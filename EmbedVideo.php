@@ -1,24 +1,8 @@
 <?php
 /*
- * EmbedVideo.php - Adds a parser function aembedding video from popular sources.
- * @author Jim R. Wilson
- * @version 0.1.2
- * @copyright Copyright (C) 2007 Jim R. Wilson
- * @license The MIT License - http://www.opensource.org/licenses/mit-license.php
- * -----------------------------------------------------------------------
- * Description:
- *     This is a MediaWiki extension which adds a parser function for embedding
- *     video from popular sources (configurable).
- * Requirements:
- *     MediaWiki 1.6.x, 1.9.x, 1.10.x or higher
- *     PHP 4.x, 5.x or higher.
- * Installation:
- *     1. Create a folder $IP/extensions/EmbedVideo
- *     2. Drop this script (EmbedVideo.php) in your folder
- *         Note: $IP is your MediaWiki install dir.
- *     3. Enable the extension by adding this line to your LocalSettings.php:
- *         require_once('$IP/extensions/EmbedVideo/EmbedVideo.php');
- * -----------------------------------------------------------------------
+ * EmbedVideo.php - Adds a parser function embedding video from popular sources.
+ * See README for details. For licensing information, see LICENSE. For a
+ * complete list of contributors, see CREDITS
  */
 
 # Confirm MW environment
