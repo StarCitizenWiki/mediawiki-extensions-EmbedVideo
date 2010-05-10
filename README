@@ -29,6 +29,10 @@ installation.
 
 === TeacherTube Support ===
 
+Support for video-hosting site TeacherTube is currently experimental as it
+uses a different embedding mechanism from other hosts. Embedding TeacherTube
+videos uses an iframe to embed the video, as opposed to embedding directly.
+
 == Credits ==
 
 The original version of EmbedVideo was written by Jim R. Wilson. Additional
