@@ -6,7 +6,8 @@
  */
 
 # Confirm MW environment
-if (defined('MEDIAWIKI')) {
+if (!defined('MEDIAWIKI')) {
+}
 
 # Credits
 $wgExtensionCredits['parserhook'][] = array(
@@ -72,7 +73,8 @@ class EmbedVideo {
     function parserFunction( $parser, $service=null, $id=null, $width=null ) {
         global $wgScriptPath;
 
-        if ($service===null || $id===null) return '<div class="errorbox">'.wfMsg('embedvideo-missing-params').'</div>';
+        if ($service === null || $id === null)
+            return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
 
         $params = array(
             'service' => trim($service),
@@ -80,23 +82,25 @@ class EmbedVideo {
             'width' => ($width===null?null:trim($width)),
         );
 
-        global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
-        if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth<100) $wgEmbedVideoMinWidth = 100;
-        if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth>1024) $wgEmbedVideoMaxWidth = 1024;
+        $this->VerifyWidthMinAndMax();
 
         global $wgEmbedVideoServiceList;
         $service = $wgEmbedVideoServiceList[$params['service']];
-        if (!$service) return '<div class="errorbox">'.wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($params['service'])).'</div>';
+        if (!$service) {
+            $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($params['service']));
+            return '<div class="errorbox">' . $msg . '</div>';
+        }
 
         $id = htmlspecialchars($params['id']);
         $idpattern = ( isset($service['id_pattern']) ? $service['id_pattern'] : '%[^A-Za-z0-9_\\-]%' );
-        if ($id==null || preg_match($idpattern,$id)) {
-            return '<div class="errorbox">'.wfMsgForContent('embedvideo-bad-id', $id, @htmlspecialchars($params['service'])).'</div>';
+        if ($id == null || preg_match($idpattern, $id)) {
+            $msg = wfMsgForContent('embedvideo-bad-id', $id, @htmlspecialchars($params['service']));
+            return '<div class="errorbox">' . $msg . '</div>';
         }
 
-        $parser->disableCache();
         $clause = $service['extern'];
         if (isset($clause)) {
+            $parser->disableCache();
             $path = $wgScriptPath . "/extensions/EmbedVideo";
             return array(wfMsgReplaceArgs($clause, array($path, $id)), 'noparse' => true, 'isHTML' => true);
         }
@@ -105,15 +109,11 @@ class EmbedVideo {
         $ratio = 425 / 350;
         $width = 425;
 
-        if ($params['width']!==null) {
-            if (
-                !is_numeric($params['width']) ||
-                $params['width'] < $wgEmbedVideoMinWidth ||
-                $params['width'] > $wgEmbedVideoMaxWidth
-            ) return
-                '<div class="errorbox">'.
-                wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($params['width'])).
-                '</div>';
+        if ($params['width'] !== null) {
+            if (!$this->WidthIsOk($params['width'])) {
+                $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($params['width']));
+                return '<div class="errorbox">' . $msg . '</div>';
+            }
             $width = $params['width'];
         }
         $height = round($width / $ratio);
@@ -125,6 +125,21 @@ class EmbedVideo {
         );
     }
 
+    function WidthIsOk($width) {
+        global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
+        if (!is_numeric($width))
+            return false;
+        return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
+    }
+
+    function VerifyWidthMinAndMax()
+    {
+        global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
+        if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth<100)
+            $wgEmbedVideoMinWidth = 100;
+        if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth>1024)
+            $wgEmbedVideoMaxWidth = 1024;
+    }
 }
 
 /**
