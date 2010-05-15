@@ -2,17 +2,22 @@
 /**
  * Wrapper class for encapsulating EmbedVideo related parser methods
  */
-class EmbedVideo {
+class EmbedVideo
+{
 
     /**
      * Sets up parser functions.
      */
-    function setup( ) {
+    function setup( )
+    {
 
-        # Setup parser hook
+        # Setup parser hooks. ev is the primary hook, evp is supported for
+        # legacy purposes
         global $wgParser, $wgVersion;
-        $hook = (version_compare($wgVersion, '1.7', '<')?'#ev':'ev');
-        $wgParser->setFunctionHook( $hook, array($this, 'parserFunction'));
+        $hookEV =  version_compare($wgVersion, '1.7', '<') ? '#ev' : 'ev';
+        $hookEVP = version_compare($wgVersion, '1.7', '<') ? '#evp' : 'evp';
+        $wgParser->setFunctionHook($hookEV, array($this, 'parserFunction_ev'));
+        $wgParser->setFunctionHook($hookEVP, array($this, 'parserFunction_evp'));
 
         # Add system messages
         global $wgMessageCache;
@@ -38,9 +43,27 @@ class EmbedVideo {
      * @param $langCode
      * @return Boolean Always true
      */
-    function parserFunctionMagic( &$magicWords, $langCode='en' ) {
-        $magicWords['ev'] = array( 0, 'ev' );
+    function parserFunctionMagic( &$magicWords, $langCode='en' )
+    {
+        $magicWords['ev'] = array(0, 'ev');
+        $magicWords['evp'] = array(0, 'evp');
         return true;
+    }
+
+    /**
+     * Embeds video of the chosen service, legacy support for 'evp' version of
+     * the tag
+     * @param Parser $parser Instance of running Parser.
+     * @param String $service Which online service has the video.
+     * @param String $id Identifier of the chosen service
+     * @param String $width Width of video (optional)
+     * @return String Encoded representation of input params (to be processed later)
+     */
+    function parserFunction( $parser, $service = null, $id = null, $desc = null,
+        $align = null, $width = null )
+    {
+        # TODO: Support the other options
+        return $this->parserFunction_ev($parser, $service, $id, $width, $desc, $align);
     }
 
     /**
@@ -49,9 +72,13 @@ class EmbedVideo {
      * @param String $service Which online service has the video.
      * @param String $id Identifier of the chosen service
      * @param String $width Width of video (optional)
+     * @param String $desc description to show (optional, unused)
+     * @param String $align alignment of the video (optional, unused)
      * @return String Encoded representation of input params (to be processed later)
      */
-    function parserFunction( $parser, $service=null, $id=null, $width=null ) {
+    function parserFunction_ev($parser, $service = null, $id = null, $width = null,
+        $desc = null, $align = null)
+    {
         global $wgScriptPath;
 
         if ($service === null || $id === null)
@@ -60,7 +87,7 @@ class EmbedVideo {
         $params = array(
             'service' => trim($service),
             'id' => trim($id),
-            'width' => ($width===null?null:trim($width)),
+            'width' => ($width === null ? null : trim($width)),
         );
 
         $this->VerifyWidthMinAndMax();
@@ -73,7 +100,7 @@ class EmbedVideo {
         }
 
         $id = htmlspecialchars($params['id']);
-        $idpattern = ( isset($service['id_pattern']) ? $service['id_pattern'] : '%[^A-Za-z0-9_\\-]%' );
+        $idpattern = (isset($service['id_pattern']) ? $service['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
         if ($id == null || preg_match($idpattern, $id)) {
             $msg = wfMsgForContent('embedvideo-bad-id', $id, @htmlspecialchars($params['service']));
             return '<div class="errorbox">' . $msg . '</div>';
@@ -106,7 +133,8 @@ class EmbedVideo {
         );
     }
 
-    function WidthIsOk($width) {
+    function WidthIsOk($width)
+    {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if (!is_numeric($width))
             return false;
