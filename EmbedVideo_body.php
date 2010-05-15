@@ -42,7 +42,7 @@ class EmbedVideo
      * @param String $width Width of video (optional)
      * @return String Encoded representation of input params (to be processed later)
      */
-    function parserFunction($parser, $service = null, $id = null, $desc = null,
+    function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
         $align = null, $width = null)
     {
         # TODO: Support the other options
