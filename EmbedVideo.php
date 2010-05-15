@@ -26,7 +26,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 require_once($dir . "EmbedVideo_body.php");
 require_once($dir . "EmbedVideo.Services.php");
-
+$wgExtensionMessagesFiles['embedvideo'] = $dir . 'EmbedVideo.i18n.php';
 
 /**
  * Wrapper function for language magic call (hack for 1.6

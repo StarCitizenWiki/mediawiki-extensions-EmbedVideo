@@ -4,13 +4,13 @@
  */
 class EmbedVideo
 {
+    protected $initialized = false;
 
     /**
      * Sets up parser functions.
      */
-    function setup( )
+    function setup()
     {
-
         # Setup parser hooks. ev is the primary hook, evp is supported for
         # legacy purposes
         global $wgParser, $wgVersion;
@@ -18,23 +18,6 @@ class EmbedVideo
         $hookEVP = version_compare($wgVersion, '1.7', '<') ? '#evp' : 'evp';
         $wgParser->setFunctionHook($hookEV, array($this, 'parserFunction_ev'));
         $wgParser->setFunctionHook($hookEVP, array($this, 'parserFunction_evp'));
-
-        # Add system messages
-        global $wgMessageCache;
-        $wgMessageCache->addMessage('embedvideo-missing-params', 'EmbedVideo is missing a required parameter.');
-        $wgMessageCache->addMessage('embedvideo-bad-params', 'EmbedVideo received a bad parameter.');
-        $wgMessageCache->addMessage('embedvideo-unparsable-param-string', 'EmbedVideo received the unparsable parameter string "<tt>$1</tt>".');
-        $wgMessageCache->addMessage('embedvideo-unrecognized-service', 'EmbedVideo does not recognize the video service "<tt>$1</tt>".');
-        $wgMessageCache->addMessage('embedvideo-bad-id', 'EmbedVideo received the bad id "$1" for the service "$2".');
-        $wgMessageCache->addMessage('embedvideo-illegal-width', 'EmbedVideo received the illegal width parameter "$1".');
-        $wgMessageCache->addMessage('embedvideo-embed-clause',
-            '<object width="$2" height="$3">'.
-            '<param name="movie" value="$1"></param>'.
-            '<param name="wmode" value="transparent"></param>'.
-            '<embed src="$1" type="application/x-shockwave-flash" '.
-            'wmode="transparent" width="$2" height="$3">'.
-            '</embed></object>'
-        );
     }
 
     /**
@@ -43,7 +26,7 @@ class EmbedVideo
      * @param $langCode
      * @return Boolean Always true
      */
-    function parserFunctionMagic( &$magicWords, $langCode='en' )
+    function parserFunctionMagic(&$magicWords, $langCode='en')
     {
         $magicWords['ev'] = array(0, 'ev');
         $magicWords['evp'] = array(0, 'evp');
@@ -59,8 +42,8 @@ class EmbedVideo
      * @param String $width Width of video (optional)
      * @return String Encoded representation of input params (to be processed later)
      */
-    function parserFunction( $parser, $service = null, $id = null, $desc = null,
-        $align = null, $width = null )
+    function parserFunction($parser, $service = null, $id = null, $desc = null,
+        $align = null, $width = null)
     {
         # TODO: Support the other options
         return $this->parserFunction_ev($parser, $service, $id, $width, $desc, $align);
@@ -80,17 +63,23 @@ class EmbedVideo
         $desc = null, $align = null)
     {
         global $wgScriptPath;
+        if (!$this->initialized) {
+            $this->VerifyWidthMinAndMax();
+            # Add system messages
+            wfLoadExtensionMessages('embedvideo');
+            $this->initialized = true;
+        }
 
         if ($service === null || $id === null)
             return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
 
         $params = array(
             'service' => trim($service),
-            'id' => trim($id),
-            'width' => ($width === null ? null : trim($width)),
+            'id'      => trim($id),
+            'width'   => ($width === null ? null : trim($width)),
+            'desc'    => ($desc  === null ? null : trim($desc)),
+            'align'   => ($align === null ? null : trim($align)),
         );
-
-        $this->VerifyWidthMinAndMax();
 
         global $wgEmbedVideoServiceList;
         $service = $wgEmbedVideoServiceList[$params['service']];
@@ -127,8 +116,17 @@ class EmbedVideo
         $height = round($width / $ratio);
         $url = wfMsgReplaceArgs($service['url'], array($id, $width, $height));
 
+        $clause = <<<EOC
+<object width="{$width}" height="{$height}">
+    <param name="movie" value="{$url}"></param>
+    <param name="wmode" value="transparent"></param>
+    <embed src="{$url}" type="application/x-shockwave-flash"
+        wmode="transparent" width="{$width}" height="{$height}">
+    </embed>
+</object>
+EOC;
         return $parser->insertStripItem(
-            wfMsgForContent('embedvideo-embed-clause', $url, $width, $height),
+            $clause,
             $parser->mStripState
         );
     }
