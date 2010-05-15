@@ -63,6 +63,8 @@ class EmbedVideo
         $desc = null, $align = null)
     {
         global $wgScriptPath;
+
+        # Initialize things once
         if (!$this->initialized) {
             $this->VerifyWidthMinAndMax();
             # Add system messages
@@ -70,60 +72,72 @@ class EmbedVideo
             $this->initialized = true;
         }
 
+        # Sanitize and prepare all parameters
         if ($service === null || $id === null)
             return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
+        $service = trim($service);
+        $id = trim($id);
+        if ($width === null)
+            $width = 425;
+        else if(!$this->WidthIsOk($width)) {
+            $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($params['width']));
+            return '<div class="errorbox">' . $msg . '</div>';
+        }
+        $ratio = 425 / 350;
+        $height = round($width / $ratio);
+        if ($desc !== null)
+            $desc = "<div class=\"thumbcaption\">$desc</div>";
+        else
+            $desc = "";
+        if ($align !== null)
+            $align = "float: " . trim($align) . ";";
+        else
+            $align = "";
 
-        $params = array(
-            'service' => trim($service),
-            'id'      => trim($id),
-            'width'   => ($width === null ? null : trim($width)),
-            'desc'    => ($desc  === null ? null : trim($desc)),
-            'align'   => ($align === null ? null : trim($align)),
-        );
-
+        # Get the entry in the list of services
         global $wgEmbedVideoServiceList;
-        $service = $wgEmbedVideoServiceList[$params['service']];
-        if (!$service) {
+        $entry = $wgEmbedVideoServiceList[$service];
+        if (!$entry) {
             $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($params['service']));
             return '<div class="errorbox">' . $msg . '</div>';
         }
 
-        $id = htmlspecialchars($params['id']);
-        $idpattern = (isset($service['id_pattern']) ? $service['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
-        if ($id == null || preg_match($idpattern, $id)) {
-            $msg = wfMsgForContent('embedvideo-bad-id', $id, @htmlspecialchars($params['service']));
+        # If the service has an ID pattern specified, verify the id number
+        $idhtml = htmlspecialchars($id);
+        $idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
+        if ($idhtml == null || preg_match($idpattern, $idhtml)) {
+            $msg = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
             return '<div class="errorbox">' . $msg . '</div>';
         }
 
-        $clause = $service['extern'];
+        # if the service has it's own custom extern declaration, use that instead
+        $clause = $entry['extern'];
         if (isset($clause)) {
             $parser->disableCache();
             $path = $wgScriptPath . "/extensions/EmbedVideo";
-            return array(wfMsgReplaceArgs($clause, array($path, $id)), 'noparse' => true, 'isHTML' => true);
+            $clause = wfMsgReplaceArgs($clause, array($path, $id));
+            $clause = <<<EOT
+<div style="{$align}">
+{$clause}
+{$desc}
+</div>
+EOT;
+            return array($clause, 'noparse' => true, 'isHTML' => true);
         }
 
         # Build URL and output embedded flash object
-        $ratio = 425 / 350;
-        $width = 425;
-
-        if ($params['width'] !== null) {
-            if (!$this->WidthIsOk($params['width'])) {
-                $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($params['width']));
-                return '<div class="errorbox">' . $msg . '</div>';
-            }
-            $width = $params['width'];
-        }
-        $height = round($width / $ratio);
-        $url = wfMsgReplaceArgs($service['url'], array($id, $width, $height));
-
+        $url = wfMsgReplaceArgs($entry['url'], array($id, $width, $height));
         $clause = <<<EOC
-<object width="{$width}" height="{$height}">
-    <param name="movie" value="{$url}"></param>
-    <param name="wmode" value="transparent"></param>
-    <embed src="{$url}" type="application/x-shockwave-flash"
-        wmode="transparent" width="{$width}" height="{$height}">
-    </embed>
-</object>
+<div style="{$align}">
+    <object width="{$width}" height="{$height}">
+        <param name="movie" value="{$url}"></param>
+        <param name="wmode" value="transparent"></param>
+        <embed src="{$url}" type="application/x-shockwave-flash"
+            wmode="transparent" width="{$width}" height="{$height}">
+        </embed>
+    </object>
+    {$desc}
+</div>
 EOC;
         return $parser->insertStripItem(
             $clause,
