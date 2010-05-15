@@ -45,8 +45,7 @@ class EmbedVideo
     function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
         $align = null, $width = null)
     {
-        # TODO: Support the other options
-        return $this->parserFunction_ev($parser, $service, $id, $width, $desc, $align);
+        return $this->parserFunction_ev($parser, $service, $id, $width, $align, $desc);
     }
 
     /**
@@ -60,7 +59,7 @@ class EmbedVideo
      * @return String Encoded representation of input params (to be processed later)
      */
     function parserFunction_ev($parser, $service = null, $id = null, $width = null,
-        $desc = null, $align = null)
+        $align = null, $desc = null)
     {
         global $wgScriptPath;
 
@@ -85,12 +84,15 @@ class EmbedVideo
         }
         $ratio = 425 / 350;
         $height = round($width / $ratio);
-        if ($desc !== null)
-            $desc = "<div class=\"thumbcaption\">$desc</div>";
-        else
-            $desc = "";
-        if ($align !== null)
+        $hasalign = false;
+        if ($align !== null) {
             $align = "float: " . trim($align) . ";";
+            if ($desc !== null)
+                $desc = "<div class=\"thumbcaption\">$desc</div>";
+            else
+                $desc = "";
+            $hasalign = true;
+        }
         else
             $align = "";
 
@@ -127,22 +129,43 @@ EOT;
 
         # Build URL and output embedded flash object
         $url = wfMsgReplaceArgs($entry['url'], array($id, $width, $height));
-        $clause = <<<EOC
-<div style="{$align}">
-    <object width="{$width}" height="{$height}">
-        <param name="movie" value="{$url}"></param>
-        <param name="wmode" value="transparent"></param>
-        <embed src="{$url}" type="application/x-shockwave-flash"
-            wmode="transparent" width="{$width}" height="{$height}">
-        </embed>
-    </object>
-    {$desc}
-</div>
-EOC;
-        return $parser->insertStripItem(
-            $clause,
-            $parser->mStripState
-        );
+        $clause = "";
+        if ($hasalign)
+            $clause = $this->generateAlignClause($parser, $url, $width, $height, $align, $desc);
+        else
+            $clause = $this->generateNormalClause($parser, $url, $width, $height);
+        return array($clause, 'noparse' => true, 'isHTML' => true);
+        //return $parser->insertStripItem(
+        //    $clause,
+        //    $parser->mStripState
+        //);
+    }
+
+    function generateNormalClause($parser, $url, $width, $height)
+    {
+        $clause = "<object width=\"{$width}\" height=\"{$height}\">" .
+            "<param name=\"movie\" value=\"{$url}\"></param>" .
+            "<param name=\"wmode\" value=\"transparent\"></param>" .
+            "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" .
+            " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\">" .
+            "</embed></object>";
+        return $clause;
+    }
+
+    function generateAlignClause($parser, $url, $width, $height, $align, $desc)
+    {
+        $clause = "<div class=\"thumb t{$align}\">" .
+            "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
+            "<object width=\"{$width}\" height=\"{$height}\">" .
+            "<param name=\"movie\" value=\"{$url}\"></param>" .
+            "<param name=\"wmode\" value=\"transparent\"></param>" .
+            "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" .
+            " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\"></embed>" .
+            "</object>" .
+            "<div class=\"thumbcaption\">" .
+            $desc .
+            "</div></div></div>";
+        return $clause;
     }
 
     function WidthIsOk($width)
