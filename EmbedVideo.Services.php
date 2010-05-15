@@ -26,7 +26,9 @@ $wgEmbedVideoServiceList = array(
         #' viral.link=http://www.teachertube.com/viewVideo.php?video_id=$2' .
         #' stretching=exactfit plugins=viral-2 viral.callout=none viral.onpause=false"' .
         #'/>'
-        'extern' => '<iframe width="490" height="295" src="$1/TeacherTube.html?id=$2"></iframe>'
+        'extern' => '<iframe width="490" height="295" src="$1/TeacherTube.html?id=$2"></iframe>',
+        'width' => 490,
+        'height' => 295
     ),
     'googlevideo' => array(
         'id_pattern'=>'%[^0-9\\-]%',

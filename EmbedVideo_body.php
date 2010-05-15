@@ -71,30 +71,10 @@ class EmbedVideo
             $this->initialized = true;
         }
 
-        # Sanitize and prepare all parameters
+        # Get the name of the host
         if ($service === null || $id === null)
             return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
         $service = trim($service);
-        $id = trim($id);
-        if ($width === null)
-            $width = 425;
-        else if(!$this->WidthIsOk($width)) {
-            $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($params['width']));
-            return '<div class="errorbox">' . $msg . '</div>';
-        }
-        $ratio = 425 / 350;
-        $height = round($width / $ratio);
-        $hasalign = false;
-        if ($align !== null) {
-            $align = "float: " . trim($align) . ";";
-            if ($desc !== null)
-                $desc = "<div class=\"thumbcaption\">$desc</div>";
-            else
-                $desc = "";
-            $hasalign = true;
-        }
-        else
-            $align = "";
 
         # Get the entry in the list of services
         global $wgEmbedVideoServiceList;
@@ -102,6 +82,39 @@ class EmbedVideo
         if (!$entry) {
             $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($params['service']));
             return '<div class="errorbox">' . $msg . '</div>';
+        }
+
+        # Sanitize and prepare the rest of the parameters
+        $id = trim($id);
+
+        if ($width === null) {
+            if (isset($entry['width']))
+                $width = $entry['width'];
+            else
+                $width = 425;
+        }
+        else if(!$this->WidthIsOk($width)) {
+            $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
+            return '<div class="errorbox">' . $msg . '</div>';
+        }
+
+        $height = 350;
+        if (isset($entry['height']))
+            $height = $entry['height'];
+        else {
+            $ratio = 425 / 350;
+            if (isset($entry['ratio']))
+                $ratio = $entry['ratio'];
+            $height = round($width / $ratio);
+        }
+
+        $hasalign = false;
+        if ($align !== null) {
+            if ($desc === null)
+                $desc = "<div class=\"thumbcaption\">$desc</div>";
+            else
+                $desc = "";
+            $hasalign = true;
         }
 
         # If the service has an ID pattern specified, verify the id number
@@ -118,12 +131,8 @@ class EmbedVideo
             $parser->disableCache();
             $path = $wgScriptPath . "/extensions/EmbedVideo";
             $clause = wfMsgReplaceArgs($clause, array($path, $id));
-            $clause = <<<EOT
-<div style="{$align}">
-{$clause}
-{$desc}
-</div>
-EOT;
+            if ($hasalign)
+                $clause = $this->generateAlignExternClause($clause, $align, $desc, $width, $height);
             return array($clause, 'noparse' => true, 'isHTML' => true);
         }
 
@@ -131,9 +140,9 @@ EOT;
         $url = wfMsgReplaceArgs($entry['url'], array($id, $width, $height));
         $clause = "";
         if ($hasalign)
-            $clause = $this->generateAlignClause($parser, $url, $width, $height, $align, $desc);
+            $clause = $this->generateAlignClause($url, $width, $height, $align, $desc);
         else
-            $clause = $this->generateNormalClause($parser, $url, $width, $height);
+            $clause = $this->generateNormalClause($url, $width, $height);
         return array($clause, 'noparse' => true, 'isHTML' => true);
         //return $parser->insertStripItem(
         //    $clause,
@@ -141,7 +150,7 @@ EOT;
         //);
     }
 
-    function generateNormalClause($parser, $url, $width, $height)
+    function generateNormalClause($url, $width, $height)
     {
         $clause = "<object width=\"{$width}\" height=\"{$height}\">" .
             "<param name=\"movie\" value=\"{$url}\"></param>" .
@@ -152,7 +161,18 @@ EOT;
         return $clause;
     }
 
-    function generateAlignClause($parser, $url, $width, $height, $align, $desc)
+    function generateAlignExternClause($clause, $align, $desc, $width, $height)
+    {
+        $clause = "<div class=\"thumb t{$align}\">" .
+            "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
+            $clause .
+            "<div class=\"thumbcaption\">" .
+            $desc .
+            "</div></div></div>";
+        return $clause;
+    }
+
+    function generateAlignClause($url, $width, $height, $align, $desc)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
             "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
