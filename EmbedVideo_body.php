@@ -110,7 +110,7 @@ class EmbedVideo
 
         $hasalign = false;
         if ($align !== null) {
-            if ($desc === null)
+            if ($desc !== null)
                 $desc = "<div class=\"thumbcaption\">$desc</div>";
             else
                 $desc = "";
