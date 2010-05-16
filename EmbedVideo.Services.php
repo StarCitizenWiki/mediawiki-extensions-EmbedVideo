@@ -11,22 +11,22 @@ $wgEmbedVideoServiceList = array(
             'http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
     ),
     'teachertube' => array(
-        #'extern' =>
-        #'<embed src="http://www.teachertube.com/embed/player.swf" ' .
-        #'   width="470" ' .
-        #'   height="275" ' .
-        #'   bgcolor="undefined" ' .
-        #'   allowscriptaccess="always" ' .
-        #'   allowfullscreen="true" ' .
-        #'   flashvars="file=http://www.teachertube.com/embedFLV.php?pg=video_$2' .
-        #' menu=false frontcolor=ffffff lightcolor=FF0000' .
-        #' logo=http://www.teachertube.com/www3/images/greylogo.swf' .
-        #' skin=http://www.teachertube.com/embed/overlay.swf volume=80' .
-        #' controlbar=over displayclick=link' .
-        #' viral.link=http://www.teachertube.com/viewVideo.php?video_id=$2' .
-        #' stretching=exactfit plugins=viral-2 viral.callout=none viral.onpause=false"' .
-        #'/>'
-        'extern' => '<iframe width="$3" height="$4" src="$1/extensions/EmbedVideo/TeacherTube.html?id=$2&width=$3&height=$4"></iframe>',
+        'extern' =>
+            '<embed src="http://www.teachertube.com/embed/player.swf" ' .
+            '   width="470" ' .
+            '   height="275" ' .
+            '   bgcolor="undefined" ' .
+            '   allowscriptaccess="always" ' .
+            '   allowfullscreen="true" ' .
+            '   flashvars="file=http://www.teachertube.com/embedFLV.php?pg=video_$2' .
+            '&menu=false' .
+            '&frontcolor=ffffff&lightcolor=FF0000' .
+            '&logo=http://www.teachertube.com/www3/images/greylogo.swf' .
+            '&skin=http://www.teachertube.com/embed/overlay.swf volume=80' .
+            '&controlbar=over&displayclick=link' .
+            '&viral.link=http://www.teachertube.com/viewVideo.php?video_id=$2' .
+            '&stretching=exactfit&plugins=viral-2&viral.callout=none&viral.onpause=false"' .
+            '/>',
         'default_width' => 490,
         'default_height' => 295
     ),
@@ -42,7 +42,7 @@ $wgEmbedVideoServiceList = array(
     ),
     'youtube' => array(
         'url'=>'http://www.youtube.com/v/$1'
-    )
+    ),
     'interiavideo' => array(
         'url' => 'http://video.interia.pl/i/players/iVideoPlayer.05.swf?vid=$1',
     ),
