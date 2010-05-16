@@ -43,4 +43,15 @@ $wgEmbedVideoServiceList = array(
     'youtube' => array(
         'url'=>'http://www.youtube.com/v/$1'
     )
+    'interiavideo' => array(
+        'url' => 'http://video.interia.pl/i/players/iVideoPlayer.05.swf?vid=$1',
+    ),
+    'divshare' => array(
+        'url' => 'http://www.divshare.com/flash/video2?myId=$1',
+    ),
+    'youtubehd' => array(
+        'url'=>'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
+        'default_width'=>720,
+        'default_ratio'=>16/9
+    )
 );
