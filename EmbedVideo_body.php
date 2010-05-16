@@ -88,8 +88,8 @@ class EmbedVideo
         $id = trim($id);
 
         if ($width === null) {
-            if (isset($entry['width']))
-                $width = $entry['width'];
+            if (isset($entry['default_width']))
+                $width = $entry['default_width'];
             else
                 $width = 425;
         }
@@ -99,12 +99,12 @@ class EmbedVideo
         }
 
         $height = 350;
-        if (isset($entry['height']))
-            $height = $entry['height'];
+        if (isset($entry['default_height']))
+            $height = $entry['default_height'];
         else {
             $ratio = 425 / 350;
-            if (isset($entry['ratio']))
-                $ratio = $entry['ratio'];
+            if (isset($entry['default_ratio']))
+                $ratio = $entry['default_ratio'];
             $height = round($width / $ratio);
         }
 
@@ -129,8 +129,7 @@ class EmbedVideo
         $clause = $entry['extern'];
         if (isset($clause)) {
             $parser->disableCache();
-            $path = $wgScriptPath . "/extensions/EmbedVideo";
-            $clause = wfMsgReplaceArgs($clause, array($path, $id));
+            $clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height));
             if ($hasalign)
                 $clause = $this->generateAlignExternClause($clause, $align, $desc, $width, $height);
             return array($clause, 'noparse' => true, 'isHTML' => true);
