@@ -80,7 +80,7 @@ class EmbedVideo
         global $wgEmbedVideoServiceList;
         $entry = $wgEmbedVideoServiceList[$service];
         if (!$entry) {
-            $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($params['service']));
+            $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service);
             return '<div class="errorbox">' . $msg . '</div>';
         }
 
