@@ -37,3 +37,5 @@ videos uses an iframe to embed the video, as opposed to embedding directly.
 
 The original version of EmbedVideo was written by Jim R. Wilson. Additional
 changes and modifications made by Andrew Whitworth and other contributors.
+
+See CREDITS for details
