@@ -9,4 +9,3 @@ $messages['en'] = array(
     'embedvideo-illegal-width' => 'EmbedVideo received the illegal width parameter "$1".',
 );
 ?>
-Loaded Messages
