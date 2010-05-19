@@ -1,14 +1,13 @@
 == About ==
 
 The EmbedVideo extension is used to embed flash videos from video hosting sites
-such as YouTube.com into a MediaWiki wiki website. It adds a parser function
-{{#ev:}} which can be added to pages to embed videos in line with other content.
+such as YouTube.com into a MediaWiki wiki website. It adds parser functions
+{{#ev:}} and {{#evp:}} which can be added to pages to embed videos in the wiki page.
 
 For more information about EmbedVideo, to download, to contribute, and to report
 bugs and problems, visit the GitHub project page:
 
     http://www.github.com/whiteknight/mediawiki-embedvideo
-
 
 == License ==
 
@@ -25,13 +24,7 @@ installation.
 # Copy the contents of this distribution into that folder
 # Add the following line to your LocalSettings.php:
 
-    require_once( "$IP/extension/EmbedVideo/EmbedVideo.php" );
-
-=== TeacherTube Support ===
-
-Support for video-hosting site TeacherTube is currently experimental as it
-uses a different embedding mechanism from other hosts. Embedding TeacherTube
-videos uses an iframe to embed the video, as opposed to embedding directly.
+    require_once( "$IP/extensions/EmbedVideo/EmbedVideo.php" );
 
 == Credits ==
 
