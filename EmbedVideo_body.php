@@ -73,57 +73,26 @@ class EmbedVideo
 
         # Get the name of the host
         if ($service === null || $id === null)
-            return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
+            return $this->errMissingParams($service, $id);
+
         $service = trim($service);
-
-        # Get the entry in the list of services
-        global $wgEmbedVideoServiceList;
-        $entry = $wgEmbedVideoServiceList[$service];
-        if (!$entry) {
-            $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
-            return '<div class="errorbox">' . $msg . '</div>';
-        }
-
-        # Sanitize and prepare the rest of the parameters
         $id = trim($id);
 
-        if ($width === null) {
-            if (isset($entry['default_width']))
-                $width = $entry['default_width'];
-            else
-                $width = 425;
-        }
-        else if(!$this->WidthIsOk($width)) {
-            $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
-            return '<div class="errorbox">' . $msg . '</div>';
-        }
+        $entry = $this->getServiceEntry($service);
+        if (!$entry)
+            return $this->errBadService($service);
 
-        $height = 350;
-        if (isset($entry['default_height']))
-            $height = $entry['default_height'];
-        else {
-            $ratio = 425 / 350;
-            if (isset($entry['default_ratio']))
-                $ratio = $entry['default_ratio'];
-            $height = round($width / $ratio);
-        }
+        if (!$this->sanitizeWidth($width))
+            return $this->errBadWidth($width);
+        $height = $this->getHeight($width);
 
-        $hasalign = false;
-        if ($align !== null) {
-            if ($desc !== null)
-                $desc = "<div class=\"thumbcaption\">$desc</div>";
-            else
-                $desc = "";
-            $hasalign = true;
-        }
+        $hasalign = ($align !== null);
+        if ($hasalign)
+            $desc = $this->getDescriptionMarkup($desc);
 
         # If the service has an ID pattern specified, verify the id number
-        $idhtml = htmlspecialchars($id);
-        $idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
-        if ($idhtml == null || preg_match($idpattern, $idhtml)) {
-            $msg = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
-            return '<div class="errorbox">' . $msg . '</div>';
-        }
+        if (!$this->verifyID($entry, $id))
+            return $this->errBadID($service, $id);
 
         # if the service has it's own custom extern declaration, use that instead
         $clause = $entry['extern'];
@@ -187,12 +156,73 @@ class EmbedVideo
         return $clause;
     }
 
-    function WidthIsOk($width)
+    function getServiceEntry($service)
+    {
+        # Get the entry in the list of services
+        global $wgEmbedVideoServiceList;
+        return $wgEmbedVideoServiceList[$service];
+    }
+
+    function sanitizeWidth(&$width)
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
+        if ($width === null) {
+            if (isset($entry['default_width']))
+                $width = $entry['default_width'];
+            else
+                $width = 425;
+            return true;
+        }
         if (!is_numeric($width))
             return false;
         return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
+    }
+
+    function getHeight($width)
+    {
+        $ratio = 425 / 350;
+        if (isset($entry['default_ratio']))
+            $ratio = $entry['default_ratio'];
+        return round($width / $ratio);
+    }
+
+    function getDescriptionMarkup($desc)
+    {
+        if ($desc !== null)
+            return "<div class=\"thumbcaption\">$desc</div>";
+        return "";
+    }
+
+    function verifyID($entry, $id)
+    {
+        $idhtml = htmlspecialchars($id);
+        //$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
+        //if ($idhtml == null || preg_match($idpattern, $idhtml)) {
+        return ($idhtml != null);
+    }
+
+    function errBadID($service, $id)
+    {
+        $idhtml = htmlspecialchars($id);
+        $msg = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
+        return '<div class="errorbox">' . $msg . '</div>';
+    }
+
+    function errBadWidth($width)
+    {
+        $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
+        return '<div class="errorbox">' . $msg . '</div>';
+    }
+
+    function errMissingParams($service, $id)
+    {
+        return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
+    }
+
+    function errBadService($service)
+    {
+        $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
+        return '<div class="errorbox">' . $msg . '</div>';
     }
 
     function VerifyWidthMinAndMax()

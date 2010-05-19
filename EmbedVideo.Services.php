@@ -48,8 +48,6 @@ $wgEmbedVideoServiceList = array(
                     '&viral.callout=none&viral.onpause=false' .
                 '"' .
             '/>',
-        'default_width' => 490,
-        'default_height' => 295
     ),
     'youtube' => array(
         'url'=>'http://www.youtube.com/v/$1'
