@@ -16,11 +16,11 @@ EOT;
 
 # Credits
 $wgExtensionCredits['parserhook'][] = array(
-    'name' => 'EmbedVideo',
-    'author' => 'Jim R. Wilson and Andrew Whitworth',
-    'url' => 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
+    'name'        => 'EmbedVideo',
+    'author'      => 'Jim R. Wilson and Andrew Whitworth',
+    'url'         => 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
     'description' => 'Adds a parser function embedding video from popular sources.',
-    'version' => '0.1.2'
+    'version'     => '1.0'
 );
 
 $dir = dirname(__FILE__) . '/';

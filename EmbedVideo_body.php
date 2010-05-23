@@ -82,9 +82,9 @@ class EmbedVideo
         if (!$entry)
             return $this->errBadService($service);
 
-        if (!$this->sanitizeWidth($width))
+        if (!$this->sanitizeWidth($entry, $width))
             return $this->errBadWidth($width);
-        $height = $this->getHeight($width);
+        $height = $this->getHeight($entry, $width);
 
         $hasalign = ($align !== null);
         if ($hasalign)
@@ -112,12 +112,9 @@ class EmbedVideo
         else
             $clause = $this->generateNormalClause($url, $width, $height);
         return array($clause, 'noparse' => true, 'isHTML' => true);
-        //return $parser->insertStripItem(
-        //    $clause,
-        //    $parser->mStripState
-        //);
     }
 
+    # Return the HTML necessary to embed the video normally.
     function generateNormalClause($url, $width, $height)
     {
         $clause = "<object width=\"{$width}\" height=\"{$height}\">" .
@@ -129,6 +126,8 @@ class EmbedVideo
         return $clause;
     }
 
+    # The HTML necessary to embed the video with a custom embedding clause,
+    # specified align and description text
     function generateAlignExternClause($clause, $align, $desc, $width, $height)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
@@ -140,6 +139,8 @@ class EmbedVideo
         return $clause;
     }
 
+    # Generate the HTML necessary to embed the video with the given alignment
+    # and text description
     function generateAlignClause($url, $width, $height, $align, $desc)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
@@ -156,6 +157,7 @@ class EmbedVideo
         return $clause;
     }
 
+    # Get the entry for the specified service, by name
     function getServiceEntry($service)
     {
         # Get the entry in the list of services
@@ -163,7 +165,12 @@ class EmbedVideo
         return $wgEmbedVideoServiceList[$service];
     }
 
-    function sanitizeWidth(&$width)
+    # Get the width. If there is no width specified, try to find a default
+    # width value for the service. If that isn't set, default to 425.
+    # If a width value is provided, verify that it is numerical and that it
+    # falls between the specified min and max size values. Return true if
+    # the width is suitable, false otherwise.
+    function sanitizeWidth($entry, &$width)
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if ($width === null) {
@@ -178,7 +185,9 @@ class EmbedVideo
         return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
     }
 
-    function getHeight($width)
+    # Calculate the height from the given width. The default ratio is 450/350,
+    # but that may be overridden for some sites.
+    function getHeight($entry, $width)
     {
         $ratio = 425 / 350;
         if (isset($entry['default_ratio']))
@@ -186,6 +195,8 @@ class EmbedVideo
         return round($width / $ratio);
     }
 
+    # If we have a textual description, get the markup necessary to display
+    # it on the page.
     function getDescriptionMarkup($desc)
     {
         if ($desc !== null)
@@ -193,6 +204,7 @@ class EmbedVideo
         return "";
     }
 
+    # Verify the id number of the video, if a pattern is provided.
     function verifyID($entry, $id)
     {
         $idhtml = htmlspecialchars($id);
@@ -201,6 +213,7 @@ class EmbedVideo
         return ($idhtml != null);
     }
 
+    # Get an error message for the case where the ID value is bad
     function errBadID($service, $id)
     {
         $idhtml = htmlspecialchars($id);
@@ -208,29 +221,33 @@ class EmbedVideo
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
+    # Get an error message if the width is bad
     function errBadWidth($width)
     {
         $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
+    # Get an error message if there are missing parameters
     function errMissingParams($service, $id)
     {
         return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
     }
 
+    # Get an error message if the service name is bad
     function errBadService($service)
     {
         $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
+    # Verify that the min and max values for width are sane.
     function VerifyWidthMinAndMax()
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
-        if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth<100)
+        if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100)
             $wgEmbedVideoMinWidth = 100;
-        if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth>1024)
+        if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth > 1024)
             $wgEmbedVideoMaxWidth = 1024;
     }
 }
