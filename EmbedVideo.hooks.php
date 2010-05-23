@@ -2,7 +2,7 @@
 /**
  * Wrapper class for encapsulating EmbedVideo related parser methods
  */
-class EmbedVideo
+abstract class EmbedVideo
 {
     protected static $initialized = false;
 
@@ -20,7 +20,7 @@ class EmbedVideo
         return true;
     }
 
-    public static function addMagicWord($prefix, $word, $function)
+    private static function addMagicWord($prefix, $word, $function)
     {
         global $wgParser;
         $wgParser->setFunctionHook($prefix . $word, $function);
@@ -48,7 +48,7 @@ class EmbedVideo
      * @param String $width Width of video (optional)
      * @return String Encoded representation of input params (to be processed later)
      */
-    public static function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
+    private static function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
         $align = null, $width = null)
     {
         return EmbedVideo::parserFunction_ev($parser, $service, $id, $width, $align, $desc);
@@ -64,7 +64,7 @@ class EmbedVideo
      * @param String $align alignment of the video (optional, unused)
      * @return String Encoded representation of input params (to be processed later)
      */
-    public static function parserFunction_ev($parser, $service = null, $id = null, $width = null,
+    private static function parserFunction_ev($parser, $service = null, $id = null, $width = null,
         $align = null, $desc = null)
     {
         global $wgScriptPath;
@@ -121,7 +121,7 @@ class EmbedVideo
     }
 
     # Return the HTML necessary to embed the video normally.
-    public static function generateNormalClause($url, $width, $height)
+    private static function generateNormalClause($url, $width, $height)
     {
         $clause = "<object width=\"{$width}\" height=\"{$height}\">" .
             "<param name=\"movie\" value=\"{$url}\"></param>" .
@@ -134,7 +134,7 @@ class EmbedVideo
 
     # The HTML necessary to embed the video with a custom embedding clause,
     # specified align and description text
-    public static function generateAlignExternClause($clause, $align, $desc, $width, $height)
+    private static function generateAlignExternClause($clause, $align, $desc, $width, $height)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
             "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
@@ -147,7 +147,7 @@ class EmbedVideo
 
     # Generate the HTML necessary to embed the video with the given alignment
     # and text description
-    public static function generateAlignClause($url, $width, $height, $align, $desc)
+    private static function generateAlignClause($url, $width, $height, $align, $desc)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
             "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
@@ -164,7 +164,7 @@ class EmbedVideo
     }
 
     # Get the entry for the specified service, by name
-    public static function getServiceEntry($service)
+    private static function getServiceEntry($service)
     {
         # Get the entry in the list of services
         global $wgEmbedVideoServiceList;
@@ -176,7 +176,7 @@ class EmbedVideo
     # If a width value is provided, verify that it is numerical and that it
     # falls between the specified min and max size values. Return true if
     # the width is suitable, false otherwise.
-    public static function sanitizeWidth($entry, &$width)
+    private static function sanitizeWidth($entry, &$width)
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if ($width === null) {
@@ -193,7 +193,7 @@ class EmbedVideo
 
     # Calculate the height from the given width. The default ratio is 450/350,
     # but that may be overridden for some sites.
-    public static function getHeight($entry, $width)
+    private static function getHeight($entry, $width)
     {
         $ratio = 425 / 350;
         if (isset($entry['default_ratio']))
@@ -203,7 +203,7 @@ class EmbedVideo
 
     # If we have a textual description, get the markup necessary to display
     # it on the page.
-    public static function getDescriptionMarkup($desc)
+    private static function getDescriptionMarkup($desc)
     {
         if ($desc !== null)
             return "<div class=\"thumbcaption\">$desc</div>";
@@ -211,7 +211,7 @@ class EmbedVideo
     }
 
     # Verify the id number of the video, if a pattern is provided.
-    public static function verifyID($entry, $id)
+    private static function verifyID($entry, $id)
     {
         $idhtml = htmlspecialchars($id);
         //$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
@@ -220,7 +220,7 @@ class EmbedVideo
     }
 
     # Get an error message for the case where the ID value is bad
-    public static function errBadID($service, $id)
+    private static function errBadID($service, $id)
     {
         $idhtml = htmlspecialchars($id);
         $msg = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
@@ -228,27 +228,27 @@ class EmbedVideo
     }
 
     # Get an error message if the width is bad
-    public static function errBadWidth($width)
+    private static function errBadWidth($width)
     {
         $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
     # Get an error message if there are missing parameters
-    public static function errMissingParams($service, $id)
+    private static function errMissingParams($service, $id)
     {
         return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
     }
 
     # Get an error message if the service name is bad
-    public static function errBadService($service)
+    private static function errBadService($service)
     {
         $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
     # Verify that the min and max values for width are sane.
-    public static function VerifyWidthMinAndMax()
+    private static function VerifyWidthMinAndMax()
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100)
