@@ -48,7 +48,7 @@ abstract class EmbedVideo
      * @param String $width Width of video (optional)
      * @return String Encoded representation of input params (to be processed later)
      */
-    private static function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
+    public static function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
         $align = null, $width = null)
     {
         return EmbedVideo::parserFunction_ev($parser, $service, $id, $width, $align, $desc);
@@ -64,7 +64,7 @@ abstract class EmbedVideo
      * @param String $align alignment of the video (optional, unused)
      * @return String Encoded representation of input params (to be processed later)
      */
-    private static function parserFunction_ev($parser, $service = null, $id = null, $width = null,
+    public static function parserFunction_ev($parser, $service = null, $id = null, $width = null,
         $align = null, $desc = null)
     {
         global $wgScriptPath;
