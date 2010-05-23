@@ -4,20 +4,26 @@
  */
 class EmbedVideo
 {
-    protected $initialized = false;
+    protected static $initialized = false;
 
     /**
      * Sets up parser functions.
      */
-    function setup()
+    public static function setup()
     {
         # Setup parser hooks. ev is the primary hook, evp is supported for
         # legacy purposes
-        global $wgParser, $wgVersion;
-        $hookEV =  version_compare($wgVersion, '1.7', '<') ? '#ev' : 'ev';
-        $hookEVP = version_compare($wgVersion, '1.7', '<') ? '#evp' : 'evp';
-        $wgParser->setFunctionHook($hookEV, array($this, 'parserFunction_ev'));
-        $wgParser->setFunctionHook($hookEVP, array($this, 'parserFunction_evp'));
+        global $wgVersion;
+        $prefix = version_compare($wgVersion, '1.7', '<') ? '#' : '';
+        EmbedVideo::addMagicWord($prefix, "ev", "EmbedVideo::parserFunction_ev");
+        EmbedVideo::addMagicWord($prefix, "evp", "EmbedVideo::parserFunction_evp");
+        return true;
+    }
+
+    public static function addMagicWord($prefix, $word, $function)
+    {
+        global $wgParser;
+        $wgParser->setFunctionHook($prefix . $word, $function);
     }
 
     /**
@@ -26,10 +32,10 @@ class EmbedVideo
      * @param $langCode
      * @return Boolean Always true
      */
-    function parserFunctionMagic(&$magicWords, $langCode='en')
+    public static function parserFunctionMagic(&$magicWords, $langCode='en')
     {
-        $magicWords['ev'] = array(0, 'ev');
         $magicWords['evp'] = array(0, 'evp');
+        $magicWords['ev']  = array(0, 'ev');
         return true;
     }
 
@@ -42,10 +48,10 @@ class EmbedVideo
      * @param String $width Width of video (optional)
      * @return String Encoded representation of input params (to be processed later)
      */
-    function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
+    public static function parserFunction_evp($parser, $service = null, $id = null, $desc = null,
         $align = null, $width = null)
     {
-        return $this->parserFunction_ev($parser, $service, $id, $width, $align, $desc);
+        return EmbedVideo::parserFunction_ev($parser, $service, $id, $width, $align, $desc);
     }
 
     /**
@@ -58,49 +64,49 @@ class EmbedVideo
      * @param String $align alignment of the video (optional, unused)
      * @return String Encoded representation of input params (to be processed later)
      */
-    function parserFunction_ev($parser, $service = null, $id = null, $width = null,
+    public static function parserFunction_ev($parser, $service = null, $id = null, $width = null,
         $align = null, $desc = null)
     {
         global $wgScriptPath;
 
         # Initialize things once
-        if (!$this->initialized) {
-            $this->VerifyWidthMinAndMax();
+        if (!EmbedVideo::$initialized) {
+            EmbedVideo::VerifyWidthMinAndMax();
             # Add system messages
             wfLoadExtensionMessages('embedvideo');
-            $this->initialized = true;
+            $parser->disableCache();
+            EmbedVideo::$initialized = true;
         }
 
         # Get the name of the host
         if ($service === null || $id === null)
-            return $this->errMissingParams($service, $id);
+            return EmbedVideo::errMissingParams($service, $id);
 
         $service = trim($service);
         $id = trim($id);
 
-        $entry = $this->getServiceEntry($service);
+        $entry = EmbedVideo::getServiceEntry($service);
         if (!$entry)
-            return $this->errBadService($service);
+            return EmbedVideo::errBadService($service);
 
-        if (!$this->sanitizeWidth($entry, $width))
-            return $this->errBadWidth($width);
-        $height = $this->getHeight($entry, $width);
+        if (!EmbedVideo::sanitizeWidth($entry, $width))
+            return EmbedVideo::errBadWidth($width);
+        $height = EmbedVideo::getHeight($entry, $width);
 
         $hasalign = ($align !== null);
         if ($hasalign)
-            $desc = $this->getDescriptionMarkup($desc);
+            $desc = EmbedVideo::getDescriptionMarkup($desc);
 
         # If the service has an ID pattern specified, verify the id number
-        if (!$this->verifyID($entry, $id))
-            return $this->errBadID($service, $id);
+        if (!EmbedVideo::verifyID($entry, $id))
+            return EmbedVideo::errBadID($service, $id);
 
         # if the service has it's own custom extern declaration, use that instead
         $clause = $entry['extern'];
         if (isset($clause)) {
-            $parser->disableCache();
             $clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height));
             if ($hasalign)
-                $clause = $this->generateAlignExternClause($clause, $align, $desc, $width, $height);
+                $clause = EmbedVideo::generateAlignExternClause($clause, $align, $desc, $width, $height);
             return array($clause, 'noparse' => true, 'isHTML' => true);
         }
 
@@ -108,14 +114,14 @@ class EmbedVideo
         $url = wfMsgReplaceArgs($entry['url'], array($id, $width, $height));
         $clause = "";
         if ($hasalign)
-            $clause = $this->generateAlignClause($url, $width, $height, $align, $desc);
+            $clause = EmbedVideo::generateAlignClause($url, $width, $height, $align, $desc);
         else
-            $clause = $this->generateNormalClause($url, $width, $height);
+            $clause = EmbedVideo::generateNormalClause($url, $width, $height);
         return array($clause, 'noparse' => true, 'isHTML' => true);
     }
 
     # Return the HTML necessary to embed the video normally.
-    function generateNormalClause($url, $width, $height)
+    public static function generateNormalClause($url, $width, $height)
     {
         $clause = "<object width=\"{$width}\" height=\"{$height}\">" .
             "<param name=\"movie\" value=\"{$url}\"></param>" .
@@ -128,7 +134,7 @@ class EmbedVideo
 
     # The HTML necessary to embed the video with a custom embedding clause,
     # specified align and description text
-    function generateAlignExternClause($clause, $align, $desc, $width, $height)
+    public static function generateAlignExternClause($clause, $align, $desc, $width, $height)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
             "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
@@ -141,7 +147,7 @@ class EmbedVideo
 
     # Generate the HTML necessary to embed the video with the given alignment
     # and text description
-    function generateAlignClause($url, $width, $height, $align, $desc)
+    public static function generateAlignClause($url, $width, $height, $align, $desc)
     {
         $clause = "<div class=\"thumb t{$align}\">" .
             "<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
@@ -158,7 +164,7 @@ class EmbedVideo
     }
 
     # Get the entry for the specified service, by name
-    function getServiceEntry($service)
+    public static function getServiceEntry($service)
     {
         # Get the entry in the list of services
         global $wgEmbedVideoServiceList;
@@ -170,7 +176,7 @@ class EmbedVideo
     # If a width value is provided, verify that it is numerical and that it
     # falls between the specified min and max size values. Return true if
     # the width is suitable, false otherwise.
-    function sanitizeWidth($entry, &$width)
+    public static function sanitizeWidth($entry, &$width)
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if ($width === null) {
@@ -187,7 +193,7 @@ class EmbedVideo
 
     # Calculate the height from the given width. The default ratio is 450/350,
     # but that may be overridden for some sites.
-    function getHeight($entry, $width)
+    public static function getHeight($entry, $width)
     {
         $ratio = 425 / 350;
         if (isset($entry['default_ratio']))
@@ -197,7 +203,7 @@ class EmbedVideo
 
     # If we have a textual description, get the markup necessary to display
     # it on the page.
-    function getDescriptionMarkup($desc)
+    public static function getDescriptionMarkup($desc)
     {
         if ($desc !== null)
             return "<div class=\"thumbcaption\">$desc</div>";
@@ -205,7 +211,7 @@ class EmbedVideo
     }
 
     # Verify the id number of the video, if a pattern is provided.
-    function verifyID($entry, $id)
+    public static function verifyID($entry, $id)
     {
         $idhtml = htmlspecialchars($id);
         //$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
@@ -214,7 +220,7 @@ class EmbedVideo
     }
 
     # Get an error message for the case where the ID value is bad
-    function errBadID($service, $id)
+    public static function errBadID($service, $id)
     {
         $idhtml = htmlspecialchars($id);
         $msg = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
@@ -222,27 +228,27 @@ class EmbedVideo
     }
 
     # Get an error message if the width is bad
-    function errBadWidth($width)
+    public static function errBadWidth($width)
     {
         $msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
     # Get an error message if there are missing parameters
-    function errMissingParams($service, $id)
+    public static function errMissingParams($service, $id)
     {
         return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
     }
 
     # Get an error message if the service name is bad
-    function errBadService($service)
+    public static function errBadService($service)
     {
         $msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
         return '<div class="errorbox">' . $msg . '</div>';
     }
 
     # Verify that the min and max values for width are sane.
-    function VerifyWidthMinAndMax()
+    public static function VerifyWidthMinAndMax()
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
         if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100)

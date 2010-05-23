@@ -28,21 +28,15 @@ require_once($dir . "EmbedVideo_body.php");
 require_once($dir . "EmbedVideo.Services.php");
 $wgExtensionMessagesFiles['embedvideo'] = $dir . 'EmbedVideo.i18n.php';
 
-/**
- * Wrapper function for language magic call (hack for 1.6
- */
 
-# Create global instance and wire it up!
-$wgEmbedVideo = new EmbedVideo();
-$wgExtensionFunctions[] = array($wgEmbedVideo, 'setup');
+$wgHooks['ParserFirstCallInit'][] = "EmbedVideo::setup";
 if (version_compare($wgVersion, '1.7', '<')) {
     # Hack solution to resolve 1.6 array parameter nullification for hook args
     function wfEmbedVideoLanguageGetMagic( &$magicWords ) {
-        global $wgEmbedVideo;
-        $wgEmbedVideo->parserFunctionMagic( $magicWords );
+        EmbedVideo::parserFunctionMagic( $magicWords );
         return true;
     }
     $wgHooks['LanguageGetMagic'][] = 'wfEmbedVideoLanguageGetMagic';
 } else {
-    $wgHooks['LanguageGetMagic'][] = array($wgEmbedVideo, 'parserFunctionMagic');
+    $wgHooks['LanguageGetMagic'][] = 'EmbedVideo::parserFunctionMagic';
 }
