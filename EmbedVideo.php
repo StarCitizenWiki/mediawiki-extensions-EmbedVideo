@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * EmbedVideo.php - Adds a parser function embedding video from popular sources.
  * See README for details. For licensing information, see LICENSE. For a
  * complete list of contributors, see CREDITS
@@ -16,8 +16,9 @@ EOT;
 
 # Credits
 $wgExtensionCredits['parserhook'][] = array(
+    'path'        => __FILE__,
     'name'        => 'EmbedVideo',
-    'author'      => 'Jim R. Wilson and Andrew Whitworth',
+    'author'      => array('Jim R. Wilson', 'Andrew Whitworth',);
     'url'         => 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
     'description' => 'Adds a parser function embedding video from popular sources.',
     'version'     => '1.0'

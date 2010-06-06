@@ -8,4 +8,5 @@ $messages['en'] = array(
     'embedvideo-bad-id' => 'EmbedVideo received the bad id "$1" for the service "$2".',
     'embedvideo-illegal-width' => 'EmbedVideo received the illegal width parameter "$1".',
 );
+
 ?>
