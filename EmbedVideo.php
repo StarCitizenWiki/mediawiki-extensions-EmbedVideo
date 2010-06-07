@@ -18,7 +18,7 @@ EOT;
 $wgExtensionCredits['parserhook'][] = array(
     'path'        => __FILE__,
     'name'        => 'EmbedVideo',
-    'author'      => array('Jim R. Wilson', 'Andrew Whitworth',);
+    'author'      => array('Jim R. Wilson', 'Andrew Whitworth',),
     'url'         => 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
     'description' => 'Adds a parser function embedding video from popular sources.',
     'version'     => '1.0'
