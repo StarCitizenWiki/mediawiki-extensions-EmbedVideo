@@ -9,7 +9,7 @@
 if (!defined('MEDIAWIKI')) {
        echo <<<EOT
 To install EmbedVideo, put the following line in LocalSettings.php:
-require_once( "\$IP/extensions/EmbedVideo/EmbedVido.php" );
+require_once( "\$IP/extensions/EmbedVideo/EmbedVideo.php" );
 EOT;
     exit( 1 );
 }
