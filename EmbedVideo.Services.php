@@ -9,19 +9,22 @@ $wgEmbedVideoServiceList = array(
         'url' => 'http://www.divshare.com/flash/video2?myId=$1',
     ),
     'edutopia' => array(
-        'extern' => '<object width="$3" height="$4">' .
-            '<param value="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg" name="FlashVars"/>' .
-            '<param value="best" name="quality"/>' .
-            '<param value="false" name="play"/>' .
-            '<param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/>' .
-            '<embed id="video_embed" width="$3" height="$4" ' .
-                'type="application/x-shockwave-flash" ' .
-                'src="http://www.edutopia.org/media/videofalse.swf" ' .
-                'play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" ' .
-                'name="video" quality="best" ' .
-                'flashvars="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg"' .
-            '/> ' .
-        '</object>',
+        'extern' =>
+            '<object width="$3" height="$4">' .
+                '<param value="flvPath=http://www.edutopia.org/media/$2/$2.flv&pPath=http://www.edutopia.org/media/$2/$2.jpg" name="FlashVars"/>' .
+                '<param value="best" name="quality"/>' .
+                '<param value="false" name="play"/>' .
+                '<param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/>' .
+                '<embed id="video_embed" width="$3" height="$4" ' .
+                    'type="application/x-shockwave-flash" ' .
+                    'src="http://www.edutopia.org/media/videofalse.swf" ' .
+                    'play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" ' .
+                    'name="video" quality="best" ' .
+                    'flashvars="flvPath=http://www.edutopia.org/media/$2/$2.flv&pPath=http://www.edutopia.org/media/$2/$2.jpg"' .
+                '/> ' .
+            '</object>',
+        'default_width' => 400,
+        'default_ratio' => 400/292,
     ),
     'funnyordie' => array(
         'url' =>
@@ -65,12 +68,11 @@ $wgEmbedVideoServiceList = array(
             '/>',
     ),
     'youtube' => array(
-        'url'=>'http://www.youtube.com/v/$1'
+        'url' => 'http://www.youtube.com/v/$1'
     ),
     'youtubehd' => array(
-        'url'=>'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
-        'default_width'=>720,
-        'default_ratio'=>16/9
+        'url' => 'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
+        'default_width' => 720,
+        'default_ratio' => 16/9
     )
-
 );
