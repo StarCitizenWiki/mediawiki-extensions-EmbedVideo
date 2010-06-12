@@ -8,6 +8,21 @@ $wgEmbedVideoServiceList = array(
     'divshare' => array(
         'url' => 'http://www.divshare.com/flash/video2?myId=$1',
     ),
+    'edutopia' => array(
+        'extern' => '<object width="$3" height="$4">' .
+            '<param value="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg" name="FlashVars"/>' .
+            '<param value="best" name="quality"/>' .
+            '<param value="false" name="play"/>' .
+            '<param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/>' .
+            '<embed id="video_embed" width="$3" height="$4" ' .
+                'type="application/x-shockwave-flash" ' .
+                'src="http://www.edutopia.org/media/videofalse.swf" ' .
+                'play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" ' .
+                'name="video" quality="best" ' .
+                'flashvars="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg"' .
+            '/> ' .
+        '</object>',
+    ),
     'funnyordie' => array(
         'url' =>
             'http://www.funnyordie.com/v1/flvideo/fodplayer.swf?file='.
@@ -32,8 +47,8 @@ $wgEmbedVideoServiceList = array(
     'teachertube' => array(
         'extern' =>
             '<embed src="http://www.teachertube.com/embed/player.swf" ' .
-                'width="470" ' .
-                'height="275" ' .
+                'width="$3" ' .
+                'height="$4" ' .
                 'bgcolor="undefined" ' .
                 'allowscriptaccess="always" ' .
                 'allowfullscreen="true" ' .
@@ -58,7 +73,4 @@ $wgEmbedVideoServiceList = array(
         'default_ratio'=>16/9
     )
 
-/* Edutopia:
-<object width="400" height="292"> <param value="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg" name="FlashVars"/> <param value="best" name="quality"/> <param value="false" name="play"/> <param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/> <embed id="video_embed" width="400" height="292" type="application/x-shockwave-flash" src="http://www.edutopia.org/media/videofalse.swf" play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" name="video" quality="best" flashvars="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg"/> </object>
-*/
 );
