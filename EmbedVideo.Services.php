@@ -57,4 +57,8 @@ $wgEmbedVideoServiceList = array(
         'default_width'=>720,
         'default_ratio'=>16/9
     )
+
+/* Edutopia:
+<object width="400" height="292"> <param value="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg" name="FlashVars"/> <param value="best" name="quality"/> <param value="false" name="play"/> <param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/> <embed id="video_embed" width="400" height="292" type="application/x-shockwave-flash" src="http://www.edutopia.org/media/videofalse.swf" play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" name="video" quality="best" flashvars="flvPath=http://www.edutopia.org/media//.flv&pPath=http://www.edutopia.org/media//.jpg"/> </object>
+*/
 );
