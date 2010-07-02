@@ -15,15 +15,16 @@ abstract class EmbedVideo
         # legacy purposes
         global $wgVersion;
         $prefix = version_compare($wgVersion, '1.7', '<') ? '#' : '';
-        EmbedVideo::addMagicWord($prefix, "ev", "EmbedVideo::parserFunction_ev");
-        EmbedVideo::addMagicWord($prefix, "evp", "EmbedVideo::parserFunction_evp");
+        EmbedVideo::addMagicWord($prefix, "ev", "parserFunction_ev");
+        EmbedVideo::addMagicWord($prefix, "evp", "parserFunction_evp");
         return true;
     }
 
     private static function addMagicWord($prefix, $word, $function)
     {
         global $wgParser;
-        $wgParser->setFunctionHook($prefix . $word, $function);
+        $hook = array("EmbedVideo", $function);
+        $wgParser->setFunctionHook($prefix . $word, $hook);
     }
 
     /**
