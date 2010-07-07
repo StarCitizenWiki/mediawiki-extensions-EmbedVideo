@@ -103,9 +103,8 @@ abstract class EmbedVideo
             return EmbedVideo::errBadID($service, $id);
 
         # if the service has it's own custom extern declaration, use that instead
-        $clause = $entry['extern'];
-        if (isset($clause)) {
-            $clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height));
+        if (isset($entry['extern'])) {
+            $clause = wfMsgReplaceArgs($entry['extern'], array($wgScriptPath, $id, $width, $height));
             if ($hasalign)
                 $clause = EmbedVideo::generateAlignExternClause($clause, $align, $desc, $width, $height);
             return array($clause, 'noparse' => true, 'isHTML' => true);
