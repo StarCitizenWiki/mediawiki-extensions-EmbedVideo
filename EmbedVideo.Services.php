@@ -74,5 +74,8 @@ $wgEmbedVideoServiceList = array(
         'url' => 'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
         'default_width' => 720,
         'default_ratio' => 16/9
+    ),
+    'vimeo' => array(
+        'url'=>'http://vimeo.com/moogaloop.swf?clip_id=$1&;server=vimeo.com&fullscreen=0&show_title=1&show_byline=1&show_portrait=0'
     )
 );
