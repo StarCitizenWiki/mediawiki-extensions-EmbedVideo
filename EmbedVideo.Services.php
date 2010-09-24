@@ -10,21 +10,21 @@ $wgEmbedVideoServiceList = array(
     ),
     'edutopia' => array(
         'extern' =>
-            '<object width="$3" height="$4">' .
-                '<param value="flvPath=http://www.edutopia.org/media/$2/$2.flv&pPath=http://www.edutopia.org/media/$2/$2.jpg" name="FlashVars"/>' .
-                '<param value="best" name="quality"/>' .
-                '<param value="false" name="play"/>' .
-                '<param value="http://www.edutopia.org/media/videofalse.swf" name="movie"/>' .
-                '<embed id="video_embed" width="$3" height="$4" ' .
-                    'type="application/x-shockwave-flash" ' .
-                    'src="http://www.edutopia.org/media/videofalse.swf" ' .
-                    'play="false" pluginspage="http://www.macromedia.com/go/getflashplayer" ' .
-                    'name="video" quality="best" ' .
-                    'flashvars="flvPath=http://www.edutopia.org/media/$2/$2.flv&pPath=http://www.edutopia.org/media/$2/$2.jpg"' .
-                '/> ' .
+            '<object id="flashObj" width="$3" height="$4">' .
+                '<param name="movie" value="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" />' .
+                '<param name="flashVars" value="videoId=$2&playerID=85476225001&domain=embed&dynamicStreaming=true" />' .
+                '<param name="base" value="http://admin.brightcove.com" />' .
+                '<param name="allowScriptAccess" value="always" />' .
+                '<embed src="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" ' .
+                    'flashVars="videoId=$2&playerID=85476225001&domain=embed&dynamicStreaming=true" '.
+                    'base="http://admin.brightcove.com" name="flashObj" width="$3" height="$4" '.
+                    'seamlesstabbing="false" type="application/x-shockwave-flash" allowFullScreen="true" ' .
+                    'allowScriptAccess="always" swLiveConnect="true" ' .
+                    'pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">' .
+                '</embed>' .
             '</object>',
-        'default_width' => 400,
-        'default_ratio' => 400/292,
+        'default_width' => 326,
+        'default_ratio' => 326/399,
     ),
     'funnyordie' => array(
         'url' =>
@@ -74,8 +74,5 @@ $wgEmbedVideoServiceList = array(
         'url' => 'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
         'default_width' => 720,
         'default_ratio' => 16/9
-    ),
-    'vimeo' => array(
-        'url'=>'vimeo.com/moogaloop.swf?clip_id=$1&;server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color="'
     )
 );
