@@ -178,7 +178,7 @@ abstract class EmbedVideo
     private static function sanitizeWidth($entry, &$width)
     {
         global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
-        if ($width === null) {
+        if ($width === null || $width == '*' || $width == '') {
             if (isset($entry['default_width']))
                 $width = $entry['default_width'];
             else
