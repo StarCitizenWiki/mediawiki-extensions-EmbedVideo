@@ -84,6 +84,7 @@ abstract class EmbedVideo
 
         $service = trim($service);
         $id = trim($id);
+	$desc = $parser->recursiveTagParse($desc);
 
         $entry = EmbedVideo::getServiceEntry($service);
         if (!$entry)
