@@ -68,12 +68,28 @@ $wgEmbedVideoServiceList = array(
 			'/>',
 	),
 	'youtube' => array(
-		'url' => 'http://www.youtube.com/v/$1'
+		'extern' =>
+			'<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1" ' .
+				'width="$3" height="$4" ' .
+				'frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width' => 600,
+		'default_ratio' => 16 / 9
 	),
 	'youtubehd' => array(
-		'url' => 'http://www.youtube.com/v/$1&ap=%2526fmt%3D22',
-		'default_width' => 720,
-		'default_ratio' => 16/9
+		'extern' =>
+			'<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1&amp;hd=1" ' .
+				'width="$3" height="$4" ' .
+				'frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width' => 600,
+		'default_ratio' => 16 / 9
+	),
+	'youtubeplaylist' => array(
+		'extern' =>
+			'<iframe src="http://www.youtube.com/embed/videoseries?showsearch=0&amp;modestbranding=1&amp;list=$2" ' .
+				'width="$3" height="$4" ' .
+				'frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width' => 600,
+		'default_ratio' => 16 / 9
 	),
 	'vimeo' => array(
 		'url'=>'http://vimeo.com/moogaloop.swf?clip_id=$1&;server=vimeo.com&fullscreen=0&show_title=1&show_byline=1&show_portrait=0'
