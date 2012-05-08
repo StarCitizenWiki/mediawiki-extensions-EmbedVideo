@@ -90,7 +90,6 @@ abstract class EmbedVideo {
 			return self::errBadWidth($width);
 		}
 		$height = self::getHeight($entry, $width);
-
 		$hasalign = ($align !== null);
 		if ($hasalign) {
 			$desc = self::getDescriptionMarkup($desc);
@@ -100,10 +99,15 @@ abstract class EmbedVideo {
 		if (!self::verifyID($entry, $id)) {
 			return self::errBadID($service, $id);
 		}
-
+		$url = null;
+		// If service is Yandex -> use own parser
+		if ($service == 'yandex' || $service == 'yandexvideo') {
+		$url = self::getYandex($id);
+		$url = htmlspecialchars_decode($url);
+		}
 		// if the service has it's own custom extern declaration, use that instead
 		if (array_key_exists ('extern', $entry) && ($clause = $entry['extern']) != NULL) {
-			$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height));
+			$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height, $url));
 			if ($hasalign) {
 				$clause = self::generateAlignExternClause($clause, $align, $desc, $width, $height);
 			}
@@ -113,6 +117,10 @@ abstract class EmbedVideo {
 		// Build URL and output embedded flash object
 		$url = wfMsgReplaceArgs($entry['url'], array($id, $width, $height));
 		$clause = "";
+		// If service is RuTube -> use own parser
+		if ($service == 'rutube'){
+		$url = self::getRuTube($id);
+		}
 		if ($hasalign) {
 			$clause = self::generateAlignClause($url, $width, $height, $align, $desc);
 		}
@@ -242,7 +250,7 @@ abstract class EmbedVideo {
 	 * @return int
 	 */
 	private static function getHeight($entry, $width) {
-		$ratio = 425 / 350;
+		$ratio = 4 / 3;
 		if (isset($entry['default_ratio'])) {
 			$ratio = $entry['default_ratio'];
 		}
@@ -342,5 +350,39 @@ abstract class EmbedVideo {
 		if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth > 1024) {
 			$wgEmbedVideoMaxWidth = 1024;
 		}
+	}
+	private static function getRuTube($id)
+	{
+	/**
+	 * Custom parser for RuTube
+	 */
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL, "http://rutube.ru/oembed/track?&amp;url=http://rutube.ru/tracks/{$id}.html&amp;format=json");
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER, false);
+	$json = curl_exec($ch);
+	curl_close($ch);
+	$start=strpos($json, 'value=\"')+8;
+	$end=strpos($json, '\"></');
+	$url=substr($json, $start, $end-$start);
+	return $url;
+	}
+	private static function getYandex($id)
+	{
+	/**
+	 * Custom parser for Yandex
+	 */
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL, "http://video.yandex.ru/oembed.xml?url=http://video.yandex.ru/users/{$id}");
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER, false);
+	$json = curl_exec($ch);
+	curl_close($ch);
+	$start=strpos($json, '<html>')+6;
+	$end=strpos($json, '</html>');
+	$url=substr($json, $start, $end-$start);
+	return $url;
 	}
 }

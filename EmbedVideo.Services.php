@@ -2,6 +2,12 @@
 
 // Build services list (may be augmented in LocalSettings.php)
 $wgEmbedVideoServiceList = array(
+	'bing' => array(
+		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+	),
+	'bingvideo' => array(
+		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+	),
 	'dailymotion' => array(
 		'url' => 'http://www.dailymotion.com/swf/$1'
 	),
@@ -31,6 +37,10 @@ $wgEmbedVideoServiceList = array(
 			'http://www.funnyordie.com/v1/flvideo/fodplayer.swf?file='.
 			'http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
 	),
+    'google' => array(
+        'id_pattern'=>'%[^0-9\\-]%',
+        'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
+    ),
 	'googlevideo' => array(
 		'id_pattern'=>'%[^0-9\\-]%',
 		'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
@@ -41,8 +51,20 @@ $wgEmbedVideoServiceList = array(
 	'interia' => array(
 		'url' => 'http://video.interia.pl/i/players/iVideoPlayer.05.swf?vid=$1',
 	),
+	'metacafe' => array(
+		'url' => 'http://www.metacafe.com/fplayer/$1.swf'
+	),
+	'msn' => array(
+		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+	),
+	'msnvideo' => array(
+		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+	),
 	'revver' => array(
 		'url' => 'http://flash.revver.com/player/1.0/player.swf?mediaId=$1'
+	),
+	'rutube' => array(
+		'url' => ''
 	),
 	'sevenload' => array(
 		'url' => 'http://page.sevenload.com/swf/en_GB/player.swf?id=$1'
@@ -67,20 +89,32 @@ $wgEmbedVideoServiceList = array(
 				'"' .
 			'/>',
 	),
+	'yahoo' => array(
+		'extern' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$2" width="$3" height="$4" frameborder="0"></iframe>'
+	),
+	'yahoovideo' => array(
+		'extern' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$2" width="$3" height="$4" frameborder="0"></iframe>'
+	),
+	'yahooscreen' => array(
+		'extern' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$2" width="$3" height="$4" frameborder="0"></iframe>'
+	),
+	'yandex' => array(
+		'extern' => '$5'
+	),
+	'yandexvideo' => array(
+		'extern' => '$5'
+	),
 	'youtube' => array(
 		'extern' =>
 			'<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1" ' .
 				'width="$3" height="$4" ' .
 				'frameborder="0" allowfullscreen="true"></iframe>',
-		'default_width' => 600,
-		'default_ratio' => 16 / 9
 	),
 	'youtubehd' => array(
 		'extern' =>
 			'<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1&amp;hd=1" ' .
 				'width="$3" height="$4" ' .
 				'frameborder="0" allowfullscreen="true"></iframe>',
-		'default_width' => 600,
 		'default_ratio' => 16 / 9
 	),
 	'youtubeplaylist' => array(
@@ -88,7 +122,6 @@ $wgEmbedVideoServiceList = array(
 			'<iframe src="http://www.youtube.com/embed/videoseries?showsearch=0&amp;modestbranding=1&amp;list=$2" ' .
 				'width="$3" height="$4" ' .
 				'frameborder="0" allowfullscreen="true"></iframe>',
-		'default_width' => 600,
 		'default_ratio' => 16 / 9
 	),
 	'vimeo' => array(
