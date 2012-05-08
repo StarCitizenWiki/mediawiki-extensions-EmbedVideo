@@ -20,14 +20,13 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'        => 'EmbedVideo',
 	'author'      => array('Jim R. Wilson', 'Andrew Whitworth',),
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
-	'description' => 'Adds a parser function embedding video from popular sources.',
-	'version'     => '1.0'
+	'version'     => '1.0',
+	'descriptionmsg' => 'embedvideo-desc'
 );
-
 $dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['embedvideo'] = $dir . 'EmbedVideo.i18n.php';
 require_once($dir . "EmbedVideo.hooks.php");
 require_once($dir . "EmbedVideo.Services.php");
-$wgExtensionMessagesFiles['embedvideo'] = $dir . 'EmbedVideo.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = "EmbedVideo::setup";
 if (version_compare($wgVersion, '1.7', '<')) {
