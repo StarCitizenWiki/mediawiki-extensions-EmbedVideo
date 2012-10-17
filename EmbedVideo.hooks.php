@@ -56,8 +56,8 @@ abstract class EmbedVideo {
 	 * @param String $service Which online service has the video.
 	 * @param String $id Identifier of the chosen service
 	 * @param String $width Width of video (optional)
-	 * @param String $desc description to show (optional, unused)
-	 * @param String $align alignment of the video (optional, unused)
+	 * @param String $desc description to show (optional)
+	 * @param String $align alignment of the video (optional)
 	 * @return String Encoded representation of input params (to be processed later)
 	 */
 	public static function parserFunction_ev($parser, $service = null, $id = null, $width = null, $align = null, $desc = null) {
@@ -90,8 +90,14 @@ abstract class EmbedVideo {
 			return self::errBadWidth($width);
 		}
 		$height = self::getHeight($entry, $width);
+
 		$hasalign = ($align !== null);
+
 		if ($hasalign) {
+                        $align = trim($align);
+                        if ( !self::validateAlignment($align) ) {
+                                return self::errBadAlignment($align);
+                        }
 			$desc = self::getDescriptionMarkup($desc);
 		}
 
@@ -240,6 +246,17 @@ abstract class EmbedVideo {
 		return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
 	}
 
+        /**
+         * Validate the align parameter.
+         *
+         * @param string $align The align parameter
+         *
+         * @return {\code true} if the align parameter is valid, otherwise {\code false}.
+         */
+        private static function validateAlignment($align) {
+                return ($align == 'left' || $align == 'right');
+        }
+
 	/**
 	 * Calculate the height from the given width. The default ratio is 450/350,
 	 * but that may be overridden for some sites.
@@ -334,6 +351,18 @@ abstract class EmbedVideo {
 	 */
 	private static function errBadService($service) {
 		$msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
+		return '<div class="errorbox">' . $msg . '</div>';
+	}
+
+	/**
+	 * Get an error message for an invalid align parameter
+	 *
+	 * @param string $align The given align parameter.
+	 *
+	 * @return string
+	 */
+	private static function errBadAlignment($align) {
+		$msg = wfMsg('embedvideo-illegal-alignment', @htmlspecialchars($align));
 		return '<div class="errorbox">' . $msg . '</div>';
 	}
 

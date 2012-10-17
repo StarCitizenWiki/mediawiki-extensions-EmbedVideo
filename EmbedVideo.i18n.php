@@ -8,6 +8,7 @@ $messages['en'] = array(
 		'embedvideo-unrecognized-service' => 'EmbedVideo does not recognize the video service "<tt>$1</tt>".',
 		'embedvideo-bad-id' => 'EmbedVideo received the bad id "$1" for the service "$2".',
 		'embedvideo-illegal-width' => 'EmbedVideo received the illegal width parameter "$1".',
+                'embedvideo-illegal-alignment' => 'EmbedVideo was given an illegal value for the alignment parameter "$1".  Valid values are "right" or "left".',
 );
 /** Russian (Русский)
  * @author P@S@f
