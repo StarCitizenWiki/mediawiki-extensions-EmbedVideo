@@ -74,10 +74,6 @@ $wgEmbedVideoServiceList = array(
 	'rutube' => array(
 		'url' => ''
 	),
-	'screen9' => array(
-		'extern' => '<object id="$2" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="579" height="358" ><param name="movie" value="http://csp.picsearch.com/players/rutile.swf"></param><param name="allowfullscreen" value="true"></param><param name="wmode" value="transparent"></param><param name="flashvars" value="config=http%3A//csp.picsearch.com/playlist%3Fauth%3DE0qV3Kzh-50qghkXmcjy-R1UJs3fbt3MjnpBPXYcr0OqucnKGAoISaFL4gUHjoTbiQ2Nqh6QGRK_jH80YoGwGva-lTwkQPxkbUa-KhhzBMhcGSBsewYY3c3FEehC8eDmU66YqCThNKXAEawsS92G1Dmw_kfBbBtifiBKo8jJTX--xZkzQWCe_HPI9fq6NLL1yHCGjBS0-Q-8G6Bm7ebFesTAf1lCXR6R"></param><param name="allowscriptaccess" value="always"></param><embed src="http://csp.picsearch.com/players/rutile.swf" name="$2" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="579" height="358" flashvars="config=http%3A//csp.picsearch.com/playlist%3Fauth%3DE0qV3Kzh-50qghkXmcjy-R1UJs3fbt3MjnpBPXYcr0OqucnKGAoISaFL4gUHjoTbiQ2Nqh6QGRK_jH80YoGwGva-lTwkQPxkbUa-KhhzBMhcGSBsewYY3c3FEehC8eDmU66YqCThNKXAEawsS92G1Dmw_kfBbBtifiBKo8jJTX--xZkzQWCe_HPI9fq6NLL1yHCGjBS0-Q-8G6Bm7ebFesTAf1lCXR6R"></embed></object>',
-	       'default_ratio' => 579 / 358
-	),
 	'sevenload' => array(
 		'url' => 'http://page.sevenload.com/swf/en_GB/player.swf?id=$1'
 	),
