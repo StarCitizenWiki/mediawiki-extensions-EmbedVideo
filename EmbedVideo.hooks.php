@@ -66,9 +66,6 @@ abstract class EmbedVideo {
 		// Initialize things once
 		if (!self::$initialized) {
 			self::VerifyWidthMinAndMax();
-			// Add system messages
-			wfLoadExtensionMessages('embedvideo');
-			$parser->disableCache();
 			self::$initialized = true;
 		}
 
@@ -94,10 +91,10 @@ abstract class EmbedVideo {
 		$hasalign = ($align !== null);
 
 		if ($hasalign) {
-                        $align = trim($align);
-                        if ( !self::validateAlignment($align) ) {
-                                return self::errBadAlignment($align);
-                        }
+			$align = trim($align);
+			if ( !self::validateAlignment($align) ) {
+				return self::errBadAlignment($align);
+			}
 			$desc = self::getDescriptionMarkup($desc);
 		}
 
@@ -246,16 +243,16 @@ abstract class EmbedVideo {
 		return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
 	}
 
-        /**
-         * Validate the align parameter.
-         *
-         * @param string $align The align parameter
-         *
-         * @return {\code true} if the align parameter is valid, otherwise {\code false}.
-         */
-        private static function validateAlignment($align) {
-                return ($align == 'left' || $align == 'right');
-        }
+	/**
+	 * Validate the align parameter.
+	 *
+	 * @param string $align The align parameter
+	 *
+	 * @return {\code true} if the align parameter is valid, otherwise {\code false}.
+	 */
+	private static function validateAlignment($align) {
+		return ($align == 'left' || $align == 'right');
+	}
 
 	/**
 	 * Calculate the height from the given width. The default ratio is 450/350,
