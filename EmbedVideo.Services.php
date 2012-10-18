@@ -2,6 +2,14 @@
 
 // Build services list (may be augmented in LocalSettings.php)
 $wgEmbedVideoServiceList = array(
+	'bambuser' => array(
+		'extern' => '<iframe src="http://embed.bambuser.com/broadcast/$2" width="$3" height="$4" frameborder="0"></iframe>',
+		'default_ratio' => 512 / 394
+	),
+	'bambuser_channel' => array(
+		'extern' => '<iframe src="http://embed.bambuser.com/channel/$2" width="$3" height="$4" frameborder="0"></iframe>',
+		'default_ratio' => 512 / 394
+	),
 	'bing' => array(
 		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
 	),
@@ -38,8 +46,8 @@ $wgEmbedVideoServiceList = array(
 			'http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
 	),
     'google' => array(
-        'id_pattern'=>'%[^0-9\\-]%',
-        'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
+	'id_pattern'=>'%[^0-9\\-]%',
+	'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
     ),
 	'googlevideo' => array(
 		'id_pattern'=>'%[^0-9\\-]%',
@@ -65,6 +73,10 @@ $wgEmbedVideoServiceList = array(
 	),
 	'rutube' => array(
 		'url' => ''
+	),
+	'screen9' => array(
+		'extern' => '<object id="$2" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="579" height="358" ><param name="movie" value="http://csp.picsearch.com/players/rutile.swf"></param><param name="allowfullscreen" value="true"></param><param name="wmode" value="transparent"></param><param name="flashvars" value="config=http%3A//csp.picsearch.com/playlist%3Fauth%3DE0qV3Kzh-50qghkXmcjy-R1UJs3fbt3MjnpBPXYcr0OqucnKGAoISaFL4gUHjoTbiQ2Nqh6QGRK_jH80YoGwGva-lTwkQPxkbUa-KhhzBMhcGSBsewYY3c3FEehC8eDmU66YqCThNKXAEawsS92G1Dmw_kfBbBtifiBKo8jJTX--xZkzQWCe_HPI9fq6NLL1yHCGjBS0-Q-8G6Bm7ebFesTAf1lCXR6R"></param><param name="allowscriptaccess" value="always"></param><embed src="http://csp.picsearch.com/players/rutile.swf" name="$2" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="579" height="358" flashvars="config=http%3A//csp.picsearch.com/playlist%3Fauth%3DE0qV3Kzh-50qghkXmcjy-R1UJs3fbt3MjnpBPXYcr0OqucnKGAoISaFL4gUHjoTbiQ2Nqh6QGRK_jH80YoGwGva-lTwkQPxkbUa-KhhzBMhcGSBsewYY3c3FEehC8eDmU66YqCThNKXAEawsS92G1Dmw_kfBbBtifiBKo8jJTX--xZkzQWCe_HPI9fq6NLL1yHCGjBS0-Q-8G6Bm7ebFesTAf1lCXR6R"></embed></object>',
+	       'default_ratio' => 579 / 358
 	),
 	'sevenload' => array(
 		'url' => 'http://page.sevenload.com/swf/en_GB/player.swf?id=$1'
@@ -123,6 +135,10 @@ $wgEmbedVideoServiceList = array(
 				'width="$3" height="$4" ' .
 				'frameborder="0" allowfullscreen="true"></iframe>',
 		'default_ratio' => 16 / 9
+	),
+	'videomaten' => array(
+		'extern' => '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="300" height="200" id="videomat" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="http://89.160.51.62/recordMe/play.swf?id=$2" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://89.160.51.62/recordMe/play.swf?id=$2" loop="false" quality="high" bgcolor="#ffffff" width="$3" height="$4" name="videomat" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object>',
+		'default_ratio' => 300 / 200
 	),
 	'vimeo' => array(
 		'url'=>'http://vimeo.com/moogaloop.swf?clip_id=$1&;server=vimeo.com&fullscreen=0&show_title=1&show_byline=1&show_portrait=0'
