@@ -74,6 +74,10 @@ $wgEmbedVideoServiceList = array(
 	'rutube' => array(
 		'url' => ''
 	),
+	'screen9' => array(
+		'extern' => 't',
+		'default_ratio' => 579 / 358
+	),
 	'sevenload' => array(
 		'url' => 'http://page.sevenload.com/swf/en_GB/player.swf?id=$1'
 	),

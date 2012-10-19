@@ -110,7 +110,14 @@ abstract class EmbedVideo {
 		}
 		// if the service has it's own custom extern declaration, use that instead
 		if (array_key_exists ('extern', $entry) && ($clause = $entry['extern']) != NULL) {
-			$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height, $url));
+			if ($service == 'screen9') {
+				$clause = self::parseScreen9Id( $id, $width, $height );
+				if ($clause == null) {
+					return self::errBadScreen9Id();
+				}
+			} else {
+				$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height, $url));
+			}
 			if ($hasalign) {
 				$clause = self::generateAlignExternClause($clause, $align, $desc, $width, $height);
 			}
@@ -364,6 +371,16 @@ abstract class EmbedVideo {
 	}
 
 	/**
+	 * Get an error message for an invalid screen 9 id.
+	 *
+	 * @return string
+	 */
+	private static function errBadScreen9Id() {
+		$msg = wfMsg('embedvideo-illegal-screen9-id');
+		return '<div class="errorbox">' . $msg . '</div>';
+	}
+
+	/**
 	 * Verify that the min and max values for width are sane.
 	 *
 	 * @return void
@@ -410,5 +427,21 @@ abstract class EmbedVideo {
 	$end=strpos($json, '</html>');
 	$url=substr($json, $start, $end-$start);
 	return $url;
+	}
+
+
+	private static function parseScreen9Id($id, $width, $height)
+	{
+		$parser = new Screen9IdParser();
+
+		if (! $parser->parse( $id ) ) {
+			return null;
+		}
+
+		$parser->setWidth( $width );
+
+		$parser->setHeight( $height );
+
+		return $parser->toString();
 	}
 }

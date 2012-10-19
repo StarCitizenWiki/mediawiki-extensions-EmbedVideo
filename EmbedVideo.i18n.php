@@ -9,6 +9,7 @@ $messages['en'] = array(
 		'embedvideo-bad-id' => 'EmbedVideo received the bad id "$1" for the service "$2".',
 		'embedvideo-illegal-width' => 'EmbedVideo received the illegal width parameter "$1".',
 		'embedvideo-illegal-alignment' => 'EmbedVideo was given an illegal value for the alignment parameter "$1".  Valid values are "right" or "left".',
+                'embedvideo-illegal-screen9-id' => 'EmbedVideo failed to interpret the screen9 id.  Note that the id of a screen9 video is the full html-snippet obtained from the video for embedding.',
 );
 /** Russian (Русский)
  * @author P@S@f
@@ -37,4 +38,5 @@ $messages['sv'] = array(
 		'embedvideo-bad-id' => 'EmbedVideo - Felaktig id "$1" för tjänsten "$2" har angivits.',
 		'embedvideo-illegal-width' => 'EmbedVideo - Felaktigt värde "$1" har angivits som bredd.',
 		'embedvideo-illegal-alignment' => 'EmbedVideo - Felaktigt värde har angivits som placering: "$1".  Korrekta värden är "right" för högerställd och "left" för vänsterställd.',
+                'embedvideo-illegal-screen9-id' => 'EmbedVideo - Kunde inte tolka screen9 video-id. Observera att video-identiteten för en screen9-id är hela den html-kodsnutt som fås då man väljer "share -> embed" på screen9 videon.'
 );
