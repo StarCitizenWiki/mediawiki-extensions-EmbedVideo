@@ -88,7 +88,7 @@ abstract class EmbedVideo {
 		}
 		$height = self::getHeight($entry, $width);
 
-		$hasalign = ($align !== null);
+		$hasalign = ($align !== null || $align == 'auto');
 
 		if ($hasalign) {
 			$align = trim($align);
@@ -173,7 +173,8 @@ abstract class EmbedVideo {
 	 */
 	private static function generateAlignExternClause($clause, $align, $desc, $width, $height)
 	{
-		$clause = "<div class=\"thumb t{$align}\">" .
+		$alignClass = self::getAlignmentClass($align);
+		$clause = "<div class=\"thumb {$alignClass}\">" .
 			"<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
 			$clause .
 			"<div class=\"thumbcaption\">" .
@@ -195,7 +196,8 @@ abstract class EmbedVideo {
 	 * @return string
 	 */
 	private static function generateAlignClause($url, $width, $height, $align, $desc) {
-		$clause = "<div class=\"thumb t{$align}\">" .
+		$alignClass = self::getAlignmentClass($align);
+		$clause = "<div class=\"thumb {$alignClass}\">" .
 			"<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
 			"<object width=\"{$width}\" height=\"{$height}\">" .
 			"<param name=\"movie\" value=\"{$url}\"></param>" .
@@ -258,7 +260,15 @@ abstract class EmbedVideo {
 	 * @return {\code true} if the align parameter is valid, otherwise {\code false}.
 	 */
 	private static function validateAlignment($align) {
-		return ($align == 'left' || $align == 'right');
+		return ($align == 'left' || $align == 'right' || $align == 'center' || $align == 'auto');
+	}
+
+	private static function getAlignmentClass($align) {
+		if ( $align == 'left' || $align == 'right' ) {
+			return 't' . $align;
+		}
+
+		return $align;
 	}
 
 	/**
