@@ -56,8 +56,8 @@ abstract class EmbedVideo {
 	 * @param String $service Which online service has the video.
 	 * @param String $id Identifier of the chosen service
 	 * @param String $width Width of video (optional)
-	 * @param String $desc description to show (optional, unused)
-	 * @param String $align alignment of the video (optional, unused)
+	 * @param String $desc description to show (optional)
+	 * @param String $align alignment of the video (optional)
 	 * @return String Encoded representation of input params (to be processed later)
 	 */
 	public static function parserFunction_ev($parser, $service = null, $id = null, $width = null, $align = null, $desc = null) {
@@ -66,9 +66,6 @@ abstract class EmbedVideo {
 		// Initialize things once
 		if (!self::$initialized) {
 			self::VerifyWidthMinAndMax();
-			// Add system messages
-			wfLoadExtensionMessages('embedvideo');
-			$parser->disableCache();
 			self::$initialized = true;
 		}
 
@@ -90,8 +87,14 @@ abstract class EmbedVideo {
 			return self::errBadWidth($width);
 		}
 		$height = self::getHeight($entry, $width);
-		$hasalign = ($align !== null);
+
+		$hasalign = ($align !== null || $align == 'auto');
+
 		if ($hasalign) {
+			$align = trim($align);
+			if ( !self::validateAlignment($align) ) {
+				return self::errBadAlignment($align);
+			}
 			$desc = self::getDescriptionMarkup($desc);
 		}
 
@@ -107,7 +110,14 @@ abstract class EmbedVideo {
 		}
 		// if the service has it's own custom extern declaration, use that instead
 		if (array_key_exists ('extern', $entry) && ($clause = $entry['extern']) != NULL) {
-			$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height, $url));
+			if ($service == 'screen9') {
+				$clause = self::parseScreen9Id( $id, $width, $height );
+				if ($clause == null) {
+					return self::errBadScreen9Id();
+				}
+			} else {
+				$clause = wfMsgReplaceArgs($clause, array($wgScriptPath, $id, $width, $height, $url));
+			}
 			if ($hasalign) {
 				$clause = self::generateAlignExternClause($clause, $align, $desc, $width, $height);
 			}
@@ -163,7 +173,8 @@ abstract class EmbedVideo {
 	 */
 	private static function generateAlignExternClause($clause, $align, $desc, $width, $height)
 	{
-		$clause = "<div class=\"thumb t{$align}\">" .
+		$alignClass = self::getAlignmentClass($align);
+		$clause = "<div class=\"thumb {$alignClass}\">" .
 			"<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
 			$clause .
 			"<div class=\"thumbcaption\">" .
@@ -185,7 +196,8 @@ abstract class EmbedVideo {
 	 * @return string
 	 */
 	private static function generateAlignClause($url, $width, $height, $align, $desc) {
-		$clause = "<div class=\"thumb t{$align}\">" .
+		$alignClass = self::getAlignmentClass($align);
+		$clause = "<div class=\"thumb {$alignClass}\">" .
 			"<div class=\"thumbinner\" style=\"width: {$width}px;\">" .
 			"<object width=\"{$width}\" height=\"{$height}\">" .
 			"<param name=\"movie\" value=\"{$url}\"></param>" .
@@ -238,6 +250,25 @@ abstract class EmbedVideo {
 			return false;
 		}
 		return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
+	}
+
+	/**
+	 * Validate the align parameter.
+	 *
+	 * @param string $align The align parameter
+	 *
+	 * @return {\code true} if the align parameter is valid, otherwise {\code false}.
+	 */
+	private static function validateAlignment($align) {
+		return ($align == 'left' || $align == 'right' || $align == 'center' || $align == 'auto');
+	}
+
+	private static function getAlignmentClass($align) {
+		if ( $align == 'left' || $align == 'right' ) {
+			return 't' . $align;
+		}
+
+		return $align;
 	}
 
 	/**
@@ -338,6 +369,28 @@ abstract class EmbedVideo {
 	}
 
 	/**
+	 * Get an error message for an invalid align parameter
+	 *
+	 * @param string $align The given align parameter.
+	 *
+	 * @return string
+	 */
+	private static function errBadAlignment($align) {
+		$msg = wfMsg('embedvideo-illegal-alignment', @htmlspecialchars($align));
+		return '<div class="errorbox">' . $msg . '</div>';
+	}
+
+	/**
+	 * Get an error message for an invalid screen 9 id.
+	 *
+	 * @return string
+	 */
+	private static function errBadScreen9Id() {
+		$msg = wfMsg('embedvideo-illegal-screen9-id');
+		return '<div class="errorbox">' . $msg . '</div>';
+	}
+
+	/**
 	 * Verify that the min and max values for width are sane.
 	 *
 	 * @return void
@@ -384,5 +437,21 @@ abstract class EmbedVideo {
 	$end=strpos($json, '</html>');
 	$url=substr($json, $start, $end-$start);
 	return $url;
+	}
+
+
+	private static function parseScreen9Id($id, $width, $height)
+	{
+		$parser = new Screen9IdParser();
+
+		if (! $parser->parse( $id ) ) {
+			return null;
+		}
+
+		$parser->setWidth( $width );
+
+		$parser->setHeight( $height );
+
+		return $parser->toString();
 	}
 }

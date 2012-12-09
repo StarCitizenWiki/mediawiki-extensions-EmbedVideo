@@ -28,6 +28,8 @@ $wgExtensionMessagesFiles['embedvideo'] = $dir . 'EmbedVideo.i18n.php';
 require_once($dir . "EmbedVideo.hooks.php");
 require_once($dir . "EmbedVideo.Services.php");
 
+$wgAutoloadClasses['Screen9IdParser'] = dirname( __FILE__ ) . '/Screen9IdParser.php';
+
 $wgHooks['ParserFirstCallInit'][] = "EmbedVideo::setup";
 if (version_compare($wgVersion, '1.7', '<')) {
 	// Hack solution to resolve 1.6 array parameter nullification for hook args
