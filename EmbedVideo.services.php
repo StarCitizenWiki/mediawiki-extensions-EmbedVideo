@@ -39,22 +39,11 @@ $wgEmbedVideoServiceList = array(
 	'funnyordie' => array(
 		'url' => 'http://www.funnyordie.com/v1/flvideo/fodplayer.swf?file=http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
 	),
-	'google' => array(
-		'id_pattern' => '%[^0-9\\-]%',
-		'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
-	),
-	'googlevideo' => array(
-		'id_pattern' => '%[^0-9\\-]%',
-		'url' => 'http://video.google.com/googleplayer.swf?docId=$1'
-	),
-	'interiavideo' => array(
-		'url' => 'http://video.interia.pl/i/players/iVideoPlayer.05.swf?vid=$1'
-	),
 	'interia' => array(
-		'url' => 'http://video.interia.pl/i/players/iVideoPlayer.05.swf?vid=$1'
+		'extern'	=> '<iframe  src="http://wideo.interia.pl/embed-video?id=$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>'
 	),
 	'metacafe' => array(
-		'url' => 'http://www.metacafe.com/fplayer/$1.swf'
+		'extern'	=> '<iframe src="http://www.metacafe.com/embed/$2/" width="$3" height="$4" allowFullScreen="true" frameborder="0"></iframe>'
 	),
 	'msn' => array(
 		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
