@@ -43,7 +43,9 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio'	=> 16 / 9
 	),
 	'msn' => array(
-		'embed' => '<iframe src="http://hub.video.msn.com/embed/$1" width="$2" height="$3" frameborder="0" scrolling="no" noscroll></iframe>'
+		'embed'			=> '<iframe src="http://hub.video.msn.com/embed/$1" width="$2" height="$3" frameborder="0" scrolling="no" noscroll></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	),
 	'rutube' => array(
 		'embed'	=> '<iframe src="//rutube.ru/play/embed/$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
@@ -60,12 +62,6 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio'	=> 640 / 370
 	),
 	'yahoo' => array(
-		'embed' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$1" width="$2" height="$3" frameborder="0"></iframe>'
-	),
-	'yahoovideo' => array(
-		'embed' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$1" width="$2" height="$3" frameborder="0"></iframe>'
-	),
-	'yahooscreen' => array(
 		'embed' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$1" width="$2" height="$3" frameborder="0"></iframe>'
 	),
 	'yandex' => array(
