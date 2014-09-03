@@ -62,9 +62,6 @@ $wgEmbedVideoServiceList = array(
 	'msnvideo' => array(
 		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
 	),
-	'revver' => array(
-		'url' => 'http://flash.revver.com/player/1.0/player.swf?mediaId=$1'
-	),
 	'rutube' => array(
 		'url' => ''
 	),
@@ -94,11 +91,9 @@ $wgEmbedVideoServiceList = array(
 		'extern' => '$5'
 	),
 	'youtube' => array(
-		'extern' => '<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>'
-	),
-	'youtubehd' => array(
-		'extern' => '<iframe src="http://www.youtube.com/embed/$2?showsearch=0&amp;modestbranding=1&amp;hd=1" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
-		'default_ratio' => 16 / 9
+		'extern' => '<iframe src="//www.youtube.com/embed/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 630,
+		'default_ratio'	=> 16 / 9
 	),
 	'youtubeplaylist' => array(
 		'extern' => '<iframe src="http://www.youtube.com/embed/videoseries?showsearch=0&amp;modestbranding=1&amp;list=$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',

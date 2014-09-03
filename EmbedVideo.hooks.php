@@ -34,8 +34,8 @@ class EmbedVideoHooks {
     static public function onParserFirstCallInit(Parser &$parser) {
 		global $wgVersion;
 
-		$parser->setFunctionHook("ev", "EmbedVideo::parseEV");
-		$parser->setFunctionHook("evp", "EmbedVideo::parseEVP");
+		$parser->setFunctionHook("ev", "EmbedVideoHooks::parseEV");
+		$parser->setFunctionHook("evp", "EmbedVideoHooks::parseEVP");
 
 		return true;
 	}
@@ -75,7 +75,7 @@ class EmbedVideoHooks {
 		
 		// Initialize things once
 		if (!self::$initialized) {
-			self::VerifyWidthMinAndMax();
+			self::verifyWidthMinAndMax();
 			self::$initialized = true;
 		}
 		
@@ -236,7 +236,7 @@ class EmbedVideoHooks {
 	 * @param	array	Array of services.
 	 * @return	void
 	 */
-	public function setServices($services) {
+	static public function setServices($services) {
 		self::$services = $services;
 	}
 
@@ -253,8 +253,9 @@ class EmbedVideoHooks {
 	 */
 	static private function sanitizeWidth($entry, &$width) {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
+
 		if ($width === null || $width == '*' || $width == '') {
-			if (isset($entry['default_width'])) {
+			if (array_key_exists('default_width', $entry)) {
 				$width = $entry['default_width'];
 			} else {
 				$width = 425;
@@ -296,7 +297,7 @@ class EmbedVideoHooks {
 	 * @return int
 	 */
 	static private function getHeight($entry, $width) {
-		$ratio = 4 / 3;
+		$ratio = 16 / 9;
 		if (isset($entry['default_ratio'])) {
 			$ratio = $entry['default_ratio'];
 		}
@@ -381,7 +382,7 @@ class EmbedVideoHooks {
 	 *
 	 * @return void
 	 */
-	static private function VerifyWidthMinAndMax() {
+	static private function verifyWidthMinAndMax() {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
 		if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100) {
 			$wgEmbedVideoMinWidth = 100;

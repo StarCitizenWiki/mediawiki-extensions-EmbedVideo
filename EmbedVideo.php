@@ -45,5 +45,5 @@ $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 //The services file is separate due to its large size.
 require_once($extDir."/EmbedVideo.services.php");
 
-EmbedVideo::setServices($wgEmbedVideoServiceList);
+EmbedVideoHooks::setServices($wgEmbedVideoServiceList);
 ?>
