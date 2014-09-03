@@ -37,11 +37,13 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio' => 326 / 399
 	),
 	'funnyordie' => array(
-		'url' => 'http://www.funnyordie.com/v1/flvideo/fodplayer.swf?file=http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
+		'extern'		=> '<iframe src="http://www.funnyordie.com/embed/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 640 / 390
 	),
 	'metacafe' => array(
-		'extern'	=> '<iframe src="http://www.metacafe.com/embed/$2/" width="$3" height="$4" frameborder="0" allowFullScreen="true"></iframe>',
-		'default_width'	=> 630,
+		'extern'		=> '<iframe src="http://www.metacafe.com/embed/$2/" width="$3" height="$4" frameborder="0" allowFullScreen="true"></iframe>',
+		'default_width'	=> 640,
 		'default_ratio'	=> 16 / 9
 	),
 	'msn' => array(
@@ -77,7 +79,7 @@ $wgEmbedVideoServiceList = array(
 	),
 	'youtube' => array(
 		'extern' => '<iframe src="//www.youtube.com/embed/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
-		'default_width'	=> 630,
+		'default_width'	=> 640,
 		'default_ratio'	=> 16 / 9
 	),
 	'youtubeplaylist' => array(
