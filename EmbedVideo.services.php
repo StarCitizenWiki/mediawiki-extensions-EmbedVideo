@@ -78,15 +78,18 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio'	=> 16 / 9
 	),
 	'youtubeplaylist' => array(
-		'embed' => '<iframe src="http://www.youtube.com/embed/videoseries?showsearch=0&amp;modestbranding=1&amp;list=$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
-		'default_ratio' => 16 / 9
+		'embed'			=> '<iframe src="http://www.youtube.com/embed/videoseries?list=$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	),
 	'videomaten' => array(
-		'embed' => '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="$2" height="$3" id="videomat" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="http://89.160.51.62/recordMe/play.swf?id=$1" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://89.160.51.62/recordMe/play.swf?id=$1" loop="false" quality="high" bgcolor="#ffffff" width="$2" height="$3" name="videomat" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object>',
-		'default_ratio' => 300 / 200
+		'embed'			=> '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="$2" height="$3" id="videomat" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="http://89.160.51.62/recordMe/play.swf?id=$1" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://89.160.51.62/recordMe/play.swf?id=$1" loop="false" quality="high" bgcolor="#ffffff" width="$2" height="$3" name="videomat" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object>',
+		'default_ratio'	=> 300 / 200
 	),
 	'vimeo' => array(
-		'embed' =>	'<iframe src="//player.vimeo.com/video/$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>'
+		'embed'			=> '<iframe src="//player.vimeo.com/video/$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	)
 );
 ?>

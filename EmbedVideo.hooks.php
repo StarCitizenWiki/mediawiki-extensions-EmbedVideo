@@ -103,7 +103,6 @@ class EmbedVideoHooks {
 
 		if ($description) {
 			$description = $parser->recursiveTagParse($description);
-			$description = self::getDescriptionMarkup($description);
 		}
 
 		//If the service has an ID pattern specified, verify the id number.
