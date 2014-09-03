@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"P@S@f"
+		]
+	},
+	"embedvideo-desc": "Добавляет функцию синтаксического анализатора для встраивания видео с популярных видеохостингов.",
+	"embedvideo-missing-params": "В теге EmbedVideo отуствует обязательный параметр.",
+	"embedvideo-bad-params": "Тег EmbedVideo обнаружил неверный параметр.",
+	"embedvideo-unparsable-param-string": "Тег EmbedVideo не может обработать строку параметра \"<tt>$1</tt>\".",
+	"embedvideo-unrecognized-service": "Тег EmbedVideo не может распознать сервис \"<tt>$1</tt>\".",
+	"embedvideo-bad-id": "В тег EmbedVideo введен неверный id \"$1\" видео для сервиса \"$2\".",
+	"embedvideo-illegal-width": "В тег EmbedVideo введен неверный параметр ширины \"$1\"."
+}

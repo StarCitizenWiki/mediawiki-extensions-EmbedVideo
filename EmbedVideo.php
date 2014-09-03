@@ -37,7 +37,6 @@ $wgExtensionMessagesFiles['embedvideo']		= "{$extDir}/EmbedVideo.i18n.php";
 $wgMessagesDirs['EmbedVideo']				= "{$extDir}/i18n";
 
 $wgAutoloadClasses['EmbedVideoHooks']		= "{$extDir}/EmbedVideo.hooks.php";
-$wgAutoloadClasses['YouTube']				= "{$extDir}/classes/YouTube.php";
 $wgAutoloadClasses['Screen9IdParser']		= "{$extDir}/Screen9IdParser.php";
 
 $wgHooks['ParserFirstCallInit'][]			= 'EmbedVideoHooks::onParserFirstCallInit';

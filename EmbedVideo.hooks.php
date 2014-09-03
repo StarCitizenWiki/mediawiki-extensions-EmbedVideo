@@ -25,18 +25,15 @@ class EmbedVideoHooks {
      * @return	boolean	true
      */
     static public function onParserFirstCallInit(Parser &$parser) {
-		// Setup parser hooks. ev is the primary hook, evp is supported for
-		// legacy purposes
 		global $wgVersion;
 		$prefix = version_compare($wgVersion, '1.7', '<') ? '#' : '';
 		self::addMagicWord($prefix, "ev", "EmbedVideo::parserFunction_ev");
 		self::addMagicWord($prefix, "evp", "EmbedVideo::parserFunction_evp");
+
+		$parser->setFunctionHook($prefix."ev", "EmbedVideo::parserFunction_ev");
+		$parser->setFunctionHook($prefix."evp", "EmbedVideo::parserFunction_evp");
+
 		return true;
-	}
-	
-	private static function addMagicWord($prefix, $word, $function) {
-		global $wgParser;
-		$wgParser->setFunctionHook($prefix . $word, $function);
 	}
 	
 	/**
