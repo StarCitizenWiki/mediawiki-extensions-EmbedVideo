@@ -37,6 +37,11 @@ $wgEmbedVideoServiceList = array(
 		'default_width'	=> 640,
 		'default_ratio'	=> 640 / 390
 	),
+	'kickstarter' => array(
+		'embed' => '<iframe src="$1/widget/video.html" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
+	),
 	'metacafe' => array(
 		'embed'		=> '<iframe src="http://www.metacafe.com/embed/$1/" width="$2" height="$3" frameborder="0" allowFullScreen="true"></iframe>',
 		'default_width'	=> 640,
