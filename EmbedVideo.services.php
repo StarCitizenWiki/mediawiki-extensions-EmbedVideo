@@ -55,7 +55,9 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio' => 579 / 358
 	),
 	'teachertube' => array(
-		'embed' => '<embed src="http://www.teachertube.com/embed/player.swf" width="$2" height="$3" bgcolor="undefined" allowscriptaccess="always" allowfullscreen="true" flashvars="file=http://www.teachertube.com/embedFLV.php?pg=video_$1&menu=false&frontcolor=ffffff&lightcolor=FF0000&logo=http://www.teachertube.com/www3/images/greylogo.swf&skin=http://www.teachertube.com/embed/overlay.swf volume=80&controlbar=over&displayclick=link&viral.link=http://www.teachertube.com/viewVideo.php?video_id=$1&stretching=exactfit&plugins=viral-2&viral.callout=none&viral.onpause=false"/>'
+		'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/345423" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 640 / 370
 	),
 	'yahoo' => array(
 		'embed' => '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$1" width="$2" height="$3" frameborder="0"></iframe>'
