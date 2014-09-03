@@ -52,10 +52,10 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Width of video
 	 * @return	string	Output from self::parseEV
 	 */
-	static public function parseEVP($parser, $service = null, $id = null, $desc = null, $align = null, $width = null) {
+	static public function parseEVP($parser, $service = null, $id = null, $description = null, $alignment = null, $width = null) {
 		wfDeprecated(__METHOD__, '1.23');
 
-		return self::parseEV($parser, $service, $id, $width, $align, $desc);
+		return self::parseEV($parser, $service, $id, $width, $alignment, $description);
 	}
 	
 	/**
@@ -70,129 +70,112 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Alignment of the video
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV($parser, $service = null, $id = null, $width = null, $align = null, $desc = null) {
-		global $wgScriptPath;
-		
-		// Initialize things once
+	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null) {
+		//Initialize things once
 		if (!self::$initialized) {
 			self::verifyWidthMinAndMax();
 			self::$initialized = true;
 		}
-		
-		// Get the name of the host
-		if ($service === null || $id === null) {
-			return self::error('missingparams', $service, $id);
-		}
-		
+
 		$service = trim($service);
 		$id      = trim($id);
-		$desc    = $parser->recursiveTagParse($desc);
-		
-		$entry = self::getServiceEntry($service);
-		if (!$entry) {
+
+		/************************************/
+		/* Error Checking                   */
+		/************************************/
+		if (!$service || !$id) {
+			return self::error('missingparams', $service, $id);
+		}
+
+		$serviceEntry = self::getServiceEntry($service);
+		if (!$serviceEntry) {
 			return self::error('service', $service);
 		}
-		
-		if (!self::sanitizeWidth($entry, $width)) {
+
+		if (!self::sanitizeWidth($serviceEntry, $width)) {
 			return self::error('width', $width);
 		}
-		$height = self::getHeight($entry, $width);
-		
-		$hasAlign = ($align !== null || $align == 'auto');
-		
-		if ($hasAlign) {
-			$align = trim($align);
-			if (!self::validateAlignment($align)) {
-				return self::error('alignment', $align);
-			}
-			$desc = self::getDescriptionMarkup($desc);
+		$height = self::getHeight($serviceEntry, $width);
+
+		if ($alignment !== null && !self::validateAlignment($alignment)) {
+			return self::error('alignment', $alignment);
 		}
-		
-		// If the service has an ID pattern specified, verify the id number
-		if (!self::verifyID($entry, $id)) {
+
+		if ($description) {
+			$description = $parser->recursiveTagParse($description);
+			$description = self::getDescriptionMarkup($description);
+		}
+
+		//If the service has an ID pattern specified, verify the id number.
+		if (!self::verifyID($serviceEntry, $id)) {
 			return self::error('id', $service, $id);
 		}
+
+		//Special Yandex Handler
 		$url = null;
 		// If service is Yandex -> use own parser
 		if ($service == 'yandex' || $service == 'yandexvideo') {
 			$url = self::getYandex($id);
 			$url = htmlspecialchars_decode($url);
 		}
-		// if the service has it's own custom extern declaration, use that instead
-		if (array_key_exists('extern', $entry) && ($clause = $entry['extern']) != NULL) {
+
+		/************************************/
+		/* HMTL Generation                  */
+		/************************************/
+		if (array_key_exists('embed', $serviceEntry)) {
+			//Handled by a premade HTML block.
 			if ($service == 'screen9') {
-				$clause = self::parseScreen9Id($id, $width, $height);
-				if ($clause == null) {
+				$html = self::parseScreen9Id($id, $width, $height);
+				if ($html == null) {
 					return self::error('screen9id');
 				}
 			} else {
-				$clause = wfMsgReplaceArgs($clause, array(
-					$wgScriptPath,
+				$html = wfMsgReplaceArgs(
+					$serviceEntry['embed'],
+					array(
+						$id,
+						$width,
+						$height,
+						$url
+					)
+				);
+			}
+		} else {
+			//Build URL and output embedded flash object.
+			$url = wfMsgReplaceArgs(
+				$serviceEntry['url'],
+				array(
 					$id,
 					$width,
-					$height,
-					$url
-				));
-			}
-			if ($hasAlign) {
-				$clause = self::generateAlignExternClause($clause, $align, $desc, $width, $height);
-			}
-			return array(
-				$clause,
-				'noparse' => true,
-				'isHTML' => true
+					$height
+				)
 			);
+			$html = self::generateEmbedHTML($url, $width, $height);
 		}
-		
-		// Build URL and output embedded flash object
-		$url    = wfMsgReplaceArgs($entry['url'], array(
-			$id,
-			$width,
-			$height
-		));
-		$clause = "";
-		if ($hasAlign) {
-			$clause = self::generateAlignClause($url, $width, $height, $align, $desc);
-		} else {
-			$clause = self::generateNormalClause($url, $width, $height);
+
+		if (self::getAlignmentClass($alignment) !== false || $hasDescription) {
+			$html = self::generateWrapperHTML($html, $alignment, $description);
 		}
+
 		return array(
-			$clause,
+			$html,
 			'noparse' => true,
 			'isHTML' => true
 		);
 	}
 	
 	/**
-	 * Return the HTML necessary to embed the video normally.
+	 * Generate HTML to embed a video from a standard embed block.
 	 *
 	 * @access	private
 	 * @param	string	URL
 	 * @param	integer	Width
 	 * @param	integer	Height
-	 * @return string
+	 * @return	string
 	 */
-	static private function generateNormalClause($url, $width, $height) {
-		$clause = "<object width=\"{$width}\" height=\"{$height}\">" . "<param name=\"movie\" value=\"{$url}\"></param>" . "<param name=\"wmode\" value=\"transparent\"></param>" . "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" . " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\">" . "</embed></object>";
-		return $clause;
-	}
-	
-	/**
-	 * The HTML necessary to embed the video with a custom embedding clause,
-	 * specified align and description text
-	 *
-	 * @access	private
-	 * @param	string	Clause
-	 * @param	string	Horizontal Alignment
-	 * @param	string	Description
-	 * @param	integer	Width
-	 * @param	integer	Height
-	 * @return string
-	 */
-	static private function generateAlignExternClause($clause, $align, $desc, $width, $height) {
-		$alignClass = self::getAlignmentClass($align);
-		$clause     = "<div class=\"thumb {$alignClass}\">" . "<div class=\"thumbinner\" style=\"width: {$width}px;\">" . $clause . "<div class=\"thumbcaption\">" . $desc . "</div></div></div>";
-		return $clause;
+	static private function generateEmbedHTML($url, $width, $height) {
+		$html = "<object width='{$width}' height='{$height}'><param name='movie' value='{$url}'></param><param name='wmode' value='transparent'></param><embed src='{$url}' type='application/x-shockwave-flash' wmode='transparent' width='{$width}' height='{$height}'></embed></object>";
+		return $html;
 	}
 	
 	/**
@@ -200,18 +183,15 @@ class EmbedVideoHooks {
 	 * and text description
 	 *
 	 * @access	private
-	 * @param	string $url
-	 * @param	integer    $width
-	 * @param	integer    $height
-	 * @param	string $align
-	 * @param	string $desc
-	 *
+	 * @param	string	[Optional] Horizontal Alignment
+	 * @param	string	[Optional] Description
 	 * @return string
 	 */
-	static private function generateAlignClause($url, $width, $height, $align, $desc) {
-		$alignClass = self::getAlignmentClass($align);
-		$clause     = "<div class=\"thumb {$alignClass}\">" . "<div class=\"thumbinner\" style=\"width: {$width}px;\">" . "<object width=\"{$width}\" height=\"{$height}\">" . "<param name=\"movie\" value=\"{$url}\"></param>" . "<param name=\"wmode\" value=\"transparent\"></param>" . "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" . " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\"></embed>" . "</object>" . "<div class=\"thumbcaption\">" . $desc . "</div></div></div>";
-		return $clause;
+	static private function generateWrapperHTML($html, $alignment = null, $description = null) {
+		$alignClass = self::getAlignmentClass($alignment);
+
+		$html = "<div class='thumb".($alignClass ? " ".$alignClass : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".($description ? "<div class='thumbcaption'>{$description}</div>" : null)."</div></div>";
+		return $html;
 	}
 
 	/**
@@ -247,12 +227,12 @@ class EmbedVideoHooks {
 	 *
 	 * @return mixed
 	 */
-	static private function sanitizeWidth($entry, &$width) {
+	static private function sanitizeWidth($serviceEntry, &$width) {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
 
 		if ($width === null || $width == '*' || $width == '') {
-			if (array_key_exists('default_width', $entry)) {
-				$width = $entry['default_width'];
+			if (array_key_exists('default_width', $serviceEntry)) {
+				$width = $serviceEntry['default_width'];
 			} else {
 				$width = 425;
 			}
@@ -263,24 +243,30 @@ class EmbedVideoHooks {
 		}
 		return $width >= $wgEmbedVideoMinWidth && $width <= $wgEmbedVideoMaxWidth;
 	}
-	
+
 	/**
 	 * Validate the align parameter.
 	 *
-	 * @param	string $align The align parameter
-	 *
-	 * @return {\code true} if the align parameter is valid, otherwise {\code false}.
+	 * @access	private
+	 * @param	string	Alignment Parameter
+	 * @return	boolean	Valid
 	 */
-	static private function validateAlignment($align) {
-		return ($align == 'left' || $align == 'right' || $align == 'center' || $align == 'auto');
+	static private function validateAlignment($alignment) {
+		return ($alignment == 'left' || $alignment == 'right' || $alignment == 'none');
 	}
-	
-	static private function getAlignmentClass($align) {
-		if ($align == 'left' || $align == 'right') {
-			return 't' . $align;
+
+	/**
+	 * Return the standard Mediawiki alignment class for the provided alignment parameter.
+	 *
+	 * @access	public
+	 * @return	mixed
+	 */
+	static private function getAlignmentClass($alignment) {
+		if ($alignment == 'left' || $alignment == 'right') {
+			return 't'.$alignment;
 		}
 		
-		return $align;
+		return false;
 	}
 	
 	/**
@@ -299,22 +285,7 @@ class EmbedVideoHooks {
 		}
 		return round($width / $ratio);
 	}
-	
-	/**
-	 * If we have a textual description, get the markup necessary to display
-	 * it on the page.
-	 *
-	 * @param	string $desc
-	 *
-	 * @return string
-	 */
-	static private function getDescriptionMarkup($desc) {
-		if ($desc !== null) {
-			return "<div class=\"thumbcaption\">$desc</div>";
-		}
-		return "";
-	}
-	
+
 	/**
 	 * Verify the id number of the video, if a pattern is provided.
 	 *
