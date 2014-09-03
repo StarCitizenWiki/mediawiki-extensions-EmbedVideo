@@ -33,13 +33,14 @@ $wgExtensionCredits['parserhook'][] = array(
 /******************************************/
 $extDir = __DIR__;
 
-$wgExtensionMessagesFiles['embedvideo']		= "{$extDir}/EmbedVideo.i18n.php";
-$wgMessagesDirs['EmbedVideo']				= "{$extDir}/i18n";
+$wgExtensionMessagesFiles['EmbedVideo']			= "{$extDir}/EmbedVideo.i18n.php";
+$wgExtensionMessagesFiles['EmbedVideoMagic']	= "{$extDir}/EmbedVideo.i18n.magic.php";
+$wgMessagesDirs['EmbedVideo']					= "{$extDir}/i18n";
 
-$wgAutoloadClasses['EmbedVideoHooks']		= "{$extDir}/EmbedVideo.hooks.php";
-$wgAutoloadClasses['Screen9IdParser']		= "{$extDir}/Screen9IdParser.php";
+$wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.hooks.php";
+$wgAutoloadClasses['Screen9IdParser']			= "{$extDir}/Screen9IdParser.php";
 
-$wgHooks['ParserFirstCallInit'][]			= 'EmbedVideoHooks::onParserFirstCallInit';
+$wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 
 //The services file is separate due to its large size.
 require_once($extDir."/EmbedVideo.services.php");

@@ -37,25 +37,6 @@ class EmbedVideoHooks {
 	}
 	
 	/**
-	 * Adds magic words for parser functions.
-	 * @param array  $magicWords
-	 * @param string $langCode
-	 *
-	 * @return bool Always true
-	 */
-	public static function parserFunctionMagic(&$magicWords, $langCode = 'en') {
-		$magicWords['evp'] = array(
-			0,
-			'evp'
-		);
-		$magicWords['ev']  = array(
-			0,
-			'ev'
-		);
-		return true;
-	}
-	
-	/**
 	 * Embeds video of the chosen service, legacy support for 'evp' version of
 	 * the tag
 	 * @param Parser $parser Instance of running Parser.
