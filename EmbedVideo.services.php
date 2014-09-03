@@ -20,13 +20,12 @@ $wgEmbedVideoServiceList = array(
 		'default_ratio' => 512 / 394
 	),
 	'bing' => array(
-		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
-	),
-	'bingvideo' => array(
-		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+		'extern' => '<iframe src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
 	),
 	'dailymotion' => array(
-		'url' => 'http://www.dailymotion.com/swf/$1'
+		'extern'		=> '<iframe src="//www.dailymotion.com/embed/video/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	),
 	'divshare' => array(
 		'extern'	=> '<iframe src="http://www.divshare.com/flash/video2?myId=$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
