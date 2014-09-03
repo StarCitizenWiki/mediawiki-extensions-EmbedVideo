@@ -1,4 +1,13 @@
 <?php
+/**
+ * EmbedVideo
+ * EmbedVideo Services List
+ *
+ * @license		MIT
+ * @package		EmbedVideo
+ * @link		https://www.mediawiki.org/wiki/Extension:EmbedVideo
+ *
+ **/
 
 // Build services list (may be augmented in LocalSettings.php)
 $wgEmbedVideoServiceList = array(
