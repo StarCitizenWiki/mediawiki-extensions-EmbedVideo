@@ -39,17 +39,13 @@ $wgEmbedVideoServiceList = array(
 	'funnyordie' => array(
 		'url' => 'http://www.funnyordie.com/v1/flvideo/fodplayer.swf?file=http://funnyordie.vo.llnwd.net/o16/$1.flv&autoStart=false'
 	),
-	'interia' => array(
-		'extern'	=> '<iframe  src="http://wideo.interia.pl/embed-video?id=$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>'
-	),
 	'metacafe' => array(
-		'extern'	=> '<iframe src="http://www.metacafe.com/embed/$2/" width="$3" height="$4" allowFullScreen="true" frameborder="0"></iframe>'
+		'extern'	=> '<iframe src="http://www.metacafe.com/embed/$2/" width="$3" height="$4" frameborder="0" allowFullScreen="true"></iframe>',
+		'default_width'	=> 630,
+		'default_ratio'	=> 16 / 9
 	),
 	'msn' => array(
-		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
-	),
-	'msnvideo' => array(
-		'extern' => '<iframe style="overflow: hidden;" src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
+		'extern' => '<iframe src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
 	),
 	'rutube' => array(
 		'url' => ''
