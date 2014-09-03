@@ -24,8 +24,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'				=> 'EmbedVideo',
 	'author'			=> array('Jim R. Wilson', 'Andrew Whitworth'),
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
-	'version'			=> '1.0',
-	'descriptionmsg'	=> 'embedvideo-desc'
+	'version'			=> '2.0',
+	'descriptionmsg'	=> 'embedvideo_description'
 );
 
 /******************************************/
@@ -45,5 +45,5 @@ $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 //The services file is separate due to its large size.
 require_once($extDir."/EmbedVideo.services.php");
 
-$wgHooks['LanguageGetMagic'][] = 'EmbedVideo::parserFunctionMagic';
+EmbedVideo::setServices($wgEmbedVideoServiceList);
 ?>

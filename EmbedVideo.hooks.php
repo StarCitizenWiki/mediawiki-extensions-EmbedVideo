@@ -16,7 +16,14 @@ class EmbedVideoHooks {
      * @var		boolean
      */
 	static private $initialized = false;
-	
+
+    /**
+     * Video Services
+     *
+     * @var		array
+     */
+	static private $services = array();
+
     /**
      * Sets up this extension's parser functions.
      *
@@ -43,10 +50,12 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
 	 * @param	string	[Optional] Width of video
-	 * @return	string	Encoded representation of input params (to be processed later)
+	 * @return	string	Output from self::parseEV
 	 */
-	static public function parseEV($parser, $service = null, $id = null, $desc = null, $align = null, $width = null) {
-		return self::parserFunction_ev($parser, $service, $id, $width, $align, $desc);
+	static public function parseEVP($parser, $service = null, $id = null, $desc = null, $align = null, $width = null) {
+		wfDeprecated(__METHOD__, '1.23');
+
+		return self::parseEV($parser, $service, $id, $width, $align, $desc);
 	}
 	
 	/**
@@ -72,7 +81,7 @@ class EmbedVideoHooks {
 		
 		// Get the name of the host
 		if ($service === null || $id === null) {
-			return self::errMissingParams($service, $id);
+			return self::error('missingparams', $service, $id);
 		}
 		
 		$service = trim($service);
@@ -81,27 +90,27 @@ class EmbedVideoHooks {
 		
 		$entry = self::getServiceEntry($service);
 		if (!$entry) {
-			return self::errBadService($service);
+			return self::error('service', $service);
 		}
 		
 		if (!self::sanitizeWidth($entry, $width)) {
-			return self::errBadWidth($width);
+			return self::error('width', $width);
 		}
 		$height = self::getHeight($entry, $width);
 		
-		$hasalign = ($align !== null || $align == 'auto');
+		$hasAlign = ($align !== null || $align == 'auto');
 		
-		if ($hasalign) {
+		if ($hasAlign) {
 			$align = trim($align);
 			if (!self::validateAlignment($align)) {
-				return self::errBadAlignment($align);
+				return self::error('alignment', $align);
 			}
 			$desc = self::getDescriptionMarkup($desc);
 		}
 		
 		// If the service has an ID pattern specified, verify the id number
 		if (!self::verifyID($entry, $id)) {
-			return self::errBadID($service, $id);
+			return self::error('id', $service, $id);
 		}
 		$url = null;
 		// If service is Yandex -> use own parser
@@ -114,7 +123,7 @@ class EmbedVideoHooks {
 			if ($service == 'screen9') {
 				$clause = self::parseScreen9Id($id, $width, $height);
 				if ($clause == null) {
-					return self::errBadScreen9Id();
+					return self::error('screen9id');
 				}
 			} else {
 				$clause = wfMsgReplaceArgs($clause, array(
@@ -125,7 +134,7 @@ class EmbedVideoHooks {
 					$url
 				));
 			}
-			if ($hasalign) {
+			if ($hasAlign) {
 				$clause = self::generateAlignExternClause($clause, $align, $desc, $width, $height);
 			}
 			return array(
@@ -146,7 +155,7 @@ class EmbedVideoHooks {
 		if ($service == 'rutube') {
 			$url = self::getRuTube($id);
 		}
-		if ($hasalign) {
+		if ($hasAlign) {
 			$clause = self::generateAlignClause($url, $width, $height, $align, $desc);
 		} else {
 			$clause = self::generateNormalClause($url, $width, $height);
@@ -208,20 +217,29 @@ class EmbedVideoHooks {
 		$clause     = "<div class=\"thumb {$alignClass}\">" . "<div class=\"thumbinner\" style=\"width: {$width}px;\">" . "<object width=\"{$width}\" height=\"{$height}\">" . "<param name=\"movie\" value=\"{$url}\"></param>" . "<param name=\"wmode\" value=\"transparent\"></param>" . "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" . " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\"></embed>" . "</object>" . "<div class=\"thumbcaption\">" . $desc . "</div></div></div>";
 		return $clause;
 	}
-	
+
 	/**
-	 * Get the entry for the specified service, by name
+	 * Get the entry for the specified service by service name.
 	 *
-	 * @param	string $service
-	 *
-	 * @return $string
+	 * @access	private
+	 * @param	string	Service string.
+	 * @return	array	Array of service definitions.
 	 */
 	static private function getServiceEntry($service) {
-		// Get the entry in the list of services
-		global $wgEmbedVideoServiceList;
-		return $wgEmbedVideoServiceList[$service];
+		return self::$services[$service];
 	}
-	
+
+	/**
+	 * Set the list of services.
+	 *
+	 * @access	public
+	 * @param	array	Array of services.
+	 * @return	void
+	 */
+	public function setServices($services) {
+		self::$services = $services;
+	}
+
 	/**
 	 * Get the width. If there is no width specified, try to find a default
 	 * width value for the service. If that isn't set, default to 425.
@@ -314,79 +332,50 @@ class EmbedVideoHooks {
 		//if ($idhtml == null || preg_match($idpattern, $idhtml)) {
 		return ($idhtml != null);
 	}
-	
+
 	/**
-	 * Get an error message for the case where the ID value is bad
+	 * Error Handler
 	 *
-	 * @param	string $service
-	 * @param	string $id
-	 *
-	 * @return string
+	 * @access	private
+	 * @param	string	[Optional] Error Type
+	 * @param	mixed	[...] Multiple arguments to be retrieved with func_get_args().
+	 * @return	string	Printable Error Message
 	 */
-	static private function errBadID($service, $id) {
-		$idhtml = htmlspecialchars($id);
-		$msg    = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
-		return '<div class="errorbox">' . $msg . '</div>';
+	static private function error($type = 'unknown') {
+		$arguments = func_get_args();
+		array_shift($arguments);
+
+		switch (strtolower($type)) {
+			case 'alignment':
+				$message = wfMessage('error_embedvideo_alignment', $arguments[0])->escaped();
+				break;
+			case 'service':
+				$message = wfMessage('error_embedvideo_service', $arguments[0])->escaped();
+				break;
+			case 'id':
+				$message = wfMessage('error_embedvideo_id', $arguments[0], $arguments[1])->escaped();
+				break;
+			case 'missingparams':
+				$message = wfMessage('error_embedvideo_missingparams', $arguments[0], $arguments[1])->escaped();
+				break;
+			case 'width':
+				$message = wfMessage('error_embedvideo_width', $arguments[0])->escaped();
+				break;
+			case 'height':
+				$message = wfMessage('error_embedvideo_height', $arguments[0])->escaped();
+				break;
+			case 'screen9id':
+				$message = wfMessage('error_embedvideo_screen9id', $arguments[0])->escaped();
+				break;
+			default:
+			case 'unknown':
+				$message = wfMessage('error_embedvideo_unknown')->escaped();
+				break;
+		}
+
+		return "<div class='errorbox'>{$message}</div>";
 	}
-	
-	/**
-	 * Get an error message if the width is bad
-	 *
-	 * @param	integer $width
-	 *
-	 * @return string
-	 */
-	static private function errBadWidth($width) {
-		$msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
-		return '<div class="errorbox">' . $msg . '</div>';
-	}
-	
-	/**
-	 * Get an error message if there are missing parameters
-	 *
-	 * @param	string $service
-	 * @param	string $id
-	 *
-	 * @return string
-	 */
-	static private function errMissingParams($service, $id) {
-		return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
-	}
-	
-	/**
-	 * Get an error message if the service name is bad
-	 *
-	 * @param	string $service
-	 *
-	 * @return string
-	 */
-	static private function errBadService($service) {
-		$msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
-		return '<div class="errorbox">' . $msg . '</div>';
-	}
-	
-	/**
-	 * Get an error message for an invalid align parameter
-	 *
-	 * @param	string $align The given align parameter.
-	 *
-	 * @return string
-	 */
-	static private function errBadAlignment($align) {
-		$msg = wfMsg('embedvideo-illegal-alignment', @htmlspecialchars($align));
-		return '<div class="errorbox">' . $msg . '</div>';
-	}
-	
-	/**
-	 * Get an error message for an invalid screen 9 id.
-	 *
-	 * @return string
-	 */
-	static private function errBadScreen9Id() {
-		$msg = wfMsg('embedvideo-illegal-screen9-id');
-		return '<div class="errorbox">' . $msg . '</div>';
-	}
-	
+
 	/**
 	 * Verify that the min and max values for width are sane.
 	 *

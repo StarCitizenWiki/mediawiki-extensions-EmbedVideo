@@ -2,13 +2,14 @@
 	"@metadata": {
 		"authors": []
 	},
-	"embedvideo-desc": "Adds a parser function embedding video from popular sources.",
-	"embedvideo-missing-params": "EmbedVideo is missing a required parameter.",
+	"embedvideo_description": "Adds a parser function embedding video from popular sources.",
+	"error_embedvideo_missingparams": "EmbedVideo is missing a required parameter.",
 	"embedvideo-bad-params": "EmbedVideo received a bad parameter.",
 	"embedvideo-unparsable-param-string": "EmbedVideo received the unparsable parameter string \"<tt>$1</tt>\".",
-	"embedvideo-unrecognized-service": "EmbedVideo does not recognize the video service \"<tt>$1</tt>\".",
-	"embedvideo-bad-id": "EmbedVideo received the bad id \"$1\" for the service \"$2\".",
-	"embedvideo-illegal-width": "EmbedVideo received the illegal width parameter \"$1\".",
-	"embedvideo-illegal-alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"right\", \"left\", \"center\", or \"auto\".",
-	"embedvideo-illegal-screen9-id": "EmbedVideo failed to interpret the screen9 id.  Note that the id of a screen9 video is the full html-snippet obtained from the video for embedding."
+	"error_embedvideo_service": "EmbedVideo does not recognize the video service \"<tt>$1</tt>\".",
+	"error_embedvideo_id": "EmbedVideo received the bad id \"$1\" for the service \"$2\".",
+	"error_embedvideo_width": "EmbedVideo received the bad width parameter \"$1\".",
+	"error_embedvideo_height": "EmbedVideo received the bad height parameter \"$1\".",
+	"error_embedvideo_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"right\", \"center\", or \"auto\".",
+	"error_embedvideo_screen9id": "EmbedVideo failed to interpret the screen9 id.  Note that the id of a screen9 video is the full html-snippet obtained from the video for embedding."
 }
