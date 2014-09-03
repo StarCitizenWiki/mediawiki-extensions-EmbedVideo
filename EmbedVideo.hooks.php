@@ -15,7 +15,7 @@ class EmbedVideoHooks {
      *
      * @var		boolean
      */
-	private static $initialized = false;
+	static private $initialized = false;
 	
     /**
      * Sets up this extension's parser functions.
@@ -26,40 +26,42 @@ class EmbedVideoHooks {
      */
     static public function onParserFirstCallInit(Parser &$parser) {
 		global $wgVersion;
-		$prefix = version_compare($wgVersion, '1.7', '<') ? '#' : '';
-		self::addMagicWord($prefix, "ev", "EmbedVideo::parserFunction_ev");
-		self::addMagicWord($prefix, "evp", "EmbedVideo::parserFunction_evp");
 
-		$parser->setFunctionHook($prefix."ev", "EmbedVideo::parserFunction_ev");
-		$parser->setFunctionHook($prefix."evp", "EmbedVideo::parserFunction_evp");
+		$parser->setFunctionHook("ev", "EmbedVideo::parseEV");
+		$parser->setFunctionHook("evp", "EmbedVideo::parseEVP");
 
 		return true;
 	}
 	
 	/**
-	 * Embeds video of the chosen service, legacy support for 'evp' version of
-	 * the tag
-	 * @param Parser $parser Instance of running Parser.
-	 * @param String $service Which online service has the video.
-	 * @param String $id Identifier of the chosen service
-	 * @param String $width Width of video (optional)
-	 * @return String Encoded representation of input params (to be processed later)
+	 * Adapter to call the new style tag.
+	 *
+	 * @access	public
+	 * @param	object	Parser
+	 * @param	string	[Optional] Which online service has the video.
+	 * @param	string	[Optional] Identifier of the chosen service
+	 * @param	string	[Optional] Description to show
+	 * @param	string	[Optional] Alignment of the video
+	 * @param	string	[Optional] Width of video
+	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	public static function parserFunction_evp($parser, $service = null, $id = null, $desc = null, $align = null, $width = null) {
+	static public function parseEV($parser, $service = null, $id = null, $desc = null, $align = null, $width = null) {
 		return self::parserFunction_ev($parser, $service, $id, $width, $align, $desc);
 	}
 	
 	/**
 	 * Embeds video of the chosen service
-	 * @param Parser $parser Instance of running Parser.
-	 * @param String $service Which online service has the video.
-	 * @param String $id Identifier of the chosen service
-	 * @param String $width Width of video (optional)
-	 * @param String $desc description to show (optional)
-	 * @param String $align alignment of the video (optional)
-	 * @return String Encoded representation of input params (to be processed later)
+	 *
+	 * @access	public
+	 * @param	object	Parser
+	 * @param	string	[Optional] Which online service has the video.
+	 * @param	string	[Optional] Identifier of the chosen service
+	 * @param	string	[Optional] Width of video
+	 * @param	string	[Optional] Description to show
+	 * @param	string	[Optional] Alignment of the video
+	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	public static function parserFunction_ev($parser, $service = null, $id = null, $width = null, $align = null, $desc = null) {
+	static public function parseEV($parser, $service = null, $id = null, $width = null, $align = null, $desc = null) {
 		global $wgScriptPath;
 		
 		// Initialize things once
@@ -159,13 +161,13 @@ class EmbedVideoHooks {
 	/**
 	 * Return the HTML necessary to embed the video normally.
 	 *
-	 * @param string $url
-	 * @param int    $width
-	 * @param int    $height
-	 *
+	 * @access	private
+	 * @param	string	URL
+	 * @param	integer	Width
+	 * @param	integer	Height
 	 * @return string
 	 */
-	private static function generateNormalClause($url, $width, $height) {
+	static private function generateNormalClause($url, $width, $height) {
 		$clause = "<object width=\"{$width}\" height=\"{$height}\">" . "<param name=\"movie\" value=\"{$url}\"></param>" . "<param name=\"wmode\" value=\"transparent\"></param>" . "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" . " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\">" . "</embed></object>";
 		return $clause;
 	}
@@ -174,15 +176,15 @@ class EmbedVideoHooks {
 	 * The HTML necessary to embed the video with a custom embedding clause,
 	 * specified align and description text
 	 *
-	 * @param string $clause
-	 * @param string $align
-	 * @param string $desc
-	 * @param int    $width
-	 * @param int    $height
-	 *
+	 * @access	private
+	 * @param	string	Clause
+	 * @param	string	Horizontal Alignment
+	 * @param	string	Description
+	 * @param	integer	Width
+	 * @param	integer	Height
 	 * @return string
 	 */
-	private static function generateAlignExternClause($clause, $align, $desc, $width, $height) {
+	static private function generateAlignExternClause($clause, $align, $desc, $width, $height) {
 		$alignClass = self::getAlignmentClass($align);
 		$clause     = "<div class=\"thumb {$alignClass}\">" . "<div class=\"thumbinner\" style=\"width: {$width}px;\">" . $clause . "<div class=\"thumbcaption\">" . $desc . "</div></div></div>";
 		return $clause;
@@ -192,15 +194,16 @@ class EmbedVideoHooks {
 	 * Generate the HTML necessary to embed the video with the given alignment
 	 * and text description
 	 *
-	 * @param string $url
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $align
-	 * @param string $desc
+	 * @access	private
+	 * @param	string $url
+	 * @param	integer    $width
+	 * @param	integer    $height
+	 * @param	string $align
+	 * @param	string $desc
 	 *
 	 * @return string
 	 */
-	private static function generateAlignClause($url, $width, $height, $align, $desc) {
+	static private function generateAlignClause($url, $width, $height, $align, $desc) {
 		$alignClass = self::getAlignmentClass($align);
 		$clause     = "<div class=\"thumb {$alignClass}\">" . "<div class=\"thumbinner\" style=\"width: {$width}px;\">" . "<object width=\"{$width}\" height=\"{$height}\">" . "<param name=\"movie\" value=\"{$url}\"></param>" . "<param name=\"wmode\" value=\"transparent\"></param>" . "<embed src=\"{$url}\" type=\"application/x-shockwave-flash\"" . " wmode=\"transparent\" width=\"{$width}\" height=\"{$height}\"></embed>" . "</object>" . "<div class=\"thumbcaption\">" . $desc . "</div></div></div>";
 		return $clause;
@@ -209,11 +212,11 @@ class EmbedVideoHooks {
 	/**
 	 * Get the entry for the specified service, by name
 	 *
-	 * @param string $service
+	 * @param	string $service
 	 *
 	 * @return $string
 	 */
-	private static function getServiceEntry($service) {
+	static private function getServiceEntry($service) {
 		// Get the entry in the list of services
 		global $wgEmbedVideoServiceList;
 		return $wgEmbedVideoServiceList[$service];
@@ -226,11 +229,11 @@ class EmbedVideoHooks {
 	 * falls between the specified min and max size values. Return true if
 	 * the width is suitable, false otherwise.
 	 *
-	 * @param string $service
+	 * @param	string $service
 	 *
 	 * @return mixed
 	 */
-	private static function sanitizeWidth($entry, &$width) {
+	static private function sanitizeWidth($entry, &$width) {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
 		if ($width === null || $width == '*' || $width == '') {
 			if (isset($entry['default_width'])) {
@@ -249,15 +252,15 @@ class EmbedVideoHooks {
 	/**
 	 * Validate the align parameter.
 	 *
-	 * @param string $align The align parameter
+	 * @param	string $align The align parameter
 	 *
 	 * @return {\code true} if the align parameter is valid, otherwise {\code false}.
 	 */
-	private static function validateAlignment($align) {
+	static private function validateAlignment($align) {
 		return ($align == 'left' || $align == 'right' || $align == 'center' || $align == 'auto');
 	}
 	
-	private static function getAlignmentClass($align) {
+	static private function getAlignmentClass($align) {
 		if ($align == 'left' || $align == 'right') {
 			return 't' . $align;
 		}
@@ -269,12 +272,12 @@ class EmbedVideoHooks {
 	 * Calculate the height from the given width. The default ratio is 450/350,
 	 * but that may be overridden for some sites.
 	 *
-	 * @param int $entry
-	 * @param int $width
+	 * @param	integer $entry
+	 * @param	integer $width
 	 *
 	 * @return int
 	 */
-	private static function getHeight($entry, $width) {
+	static private function getHeight($entry, $width) {
 		$ratio = 4 / 3;
 		if (isset($entry['default_ratio'])) {
 			$ratio = $entry['default_ratio'];
@@ -286,11 +289,11 @@ class EmbedVideoHooks {
 	 * If we have a textual description, get the markup necessary to display
 	 * it on the page.
 	 *
-	 * @param string $desc
+	 * @param	string $desc
 	 *
 	 * @return string
 	 */
-	private static function getDescriptionMarkup($desc) {
+	static private function getDescriptionMarkup($desc) {
 		if ($desc !== null) {
 			return "<div class=\"thumbcaption\">$desc</div>";
 		}
@@ -300,12 +303,12 @@ class EmbedVideoHooks {
 	/**
 	 * Verify the id number of the video, if a pattern is provided.
 	 *
-	 * @param string $entry
-	 * @param string $id
+	 * @param	string $entry
+	 * @param	string $id
 	 *
 	 * @return bool
 	 */
-	private static function verifyID($entry, $id) {
+	static private function verifyID($entry, $id) {
 		$idhtml = htmlspecialchars($id);
 		//$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
 		//if ($idhtml == null || preg_match($idpattern, $idhtml)) {
@@ -315,12 +318,12 @@ class EmbedVideoHooks {
 	/**
 	 * Get an error message for the case where the ID value is bad
 	 *
-	 * @param string $service
-	 * @param string $id
+	 * @param	string $service
+	 * @param	string $id
 	 *
 	 * @return string
 	 */
-	private static function errBadID($service, $id) {
+	static private function errBadID($service, $id) {
 		$idhtml = htmlspecialchars($id);
 		$msg    = wfMsgForContent('embedvideo-bad-id', $idhtml, @htmlspecialchars($service));
 		return '<div class="errorbox">' . $msg . '</div>';
@@ -329,11 +332,11 @@ class EmbedVideoHooks {
 	/**
 	 * Get an error message if the width is bad
 	 *
-	 * @param int $width
+	 * @param	integer $width
 	 *
 	 * @return string
 	 */
-	private static function errBadWidth($width) {
+	static private function errBadWidth($width) {
 		$msg = wfMsgForContent('embedvideo-illegal-width', @htmlspecialchars($width));
 		return '<div class="errorbox">' . $msg . '</div>';
 	}
@@ -341,23 +344,23 @@ class EmbedVideoHooks {
 	/**
 	 * Get an error message if there are missing parameters
 	 *
-	 * @param string $service
-	 * @param string $id
+	 * @param	string $service
+	 * @param	string $id
 	 *
 	 * @return string
 	 */
-	private static function errMissingParams($service, $id) {
+	static private function errMissingParams($service, $id) {
 		return '<div class="errorbox">' . wfMsg('embedvideo-missing-params') . '</div>';
 	}
 	
 	/**
 	 * Get an error message if the service name is bad
 	 *
-	 * @param string $service
+	 * @param	string $service
 	 *
 	 * @return string
 	 */
-	private static function errBadService($service) {
+	static private function errBadService($service) {
 		$msg = wfMsg('embedvideo-unrecognized-service', @htmlspecialchars($service));
 		return '<div class="errorbox">' . $msg . '</div>';
 	}
@@ -365,11 +368,11 @@ class EmbedVideoHooks {
 	/**
 	 * Get an error message for an invalid align parameter
 	 *
-	 * @param string $align The given align parameter.
+	 * @param	string $align The given align parameter.
 	 *
 	 * @return string
 	 */
-	private static function errBadAlignment($align) {
+	static private function errBadAlignment($align) {
 		$msg = wfMsg('embedvideo-illegal-alignment', @htmlspecialchars($align));
 		return '<div class="errorbox">' . $msg . '</div>';
 	}
@@ -379,7 +382,7 @@ class EmbedVideoHooks {
 	 *
 	 * @return string
 	 */
-	private static function errBadScreen9Id() {
+	static private function errBadScreen9Id() {
 		$msg = wfMsg('embedvideo-illegal-screen9-id');
 		return '<div class="errorbox">' . $msg . '</div>';
 	}
@@ -389,7 +392,7 @@ class EmbedVideoHooks {
 	 *
 	 * @return void
 	 */
-	private static function VerifyWidthMinAndMax() {
+	static private function VerifyWidthMinAndMax() {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
 		if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100) {
 			$wgEmbedVideoMinWidth = 100;
@@ -398,41 +401,54 @@ class EmbedVideoHooks {
 			$wgEmbedVideoMaxWidth = 1024;
 		}
 	}
-	private static function getRuTube($id) {
-		/**
-		 * Custom parser for RuTube
-		 */
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, "http://rutube.ru/oembed/track?&amp;url=http://rutube.ru/tracks/{$id}.html&amp;format=json");
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER, false);
+
+	/**
+	 * Get RuTube information
+	 *
+	 * @access	public
+	 * @param	integer
+	 * @return	string
+	 */
+	static private function getRuTube($id) {
+		$id = intval($id);
+		$return = self::curlGet("http://rutube.ru/oembed/track?&amp;url=http://rutube.ru/tracks/{$id}.html&amp;format=json");
+		if ($return === false) {
+			return false;
+		}
 		$json = curl_exec($ch);
-		curl_close($ch);
-		$start = strpos($json, 'value=\"') + 8;
-		$end   = strpos($json, '\"></');
-		$url   = substr($json, $start, $end - $start);
+		$start = strpos($return, 'value=\"') + 8;
+		$end   = strpos($return, '\"></');
+		$url   = substr($return, $start, $end - $start);
 		return $url;
 	}
-	private static function getYandex($id) {
-		/**
-		 * Custom parser for Yandex
-		 */
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, "http://video.yandex.ru/oembed.xml?url=http://video.yandex.ru/users/{$id}");
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER, false);
-		$json = curl_exec($ch);
-		curl_close($ch);
-		$start = strpos($json, '<html>') + 6;
-		$end   = strpos($json, '</html>');
-		$url   = substr($json, $start, $end - $start);
+
+	/**
+	 * Get Yandex information
+	 *
+	 * @access	public
+	 * @param	integer
+	 * @return	string
+	 */
+	static private function getYandex($id) {
+		$id = intval($id);
+		$return = self::curlGet("http://video.yandex.ru/oembed.xml?url=http://video.yandex.ru/users/{$id}");
+		if ($return === false) {
+			return false;
+		}
+		$start = strpos($return, '<html>') + 6;
+		$end   = strpos($return, '</html>');
+		$url   = substr($return, $start, $end - $start);
 		return $url;
 	}
-	
-	
-	private static function parseScreen9Id($id, $width, $height) {
+
+	/**
+	 * Parse Screen9 Identification code.
+	 *
+	 * @access	public
+	 * @param	integer
+	 * @return	string
+	 */
+	static private function parseScreen9Id($id, $width, $height) {
 		$parser = new Screen9IdParser();
 		
 		if (!$parser->parse($id)) {
@@ -444,6 +460,48 @@ class EmbedVideoHooks {
 		$parser->setHeight($height);
 		
 		return $parser->toString();
+	}
+
+	/**
+	 * Perform a Curl GET request.
+	 *
+	 * @access	private
+	 * @param	string URL
+	 * @return	mixed
+	 */
+	static private function curlGet($location) {
+		global $wgServer;
+
+		$ch = curl_init();
+
+		$timeout = 10;
+		$useragent = "EmbedVideo/1.0/".$wgServer;
+		$dateTime = gmdate("D, d M Y H:i:s", time())." GMT";
+		$headers = ['Date: '.$dateTime];
+
+		$curlOptions = [
+			CURLOPT_TIMEOUT			=> $timeout,
+			CURLOPT_USERAGENT		=> $useragent,
+			CURLOPT_URL				=> $location,
+			CURLOPT_CONNECTTIMEOUT	=> $timeout,
+			CURLOPT_FOLLOWLOCATION	=> true,
+			CURLOPT_MAXREDIRS		=> 10,
+			CURLOPT_COOKIEFILE		=> sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
+			CURLOPT_COOKIEJAR		=> sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
+			CURLOPT_RETURNTRANSFER	=> true,
+			CURLOPT_HTTPHEADER		=> $headers
+		];
+
+		curl_setopt_array($ch, $curlOptions);
+
+		$page = curl_exec($ch);
+
+		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if ($responseCode == 503 || $responseCode == 404) {
+			return false;
+		}
+
+		return $page;
 	}
 }
 ?>
