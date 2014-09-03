@@ -29,12 +29,9 @@ $wgEmbedVideoServiceList = array(
 		'url' => 'http://www.dailymotion.com/swf/$1'
 	),
 	'divshare' => array(
-		'url' => 'http://www.divshare.com/flash/video2?myId=$1'
-	),
-	'edutopia' => array(
-		'extern' => '<object id="flashObj" width="$3" height="$4"><param name="movie" value="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" /><param name="flashVars" value="videoId=$2&playerID=85476225001&domain=embed&dynamicStreaming=true" /><param name="base" value="http://admin.brightcove.com" /><param name="allowScriptAccess" value="always" /><embed src="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&isUI=1" flashVars="videoId=$2&playerID=85476225001&domain=embed&dynamicStreaming=true" base="http://admin.brightcove.com" name="flashObj" width="$3" height="$4" seamlesstabbing="false" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" swLiveConnect="true" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></embed></object>',
-		'default_width' => 326,
-		'default_ratio' => 326 / 399
+		'extern'	=> '<iframe src="http://www.divshare.com/flash/video2?myId=$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	),
 	'funnyordie' => array(
 		'extern'		=> '<iframe src="http://www.funnyordie.com/embed/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
