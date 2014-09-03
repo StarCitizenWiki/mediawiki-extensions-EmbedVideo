@@ -151,10 +151,6 @@ class EmbedVideoHooks {
 			$height
 		));
 		$clause = "";
-		// If service is RuTube -> use own parser
-		if ($service == 'rutube') {
-			$url = self::getRuTube($id);
-		}
 		if ($hasAlign) {
 			$clause = self::generateAlignClause($url, $width, $height, $align, $desc);
 		} else {
@@ -390,26 +386,6 @@ class EmbedVideoHooks {
 		if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth > 1024) {
 			$wgEmbedVideoMaxWidth = 1024;
 		}
-	}
-
-	/**
-	 * Get RuTube information
-	 *
-	 * @access	public
-	 * @param	integer
-	 * @return	string
-	 */
-	static private function getRuTube($id) {
-		$id = intval($id);
-		$return = self::curlGet("http://rutube.ru/oembed/track?&amp;url=http://rutube.ru/tracks/{$id}.html&amp;format=json");
-		if ($return === false) {
-			return false;
-		}
-		$json = curl_exec($ch);
-		$start = strpos($return, 'value=\"') + 8;
-		$end   = strpos($return, '\"></');
-		$url   = substr($return, $start, $end - $start);
-		return $url;
 	}
 
 	/**

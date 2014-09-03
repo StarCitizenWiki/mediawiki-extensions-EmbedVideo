@@ -46,7 +46,9 @@ $wgEmbedVideoServiceList = array(
 		'extern' => '<iframe src="http://hub.video.msn.com/embed/$2" width="$3" height="$4" frameborder="0" scrolling="no" noscroll></iframe>'
 	),
 	'rutube' => array(
-		'url' => ''
+		'extern'	=> '<iframe src="//rutube.ru/play/embed/$2" width="$3" height="$4" frameborder="0" allowfullscreen="true"></iframe>',
+		'default_width'	=> 640,
+		'default_ratio'	=> 16 / 9
 	),
 	'screen9' => array(
 		'extern' => 't',
