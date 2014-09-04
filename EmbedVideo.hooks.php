@@ -101,12 +101,6 @@ class EmbedVideoHooks {
 		/* HMTL Generation                  */
 		/************************************/
 		$html = self::$service->getHtml();
-		if ($service == 'screen9') {
-			$html = self::parseScreen9Id($id, $width, $height);
-			if ($html == null) {
-				return self::error('screen9id');
-			}
-		}
 
 		if (self::getAlignmentClass($alignment) !== false || $hasDescription) {
 			$html = self::generateWrapperHTML($html, $alignment, $description);
@@ -175,27 +169,6 @@ class EmbedVideoHooks {
 		$message = wfMessage('error_embedvideo_'.$type, $arguments)->escaped();
 
 		return "<div class='errorbox'>{$message}</div>";
-	}
-
-	/**
-	 * Parse Screen9 Identification code.
-	 *
-	 * @access	public
-	 * @param	integer
-	 * @return	string
-	 */
-	static private function parseScreen9Id($id, $width, $height) {
-		$parser = new Screen9IdParser();
-		
-		if (!$parser->parse($id)) {
-			return null;
-		}
-		
-		$parser->setWidth($width);
-		
-		$parser->setHeight($height);
-		
-		return $parser->toString();
 	}
 }
 ?>

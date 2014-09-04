@@ -56,11 +56,11 @@ include:
 * Bing/MSN
 * DailyMotion
 * Divshare
+* Edutopia (Their content has been moved to YouTube.  Simply use the YouTube service to load these.)
 * Funny or Die
 * Kickstarter
 * Metacafe
 * RuTube
-* Screen9
 * TeacherTube
 * Yahoo
 * YouTube (Videos and Playlists)

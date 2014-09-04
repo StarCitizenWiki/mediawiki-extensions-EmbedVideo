@@ -13,5 +13,4 @@
 	"error_embedvideo_width": "В тег EmbedVideo введен неверный параметр ширины \"$1\".",
 	"error_embedvideo_height": "EmbedVideo received the bad height parameter \"$1\".",
 	"error_embedvideo_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"right\", \"center\", or \"auto\".",
-	"error_embedvideo_screen9id": "EmbedVideo failed to interpret the screen9 id.  Note that the id of a screen9 video is the full html-snippet obtained from the video for embedding."
 }

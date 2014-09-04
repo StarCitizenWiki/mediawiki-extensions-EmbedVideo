@@ -75,10 +75,6 @@ class VideoService {
 			'default_ratio'	=> 16 / 9,
 			'https_enabled'	=> true
 		),
-		'screen9' => array(
-			'embed' 		=> 't',
-			'default_ratio' => 579 / 358
-		),
 		'teachertube' => array(
 			'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,

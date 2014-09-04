@@ -13,5 +13,4 @@
 	"error_embedvideo_width": "EmbedVideo - Felaktigt värde \"$1\" har angivits som bredd.",
 	"error_embedvideo_height": "EmbedVideo received the bad height parameter \"$1\".",
 	"error_embedvideo_alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad eller \"auto\".",
-	"error_embedvideo_screen9id": "EmbedVideo - Kunde inte tolka screen9 video-id. Observera att video-identiteten för en screen9-id är hela den html-kodsnutt som fås då man väljer \"share -> embed\" på screen9 videon."
 }
