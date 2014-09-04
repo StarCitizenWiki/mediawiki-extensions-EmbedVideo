@@ -247,33 +247,7 @@ class EmbedVideoHooks {
 		$arguments = func_get_args();
 		array_shift($arguments);
 
-		switch (strtolower($type)) {
-			case 'alignment':
-				$message = wfMessage('error_embedvideo_alignment', $arguments[0])->escaped();
-				break;
-			case 'service':
-				$message = wfMessage('error_embedvideo_service', $arguments[0])->escaped();
-				break;
-			case 'id':
-				$message = wfMessage('error_embedvideo_id', $arguments[0], $arguments[1])->escaped();
-				break;
-			case 'missingparams':
-				$message = wfMessage('error_embedvideo_missingparams', $arguments[0], $arguments[1])->escaped();
-				break;
-			case 'width':
-				$message = wfMessage('error_embedvideo_width', $arguments[0])->escaped();
-				break;
-			case 'height':
-				$message = wfMessage('error_embedvideo_height', $arguments[0])->escaped();
-				break;
-			case 'screen9id':
-				$message = wfMessage('error_embedvideo_screen9id', $arguments[0])->escaped();
-				break;
-			default:
-			case 'unknown':
-				$message = wfMessage('error_embedvideo_unknown')->escaped();
-				break;
-		}
+		$message = wfMessage('error_embedvideo_'.$type, $arguments)->escaped();
 
 		return "<div class='errorbox'>{$message}</div>";
 	}
