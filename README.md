@@ -4,11 +4,11 @@ The EmbedVideo extension is used to embed videos from video hosting sites such a
 
 For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
 
-(https://github.com/Alexia/mediawiki-embedvideo)
+https://github.com/Alexia/mediawiki-embedvideo
 
 Issues, bug reports, and feature requests may be created at the issue tracker:
 
-(https://github.com/Alexia/mediawiki-embedvideo/issues)
+https://github.com/Alexia/mediawiki-embedvideo/issues
 
 ##History
 
@@ -20,7 +20,7 @@ The newer versions of EmbedVideo are intended to be fully backwards-compatible w
 
 EmbedVideo is released under the MIT license
 
-(http://www.opensource.org/licenses/mit-license.php)
+http://www.opensource.org/licenses/mit-license.php
 
 See LICENSE for more details
 
