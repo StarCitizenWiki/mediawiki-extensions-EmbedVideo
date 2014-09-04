@@ -177,6 +177,20 @@ class VideoService {
 	private $id = false;
 
 	/**
+	 * Player Width
+	 *
+	 * @var		integer
+	 */
+	private $width = false;
+
+	/**
+	 * Player Height
+	 *
+	 * @var		integer
+	 */
+	private $height = false;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	private
@@ -198,6 +212,16 @@ class VideoService {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Return Video ID
+	 *
+	 * @access	public
+	 * @return	mixed	Parsed Video ID or false for one that is not set.
+	 */
+	public function getVideoID() {
+		return $this->id;
 	}
 
 	/**
@@ -249,6 +273,80 @@ class VideoService {
 	 */
 	public function isHttpsEnabled() {
 		return (bool) $this->service['https_enabled'];
+	}
+
+	/**
+	 * Return the width.
+	 *
+	 * @access	public
+	 * @return	mixed	Integer value or false for not set.
+	 */
+	public function getWidth() {
+		return $this->width;
+	}
+
+	/**
+	 * Return the height.
+	 *
+	 * @access	public
+	 * @return	mixed	Integer value or false for not set.
+	 */
+	public function getHeight() {
+		return $this->height;
+	}
+
+	/**
+	 * Set the width of the player.  This also will set the height automatically.
+	 * Width will be automatically constrained to the minimum and maximum widths.
+	 *
+	 * @access	public
+	 * @param	integer	Width
+	 * @return	void
+	 */
+	public function setWidth($width = null) {
+		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth, $wgEmbedVideoDefaultWidth;
+
+		$width = ($wgEmbedVideoDefaultWidth > 0 ? $wgEmbedVideoDefaultWidth : 640);
+		if (!is_numeric($width)) {
+			if ($width === null && $this->getDefaultWidth() !== false) {
+				$width = $this->getDefaultWidth();
+			}
+		} else {
+			$width = intval($width);
+		}
+
+		if ($wgEmbedVideoMaxWidth > 0 && $width > $wgEmbedVideoMaxWidth) {
+			$width = $wgEmbedVideoMaxWidth;
+		}
+
+		if ($wgEmbedVideoMinWidth > 0 && $width < $wgEmbedVideoMinWidth) {
+			$width = $wgEmbedVideoMinWidth;
+		}
+		$this->width = $width;
+
+		if ($this->getHeight() === false) {
+			$this->setHeight();
+		}
+	}
+
+	/**
+	 * Set the height automatically by a ratio of the width or use the provided value.
+	 *
+	 * @access	public
+	 * @param	mixed	[Optional] Height Value
+	 * @return	void
+	 */
+	public function setHeight($height = null) {
+		if ($height !== null && $height > 0) {
+			$this->height = intval($height);
+			return;
+		}
+
+		$ratio = 16 / 9;
+		if ($this->getDefaultRatio() !== false) {
+			$ratio = $this->getDefaultRatio();
+		}
+		$this->height = round($this->getWidth() / $ratio);
 	}
 
 	/**
