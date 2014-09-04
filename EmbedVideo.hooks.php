@@ -101,6 +101,9 @@ class EmbedVideoHooks {
 		/* HMTL Generation                  */
 		/************************************/
 		$html = self::$service->getHtml();
+		if (!$html) {
+			return self::error('unknown', $service);
+		}
 
 		if (self::getAlignmentClass($alignment) !== false || $hasDescription) {
 			$html = self::generateWrapperHTML($html, $alignment, $description);
