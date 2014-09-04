@@ -17,6 +17,13 @@ class EmbedVideoHooks {
 	 */
 	static private $service;
 
+	/**
+	 * Description for the current video being processed.
+	 *
+	 * @var		object
+	 */
+	static private $description = false;
+
     /**
      * Sets up this extension's parser functions.
      *
@@ -25,8 +32,6 @@ class EmbedVideoHooks {
      * @return	boolean	true
      */
     static public function onParserFirstCallInit(Parser &$parser) {
-		global $wgVersion;
-
 		$parser->setFunctionHook("ev", "EmbedVideoHooks::parseEV");
 		$parser->setFunctionHook("evp", "EmbedVideoHooks::parseEVP");
 
@@ -83,12 +88,12 @@ class EmbedVideoHooks {
 		//The parser tag currently does not support specifying the height, but the coding functionality is available.
 		//self::$service->setHeight($height);
 
-		self::$service->setDescription($description, $parser);
-
 		//If the service has an ID pattern specified, verify the id number.
 		if (!self::$service->setVideoID($id)) {
 			return self::error('id', $service, $id);
 		}
+
+		self::setDescription($description, $parser);
 
 		if ($alignment !== null && !self::validateAlignment($alignment)) {
 			return self::error('alignment', $alignment);
@@ -102,8 +107,8 @@ class EmbedVideoHooks {
 			return self::error('unknown', $service);
 		}
 
-		if (self::getAlignmentClass($alignment) !== false || $hasDescription) {
-			$html = self::generateWrapperHTML($html, $alignment, $description);
+		if (self::getAlignmentClass($alignment) !== false || self::getDescription() !== false) {
+			$html = self::generateWrapperHTML($html, $alignment, self::getDescription());
 		}
 
 		return array(
@@ -152,6 +157,28 @@ class EmbedVideoHooks {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Return description text.
+	 *
+	 * @access	private
+	 * @return	mixed	String description or false for not set.
+	 */
+	static private function getDescription() {
+		return self::$description;
+	}
+
+	/**
+	 * Set the description.
+	 *
+	 * @access	private
+	 * @param	string	Description
+	 * @param	object	Mediawiki Parser object
+	 * @return	void
+	 */
+	static private function setDescription($description, \Parser $parser) {
+		self::$description = (!$description ? false : $parser->recursiveTagParse($description));
 	}
 
 	/**

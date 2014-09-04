@@ -393,28 +393,6 @@ class VideoService {
 	}
 
 	/**
-	 * Return description text.
-	 *
-	 * @access	public
-	 * @return	mixed	String description or false for not set.
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-
-	/**
-	 * Set the description.
-	 *
-	 * @access	public
-	 * @param	string	Description
-	 * @param	object	Mediawiki Parser object
-	 * @return	void
-	 */
-	public function setDescription($description, \Parser $parser) {
-		$this->description = (!$description ? false : $parser->recursiveTagParse($description));
-	}
-
-	/**
 	 * Return the width.
 	 *
 	 * @access	public
