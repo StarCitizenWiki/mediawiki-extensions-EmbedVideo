@@ -198,16 +198,16 @@ class VideoService {
 	<param name="allowScriptAccess" value="always" />
 	<param name="allowNetworking" value="all" />
 	<param name="allowFullScreen" value="true" />
-	<param name="flashvars" value="channel=%1$s&amp;auto_play=false&amp;start_volume=100&amp;chapter_id=$4" />
+	<param name="flashvars" value="channel=%1$s&amp;auto_play=false&amp;start_volume=100&amp;chapter_id=%4$d" />
 </object>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, //(620 / 378)
 			'https_enabled'	=> false,
 			'url_regex'		=> array(
-				'#twitch\.tv/([\d\w-]+)(?:/\S+?)?#is'
+				'#twitch\.tv/([\d\w-]+)/c/([\d]+)(?:/\S+?)?#is'
 			),
 			'id_regex'		=> array(
-				'#^([\d\w-]+)$#is'
+				'#^([\d\w-]+)/c/([\d]+)$#is'
 			)
 		),
 		'vimeo' => array(
@@ -261,6 +261,13 @@ class VideoService {
 	private $description = false;
 
 	/**
+	 * Extra IDs that some services require.
+	 *
+	 * @var		array
+	 */
+	private $extraIDs = false;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	private
@@ -295,12 +302,19 @@ class VideoService {
 			return false;
 		}
 
-		$html = sprintf(
+		$data = array(
 			$this->service['embed'],
 			$this->getVideoID(),
 			$this->getWidth(),
 			$this->getHeight()
 		);
+
+		if ($this->getExtraIds() !== false) {
+			$data = array_merge($data, $this->getExtraIds());
+		}
+
+		$html = call_user_func_array('sprintf', $data);
+
 		return $html;
 	}
 
@@ -345,7 +359,15 @@ class VideoService {
 		if (is_array($regexes) && count($regexes)) {
 			foreach ($regexes as $regex) {
 				if (preg_match($regex, $id, $matches)) {
-					$id = $matches[1];
+					//Get rid of the full text match.
+					array_shift($matches);
+
+					$id = array_shift($matches);
+
+					if (count($matches)) {
+						$this->extraIDs = $matches;
+					}
+
 					return $id;
 				}
 			}
@@ -355,6 +377,16 @@ class VideoService {
 			//Service definition has not specified a sanitization/validation regex.
 			return $id;
 		}
+	}
+
+	/**
+	 * Return extra IDs.
+	 *
+	 * @access	public
+	 * @return	boolean	Array of extra information or false if not set.
+	 */
+	public function getExtraIDs() {
+		return $this->extraIDs;
 	}
 
 	/**
