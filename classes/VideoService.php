@@ -216,6 +216,27 @@ class VideoService {
 	}
 
 	/**
+	 * Return built HTML.
+	 *
+	 * @access	public
+	 * @return	mixed	String HTML to output or false on error.
+	 */
+	public function getHtml() {
+		if ($this->getVideoID() === false || $this->getWidth() === false || $this->getHeight() === false) {
+			return false;
+		}
+
+		$html = wfMsgReplaceArgs(
+			$this->service['embed'],
+			array(
+				$this->getVideoID(),
+				$this->getWidth(),
+				$this->getHeight()
+			)
+		);
+	}
+
+	/**
 	 * Return Video ID
 	 *
 	 * @access	public
@@ -286,16 +307,6 @@ class VideoService {
 	 */
 	public function setDescription($description, Parser $parser) {
 		$this->description = (!$description ? false : $parser->recursiveTagParse($description););
-	}
-
-	/**
-	 * Is HTTPS enabled?
-	 *
-	 * @access	public
-	 * @return	boolean
-	 */
-	public function isHttpsEnabled() {
-		return (bool) $this->service['https_enabled'];
 	}
 
 	/**
@@ -370,6 +381,16 @@ class VideoService {
 			$ratio = $this->getDefaultRatio();
 		}
 		$this->height = round($this->getWidth() / $ratio);
+	}
+
+	/**
+	 * Is HTTPS enabled?
+	 *
+	 * @access	public
+	 * @return	boolean
+	 */
+	public function isHttpsEnabled() {
+		return (bool) $this->service['https_enabled'];
 	}
 
 	/**

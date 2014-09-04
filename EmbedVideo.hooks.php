@@ -100,35 +100,12 @@ class EmbedVideoHooks {
 		/************************************/
 		/* HMTL Generation                  */
 		/************************************/
-		if (array_key_exists('embed', self::$service)) {
-			//Handled by a premade HTML block.
-			if ($service == 'screen9') {
-				$html = self::parseScreen9Id($id, $width, $height);
-				if ($html == null) {
-					return self::error('screen9id');
-				}
-			} else {
-				$html = wfMsgReplaceArgs(
-					self::$service['embed'],
-					array(
-						$id,
-						$width,
-						$height,
-						$url
-					)
-				);
+		$html = self::$service->getHtml();
+		if ($service == 'screen9') {
+			$html = self::parseScreen9Id($id, $width, $height);
+			if ($html == null) {
+				return self::error('screen9id');
 			}
-		} else {
-			//Build URL and output embedded flash object.
-			$url = wfMsgReplaceArgs(
-				self::$service['url'],
-				array(
-					$id,
-					$width,
-					$height
-				)
-			);
-			$html = self::generateEmbedHTML($url, $width, $height);
 		}
 
 		if (self::getAlignmentClass($alignment) !== false || $hasDescription) {
@@ -140,20 +117,6 @@ class EmbedVideoHooks {
 			'noparse' => true,
 			'isHTML' => true
 		);
-	}
-	
-	/**
-	 * Generate HTML to embed a video from a standard embed block.
-	 *
-	 * @access	private
-	 * @param	string	URL
-	 * @param	integer	Width
-	 * @param	integer	Height
-	 * @return	string
-	 */
-	static private function generateEmbedHTML($url, $width, $height) {
-		$html = "<object width='{$width}' height='{$height}'><param name='movie' value='{$url}'></param><param name='wmode' value='transparent'></param><embed src='{$url}' type='application/x-shockwave-flash' wmode='transparent' width='{$width}' height='{$height}'></embed></object>";
-		return $html;
 	}
 	
 	/**
@@ -233,48 +196,6 @@ class EmbedVideoHooks {
 		$parser->setHeight($height);
 		
 		return $parser->toString();
-	}
-
-	/**
-	 * Perform a Curl GET request.
-	 *
-	 * @access	private
-	 * @param	string URL
-	 * @return	mixed
-	 */
-	static private function curlGet($location) {
-		global $wgServer;
-
-		$ch = curl_init();
-
-		$timeout = 10;
-		$useragent = "EmbedVideo/1.0/".$wgServer;
-		$dateTime = gmdate("D, d M Y H:i:s", time())." GMT";
-		$headers = ['Date: '.$dateTime];
-
-		$curlOptions = [
-			CURLOPT_TIMEOUT			=> $timeout,
-			CURLOPT_USERAGENT		=> $useragent,
-			CURLOPT_URL				=> $location,
-			CURLOPT_CONNECTTIMEOUT	=> $timeout,
-			CURLOPT_FOLLOWLOCATION	=> true,
-			CURLOPT_MAXREDIRS		=> 10,
-			CURLOPT_COOKIEFILE		=> sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
-			CURLOPT_COOKIEJAR		=> sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
-			CURLOPT_RETURNTRANSFER	=> true,
-			CURLOPT_HTTPHEADER		=> $headers
-		];
-
-		curl_setopt_array($ch, $curlOptions);
-
-		$page = curl_exec($ch);
-
-		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($responseCode == 503 || $responseCode == 404) {
-			return false;
-		}
-
-		return $page;
 	}
 }
 ?>
