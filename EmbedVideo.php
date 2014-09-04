@@ -38,8 +38,8 @@ $wgExtensionMessagesFiles['EmbedVideoMagic']	= "{$extDir}/EmbedVideo.i18n.magic.
 $wgMessagesDirs['EmbedVideo']					= "{$extDir}/i18n";
 
 $wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.hooks.php";
-$wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.services.php";
-$wgAutoloadClasses['Screen9IdParser']			= "{$extDir}/Screen9IdParser.php";
+$wgAutoloadClasses['VideoService']				= "{$extDir}/classes/VideoService.php";
+$wgAutoloadClasses['Screen9IdParser']			= "{$extDir}/classes/Screen9IdParser.php";
 
 $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 
