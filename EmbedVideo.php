@@ -22,7 +22,7 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['parserhook'][] = array(
 	'path'				=> __FILE__,
 	'name'				=> 'EmbedVideo',
-	'author'			=> array('Jim R. Wilson', 'Andrew Whitworth'),
+	'author'			=> array('Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'),
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
 	'version'			=> '2.0',
 	'descriptionmsg'	=> 'embedvideo_description'
