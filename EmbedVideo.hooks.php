@@ -10,19 +10,19 @@
  **/
 
 class EmbedVideoHooks {
-    /**
-     * Hooks Initialized
-     *
-     * @var		boolean
-     */
+	/**
+	 * Hooks Initialized
+	 *
+	 * @var		boolean
+	 */
 	static private $initialized = false;
 
-    /**
-     * Video Services
-     *
-     * @var		array
-     */
-	static private $services = array();
+	/**
+	 * Temporary storage for the current service.
+	 *
+	 * @var		array
+	 */
+	static private $currentService = array();
 
     /**
      * Sets up this extension's parser functions.
@@ -64,7 +64,7 @@ class EmbedVideoHooks {
 	 * @access	public
 	 * @param	object	Parser
 	 * @param	string	[Optional] Which online service has the video.
-	 * @param	string	[Optional] Identifier of the chosen service
+	 * @param	string	[Optional] Identifier Code or URL for the video on the service.
 	 * @param	string	[Optional] Width of video
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
@@ -87,15 +87,15 @@ class EmbedVideoHooks {
 			return self::error('missingparams', $service, $id);
 		}
 
-		$serviceEntry = self::getServiceEntry($service);
-		if (!$serviceEntry) {
+		self::$currentService = self::getServiceEntry($service);
+		if (!self::$currentService) {
 			return self::error('service', $service);
 		}
 
-		if (!self::sanitizeWidth($serviceEntry, $width)) {
+		if (!self::sanitizeWidth($width)) {
 			return self::error('width', $width);
 		}
-		$height = self::getHeight($serviceEntry, $width);
+		$height = self::getHeight($width);
 
 		if ($alignment !== null && !self::validateAlignment($alignment)) {
 			return self::error('alignment', $alignment);
@@ -106,7 +106,8 @@ class EmbedVideoHooks {
 		}
 
 		//If the service has an ID pattern specified, verify the id number.
-		if (!self::verifyID($serviceEntry, $id)) {
+		$id = self::parseVideoID($id);
+		if (!$id) {
 			return self::error('id', $service, $id);
 		}
 
@@ -121,7 +122,7 @@ class EmbedVideoHooks {
 		/************************************/
 		/* HMTL Generation                  */
 		/************************************/
-		if (array_key_exists('embed', $serviceEntry)) {
+		if (array_key_exists('embed', self::$currentService)) {
 			//Handled by a premade HTML block.
 			if ($service == 'screen9') {
 				$html = self::parseScreen9Id($id, $width, $height);
@@ -130,7 +131,7 @@ class EmbedVideoHooks {
 				}
 			} else {
 				$html = wfMsgReplaceArgs(
-					$serviceEntry['embed'],
+					self::$currentService['embed'],
 					array(
 						$id,
 						$width,
@@ -142,7 +143,7 @@ class EmbedVideoHooks {
 		} else {
 			//Build URL and output embedded flash object.
 			$url = wfMsgReplaceArgs(
-				$serviceEntry['url'],
+				self::$currentService['url'],
 				array(
 					$id,
 					$width,
@@ -194,44 +195,22 @@ class EmbedVideoHooks {
 	}
 
 	/**
-	 * Get the entry for the specified service by service name.
-	 *
-	 * @access	private
-	 * @param	string	Service string.
-	 * @return	array	Array of service definitions.
-	 */
-	static private function getServiceEntry($service) {
-		return self::$services[$service];
-	}
-
-	/**
-	 * Set the list of services.
-	 *
-	 * @access	public
-	 * @param	array	Array of services.
-	 * @return	void
-	 */
-	static public function setServices($services) {
-		self::$services = $services;
-	}
-
-	/**
 	 * Get the width. If there is no width specified, try to find a default
 	 * width value for the service. If that isn't set, default to 425.
 	 * If a width value is provided, verify that it is numerical and that it
 	 * falls between the specified min and max size values. Return true if
 	 * the width is suitable, false otherwise.
 	 *
-	 * @param	string $service
-	 *
-	 * @return mixed
+	 * @access	private
+	 * @param	string	Width
+	 * @return	boolean
 	 */
-	static private function sanitizeWidth($serviceEntry, &$width) {
+	static private function sanitizeWidth(&$width) {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
 
 		if ($width === null || $width == '*' || $width == '') {
-			if (array_key_exists('default_width', $serviceEntry)) {
-				$width = $serviceEntry['default_width'];
+			if (array_key_exists('default_width', self::$currentService)) {
+				$width = self::$currentService['default_width'];
 			} else {
 				$width = 425;
 			}
@@ -272,29 +251,28 @@ class EmbedVideoHooks {
 	 * Calculate the height from the given width. The default ratio is 450/350,
 	 * but that may be overridden for some sites.
 	 *
-	 * @param	integer $entry
-	 * @param	integer $width
-	 *
-	 * @return int
+	 * @access	private
+	 * @param	integer Width
+	 * @return	integer
 	 */
-	static private function getHeight($entry, $width) {
+	static private function getHeight($width) {
 		$ratio = 16 / 9;
-		if (isset($entry['default_ratio'])) {
-			$ratio = $entry['default_ratio'];
+		if (isset(self::$currentService['default_ratio'])) {
+			$ratio = self::$currentService['default_ratio'];
 		}
 		return round($width / $ratio);
 	}
 
 	/**
-	 * Verify the id number of the video, if a pattern is provided.
+	 * Parse the video ID or URL, parsing through regex as needed.
 	 *
-	 * @param	string $entry
-	 * @param	string $id
-	 *
-	 * @return bool
+	 * @access	private
+	 * @param	string	ID/URL to parse.
+	 * @return	string	Parsed ID
 	 */
-	static private function verifyID($entry, $id) {
+	static private function parseVideoID($id) {
 		$idhtml = htmlspecialchars($id);
+		if (array_key_exists('url_exists'))
 		//$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
 		//if ($idhtml == null || preg_match($idpattern, $idhtml)) {
 		return ($idhtml != null);

@@ -38,12 +38,11 @@ $wgExtensionMessagesFiles['EmbedVideoMagic']	= "{$extDir}/EmbedVideo.i18n.magic.
 $wgMessagesDirs['EmbedVideo']					= "{$extDir}/i18n";
 
 $wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.hooks.php";
+$wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.services.php";
 $wgAutoloadClasses['Screen9IdParser']			= "{$extDir}/Screen9IdParser.php";
 
 $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 
 //The services file is separate due to its large size.
 require_once($extDir."/EmbedVideo.services.php");
-
-EmbedVideoHooks::setServices($wgEmbedVideoServiceList);
 ?>
