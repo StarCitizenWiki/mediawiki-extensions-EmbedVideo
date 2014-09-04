@@ -73,13 +73,25 @@ class VideoService {
 			'embed'			=> '<iframe src="//rutube.ru/play/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
-			'https_enabled'	=> true
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#rutube.ru/video/([a-zA-Z0-9]+)(?:/\S+?)?#is'
+			),
+			'id_regex'		=> array(
+				'#^([a-zA-Z0-9]+)$#is'
+			)
 		),
 		'teachertube' => array(
 			'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.72972972972973, //(640 / 370)
-			'https_enabled'	=> false
+			'https_enabled'	=> false,
+			'url_regex'		=> array(
+				'#teachertube.com/video/(?:.*?-)?([\d]+)$#is',
+			),
+			'id_regex'		=> array(
+				'#^([\d]+)$#is'
+			)
 		),
 		'yahoo' => array(
 			'embed'			=> '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=%1$s" width="%2$d" height="%3$d" frameborder="0"></iframe>'
@@ -114,7 +126,7 @@ class VideoService {
 			'default_ratio'	=> 1.5, //(300 / 200)
 			'https_enabled'	=> false
 		),
-		'twitchchannel' => array(
+		'twitch' => array(
 			'embed'			=> '<object id="live_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=%1$s">
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
@@ -124,7 +136,13 @@ class VideoService {
 </object>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, //(620 / 378)
-			'https_enabled'	=> false
+			'https_enabled'	=> false,
+			'url_regex'		=> array(
+				'#twitch.tv/([\d\w-]+)(?:/\S+?)?#is'
+			),
+			'id_regex'		=> array(
+				'#^([\d\w-]+)$#is'
+			)
 		),
 		'twitchvod' => array(
 			'embed'			=> '<object id="clip_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/archive_embed_player.swf" bgcolor="#000000">
@@ -136,7 +154,13 @@ class VideoService {
 </object>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, //(620 / 378)
-			'https_enabled'	=> false
+			'https_enabled'	=> false,
+			'url_regex'		=> array(
+				'#twitch.tv/([\d\w-]+)(?:/\S+?)?#is'
+			),
+			'id_regex'		=> array(
+				'#^([\d\w-]+)$#is'
+			)
 		),
 		'vimeo' => array(
 			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',

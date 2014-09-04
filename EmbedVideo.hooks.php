@@ -88,8 +88,7 @@ class EmbedVideoHooks {
 		self::$service->setDescription($description, $parser);
 
 		//If the service has an ID pattern specified, verify the id number.
-		$id = self::$service->setVideoID($id);
-		if (!$id) {
+		if (!self::$service->setVideoID($id)) {
 			return self::error('id', $service, $id);
 		}
 
