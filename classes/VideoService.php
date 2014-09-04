@@ -88,12 +88,6 @@ class VideoService {
 		'yahoo' => array(
 			'embed'			=> '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=$1" width="$2" height="$3" frameborder="0"></iframe>'
 		),
-		'yandex' => array(
-			'embed'			=> '$5'
-		),
-		'yandexvideo' => array(
-			'embed'			=> '$5'
-		),
 		'youtube' => array(
 			'embed'			=> '<iframe src="//www.youtube.com/embed/$1" width="$2" height="$3" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -191,6 +185,13 @@ class VideoService {
 	private $height = false;
 
 	/**
+	 * Description Text
+	 *
+	 * @var		string
+	 */
+	private $description = false;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	private
@@ -263,6 +264,28 @@ class VideoService {
 			//Service definition has not specified a sanitization/validation regex.
 			return $id;
 		}
+	}
+
+	/**
+	 * Return description text.
+	 *
+	 * @access	public
+	 * @return	mixed	String description or false for not set.
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * Set the description.
+	 *
+	 * @access	public
+	 * @param	string	Description
+	 * @param	object	Mediawiki Parser object
+	 * @return	void
+	 */
+	public function setDescription($description, Parser $parser) {
+		$this->description = (!$description ? false : $parser->recursiveTagParse($description););
 	}
 
 	/**

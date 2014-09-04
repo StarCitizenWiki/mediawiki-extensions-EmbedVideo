@@ -11,13 +11,6 @@
 
 class EmbedVideoHooks {
 	/**
-	 * Hooks Initialized
-	 *
-	 * @var		boolean
-	 */
-	static private $initialized = false;
-
-	/**
 	 * Temporary storage for the current service object.
 	 *
 	 * @var		object
@@ -71,12 +64,6 @@ class EmbedVideoHooks {
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
 	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null) {
-		//Initialize things once
-		if (!self::$initialized) {
-			self::verifyWidthMinAndMax();
-			self::$initialized = true;
-		}
-
 		$service = trim($service);
 		$id      = trim($id);
 
@@ -98,13 +85,7 @@ class EmbedVideoHooks {
 		//The parser tag currently does not support specifying the height, but the coding functionality is available.
 		//self::$service->setHeight($height);
 
-		if ($alignment !== null && !self::validateAlignment($alignment)) {
-			return self::error('alignment', $alignment);
-		}
-
-		if ($description) {
-			$description = $parser->recursiveTagParse($description);
-		}
+		self::$service->setDescription($description, $parser);
 
 		//If the service has an ID pattern specified, verify the id number.
 		$id = self::$service->setVideoID($id);
@@ -112,12 +93,8 @@ class EmbedVideoHooks {
 			return self::error('id', $service, $id);
 		}
 
-		//Special Yandex Handler
-		$url = null;
-		// If service is Yandex -> use own parser
-		if ($service == 'yandex' || $service == 'yandexvideo') {
-			$url = self::getYandex($id);
-			$url = htmlspecialchars_decode($url);
+		if ($alignment !== null && !self::validateAlignment($alignment)) {
+			return self::error('alignment', $alignment);
 		}
 
 		/************************************/
@@ -221,21 +198,6 @@ class EmbedVideoHooks {
 	}
 
 	/**
-	 * Parse the video ID or URL, parsing through regex as needed.
-	 *
-	 * @access	private
-	 * @param	string	ID/URL to parse.
-	 * @return	string	Parsed ID
-	 */
-	static private function parseVideoID($id) {
-		$idhtml = htmlspecialchars($id);
-		if (array_key_exists('url_exists'))
-		//$idpattern = (isset($entry['id_pattern']) ? $entry['id_pattern'] : '%[^A-Za-z0-9_\\-]%');
-		//if ($idhtml == null || preg_match($idpattern, $idhtml)) {
-		return ($idhtml != null);
-	}
-
-	/**
 	 * Error Handler
 	 *
 	 * @access	private
@@ -250,40 +212,6 @@ class EmbedVideoHooks {
 		$message = wfMessage('error_embedvideo_'.$type, $arguments)->escaped();
 
 		return "<div class='errorbox'>{$message}</div>";
-	}
-
-	/**
-	 * Verify that the min and max values for width are sane.
-	 *
-	 * @return void
-	 */
-	static private function verifyWidthMinAndMax() {
-		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth;
-		if (!is_numeric($wgEmbedVideoMinWidth) || $wgEmbedVideoMinWidth < 100) {
-			$wgEmbedVideoMinWidth = 100;
-		}
-		if (!is_numeric($wgEmbedVideoMaxWidth) || $wgEmbedVideoMaxWidth > 1024) {
-			$wgEmbedVideoMaxWidth = 1024;
-		}
-	}
-
-	/**
-	 * Get Yandex information
-	 *
-	 * @access	public
-	 * @param	integer
-	 * @return	string
-	 */
-	static private function getYandex($id) {
-		$id = intval($id);
-		$return = self::curlGet("http://video.yandex.ru/oembed.xml?url=http://video.yandex.ru/users/{$id}");
-		if ($return === false) {
-			return false;
-		}
-		$start = strpos($return, '<html>') + 6;
-		$end   = strpos($return, '</html>');
-		$url   = substr($return, $start, $end - $start);
-		return $url;
 	}
 
 	/**

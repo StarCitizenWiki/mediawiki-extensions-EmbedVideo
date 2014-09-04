@@ -63,7 +63,6 @@ include:
 * Screen9
 * TeacherTube
 * Yahoo
-* Yandex
 * YouTube (Videos and Playlists)
 * Videomaten
 * Twitch (Channels and Archived Videos on Demand)
