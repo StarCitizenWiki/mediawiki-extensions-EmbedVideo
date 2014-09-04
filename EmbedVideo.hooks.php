@@ -46,8 +46,6 @@ class EmbedVideoHooks {
 	 * @return	string	Output from self::parseEV
 	 */
 	static public function parseEVP($parser, $service = null, $id = null, $description = null, $alignment = null, $width = null) {
-		wfDeprecated(__METHOD__, '1.23');
-
 		return self::parseEV($parser, $service, $id, $width, $alignment, $description);
 	}
 	
