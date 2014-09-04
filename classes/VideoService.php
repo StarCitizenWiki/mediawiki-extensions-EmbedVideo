@@ -175,13 +175,7 @@ class VideoService {
 			'https_enabled'	=> false
 		),
 		'twitch' => array(
-			'embed'			=> '<object id="live_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=%1$s">
-	<param name="allowFullScreen" value="true" />
-	<param name="allowScriptAccess" value="always" />
-	<param name="allowNetworking" value="all" />
-	<param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-	<param name="flashvars" value="hostname=www.twitch.tv&channel=%1$s&auto_play=false&start_volume=100" />
-</object>',
+			'embed'			=> '<iframe src="http://www.twitch.tv/embed?channel=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, //(620 / 378)
 			'https_enabled'	=> false,
