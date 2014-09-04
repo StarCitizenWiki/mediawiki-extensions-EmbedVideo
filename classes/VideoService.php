@@ -142,7 +142,16 @@ class VideoService {
 			)
 		),
 		'yahoo' => array(
-			'embed'			=> '<iframe src="http://d.yimg.com/nl/vyc/site/player.html#vid=%1$s" width="%2$d" height="%3$d" frameborder="0"></iframe>'
+			'embed'			=> '<iframe src="//screen.yahoo.com/%1$s.html?format=embed" width="%2$d" height="%3$d" scrolling="no" frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#screen\.yahoo\.com/(.+?-\d+).html#is'
+			),
+			'id_regex'		=> array(
+				'#^(.+?-\d+)$#is'
+			)
 		),
 		'youtube' => array(
 			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
