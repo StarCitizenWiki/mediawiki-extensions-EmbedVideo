@@ -67,8 +67,10 @@ class EmbedVideoHooks {
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
 	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null) {
-		$service = trim($service);
-		$id      = trim($id);
+		$service		= trim($service);
+		$id				= trim($id);
+		$alignment		= trim($alignment);
+		$description	= trim($description);
 
 		/************************************/
 		/* Error Checking                   */
