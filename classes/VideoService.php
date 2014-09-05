@@ -1,7 +1,7 @@
 <?php
 /**
  * EmbedVideo
- * EmbedVideo Services List
+ * EmbedVideo VideoService Class
  *
  * @license		MIT
  * @package		EmbedVideo
@@ -52,6 +52,15 @@ class VideoService {
 			'id_regex'		=> array(
 				'#^([\d\w\-\+]+)$#is'
 			)
+		),
+		'blip' => array(
+			'default_width'	=> 640,
+			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'https_enabled'	=> false,
+			'url_regex'		=> array(
+				'#http://blip\.tv/.+?/.+?-[\d]+#is'
+			),
+			'oembed'		=> 'http://blip.tv/oembed/?url=%1$s&width=%2$d&maxwidth=%2$d'
 		),
 		'bing' => array(
 			'embed'			=> '<iframe src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll allowfullscreen="true"></iframe>',
@@ -190,6 +199,10 @@ class VideoService {
 			),
 			'id_regex'		=> array(
 				'#^([\d\w-]+)$#is'
+			),
+			'oembed'		=> array(
+				'http'	=> 'http://www.youtube.com/oembed?url=%1$s&width=%2$d&maxwidth=%2$d',
+				'https'	=> 'http://www.youtube.com/oembed?scheme=https&url=%1$s&width=%2$d&maxwidth=%2$d'
 			)
 		),
 		'youtubeplaylist' => array(
@@ -250,7 +263,8 @@ class VideoService {
 			),
 			'id_regex'		=> array(
 				'#^([\d]+)$#is'
-			)
+			),
+			'oembed'		=> '//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
 		),
 		'vine' => array(
 			'embed'			=> '<iframe src="//vine.co/v/%1$s/embed/simple" width="%2$d" height="%3$d" frameborder="0"></iframe>',
@@ -312,6 +326,7 @@ class VideoService {
 	 * Main Constructor
 	 *
 	 * @access	private
+	 * @param	string	Service Name
 	 * @return	void
 	 */
 	private function __construct($service) {
@@ -322,11 +337,12 @@ class VideoService {
 	 * Create a new object from a service name.
 	 *
 	 * @access	public
-	 * @return	void
+	 * @param	string	Service Name
+	 * @return	mixed	New VideoService object or false on initialization error.
 	 */
 	static public function newFromName($service) {
 		if (array_key_exists($service, self::$services)) {
-			return new \EmbedVideo\VideoService($service);
+			return new self($service);
 		} else {
 			return false;
 		}
