@@ -188,6 +188,18 @@ class VideoService {
 				'#^([\d]+)$#is'
 			)
 		),
+		'ted' => array(
+			'embed'			=> '<iframe src="//embed-ssl.ted.com/talks/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#ted\.com/talks/([\d\w\-]+)(?:/\S+?)?#is',
+			),
+			'id_regex'		=> array(
+				'#^([\d\w\-]+)$#is'
+			)
+		),
 		'yahoo' => array(
 			'embed'			=> '<iframe src="//screen.yahoo.com/%1$s.html?format=embed" width="%2$d" height="%3$d" scrolling="no" frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe>',
 			'default_width'	=> 640,
