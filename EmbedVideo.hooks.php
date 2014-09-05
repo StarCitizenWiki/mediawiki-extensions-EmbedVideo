@@ -18,11 +18,25 @@ class EmbedVideoHooks {
 	static private $service;
 
 	/**
-	 * Description for the current video being processed.
+	 * Description Parameter
 	 *
-	 * @var		object
+	 * @var		string
 	 */
 	static private $description = false;
+
+	/**
+	 * Alignment Parameter
+	 *
+	 * @var		string
+	 */
+	static private $alignment = false;
+
+	/**
+	 * Container Parameter
+	 *
+	 * @var		string
+	 */
+	static private $container = false;
 
     /**
      * Sets up this extension's parser functions.
@@ -43,14 +57,9 @@ class EmbedVideoHooks {
 	 *
 	 * @access	public
 	 * @param	object	Parser
-	 * @param	string	[Optional] Which online service has the video.
-	 * @param	string	[Optional] Identifier of the chosen service
-	 * @param	string	[Optional] Description to show
-	 * @param	string	[Optional] Alignment of the video
-	 * @param	string	[Optional] Width of video
-	 * @return	string	Output from self::parseEV
+	 * @return	string	Error Message
 	 */
-	static public function parseEVP($parser, $service = null, $id = null, $description = null, $alignment = null, $width = null) {
+	static public function parseEVP($parser) {
 		wfDeprecated(__METHOD__, '2.0', 'EmbedVideo');
 		return self::error('evp_deprecated');
 	}
@@ -65,9 +74,10 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Width of video
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
+	 * @param	string	[Optional] Container to use, frame or thumb.
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null) {
+	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null, $container = null) {
 		$service		= trim($service);
 		$id				= trim($id);
 		$alignment		= trim($alignment);
@@ -98,7 +108,11 @@ class EmbedVideoHooks {
 
 		self::setDescription($description, $parser);
 
-		if (!empty($alignment) && !self::validateAlignment($alignment)) {
+		if (!self::setContainer($container)) {
+			return self::error('container', $container);
+		}
+
+		if (!self::setAlignment($alignment)) {
 			return self::error('alignment', $alignment);
 		}
 
@@ -110,9 +124,7 @@ class EmbedVideoHooks {
 			return self::error('unknown', $service);
 		}
 
-		if (self::getAlignmentClass($alignment) !== false || self::getDescription() !== false) {
-			$html = self::generateWrapperHTML($html, $alignment, self::getDescription());
-		}
+		$html = self::generateWrapperHTML($html);
 
 		return array(
 			$html,
@@ -130,36 +142,41 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Description
 	 * @return string
 	 */
-	static private function generateWrapperHTML($html, $alignment = null, $description = null) {
-		$alignClass = self::getAlignmentClass($alignment);
-
-		$html = "<div class='thumb".($alignClass ? " ".$alignClass : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".($description ? "<div class='thumbcaption'>{$description}</div>" : null)."</div></div>";
+	static private function generateWrapperHTML($html, $description = null) {
+		if (self::getContainer() == 'frame') {
+			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
+		} elseif (self::getContainer() == 'thumb') {
+			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
+		} else {
+			$html = "<div class='embedvideo ".(self::getAlignment() !== false ? " ev_".self::getAlignment() : null)."'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div>";
+		}
 		return $html;
 	}
 
 	/**
-	 * Validate the align parameter.
+	 * Return the alignment parameter.
+	 *
+	 * @access	public
+	 * @return	mixed	Alignment or false for not set.
+	 */
+	static private function getAlignment() {
+		return self::$alignment;
+	}
+
+	/**
+	 * Set the align parameter.
 	 *
 	 * @access	private
 	 * @param	string	Alignment Parameter
 	 * @return	boolean	Valid
 	 */
-	static private function validateAlignment($alignment) {
-		return ($alignment == 'left' || $alignment == 'right' || $alignment == 'none');
-	}
-
-	/**
-	 * Return the standard Mediawiki alignment class for the provided alignment parameter.
-	 *
-	 * @access	public
-	 * @return	mixed
-	 */
-	static private function getAlignmentClass($alignment) {
-		if ($alignment == 'left' || $alignment == 'right') {
-			return 't'.$alignment;
+	static private function setAlignment($alignment) {
+		if (!empty($alignment) && ($alignment == 'left' || $alignment == 'right')) {
+			self::$alignment = $alignment;
+		} elseif (!empty($alignment)) {
+			return false;
 		}
-
-		return false;
+		return true;
 	}
 
 	/**
@@ -182,6 +199,32 @@ class EmbedVideoHooks {
 	 */
 	static private function setDescription($description, \Parser $parser) {
 		self::$description = (!$description ? false : $parser->recursiveTagParse($description));
+	}
+
+	/**
+	 * Return container type.
+	 *
+	 * @access	private
+	 * @return	mixed	String container type or false for not set.
+	 */
+	static private function getContainer() {
+		return self::$container;
+	}
+
+	/**
+	 * Set the container type.
+	 *
+	 * @access	private
+	 * @param	string	Container
+	 * @return	boolean	Success
+	 */
+	static private function setContainer($container) {
+		if (!empty($container) && ($container == 'thumb' || $container == 'frame')) {
+			self::$container = $container;
+		} elseif (!empty($container)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
