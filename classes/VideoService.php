@@ -251,6 +251,18 @@ class VideoService {
 			'id_regex'		=> array(
 				'#^([\d]+)$#is'
 			)
+		),
+		'vine' => array(
+			'embed'			=> '<iframe src="//vine.co/v/%1$s/embed/simple" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1, //(1 / 1)
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#vine\.co/v/([a-zA-Z0-9]+)#is'
+			),
+			'id_regex'		=> array(
+				'#^([a-zA-Z0-9]+)$#is'
+			)
 		)
 	);
 
