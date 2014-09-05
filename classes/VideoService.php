@@ -74,6 +74,18 @@ class VideoService {
 				'#^([a-zA-Z0-9]+)$#is'
 			)
 		),
+		'collegehumor' => array(
+			'embed'			=> '<iframe src="//www.collegehumor.com/e/%1$s" width="%2$d" height="%3$d" frameborder="0" allowFullScreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1.6260162601626, //(600 / 369)
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#collegehumor\.com/(?:video|e)/([\d]+)#is'
+			),
+			'id_regex'		=> array(
+				'#^([\d]+)$#is'
+			)
+		),
 		'dailymotion' => array(
 			'embed'			=> '<iframe src="//www.dailymotion.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
