@@ -95,7 +95,7 @@ class EmbedVideoHooks {
 
 		self::setDescription($description, $parser);
 
-		if ($alignment !== null && !self::validateAlignment($alignment)) {
+		if (!empty($alignment) && !self::validateAlignment($alignment)) {
 			return self::error('alignment', $alignment);
 		}
 
