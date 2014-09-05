@@ -56,6 +56,14 @@ class OEmbed {
 	 */
 	public function getHtml() {
 		if (array_key_exists('html', $this->data)) {
+			//Remove any extra HTML besides the iframe.
+			$iframeStart = strpos($this->data['html'], '<iframe');
+			$iframeEnd = strpos($this->data['html'], '</iframe>');
+			if ($iframeStart !== false) {
+				//Only strip if an iframe was found.
+				$this->data['html'] = substr($this->data['html'], $iframeStart, $iframeEnd + 9);
+			}
+
 			return $this->data['html'];
 		} else {
 			return false;
@@ -223,7 +231,7 @@ class OEmbed {
 	   $page = curl_exec($ch);
 
 	   $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	   if ($responseCode == 503 || $responseCode == 404) {
+	   if ($responseCode == 503 || $responseCode == 404 || $responseCode == 501 || $responseCode == 401) {
 		   return false;
 	   }
 

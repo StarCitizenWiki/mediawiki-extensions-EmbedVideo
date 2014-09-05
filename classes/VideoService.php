@@ -58,7 +58,7 @@ class VideoService {
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> false,
 			'url_regex'		=> array(
-				'#http://blip\.tv/.+?/.+?-[\d]+#is'
+				'#(http://blip\.tv/.+?/.+?-[\d]+)#is'
 			),
 			'oembed'		=> 'http://blip.tv/oembed/?url=%1$s&width=%2$d&maxwidth=%2$d'
 		),
@@ -264,7 +264,7 @@ class VideoService {
 			'id_regex'		=> array(
 				'#^([\d]+)$#is'
 			),
-			'oembed'		=> '//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
+			'oembed'		=> '%4$s//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
 		),
 		'vine' => array(
 			'embed'			=> '<iframe src="//vine.co/v/%1$s/embed/simple" width="%2$d" height="%3$d" frameborder="0"></iframe>',
@@ -359,18 +359,42 @@ class VideoService {
 			return false;
 		}
 
-		$data = array(
-			$this->service['embed'],
-			$this->getVideoID(),
-			$this->getWidth(),
-			$this->getHeight()
-		);
+		$html = false;
+		if (array_key_exists('embed', $this->service)) {
+			//Embed can be generated locally instead of calling out to the service to get it.
+			$data = array(
+				$this->service['embed'],
+				$this->getVideoID(),
+				$this->getWidth(),
+				$this->getHeight()
+			);
 
-		if ($this->getExtraIds() !== false) {
-			$data = array_merge($data, $this->getExtraIds());
+			if ($this->getExtraIds() !== false) {
+				$data = array_merge($data, $this->getExtraIds());
+			}
+
+			$html = call_user_func_array('sprintf', $data);
+		} elseif (array_key_exists('oembed', $this->service)) {
+			//Call out to the service to get the embed HTML.
+			if ($this->service['https_enabled']) {
+				if (stristr($this->getVideoID(), 'https:') !== false) {
+					$protocol = 'https:';
+				} else {
+					$protocol = 'http:';
+				}
+			}
+			$url = sprintf(
+				$this->service['oembed'],
+				$this->getVideoID(),
+				$this->getWidth(),
+				$this->getHeight(),
+				$protocol
+			);
+			$oEmbed = OEmbed::newFromRequest($url);
+			if ($oEmbed !== false) {
+				$html = $oEmbed->getHtml();
+			}
 		}
-
-		$html = call_user_func_array('sprintf', $data);
 
 		return $html;
 	}
