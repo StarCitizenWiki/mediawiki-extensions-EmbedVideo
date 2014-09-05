@@ -18,15 +18,15 @@ class VideoService {
 	 */
 	static private $services = array(
 		'archiveorg' => array(
-			'embed'			=> '<iframe src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>'
+			'embed'			=> '<iframe src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> array(
-				'#archive\.org/(?:details|embed)/([^/\?#]+)#is'
+				'#archive\.org/(?:details|embed)/([^/\?\#]+)#is'
 			),
 			'id_regex'		=> array(
-				'#^([^/\?#]+)$#is'
+				'#^([^/\?\#]+)$#is'
 			)
 		),
 		'bambuser' => array(
