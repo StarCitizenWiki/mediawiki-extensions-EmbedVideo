@@ -155,7 +155,7 @@ class EmbedVideoHooks {
 		if ($alignment == 'left' || $alignment == 'right') {
 			return 't'.$alignment;
 		}
-		
+
 		return false;
 	}
 

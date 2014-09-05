@@ -42,4 +42,10 @@ $wgAutoloadClasses['EmbedVideo\VideoService']	= "{$extDir}/classes/VideoService.
 $wgAutoloadClasses['EmbedVideo\OEmbed']			= "{$extDir}/classes/OEmbed.php";
 
 $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
+
+$wgResourceModules['ext.embedVideo'] = array(
+	'localBasePath'	=> __DIR__,
+	'remoteExtPath'	=> 'EmbedVideo',
+	'styles'		=> array('css/embedvideo.css')
+);
 ?>
