@@ -117,6 +117,18 @@ class VideoService {
 				'#^([a-zA-Z0-9]+)$#is'
 			)
 		),
+		'nico' => array(
+			'embed'			=> '<script type="text/javascript" src="http://ext.nicovideo.jp/thumb_watch/%1$s?w=%2$d&h=%3$d"></script>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.59609120521173, //(490 / 307)
+			'https_enabled'	=> false,
+			'url_regex'		=> array(
+				'#nicovideo.jp/watch/(sm[\d]+)#is'
+			),
+			'id_regex'		=> array(
+				'#^(sm[\d]+)$#is'
+			)
+		),
 		'rutube' => array(
 			'embed'			=> '<iframe src="//rutube.ru/play/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
