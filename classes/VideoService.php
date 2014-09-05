@@ -17,8 +17,21 @@ class VideoService {
 	 * @var		array
 	 */
 	static private $services = array(
+		'archiveorg' => array(
+			'embed'			=> '<iframe src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>'
+			'default_width'	=> 640,
+			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#archive\.org/(?:details|embed)/([^/\?#]+)#is'
+			),
+			'id_regex'		=> array(
+				'#^([^/\?#]+)$#is'
+			)
+		),
 		'bambuser' => array(
-			'embed'			=> '<iframe src="//embed.bambuser.com/broadcast/%1$s" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'embed'			=> '<iframe src="//embed.bambuser.com/broadcast/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> array(
@@ -29,7 +42,8 @@ class VideoService {
 			)
 		),
 		'bambuser_channel' => array(
-			'embed' 		=> '<iframe src="//embed.bambuser.com/channel/%1$s" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'embed' 		=> '<iframe src="//embed.bambuser.com/channel/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> array(
@@ -40,7 +54,7 @@ class VideoService {
 			)
 		),
 		'bing' => array(
-			'embed'			=> '<iframe src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll></iframe>',
+			'embed'			=> '<iframe src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
@@ -123,7 +137,7 @@ class VideoService {
 			'default_ratio'	=> 1.59609120521173, //(490 / 307)
 			'https_enabled'	=> false,
 			'url_regex'		=> array(
-				'#nicovideo.jp/watch/(sm[\d]+)#is'
+				'#nicovideo\.jp/watch/(sm[\d]+)#is'
 			),
 			'id_regex'		=> array(
 				'#^(sm[\d]+)$#is'
