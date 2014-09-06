@@ -74,7 +74,7 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Width of video
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
-	 * @param	string	[Optional] Container to use, frame or thumb.
+	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
 	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null, $container = null) {
@@ -144,8 +144,6 @@ class EmbedVideoHooks {
 	 */
 	static private function generateWrapperHTML($html, $description = null) {
 		if (self::getContainer() == 'frame') {
-			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
-		} elseif (self::getContainer() == 'thumb') {
 			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
 		} else {
 			$html = "<div class='embedvideo ".(self::getAlignment() !== false ? " ev_".self::getAlignment() : null)."'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div>";
@@ -219,7 +217,7 @@ class EmbedVideoHooks {
 	 * @return	boolean	Success
 	 */
 	static private function setContainer($container) {
-		if (!empty($container) && ($container == 'thumb' || $container == 'frame')) {
+		if (!empty($container) && ($container == 'frame')) {
 			self::$container = $container;
 		} elseif (!empty($container)) {
 			return false;
