@@ -116,6 +116,17 @@ class VideoService {
 				'#^([a-zA-Z0-9]+)$#is'
 			)
 		),
+		'gfycat' => array(
+			'embed'			=> '<iframe src="//gfycat.com/ifr/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no" style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ></iframe>',
+			'default_width'	=> 640,
+			'https_enabled'	=> true,
+			'url_regex'		=> array(
+				'#gfycat\.com/([a-zA-Z]+)#is'
+			),
+			'id_regex'		=> array(
+				'#^([a-zA-Z]+)$#is'
+			)
+		),
 		'kickstarter' => array(
 			'embed'			=> '<iframe src="//www.kickstarter.com/projects/%1$s/widget/video.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,

@@ -71,17 +71,27 @@ class EmbedVideoHooks {
 	 * @param	object	Parser
 	 * @param	string	[Optional] Which online service has the video.
 	 * @param	string	[Optional] Identifier Code or URL for the video on the service.
-	 * @param	string	[Optional] Width of video
+	 * @param	string	[Optional] Dimensions of video
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
 	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV($parser, $service = null, $id = null, $width = null, $alignment = null, $description = null, $container = null) {
+	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null) {
 		$service		= trim($service);
 		$id				= trim($id);
 		$alignment		= trim($alignment);
 		$description	= trim($description);
+		$dimensions		= trim($dimensions);
+		$width			= null;
+		$height			= null;
+
+		if (stristr($dimensions, 'x')) {
+			$dimensions = strtolower($dimensions);
+			list($width, $height) = explode('x', $dimensions);
+		} elseif (is_numeric($dimensions)) {
+			$width = $dimensions;
+		}
 
 		/************************************/
 		/* Error Checking                   */
@@ -95,11 +105,10 @@ class EmbedVideoHooks {
 			return self::error('service', $service);
 		}
 
-		//Let the service automatically handle bad width values.
+		//Let the service automatically handle bad dimensional values.
 		self::$service->setWidth($width);
 
-		//The parser tag currently does not support specifying the height, but the coding functionality is available.
-		//self::$service->setHeight($height);
+		self::$service->setHeight($height);
 
 		//If the service has an ID pattern specified, verify the id number.
 		if (!self::$service->setVideoID($id)) {
@@ -144,9 +153,10 @@ class EmbedVideoHooks {
 	 */
 	static private function generateWrapperHTML($html, $description = null) {
 		if (self::getContainer() == 'frame') {
-			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: {$width}px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
+			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: ".self::$service->getWidth()."px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
 		} else {
-			$html = "<div class='embedvideo ".(self::getAlignment() !== false ? " ev_".self::getAlignment() : null)."'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div>";
+			//Normally I would avoid inline styles, but it is necessary in this case for center alignment as the stylesheet can not be dynamically modified.
+			$html = "<div class='embedvideo ".(self::getAlignment() !== false ? " ev_".self::getAlignment() : null)."' style='width: ".self::$service->getWidth()."px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div>";
 		}
 		return $html;
 	}
@@ -169,7 +179,7 @@ class EmbedVideoHooks {
 	 * @return	boolean	Valid
 	 */
 	static private function setAlignment($alignment) {
-		if (!empty($alignment) && ($alignment == 'left' || $alignment == 'right')) {
+		if (!empty($alignment) && ($alignment == 'left' || $alignment == 'right' || $alignment == 'center')) {
 			self::$alignment = $alignment;
 		} elseif (!empty($alignment)) {
 			return false;
