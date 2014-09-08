@@ -78,6 +78,8 @@ class EmbedVideoHooks {
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
 	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null) {
+		global $wgOut;
+
 		$service		= trim($service);
 		$id				= trim($id);
 		$alignment		= trim($alignment);
@@ -86,6 +88,7 @@ class EmbedVideoHooks {
 		$width			= null;
 		$height			= null;
 
+		//I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
 		if (stristr($dimensions, 'x')) {
 			$dimensions = strtolower($dimensions);
 			list($width, $height) = explode('x', $dimensions);
@@ -135,6 +138,8 @@ class EmbedVideoHooks {
 
 		$html = self::generateWrapperHTML($html);
 
+		$wgOut->addModuleStyles(['ext.embedVideo']);
+
 		return array(
 			$html,
 			'noparse' => true,
@@ -153,7 +158,7 @@ class EmbedVideoHooks {
 	 */
 	static private function generateWrapperHTML($html, $description = null) {
 		if (self::getContainer() == 'frame') {
-			$html = "<div class='thumb".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'><div class='thumbinner' style='width: ".self::$service->getWidth()."px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
+			$html = "<div class='thumb embedvideo".(self::getAlignment() !== false ? " t".self::getAlignment() : null)."'".(self::getAlignment() !== false ? "style='width: ".(self::$service->getWidth() + 6)."px;'" : null)."><div class='thumbinner' style='width: ".self::$service->getWidth()."px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div></div>";
 		} else {
 			//Normally I would avoid inline styles, but it is necessary in this case for center alignment as the stylesheet can not be dynamically modified.
 			$html = "<div class='embedvideo ".(self::getAlignment() !== false ? " ev_".self::getAlignment() : null)."' style='width: ".self::$service->getWidth()."px;'>{$html}".(self::getDescription() !== false ? "<div class='thumbcaption'>".self::getDescription()."</div>" : null)."</div>";
