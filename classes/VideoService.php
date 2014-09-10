@@ -537,7 +537,7 @@ class VideoService {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth, $wgEmbedVideoDefaultWidth;
 
 		if (!is_numeric($width)) {
-			if ($width === null && $this->getDefaultWidth() !== false) {
+			if ($width === null && $this->getDefaultWidth() !== false && $wgEmbedVideoDefaultWidth < 1) {
 				$width = $this->getDefaultWidth();
 			} else {
 				$width = ($wgEmbedVideoDefaultWidth > 0 ? $wgEmbedVideoDefaultWidth : 640);
