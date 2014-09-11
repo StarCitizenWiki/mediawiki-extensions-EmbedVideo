@@ -80,6 +80,8 @@ class EmbedVideoHooks {
 	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null) {
 		global $wgOut;
 
+		self::resetParameters();
+
 		$service		= trim($service);
 		$id				= trim($id);
 		$alignment		= trim($alignment);
@@ -238,6 +240,18 @@ class EmbedVideoHooks {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Reset parameters between parses.
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	static private function resetParameters() {
+		self::$description	= false;
+		self::$alignment	= false;
+		self::$container	= false;
 	}
 
 	/**
