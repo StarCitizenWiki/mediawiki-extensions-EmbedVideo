@@ -516,16 +516,6 @@ class VideoService {
 	}
 
 	/**
-	 * Return the height.
-	 *
-	 * @access	public
-	 * @return	mixed	Integer value or false for not set.
-	 */
-	public function getHeight() {
-		return $this->height;
-	}
-
-	/**
 	 * Set the width of the player.  This also will set the height automatically.
 	 * Width will be automatically constrained to the minimum and maximum widths.
 	 *
@@ -558,6 +548,16 @@ class VideoService {
 		if ($this->getHeight() === false) {
 			$this->setHeight();
 		}
+	}
+
+	/**
+	 * Return the height.
+	 *
+	 * @access	public
+	 * @return	mixed	Integer value or false for not set.
+	 */
+	public function getHeight() {
+		return $this->height;
 	}
 
 	/**
