@@ -140,7 +140,7 @@ class EmbedVideoHooks {
 
 		$html = self::generateWrapperHTML($html);
 
-		$wgOut->addModuleStyles( 'ext.embedVideo' );
+		$wgOut->addModuleStyles(array('ext.embedVideo'));
 
 		return array(
 			$html,
