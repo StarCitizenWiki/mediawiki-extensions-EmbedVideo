@@ -95,7 +95,7 @@ class VideoService {
 				'#dailymotion\.com/(?:video|embed/video)/([a-zA-Z0-9]+)(?:_\S+?)?#is'
 			),
 			'id_regex'		=> array(
-				'#^([a-zA-Z0-9]+)$#is'
+				'#^([a-zA-Z0-9]+)(?:_\S+?)#is'
 			)
 		),
 		'divshare' => array(
