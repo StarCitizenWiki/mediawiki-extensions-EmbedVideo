@@ -51,7 +51,7 @@ class EmbedVideoHooks {
 
 		return true;
 	}
-	
+
 	/**
 	 * Adapter to call the new style tag.
 	 *
