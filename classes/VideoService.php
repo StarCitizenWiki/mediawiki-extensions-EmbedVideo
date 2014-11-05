@@ -224,7 +224,7 @@ class VideoService {
 			)
 		),
 		'youtube' => array(
-			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
@@ -241,7 +241,7 @@ class VideoService {
 			)
 		),
 		'youtubeplaylist' => array(
-			'embed'			=> '<iframe src="//www.youtube.com/embed/videoseries?list=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//www.youtube.com/embed/videoseries?list=%1$s%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
@@ -358,6 +358,13 @@ class VideoService {
 	private $extraIDs = false;
 
 	/**
+	 * Extra URL Arguments that may be utilized by some services.
+	 *
+	 * @var		array
+	 */
+	private $urlArgs = false;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	private
@@ -401,11 +408,16 @@ class VideoService {
 				$this->service['embed'],
 				$this->getVideoID(),
 				$this->getWidth(),
-				$this->getHeight()
+				$this->getHeight(),
 			);
 
 			if ($this->getExtraIds() !== false) {
 				$data = array_merge($data, $this->getExtraIds());
+			}
+
+			$urlArgs = $this->getUrlArgs();
+			if ($urlArgs !== false) {
+				$data[] = '?'.$urlArgs;
 			}
 
 			$html = call_user_func_array('sprintf', $data);
@@ -445,7 +457,7 @@ class VideoService {
 	}
 
 	/**
-	 * Function Documentation
+	 * Set the Video ID for this video.
 	 *
 	 * @access	public
 	 * @param	string	Video ID/URL
@@ -578,6 +590,48 @@ class VideoService {
 			$ratio = $this->getDefaultRatio();
 		}
 		$this->height = round($this->getWidth() / $ratio);
+	}
+
+	/**
+	 * Return the optional URL arguments.
+	 *
+	 * @access	public
+	 * @return	mixed	Integer value or false for not set.
+	 */
+	public function getUrlArgs() {
+		if ($this->urlArgs !== false) {
+			return http_build_query($this->urlArgs);
+		}
+	}
+
+	/**
+	 * Set URL Arguments to optionally add to the embed URL.
+	 *
+	 * @access	public
+	 * @param	string	Raw Arguments
+	 * @return	boolean	Success
+	 */
+	public function setUrlArgs($urlArgs) {
+		if (!$urlArgs) {
+			return true;
+		}
+
+		$urlArgs = urldecode($urlArgs);
+		$_args = explode('&', $urlArgs);
+
+		if (is_array($_args)) {
+			foreach ($_args as $rawPair) {
+				list($key, $value) = explode("=", $rawPair, 2);
+				if (empty($key) || ($value === null || $value === '')) {
+					return false;
+				}
+				$arguments[$key] = htmlentities($value, ENT_QUOTES);
+			}
+		} else {
+			return false;
+		}
+		$this->urlArgs = $arguments;
+		return true;
 	}
 
 	/**

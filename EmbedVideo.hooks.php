@@ -77,7 +77,7 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null) {
+	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null) {
 		self::resetParameters();
 
 		$service		= trim($service);
@@ -85,6 +85,7 @@ class EmbedVideoHooks {
 		$alignment		= trim($alignment);
 		$description	= trim($description);
 		$dimensions		= trim($dimensions);
+		$urlArgs		= trim($urlArgs);
 		$width			= null;
 		$height			= null;
 
@@ -116,6 +117,10 @@ class EmbedVideoHooks {
 		//If the service has an ID pattern specified, verify the id number.
 		if (!self::$service->setVideoID($id)) {
 			return self::error('id', $service, $id);
+		}
+
+		if (!self::$service->setUrlArgs($urlArgs)) {
+			return self::error('urlargs', $service, $urlArgs);
 		}
 
 		self::setDescription($description, $parser);
