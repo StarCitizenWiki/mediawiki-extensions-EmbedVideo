@@ -75,6 +75,7 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Description to show
 	 * @param	string	[Optional] Alignment of the video
 	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
+	 * @param	string	[Optional] Extra URL Arguments
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
 	static public function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null) {
