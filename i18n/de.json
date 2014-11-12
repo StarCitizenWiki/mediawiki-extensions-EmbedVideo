@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Messerjokke79"
+		]
+	},
+	"embedvideo_description": "Fügt eine Parserfunktion, mittels derer Videos populärer Dienste eingebettet werden können.",
+	"error_embedvideo_missingparams": "EmbedVideo fehlt eine anzugebender Parameter.",
+	"error_embedvideo_service": "EmbedVideo erkennt den Videodienst „$1“ nicht.",
+	"error_embedvideo_id": "EmbedVideo erhielt die unbrauchbare ID „$2“ für „$1“.",
+	"error_embedvideo_width": "EmbedVideo erhielt den unbrauchbaren width-Parameter „$1“.",
+	"error_embedvideo_height": "EmbedVideo erhielt den unbrauchbaren height-Parameter „$1“.",
+	"error_embedvideo_alignment": "EmbedVideo wurde ein ungültiger Wert den alignment-Parameter „$1“ gegeben. Gültige Werte sind „left“, „center“, „right“ oder „none“.",
+	"error_embedvideo_urlargs": "EmbedVideo erhielt eine Liste von URL-Argumenten, die unbrauchbare Daten oder leere Argumente aufwiesen.",
+	"error_embedvideo_unknown": "EmbedVideo stieß auf einen Fehler, während der Video-Einbettungsblock erstellt werden sollte.  ($1)",
+	"error_embedvideo_evp_deprecated": "Die Parserfunktion „#evp“ in EmbedVideo 2.0 verworfen; es sind alle Parserfunktionen-Tags in „#ev“ zu ändern.",
+	"error_embedvideo_container": "Der Parameter für 'container' ist ungültig."
+}
