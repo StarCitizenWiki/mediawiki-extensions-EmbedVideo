@@ -10,7 +10,7 @@
 	"error_embedvideo_id": "EmbedVideo - Felaktig id \"$2\" för tjänsten \"$1\" har angivits.",
 	"error_embedvideo_width": "EmbedVideo - Felaktigt värde \"$1\" har angivits som bredd.",
 	"error_embedvideo_height": "EmbedVideo - Felaktigt värde \"$1\" har angivits som höjd.",
-	"error_embedvideo_alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad eller \"auto\".",
+	"error_embedvideo_alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad.",
 	"error_embedvideo_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
 	"error_embedvideo_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
 	"error_embedvideo_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
