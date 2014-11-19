@@ -50,8 +50,9 @@ $wgResourceModules['ext.embedVideo'] = array(
 	'position'		=> 'top'
 );
 
-if (!isset($wgEmbedVideoDefaultWidth) && $_SERVER['HTTP_X_MOBILE'] == 'true' && $_COOKIE['stopMobileRedirect'] != 1) {
-	//Set a smaller default width when in mobile view.
-	$wgEmbedVideoDefaultWidth = 320;
+if (!isset($wgEmbedVideoDefaultWidth) && isset( $_SERVER['HTTP_X_MOBILE'] )
+	&& $_SERVER['HTTP_X_MOBILE'] == 'true' && $_COOKIE['stopMobileRedirect'] != 1) {
+		//Set a smaller default width when in mobile view.
+		$wgEmbedVideoDefaultWidth = 320;
 }
 ?>
