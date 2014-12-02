@@ -38,6 +38,21 @@ class EmbedVideoHooks {
 	 */
 	static private $container = false;
 
+	/**
+	 * Container Parameter
+	 *
+	 * @var		string
+	 */
+	static private $validArguments = [
+		'service',
+		'id',
+		'dimensions',
+		'alignment',
+		'description',
+		'container',
+		'urlargs',
+	];
+
     /**
      * Sets up this extension's parser functions.
      *
@@ -47,7 +62,10 @@ class EmbedVideoHooks {
      */
     static public function onParserFirstCallInit(Parser &$parser) {
 		$parser->setFunctionHook("ev", "EmbedVideoHooks::parseEV");
+		$parser->setFunctionHook("evt", "EmbedVideoHooks::parseEVT");
 		$parser->setFunctionHook("evp", "EmbedVideoHooks::parseEVP");
+
+		$parser->setHook("embedvideo", "EmbedVideoHooks::parseEVTag");
 
 		return true;
 	}
@@ -62,6 +80,66 @@ class EmbedVideoHooks {
 	static public function parseEVP($parser) {
 		wfDeprecated(__METHOD__, '2.0', 'EmbedVideo');
 		return self::error('evp_deprecated');
+	}
+
+	/**
+	 * Adapter to call the EV parser tag with template like calls.
+	 *
+	 * @access	public
+	 * @param	object	Parser
+	 * @return	string	Error Message
+	 */
+	static public function parseEVT($parser) {
+		$arguments = func_get_args();
+		array_shift($arguments);
+
+		foreach ($arguments as $argumentPair) {
+			$argumentPair = trim($argumentPair);
+			if (!strpos($argumentPair, '=')) {
+				continue;
+			}
+
+			list($key, $value) = explode('=', $argumentPair, 2);
+
+			if (!in_array($key, self::$validArguments)) {
+				continue;
+			}
+			$args[$key] = $value;
+		}
+
+		return self::parseEV(
+			$parser,
+			$args['service'],
+			$args['id'],
+			$args['dimensions'],
+			$args['alignment'],
+			$args['description'],
+			$args['container'],
+			$args['urlargs']
+		);
+	}
+
+	/**
+	 * Adapter to call the parser hook.
+	 *
+	 * @access	public
+	 * @param	string	Raw User Input
+	 * @param	array	Arguments on the tag.
+	 * @param	object	Parser object.
+	 * @param	object	PPFrame object.
+	 * @return	string	Error Message
+	 */
+	static public function parseEVTag($input, array $args, Parser $parser, PPFrame $frame) {
+		return self::parseEV(
+			$parser,
+			$args['service'],
+			$input,
+			$args['dimensions'],
+			$args['alignment'],
+			$args['description'],
+			$args['container'],
+			$args['urlargs']
+		);
 	}
 	
 	/**

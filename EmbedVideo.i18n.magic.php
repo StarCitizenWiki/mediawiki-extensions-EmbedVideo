@@ -13,6 +13,7 @@ $magicWords = array();
 
 $magicWords['en']  = array(
 	'ev'	=> array(0, 'ev'),
-	'evp'	=> array(0, 'evp')
+	'evp'	=> array(0, 'evp'),
+	'evt'	=> array(0, 'evt')
 );
 ?>
