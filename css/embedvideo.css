@@ -3,6 +3,11 @@ div.tcenter.embedvideo, div.embedvideo.ev_center {
 	margin-right: auto;
 }
 
+div.embedvideo.ev_left {
+	clear: left;
+	float: left;
+}
+
 div.embedvideo.ev_right {
 	clear: right;
 	float: right;
