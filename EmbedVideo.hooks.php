@@ -43,15 +43,15 @@ class EmbedVideoHooks {
 	 *
 	 * @var		string
 	 */
-	static private $validArguments = [
+	static private $validArguments = array(
 		'service',
 		'id',
 		'dimensions',
 		'alignment',
 		'description',
 		'container',
-		'urlargs',
-	];
+		'urlargs'
+	);
 
     /**
      * Sets up this extension's parser functions.
