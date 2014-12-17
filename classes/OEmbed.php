@@ -16,7 +16,7 @@ class OEmbed {
 	 *
 	 * @var		array
 	 */
-	private $data = array();
+	private $data = [];
 
 	/**
 	 * Main Constructor
@@ -211,9 +211,9 @@ class OEmbed {
 	   $timeout = 10;
 	   $useragent = "EmbedVideo/1.0/".$wgServer;
 	   $dateTime = gmdate("D, d M Y H:i:s", time())." GMT";
-	   $headers = array('Date: '.$dateTime);
+	   $headers = ['Date: '.$dateTime];
 
-	   $curlOptions = array(
+	   $curlOptions = [
 		   CURLOPT_TIMEOUT		   => $timeout,
 		   CURLOPT_USERAGENT	   => $useragent,
 		   CURLOPT_URL			   => $location,
@@ -224,7 +224,7 @@ class OEmbed {
 		   CURLOPT_COOKIEJAR	   => sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
 		   CURLOPT_RETURNTRANSFER  => true,
 		   CURLOPT_HTTPHEADER	   => $headers
-	   );
+	   ];
 
 	   curl_setopt_array($ch, $curlOptions);
 
