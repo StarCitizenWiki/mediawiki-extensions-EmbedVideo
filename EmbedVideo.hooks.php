@@ -39,18 +39,18 @@ class EmbedVideoHooks {
 	static private $container = false;
 
 	/**
-	 * Container Parameter
+	 * Valid Arguments for the parseEV function hook.
 	 *
 	 * @var		string
 	 */
 	static private $validArguments = array(
-		'service',
-		'id',
-		'dimensions',
-		'alignment',
-		'description',
-		'container',
-		'urlargs'
+		'service'		=> null,
+		'id'			=> null,
+		'dimensions'	=> null,
+		'alignment'		=> null,
+		'description'	=> null,
+		'container'		=> null,
+		'urlargs'		=> null
 	);
 
     /**
@@ -101,11 +101,13 @@ class EmbedVideoHooks {
 
 			list($key, $value) = explode('=', $argumentPair, 2);
 
-			if (!in_array($key, self::$validArguments)) {
+			if (!array_key_exists($key, self::$validArguments)) {
 				continue;
 			}
 			$args[$key] = $value;
 		}
+
+		$args = array_merge(self::$validArguments, $args);
 
 		return self::parseEV(
 			$parser,
@@ -130,6 +132,8 @@ class EmbedVideoHooks {
 	 * @return	string	Error Message
 	 */
 	static public function parseEVTag($input, array $args, Parser $parser, PPFrame $frame) {
+		$args = array_merge(self::$validArguments, $args);
+
 		return self::parseEV(
 			$parser,
 			$args['service'],
@@ -143,7 +147,7 @@ class EmbedVideoHooks {
 	}
 	
 	/**
-	 * Embeds video of the chosen service
+	 * Embeds a video of the chosen service.
 	 *
 	 * @access	public
 	 * @param	object	Parser
