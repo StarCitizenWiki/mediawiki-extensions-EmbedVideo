@@ -9,11 +9,11 @@
  *
  **/
 
-$magicWords = array();
+$magicWords = [];
 
-$magicWords['en']  = array(
-	'ev'	=> array(0, 'ev'),
-	'evp'	=> array(0, 'evp'),
-	'evt'	=> array(0, 'evt')
-);
+$magicWords['en']  = [
+	'ev'	=> [0, 'ev'],
+	'evp'	=> [0, 'evp'],
+	'evt'	=> [0, 'evt']
+];
 ?>

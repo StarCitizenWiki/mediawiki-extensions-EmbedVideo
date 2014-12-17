@@ -19,14 +19,14 @@ if (!defined('MEDIAWIKI')) {
 /******************************************/
 /* Credits                                */
 /******************************************/
-$wgExtensionCredits['parserhook'][] = array(
+$wgExtensionCredits['parserhook'][] = [
 	'path'				=> __FILE__,
 	'name'				=> 'EmbedVideo',
-	'author'			=> array('Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'),
+	'author'			=> ['Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'],
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
 	'version'			=> '2.2.1',
 	'descriptionmsg'	=> 'embedvideo_description'
-);
+];
 
 /******************************************/
 /* Language Strings, Page Aliases, Hooks  */
@@ -43,12 +43,12 @@ $wgAutoloadClasses['EmbedVideo\OEmbed']			= "{$extDir}/classes/OEmbed.php";
 
 $wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
 
-$wgResourceModules['ext.embedVideo'] = array(
+$wgResourceModules['ext.embedVideo'] = [
 	'localBasePath'	=> __DIR__,
 	'remoteExtPath'	=> 'EmbedVideo',
-	'styles'		=> array('css/embedvideo.css'),
+	'styles'		=> ['css/embedvideo.css'],
 	'position'		=> 'top'
-);
+];
 
 if (!isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1) {
 	//Set a smaller default width when in mobile view.
