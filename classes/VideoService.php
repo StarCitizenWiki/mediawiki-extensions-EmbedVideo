@@ -258,7 +258,7 @@ class VideoService {
 			'https_enabled'	=> false
 		],
 		'twitch' => [
-			'embed'			=> '<iframe src="http://www.twitch.tv/embed?channel=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="http://www.twitch.tv/%1$s/embed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, //(620 / 378)
 			'https_enabled'	=> false,
