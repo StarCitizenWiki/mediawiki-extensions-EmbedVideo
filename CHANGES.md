@@ -28,7 +28,7 @@
 * Fixed context in which resource modules are loaded.  This resolves an issue with CSS not always applying.
 
 ###v2.1.4 Patch Notes
-* [Problem with Dailymotion videos // EmbedVideo 2.1.3 (running on MediaWiki 1.23.5)](https://github.com/Alexia/mediawiki-embedvideo/issues/16)  Thanks to [Accidental usage of PHP 5.4+ array syntax would cause a fatal error for older Mediawiki installations.](https://github.com/Alexia/mediawiki-embedvideo/pull/14) for reporting this issue.
+* [Problem with Dailymotion videos // EmbedVideo 2.1.3 (running on MediaWiki 1.23.5)](https://github.com/Alexia/mediawiki-embedvideo/issues/16)  Thanks to [Pierre-Yves](https://github.com/gentilvirus) for reporting this issue.
 
 ###v2.1.3 Patch Notes
 * [Accidental usage of PHP 5.4+ array syntax would cause a fatal error for older Mediawiki installations.](https://github.com/Alexia/mediawiki-embedvideo/pull/14)  Thanks to [Rich Bowen](https://github.com/rbowen) for reporting and submitting a patch for this issue.
