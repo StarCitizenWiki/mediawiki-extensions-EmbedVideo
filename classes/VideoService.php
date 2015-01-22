@@ -211,6 +211,19 @@ class VideoService {
 				'#^([\d\w\-]+)$#is'
 			]
 		],
+		'tudou' => [
+			'embed'			=> '<embed src="http://www.tudou.com/l/%1$s/&bid=05&iid=220682902&resourceId=0_05_05_99/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="%2$d" height="%3$d"></embed>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.6,
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#tudou.com/listplay/([\d\w-]+)/([\d\w-]+).html#is',
+				'#tudou.com/listplay/([\d\w-]+).html#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-]+)$#is'
+			]
+		],
 		'twitch' => [
 			'embed'			=> '<iframe src="http://www.twitch.tv/%1$s/embed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
