@@ -211,6 +211,67 @@ class VideoService {
 				'#^([\d\w\-]+)$#is'
 			]
 		],
+		'twitch' => [
+			'embed'			=> '<iframe src="http://www.twitch.tv/%1$s/embed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.64021164021164, //(620 / 378)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#twitch\.tv/([\d\w-]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-]+)$#is'
+			]
+		],
+		'twitchvod' => [
+			'embed'			=> '<object id="clip_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/archive_embed_player.swf" bgcolor="#000000">
+	<param name="movie" value="http://www.twitch.tv/widgets/archive_embed_player.swf" />
+	<param name="allowScriptAccess" value="always" />
+	<param name="allowNetworking" value="all" />
+	<param name="allowFullScreen" value="true" />
+	<param name="flashvars" value="channel=%1$s&amp;auto_play=false&amp;start_volume=100&amp;chapter_id=%4$d" />
+</object>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.64021164021164, //(620 / 378)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#twitch\.tv/([\d\w-]+)/c/([\d]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-]+)/c/([\d]+)$#is'
+			]
+		],
+		'videomaten' => [
+			'embed'			=> '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="%2$d" height="%3$d" id="videomat" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="http://89.160.51.62/recordMe/play.swf?id=%1$s" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://89.160.51.62/recordMe/play.swf?id=%1$s" loop="false" quality="high" bgcolor="#ffffff" width="%2$d" height="%3$d" name="videomat" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object>',
+			'default_ratio'	=> 1.5, //(300 / 200)
+			'https_enabled'	=> false
+		],
+		'vimeo' => [
+			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#vimeo\.com/([\d]+)#is',
+				'#vimeo\.com/channels/[\d\w-]+/([\d]+)#is'
+			],
+			'id_regex'		=> [
+				'#^([\d]+)$#is'
+			],
+			'oembed'		=> '%4$s//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
+		],
+		'vine' => [
+			'embed'			=> '<iframe src="//vine.co/v/%1$s/embed/simple" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1, //(1 / 1)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#vine\.co/v/([a-zA-Z0-9]+)#is'
+			],
+			'id_regex'		=> [
+				'#^([a-zA-Z0-9]+)$#is'
+			]
+		],
 		'yahoo' => [
 			'embed'			=> '<iframe src="//screen.yahoo.com/%1$s.html?format=embed" width="%2$d" height="%3$d" scrolling="no" frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe>',
 			'default_width'	=> 640,
@@ -252,65 +313,16 @@ class VideoService {
 				'#^([\d\w-]+)$#is'
 			]
 		],
-		'videomaten' => [
-			'embed'			=> '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="%2$d" height="%3$d" id="videomat" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="http://89.160.51.62/recordMe/play.swf?id=%1$s" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://89.160.51.62/recordMe/play.swf?id=%1$s" loop="false" quality="high" bgcolor="#ffffff" width="%2$d" height="%3$d" name="videomat" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></object>',
-			'default_ratio'	=> 1.5, //(300 / 200)
-			'https_enabled'	=> false
-		],
-		'twitch' => [
-			'embed'			=> '<iframe src="http://www.twitch.tv/%1$s/embed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+		'youku' => [
+			'embed'			=> '<iframe src="http://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio'	=> 1.64021164021164, //(620 / 378)
+			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#twitch\.tv/([\d\w-]+)(?:/\S+?)?#is'
+				'#id_([\d\w-]+).html#is',
 			],
 			'id_regex'		=> [
-				'#^([\d\w-]+)$#is'
-			]
-		],
-		'twitchvod' => [
-			'embed'			=> '<object id="clip_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/archive_embed_player.swf" bgcolor="#000000">
-	<param name="movie" value="http://www.twitch.tv/widgets/archive_embed_player.swf" />
-	<param name="allowScriptAccess" value="always" />
-	<param name="allowNetworking" value="all" />
-	<param name="allowFullScreen" value="true" />
-	<param name="flashvars" value="channel=%1$s&amp;auto_play=false&amp;start_volume=100&amp;chapter_id=%4$d" />
-</object>',
-			'default_width'	=> 640,
-			'default_ratio'	=> 1.64021164021164, //(620 / 378)
-			'https_enabled'	=> false,
-			'url_regex'		=> [
-				'#twitch\.tv/([\d\w-]+)/c/([\d]+)(?:/\S+?)?#is'
-			],
-			'id_regex'		=> [
-				'#^([\d\w-]+)/c/([\d]+)$#is'
-			]
-		],
-		'vimeo' => [
-			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
-			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
-			'https_enabled'	=> true,
-			'url_regex'		=> [
-				'#vimeo\.com/([\d]+)#is',
-				'#vimeo\.com/channels/[\d\w-]+/([\d]+)#is'
-			],
-			'id_regex'		=> [
-				'#^([\d]+)$#is'
-			],
-			'oembed'		=> '%4$s//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
-		],
-		'vine' => [
-			'embed'			=> '<iframe src="//vine.co/v/%1$s/embed/simple" width="%2$d" height="%3$d" frameborder="0"></iframe>',
-			'default_width'	=> 640,
-			'default_ratio' => 1, //(1 / 1)
-			'https_enabled'	=> true,
-			'url_regex'		=> [
-				'#vine\.co/v/([a-zA-Z0-9]+)#is'
-			],
-			'id_regex'		=> [
-				'#^([a-zA-Z0-9]+)$#is'
+				'#^(?:id_)?([\d\w-]+)$#is'
 			]
 		]
 	];
