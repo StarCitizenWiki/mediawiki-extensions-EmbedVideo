@@ -68,7 +68,7 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#video\.[a-zA-Z]{1,4}\.msn.com/watch/video/.+?/([a-zA-Z0-9]+)(?:/\S+?)?#is'
+				'#bing.com/videos/watch/video/.+?/([a-zA-Z0-9]+)(?:/\S+?)?#is'
 			],
 			'id_regex'		=> [
 				'#^([a-zA-Z0-9]+)$#is'
@@ -149,18 +149,6 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^([\d]+)$#is'
-			]
-		],
-		'msn' => [
-			'embed'			=> '<iframe src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll></iframe>',
-			'default_width'	=> 640,
-			'default_ratio'	=> 1.77777777777778, //(16 / 9)
-			'https_enabled'	=> true,
-			'url_regex'		=> [
-				'#video\.[a-zA-Z]{1,4}\.msn.com/watch/video/.+?/([a-zA-Z0-9]+)(?:/\S+?)?#is'
-			],
-			'id_regex'		=> [
-				'#^([a-zA-Z0-9]+)$#is'
 			]
 		],
 		'nico' => [
