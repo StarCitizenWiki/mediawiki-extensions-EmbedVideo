@@ -23,10 +23,10 @@ class VideoService {
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#archive\.org/(?:details|embed)/([^/\?\#]+)#is'
+				'#archive\.org/(?:details|embed)/([\d\w\-_][^/\?\#]+)#is'
 			],
 			'id_regex'		=> [
-				'#^([^/\?\#]+)$#is'
+				'#^([\d\w\-_][^/\?\#]+)$#is'
 			]
 		],
 		'bambuser' => [
