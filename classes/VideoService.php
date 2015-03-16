@@ -419,13 +419,15 @@ class VideoService {
 			//Embed can be generated locally instead of calling out to the service to get it.
 			$data = [
 				$this->service['embed'],
-				$this->getVideoID(),
+				htmlentities($this->getVideoID(), ENT_QUOTES),
 				$this->getWidth(),
 				$this->getHeight(),
 			];
 
 			if ($this->getExtraIds() !== false) {
-				$data = array_merge($data, $this->getExtraIds());
+				foreach ($this->getExtraIds() as $extraId) {
+					$data[] = htmlentities($extraId, ENT_QUOTES);
+				}
 			}
 
 			$urlArgs = $this->getUrlArgs();
