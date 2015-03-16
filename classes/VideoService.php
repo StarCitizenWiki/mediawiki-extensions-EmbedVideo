@@ -58,7 +58,7 @@ class VideoService {
 			'default_ratio' => 1.2994923857868, //(16 / 9)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#(http://blip\.tv/.+?/.+?-[\d]+)#is'
+				'#(http://blip\.tv/[\w\d\-]+?/[\w\d\-]+?-[\d]+)#is'
 			],
 			'oembed'		=> 'http://blip.tv/oembed/?url=%1$s&width=%2$d&maxwidth=%2$d'
 		],
@@ -68,7 +68,7 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#bing.com/videos/watch/video/.+?/([a-zA-Z0-9]+)(?:/\S+?)?#is'
+				'#bing.com/videos/watch/video/[\w\d\-]+?/([a-zA-Z0-9]+)(?:/\S+?)?#is'
 			],
 			'id_regex'		=> [
 				'#^([a-zA-Z0-9]+)$#is'
@@ -181,7 +181,7 @@ class VideoService {
 			'default_ratio'	=> 1.72972972972973, //(640 / 370)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#teachertube\.com/video/(?:.+?-)?([\d]+)$#is',
+				'#teachertube\.com/video/(?:[\w\d\-]+?-)?([\d]+)$#is',
 			],
 			'id_regex'		=> [
 				'#^([\d]+)$#is'
@@ -279,10 +279,10 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#screen\.yahoo\.com/(.+?-\d+).html#is'
+				'#screen\.yahoo\.com/([\w\d\-]+?-\d+).html#is'
 			],
 			'id_regex'		=> [
-				'#^(.+?-\d+)$#is'
+				'#^([\w\d\-]+?-\d+)$#is'
 			]
 		],
 		'youtube' => [
