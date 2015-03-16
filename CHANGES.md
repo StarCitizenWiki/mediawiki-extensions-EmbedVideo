@@ -1,4 +1,7 @@
 ##Patch Notes
+###v2.2.5
+* XSS flaws reported by [Mischanix](https://github.com/Mischanix/).
+
 ###v2.2.4
 * Fix Bing to work with their new URLs.
 * Remove MSN as their new video service does not support embedding.
