@@ -1,4 +1,7 @@
 ##Patch Notes
+###v2.2.6
+* NicoNico Video ID fixes; will work with new ID formats.
+
 ###v2.2.5
 * XSS flaws reported by [Mischanix](https://github.com/Mischanix/).
 

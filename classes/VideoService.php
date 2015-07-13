@@ -157,10 +157,10 @@ class VideoService {
 			'default_ratio'	=> 1.59609120521173, //(490 / 307)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#nicovideo\.jp/watch/(sm[\d]+)#is'
+				'#nicovideo\.jp/watch/((?:[a-zA-Z]{2})?[\d]+)#is'
 			],
 			'id_regex'		=> [
-				'#^(sm[\d]+)$#is'
+				'#^((?:[a-zA-Z]{2})?[\d]+)$#is'
 			]
 		],
 		'rutube' => [
