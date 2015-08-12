@@ -24,8 +24,9 @@ $wgExtensionCredits['parserhook'][] = [
 	'name'				=> 'EmbedVideo',
 	'author'			=> ['Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'],
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
-	'version'			=> '2.2.6',
-	'descriptionmsg'	=> 'embedvideo_description'
+	'version'			=> '2.2.7',
+	'descriptionmsg'	=> 'embedvideo_description',
+	'license-name'		=> 'MIT'
 ];
 
 /******************************************/
