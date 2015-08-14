@@ -19,12 +19,14 @@ if (!defined('MEDIAWIKI')) {
 /******************************************/
 /* Credits                                */
 /******************************************/
+define('EV_VERSION', '2.2.7');
+
 $wgExtensionCredits['parserhook'][] = [
 	'path'				=> __FILE__,
 	'name'				=> 'EmbedVideo',
 	'author'			=> ['Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'],
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
-	'version'			=> '2.2.7',
+	'version'			=> EV_VERSION,
 	'descriptionmsg'	=> 'embedvideo_description',
 	'license-name'		=> 'MIT'
 ];
