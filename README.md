@@ -41,10 +41,17 @@ Downloadable archive packages for numbered releases will also be available from 
 1. Download the contents of the extension, as outlined above.
 2. Create an EmbedVideo folder in the extensions/ folder of your MediaWiki installation.
 3. Copy the contents of this distribution into that folder
-4. Add the following line to your LocalSettings.php:
 
-```
+For Mediawiki 1.19 through 1.23 add the following line to your LocalSettings.php:
+
+```php
 require_once("$IP/extensions/EmbedVideo/EmbedVideo.php");
+```
+
+For Mediawiki 1.24 and up add the following line to your LocalSettings.php:
+
+```php
+wfLoadExtension("EmbedVideo");
 ```
 
 #Supported Sites
