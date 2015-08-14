@@ -1,6 +1,7 @@
 ##Patch Notes
 ###v2.2.7
 * Compatible with Mediawiki 1.24.0+
+ * https://github.com/Alexia/mediawiki-embedvideo/pull/35
 
 ###v2.2.6
 * NicoNico Video ID fixes; will work with new ID formats.
