@@ -212,6 +212,18 @@ class VideoService {
 				'#^([\d\w-]+)$#is'
 			]
 		],
+		'tvpot' => [
+			'embed'			=> '<iframe src="//videofarm.daum.net/controller/video/viewer/Video.html?vid=%1$s&play_loc=undefined&alert=true" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#tvpot\.daum\.net/v/([\d\w-%]+)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-%]+)$#is'
+			]
+		],
 		'twitch' => [
 			'embed'			=> '<iframe src="http://www.twitch.tv/%1$s/embed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
