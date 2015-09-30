@@ -286,7 +286,7 @@ class VideoService {
 			]
 		],
 		'youtube' => [
-			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s?%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
@@ -303,7 +303,7 @@ class VideoService {
 			]
 		],
 		'youtubeplaylist' => [
-			'embed'			=> '<iframe src="//www.youtube.com/embed/videoseries?list=%1$s%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//www.youtube.com/embed/videoseries?list=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
@@ -432,7 +432,7 @@ class VideoService {
 
 			$urlArgs = $this->getUrlArgs();
 			if ($urlArgs !== false) {
-				$data[] = '?'.$urlArgs;
+				$data[] = $urlArgs;
 			}
 
 			$html = call_user_func_array('sprintf', $data);
