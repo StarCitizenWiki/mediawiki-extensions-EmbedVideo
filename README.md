@@ -10,6 +10,10 @@ Issues, bug reports, and feature requests may be created at the issue tracker:
 
 https://github.com/Alexia/mediawiki-embedvideo/issues
 
+The MediaWiki extension page is located at:
+
+https://www.mediawiki.org/wiki/Extension:EmbedVideo
+
 ##History
 
 The original version of EmbedVideo was created by Jim R. Wilson.  That version was later forked by Mohammed Derakhshani as the EmbedVideoPlus extension.  In early 2010 Andrew Whitworth took over active maintenance of both extensions and merged them together as "EmbedVideo".  Much later on in September 2014 Alexia E. Smith forcefully took over being unable to contact a current maintainer.
