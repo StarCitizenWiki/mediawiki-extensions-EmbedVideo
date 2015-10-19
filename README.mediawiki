@@ -27,7 +27,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 ==Installation==
 
-{{ {{TNTN|ExtensionInstall}}|registration=yes |download-link=[https://github.com/Alexia/mediawiki-embedvideo/archive/v2.2.7.zip Download]}}
+{{ {{TNTN|ExtensionInstall}}|registration=yes |download-link=[https://github.com/Alexia/mediawiki-embedvideo/archive/v2.2.8.zip Download]}}
 
 ==Usage==
 
