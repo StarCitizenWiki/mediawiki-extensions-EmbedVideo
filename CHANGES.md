@@ -1,4 +1,12 @@
 ##Patch Notes
+###v2.2.8
+* Support for Daum TVPot
+ * https://github.com/Alexia/mediawiki-embedvideo/pull/38
+* Fix for URL arguments for youtube and youtubeplaylist.
+ * https://github.com/Alexia/mediawiki-embedvideo/pull/40
+* Support for Beam.pro.
+* Support for Hitbox.tv.
+
 ###v2.2.7
 * Compatible with Mediawiki 1.24.0+
  * https://github.com/Alexia/mediawiki-embedvideo/pull/35

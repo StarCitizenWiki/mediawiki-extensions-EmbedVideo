@@ -53,6 +53,18 @@ class VideoService {
 				'#^([\d\w\-\+]+)$#is'
 			]
 		],
+		'beam' => [
+			'embed'			=> '<iframe src="https://beam.pro/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#beam.pro/([\d\w\-\+]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w\-\+]+)$#is'
+			]
+		],
 		'blip' => [
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, //(16 / 9)
@@ -125,6 +137,18 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^([a-zA-Z]+)$#is'
+			]
+		],
+		'hitbox' => [
+			'embed'			=> '<iframe src="http://www.hitbox.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#hitbox.tv/([\d\w]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w]+)$#is'
 			]
 		],
 		'kickstarter' => [

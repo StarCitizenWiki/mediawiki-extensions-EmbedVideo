@@ -61,13 +61,16 @@ include:
 
 * Archive.org Videos
 * Bambuser (Broadcast and Channel)
+* Beam
 * Bing/MSN
 * Blip.tv
 * DailyMotion
+* Daum TVPot
 * Divshare
 * Edutopia (Their content has been moved to YouTube.  Simply use the YouTube service to load these.)
 * Funny or Die
 * Gfycat
+* Hitbox.tv
 * Kickstarter
 * Metacafe
 * Nico Nico Video

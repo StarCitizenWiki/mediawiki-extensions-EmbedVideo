@@ -19,7 +19,7 @@ if (!defined('MEDIAWIKI')) {
 /******************************************/
 /* Credits                                */
 /******************************************/
-define('EV_VERSION', '2.2.7');
+define('EV_VERSION', '2.2.8');
 
 $wgExtensionCredits['parserhook'][] = [
 	'path'				=> __FILE__,
