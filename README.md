@@ -92,7 +92,7 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 ## Attributes for Parser Tags
 
 | Attribute                                   | Required | Default | Description                                                                                                                                                                                      |
-|--------------------------------------------------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|---------------------------------------------|----------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `service="(See Supported Services below.)"` | yes      |         | The video service to call.                                                                                                                                                                       |
 | `id="[id|url]"`                             | yes      |         | The raw ID of the video or URL from the player page.                                                                                                                                             |
 | `dimensions="[WIDTH|WIDTHxHEIGHT|xHEIGHT]"` | no       | 640     | Dimensions in pixels to size the embed container. The standard format is width x height where either can be omitted, but the `x` must proceed height to indicate it as the height.                
