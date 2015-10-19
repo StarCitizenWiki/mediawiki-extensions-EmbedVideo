@@ -167,38 +167,6 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | $wgEmbedVideoMaxWidth     |               | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
 | $wgEmbedVideoDefaultWidth |               | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
 
-
-#Supported Sites
-
-EmbedVideo supports several video hosting sites. Some of the more popular ones
-include:
-
-* Archive.org Videos
-* Bambuser (Broadcast and Channel)
-* Beam
-* Bing/MSN
-* Blip.tv
-* DailyMotion
-* Daum TVPot
-* Divshare
-* Edutopia (Their content has been moved to YouTube.  Simply use the YouTube service to load these.)
-* Funny or Die
-* Gfycat
-* Hitbox.tv
-* Kickstarter
-* Metacafe
-* Nico Nico Video
-* RuTube
-* TeacherTube
-* TED Talks
-* Twitch (Live Streams and Archived Videos on Demand)
-* Yahoo
-* YouTube (Videos and Playlists)
-* Videomaten
-* Twitch (Channels and Archived Videos on Demand)
-* Vimeo
-* Vine
-
 #Credits
 
 The original version of EmbedVideo was written by Jim R. Wilson.  Additional major upgrades made by Andrew Whitworth, Alexia E. Smith, and other contributors.
