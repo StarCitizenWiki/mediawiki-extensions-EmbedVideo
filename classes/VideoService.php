@@ -20,7 +20,7 @@ class VideoService {
 		'archiveorg' => [
 			'embed'			=> '<iframe src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio' => 1.2994923857868, //(640 / 493)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#archive\.org/(?:details|embed)/([\d\w\-_][^/\?\#]+)#is'
@@ -32,7 +32,7 @@ class VideoService {
 		'bambuser' => [
 			'embed'			=> '<iframe src="//embed.bambuser.com/broadcast/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio' => 1.2994923857868, //(640 / 493)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#bambuser\.com/(?:v|broadcast)/([\d\w\-\+]+)(?:/\S+?)?#is'
@@ -44,7 +44,7 @@ class VideoService {
 		'bambuser_channel' => [
 			'embed' 		=> '<iframe src="//embed.bambuser.com/channel/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio' => 1.2994923857868, //(640 / 493)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#bambuser\.com/channel/([\d\w\-\+]+)(?:/\S+?)?#is'
@@ -56,7 +56,7 @@ class VideoService {
 		'beam' => [
 			'embed'			=> '<iframe src="https://beam.pro/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#beam.pro/([\d\w\-\+]+)(?:/\S+?)?#is'
@@ -67,7 +67,7 @@ class VideoService {
 		],
 		'blip' => [
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio' => 1.2994923857868, //(640 / 493)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
 				'#(http://blip\.tv/[\w\d\-]+?/[\w\d\-]+?-[\d]+)#is'
@@ -142,7 +142,7 @@ class VideoService {
 		'hitbox' => [
 			'embed'			=> '<iframe src="http://www.hitbox.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio'	=> 1.77777777777778, //(16 / 9)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
 				'#hitbox.tv/([\d\w]+)(?:/\S+?)?#is'
@@ -286,7 +286,7 @@ class VideoService {
 		'vimeo' => [
 			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, //(16 / 9)
+			'default_ratio' => 1.2994923857868, //(640 / 493)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#vimeo\.com/([\d]+)#is',
