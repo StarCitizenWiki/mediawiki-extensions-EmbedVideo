@@ -12,49 +12,16 @@
  *
  **/
 
-if (!defined('MEDIAWIKI')) {
-	exit;
+if ( function_exists( 'wfLoadExtension' ) ) {
+	wfLoadExtension( 'EmbedVideo' );
+	// Keep i18n globals so mergeMessageFileList.php doesn't break
+	$wgMessagesDirs['EmbedVideo'] = __DIR__ . '/i18n';
+	$wgExtensionMessagesFiles['EmbedVideoMagic']	= __DIR__ . '/EmbedVideo.i18n.magic.php';
+	wfWarn(
+		'Deprecated PHP entry point used for EmbedVideo extension. Please use wfLoadExtension instead, ' .
+		'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
+	);
+	return;
+} else {
+	die( 'This version of the EmbedVideo extension requires MediaWiki 1.25+' );
 }
-
-/******************************************/
-/* Credits                                */
-/******************************************/
-define('EV_VERSION', '2.2.8');
-
-$wgExtensionCredits['parserhook'][] = [
-	'path'				=> __FILE__,
-	'name'				=> 'EmbedVideo',
-	'author'			=> ['Jim R. Wilson', 'Andrew Whitworth', 'Alexia E. Smith'],
-	'url'				=> 'http://www.mediawiki.org/wiki/Extension:EmbedVideo',
-	'version'			=> EV_VERSION,
-	'descriptionmsg'	=> 'embedvideo_description',
-	'license-name'		=> 'MIT'
-];
-
-/******************************************/
-/* Language Strings, Page Aliases, Hooks  */
-/******************************************/
-$extDir = __DIR__;
-
-$wgExtensionMessagesFiles['EmbedVideo']			= "{$extDir}/EmbedVideo.i18n.php";
-$wgExtensionMessagesFiles['EmbedVideoMagic']	= "{$extDir}/EmbedVideo.i18n.magic.php";
-$wgMessagesDirs['EmbedVideo']					= "{$extDir}/i18n";
-
-$wgAutoloadClasses['EmbedVideoHooks']			= "{$extDir}/EmbedVideo.hooks.php";
-$wgAutoloadClasses['EmbedVideo\VideoService']	= "{$extDir}/classes/VideoService.php";
-$wgAutoloadClasses['EmbedVideo\OEmbed']			= "{$extDir}/classes/OEmbed.php";
-
-$wgHooks['ParserFirstCallInit'][]				= 'EmbedVideoHooks::onParserFirstCallInit';
-
-$wgResourceModules['ext.embedVideo'] = [
-	'localBasePath'	=> __DIR__,
-	'remoteExtPath'	=> 'EmbedVideo',
-	'styles'		=> ['css/embedvideo.css'],
-	'position'		=> 'top'
-];
-
-if (!isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1) {
-	//Set a smaller default width when in mobile view.
-	$wgEmbedVideoDefaultWidth = 320;
-}
-?>
