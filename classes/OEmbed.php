@@ -55,7 +55,7 @@ class OEmbed {
 	 * @return	mixed	String HTML or false on error.
 	 */
 	public function getHtml() {
-		if ( array_key_exists( 'html', $this->data ) ) {
+		if ( isset( $this->data['html'] ) ) {
 			// Remove any extra HTML besides the iframe.
 			$iframeStart = strpos( $this->data['html'], '<iframe' );
 			$iframeEnd = strpos( $this->data['html'], '</iframe>' );
@@ -77,7 +77,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getTitle() {
-		if ( array_key_exists( 'title', $this->data ) ) {
+		if ( isset( $this->data['title'] ) ) {
 			return $this->data['title'];
 		} else {
 			return false;
@@ -91,7 +91,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getAuthorName() {
-		if ( array_key_exists( 'author_name', $this->data ) ) {
+		if ( isset( $this->data['author_name'] ) ) {
 			return $this->data['author_name'];
 		} else {
 			return false;
@@ -105,7 +105,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getAuthorUrl() {
-		if ( array_key_exists( 'author_url', $this->data ) ) {
+		if ( isset( $this->data['author_url'] ) ) {
 			return $this->data['author_url'];
 		} else {
 			return false;
@@ -119,7 +119,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getProviderName() {
-		if ( array_key_exists( 'provider_name', $this->data ) ) {
+		if ( isset( $this->data['provider_name'] ) ) {
 			return $this->data['provider_name'];
 		} else {
 			return false;
@@ -133,7 +133,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getProviderUrl() {
-		if ( array_key_exists( 'provider_url', $this->data ) ) {
+		if ( isset( $this->data['provider_url'] ) ) {
 			return $this->data['provider_url'];
 		} else {
 			return false;
@@ -147,7 +147,7 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getWidth() {
-		if ( array_key_exists( 'width', $this->data ) ) {
+		if ( isset( $this->data['width'] ) ) {
 			return intval( $this->data['width'] );
 		} else {
 			return false;
@@ -161,7 +161,7 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getHeight() {
-		if ( array_key_exists( 'height', $this->data ) ) {
+		if ( isset( $this->data['height'] ) ) {
 			return intval( $this->data['height'] );
 		} else {
 			return false;
@@ -175,7 +175,7 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getThumbnailWidth() {
-		if ( array_key_exists( 'thumbnail_width', $this->data ) ) {
+		if ( isset( $this->data['thumbnail_width'] ) ) {
 			return intval( $this->data['thumbnail_width'] );
 		} else {
 			return false;
@@ -189,7 +189,7 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getThumbnailHeight() {
-		if ( array_key_exists( 'thumbnail_height', $this->data ) ) {
+		if ( isset( $this->data['thumbnail_height'] ) ) {
 			return intval( $this->data['thumbnail_height'] );
 		} else {
 			return false;

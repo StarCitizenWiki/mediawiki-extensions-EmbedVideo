@@ -432,7 +432,7 @@ class VideoService {
 	 * @return	mixed	New VideoService object or false on initialization error.
 	 */
 	static public function newFromName( $service ) {
-		if ( array_key_exists( $service, self::$services ) ) {
+		if ( isset( self::$services[$service] ) ) {
 			return new self( $service );
 		} else {
 			return false;
@@ -451,7 +451,7 @@ class VideoService {
 		}
 
 		$html = false;
-		if ( array_key_exists( 'embed', $this->service ) ) {
+		if ( isset( $this->service['embed'] ) ) {
 			// Embed can be generated locally instead of calling out to the service to get it.
 			$data = [
 				$this->service['embed'],
@@ -472,7 +472,7 @@ class VideoService {
 			}
 
 			$html = call_user_func_array( 'sprintf', $data );
-		} elseif ( array_key_exists( 'oembed', $this->service ) ) {
+		} elseif ( isset( $this->service['oembed'] ) ) {
 			// Call out to the service to get the embed HTML.
 			if ( $this->service['https_enabled'] ) {
 				if ( stristr( $this->getVideoID(), 'https:' ) !== false ) {

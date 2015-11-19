@@ -101,7 +101,7 @@ class EmbedVideoHooks {
 
 			list( $key, $value ) = explode( '=', $argumentPair, 2 );
 
-			if ( !array_key_exists( $key, self::$validArguments ) ) {
+			if ( !isset( self::$validArguments[$key] ) ) {
 				continue;
 			}
 			$args[$key] = $value;
