@@ -25,7 +25,7 @@ class OEmbed {
 	 * @param	array	Data return from oEmbed service.
 	 * @return	void
 	 */
-	private function __construct($data) {
+	private function __construct( $data ) {
 		$this->data = $data;
 	}
 
@@ -36,16 +36,16 @@ class OEmbed {
 	 * @param	string	Full oEmbed URL to process.
 	 * @return	mixed	New OEmbed object or false on initialization failure.
 	 */
-	static public function newFromRequest($url) {
-		$data = self::curlGet($url);
-		if ($data !== false) {
-			//Error suppression is required as json_decode() tosses E_WARNING in contradiction to its documentation.
-			$data = @json_decode($data, true);
+	static public function newFromRequest( $url ) {
+		$data = self::curlGet( $url );
+		if ( $data !== false ) {
+			// Error suppression is required as json_decode() tosses E_WARNING in contradiction to its documentation.
+			$data = @json_decode( $data, true );
 		}
-		if (!$data || !is_array($data)) {
+		if ( !$data || !is_array( $data ) ) {
 			return false;
 		}
-		return new self($data);
+		return new self( $data );
 	}
 
 	/**
@@ -55,13 +55,13 @@ class OEmbed {
 	 * @return	mixed	String HTML or false on error.
 	 */
 	public function getHtml() {
-		if (array_key_exists('html', $this->data)) {
-			//Remove any extra HTML besides the iframe.
-			$iframeStart = strpos($this->data['html'], '<iframe');
-			$iframeEnd = strpos($this->data['html'], '</iframe>');
-			if ($iframeStart !== false) {
-				//Only strip if an iframe was found.
-				$this->data['html'] = substr($this->data['html'], $iframeStart, $iframeEnd + 9);
+		if ( array_key_exists( 'html', $this->data ) ) {
+			// Remove any extra HTML besides the iframe.
+			$iframeStart = strpos( $this->data['html'], '<iframe' );
+			$iframeEnd = strpos( $this->data['html'], '</iframe>' );
+			if ( $iframeStart !== false ) {
+				// Only strip if an iframe was found.
+				$this->data['html'] = substr( $this->data['html'], $iframeStart, $iframeEnd + 9 );
 			}
 
 			return $this->data['html'];
@@ -77,7 +77,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getTitle() {
-		if (array_key_exists('title', $this->data)) {
+		if ( array_key_exists( 'title', $this->data ) ) {
 			return $this->data['title'];
 		} else {
 			return false;
@@ -91,7 +91,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getAuthorName() {
-		if (array_key_exists('author_name', $this->data)) {
+		if ( array_key_exists( 'author_name', $this->data ) ) {
 			return $this->data['author_name'];
 		} else {
 			return false;
@@ -105,7 +105,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getAuthorUrl() {
-		if (array_key_exists('author_url', $this->data)) {
+		if ( array_key_exists( 'author_url', $this->data ) ) {
 			return $this->data['author_url'];
 		} else {
 			return false;
@@ -119,7 +119,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getProviderName() {
-		if (array_key_exists('provider_name', $this->data)) {
+		if ( array_key_exists( 'provider_name', $this->data ) ) {
 			return $this->data['provider_name'];
 		} else {
 			return false;
@@ -133,7 +133,7 @@ class OEmbed {
 	 * @return	mixed	String or false on error.
 	 */
 	public function getProviderUrl() {
-		if (array_key_exists('provider_url', $this->data)) {
+		if ( array_key_exists( 'provider_url', $this->data ) ) {
 			return $this->data['provider_url'];
 		} else {
 			return false;
@@ -147,8 +147,8 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getWidth() {
-		if (array_key_exists('width', $this->data)) {
-			return intval($this->data['width']);
+		if ( array_key_exists( 'width', $this->data ) ) {
+			return intval( $this->data['width'] );
 		} else {
 			return false;
 		}
@@ -161,8 +161,8 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getHeight() {
-		if (array_key_exists('height', $this->data)) {
-			return intval($this->data['height']);
+		if ( array_key_exists( 'height', $this->data ) ) {
+			return intval( $this->data['height'] );
 		} else {
 			return false;
 		}
@@ -175,8 +175,8 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getThumbnailWidth() {
-		if (array_key_exists('thumbnail_width', $this->data)) {
-			return intval($this->data['thumbnail_width']);
+		if ( array_key_exists( 'thumbnail_width', $this->data ) ) {
+			return intval( $this->data['thumbnail_width'] );
 		} else {
 			return false;
 		}
@@ -189,8 +189,8 @@ class OEmbed {
 	 * @return	mixed	Integer or false on error.
 	 */
 	public function getThumbnailHeight() {
-		if (array_key_exists('thumbnail_height', $this->data)) {
-			return intval($this->data['thumbnail_height']);
+		if ( array_key_exists( 'thumbnail_height', $this->data ) ) {
+			return intval( $this->data['thumbnail_height'] );
 		} else {
 			return false;
 		}
@@ -203,15 +203,15 @@ class OEmbed {
 	 * @param	string	URL
 	 * @return	mixed
 	 */
-	static private function curlGet($location) {
+	static private function curlGet( $location ) {
 	   global $wgServer;
 
 	   $ch = curl_init();
 
 	   $timeout = 10;
-	   $useragent = "EmbedVideo/1.0/".$wgServer;
-	   $dateTime = gmdate("D, d M Y H:i:s", time())." GMT";
-	   $headers = ['Date: '.$dateTime];
+	   $useragent = "EmbedVideo/1.0/" . $wgServer;
+	   $dateTime = gmdate( "D, d M Y H:i:s", time() ) . " GMT";
+	   $headers = ['Date: ' . $dateTime];
 
 	   $curlOptions = [
 		   CURLOPT_TIMEOUT		   => $timeout,
@@ -220,22 +220,21 @@ class OEmbed {
 		   CURLOPT_CONNECTTIMEOUT  => $timeout,
 		   CURLOPT_FOLLOWLOCATION  => true,
 		   CURLOPT_MAXREDIRS	   => 10,
-		   CURLOPT_COOKIEFILE	   => sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
-		   CURLOPT_COOKIEJAR	   => sys_get_temp_dir().DIRECTORY_SEPARATOR.'curlget',
+		   CURLOPT_COOKIEFILE	   => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'curlget',
+		   CURLOPT_COOKIEJAR	   => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'curlget',
 		   CURLOPT_RETURNTRANSFER  => true,
 		   CURLOPT_HTTPHEADER	   => $headers
 	   ];
 
-	   curl_setopt_array($ch, $curlOptions);
+	   curl_setopt_array( $ch, $curlOptions );
 
-	   $page = curl_exec($ch);
+	   $page = curl_exec( $ch );
 
-	   $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	   if ($responseCode == 503 || $responseCode == 404 || $responseCode == 501 || $responseCode == 401) {
+	   $response_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+	   if ( $responseCode == 503 || $responseCode == 404 || $responseCode == 501 || $responseCode == 401 ) {
 		   return false;
 	   }
 
 	   return $page;
    }
 }
-?>
