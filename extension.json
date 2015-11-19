@@ -16,7 +16,6 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"EmbedVideo": "EmbedVideo.i18n.php",
 		"EmbedVideoMagic": "EmbedVideo.i18n.magic.php"
 	},
 	"AutoloadClasses": {
