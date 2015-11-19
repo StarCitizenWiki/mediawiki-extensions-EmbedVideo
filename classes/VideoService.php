@@ -440,6 +440,20 @@ class VideoService {
 	}
 
 	/**
+	 * Add a service
+	 *
+	 * @access	public
+	 * @param	string	Service Name
+	 * @param   mixed   args
+	 */
+	static public function addService( $service, $args ) {
+		if ( isset( self::$services[$service] ) ) {
+			throw new MWException( "Service already already exists: $service" );
+		}
+		self::$services[$service] = $arg;
+	}
+
+	/**
 	 * Return built HTML.
 	 *
 	 * @access	public
