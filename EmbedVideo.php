@@ -12,14 +12,14 @@
  *
  **/
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
 /******************************************/
 /* Credits                                */
 /******************************************/
-define('EV_VERSION', '2.2.8');
+define( 'EV_VERSION', '2.2.8' );
 
 $wgExtensionCredits['parserhook'][] = [
 	'path'				=> __FILE__,
@@ -53,8 +53,7 @@ $wgResourceModules['ext.embedVideo'] = [
 	'position'		=> 'top'
 ];
 
-if (!isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1) {
-	//Set a smaller default width when in mobile view.
+if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] == 'true' ) && $_COOKIE['stopMobileRedirect'] != 1 ) {
+	// Set a smaller default width when in mobile view.
 	$wgEmbedVideoDefaultWidth = 320;
 }
-?>

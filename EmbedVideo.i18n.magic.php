@@ -16,4 +16,3 @@ $magicWords['en']  = [
 	'evp'	=> [0, 'evp'],
 	'evt'	=> [0, 'evt']
 ];
-?>
