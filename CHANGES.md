@@ -1,4 +1,11 @@
 ##Patch Notes
+###v2.2.9
+* Fixed issue with Twitch.tv switching over to HTTPS.
+* Added support for http://media.ccc.de
+ * https://github.com/HydraWiki/mediawiki-embedvideo/pull/52
+* New services can now be added from other extensions programmatically.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/pull/46
+
 ###v2.2.8
 * Support for Daum TVPot
  * https://github.com/Alexia/mediawiki-embedvideo/pull/38

@@ -1,33 +1,35 @@
-{{ {{TNTN|Extension}}
+{{TNT|Extension
 |name        = EmbedVideo
-|license     = {{EL|MIT}}
+|license     = MIT
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.2.8
-|update      = 2015-10-19
-|mediawiki   = 1.19+
+|version     = 2.2.9
+|update      = 2016-05-26
+|mediawiki   = 1.23+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
-|download    = {{ {{TNTN|GithubDownload}} |Alexia|mediawiki-embedvideo}}
+|download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
 |hook1       = ParserFirstCallInit
 |description = Adds a parser function called <tt>#ev</tt> for embedding video clips from popular video sharing services.
 |example     = [http://help.gamepedia.com/Extension:EmbedVideo/Example Gamepedia Help Wiki]
+|vagrant-role      = embedvideo
 }}
-
-{{warning|Please update your installed copies of EmbedVideo to version 2.2.5 or higher if you are running previous versions.  There are XSS flaws present in version 2.2.4 and earlier.  Please see the download link below under [[#Installation]].}}
 
 The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.
 
-;Project Homepage: [https://github.com/Alexia/mediawiki-embedvideo Documentation at Github]
-;Source Code: [https://github.com/Alexia/mediawiki-embedvideo Source code at Github]
-;Bugs:[https://github.com/Alexia/mediawiki-embedvideo/issues issues at Github]
+;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
+;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
+;Bugs:[https://github.com/HydraWiki/mediawiki-embedvideo/issues issues at Github]
 ;Licensing: EmbedVideo is released under [http://www.opensource.org/licenses/mit-license.php The MIT License].
 
 <span style="font-weight: bold; color: darkred;">Notice:</span> As of the 2.x series the EmbedVideo extension has a new maintainer and an entirely rewritten code base.  It retains backwards compatibility with EmbedVideo 1.0 and EmbedVideoPlus.
 
 ==Installation==
 
-{{ {{TNTN|ExtensionInstall}}|registration=yes |download-link=[https://github.com/Alexia/mediawiki-embedvideo/archive/v2.2.8.zip Download]}}
+{{TNT|ExtensionInstall
+ |registration=yes
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.2.9.zip Download]
+}}
 
 ==Usage==
 
@@ -103,9 +105,9 @@ Videos can easily be embedded with the <nowiki><embedvideo></embedvideo></nowiki
 
 [[File:EmbedVideoExample1.jpg|thumb|Example #1]]
 
-For example, a video from YouTube use the 'youtube' service selector enter either the raw ID:
+For example, a video from YouTube uses the 'youtube' service selector. You can specify either the raw ID:
 <pre>{{#ev:youtube|pSsYTj9kCHE}}</pre>
-Or the full URL:
+Or specify the full URL:
 <pre>{{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE}}</pre>
 
 
@@ -298,53 +300,55 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
-===v2.2.8===
-* Support for Daum TVPot
- * https://github.com/Alexia/mediawiki-embedvideo/pull/38
-* Fix for URL arguments for youtube and youtubeplaylist.
- * https://github.com/Alexia/mediawiki-embedvideo/pull/40
+; v2.2.9
+* Fixed issue with Twitch.tv switching over to HTTPS.
+* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/52 Added support for http://media.ccc.de]
+* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/46 New services can now be added from other extensions programmatically.]
+
+; v2.2.8
+* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/38 Support for Daum TVPot]
+* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/40 Fix for URL arguments for youtube and youtubeplaylist].
 * Support for Beam.pro.
 * Support for Hitbox.tv.
 
-===v2.2.7===
-* Compatible with Mediawiki 1.24.0+
- * https://github.com/Alexia/mediawiki-embedvideo/pull/35
+; v2.2.7
+* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/35 Compatible with MediaWiki 1.24.0+]
 
-===v2.2.6===
+; v2.2.6
 * NicoNico Video ID fixes; will work with new ID formats.
 
-===v2.2.5===
+; v2.2.5
 * XSS flaws reported by [https://github.com/Mischanix/ Mischanix].
 
-===v2.2.4===
+; v2.2.4
 * Fix Bing to work with their new URLs.
 * Remove MSN as their new video service does not support embedding.
 * Standardize Tudou support per their wiki.
 
-===v2.2.3===
+; v2.2.3
 * Added support for Youku and Tudou.
 
-===v2.2.2===
+; v2.2.2
 * Updated regular expression replacement pattern for Twitch URLs.  Old Twitch embed URLs do not automatically redirect.
 
-===v2.2.1===
-* Fixed E_NOTICE being thrown for [https://github.com/Alexia/mediawiki-embedvideo/issues/25 undefined array indexes].
-* Back ported some [https://github.com/Alexia/mediawiki-embedvideo/issues/23 PHP 5.3 compatibility changes].  Please note that future releases of EmbedVideo may not support PHP 5.3 as it is an outdated version.  Upgrading to PHP 5.4 at a minimum is recommended.
+; v2.2.1
+* Fixed E_NOTICE being thrown for [https://github.com/HydraWiki/mediawiki-embedvideo/issues/25 undefined array indexes].
+* Back ported some [https://github.com/HydraWiki/mediawiki-embedvideo/issues/23 PHP 5.3 compatibility changes].  Please note that future releases of EmbedVideo may not support PHP 5.3 as it is an outdated version.  Upgrading to PHP 5.4 at a minimum is recommended.
 
-===v2.2.0===
-* Fixed a bug with alignment that would cause the left align to not work similar to how Mediawiki handles images and other media.
+; v2.2.0
+* Fixed a bug with alignment that would cause the left align to not work similar to how MediaWiki handles images and other media.
 * New parser tag better suited for templates; #evt.
 * New HTML like tag format that can take parameters.
 
-===v2.1===
+; v2.1.0
 * The width parameter was changed to dimensions.  See parameter documentation above.
-* New container parameter to use a standard Mediawiki thumb frame or default to a generic container.
+* New container parameter to use a standard MediaWiki thumb frame or default to a generic container.
 * The description parameter no longer forces the thumb frame to be used.
 * Added support for Archive.org, Blip.tv, CollegeHumor, Gfycat, Nico Nico Video, TED Talks, and Vine.
 * Ability to center align embeds.
 * CSS resource module.
 
-===v2.0===
+; v2.0
 * URLs from the player pages that contain the raw video ID can now be used as the ID parameter.
 * Validation of the raw IDs is improved.
 * Code base rewritten to have a VideoService class for future extensibility.
@@ -370,7 +374,7 @@ And then call it like this:
 
 ===Reporting Bugs===
 
-There is an issue tracker set up on the [https://github.com/Alexia/mediawiki-embedvideo/issues Github project page].
+There is an issue tracker set up on the [https://github.com/HydraWiki/mediawiki-embedvideo/issues Github project page].
 
 ===Contributing===
 
