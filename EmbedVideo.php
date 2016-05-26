@@ -39,13 +39,13 @@ $wgExtensionCredits['parserhook'][] = [
 /******************************************/
 /* Language Strings, Page Aliases, Hooks  */
 /******************************************/
-$wgExtensionMessagesFiles['EmbedVideo']	= __DIR__ . '/EmbedVideo.i18n.php';
+$wgExtensionMessagesFiles['EmbedVideo'] = __DIR__ . '/EmbedVideo.i18n.php';
 $wgExtensionMessagesFiles['EmbedVideoMagic'] = __DIR__ . '/EmbedVideo.i18n.magic.php';
 $wgMessagesDirs['EmbedVideo'] = __DIR__ . '/i18n';
 
 $wgAutoloadClasses['EmbedVideoHooks'] = __DIR__ . '/EmbedVideo.hooks.php';
 $wgAutoloadClasses['EmbedVideo\VideoService'] = __DIR__ . '/classes/VideoService.php';
-$wgAutoloadClasses['EmbedVideo\OEmbed']	= __DIR__ . '/classes/OEmbed.php';
+$wgAutoloadClasses['EmbedVideo\OEmbed'] = __DIR__ . '/classes/OEmbed.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'EmbedVideoHooks::onParserFirstCallInit';
 
