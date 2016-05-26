@@ -153,22 +153,27 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <nowiki>RocketBear</nowiki>
 | <nowiki>https://beam.pro/RocketBear</nowiki>
 |-
-! [http://www.bing.com/videos/ Bing] 
+! [http://www.bing.com/videos/ Bing]
 | colspan="2"|<tt>bing</tt>
 | <nowiki>31ncp9r7l</nowiki>
 | <nowiki>http://www.bing.com/videos/watch/video/adorable-cats-attempt-to-eat-invisible-tuna/31ncp9r7l</nowiki>
 |-
-! [http://www.blip.tv/ Blip.tv] 
+! [http://www.blip.tv/ Blip.tv]
 | colspan="2"|<tt>blip</tt> - Blip requires the full URL to the video page and does not accept the raw ID.
 | 
 |<nowiki>http://blip.tv/vinylrewind/review-6864612</nowiki>
 |-
-! [http://www.collegehumor.com/ CollegeHumor] 
+! [https://media.ccc.de/ C3TV]
+| colspan="2"|<tt>mediacccde</tt>
+| <nowiki>32c3-7305-quantum_cryptography</nowiki>
+| <nowiki>https://media.ccc.de/v/32c3-7305-quantum_cryptography</nowiki>
+|-
+! [http://www.collegehumor.com/ CollegeHumor]
 | colspan="2"|<tt>collegehumor</tt>
 | <nowiki>6875289</nowiki>
 | <nowiki>http://www.collegehumor.com/video/6875289/batman-says-his-goodbyes</nowiki>
 |-
-! [http://www.dailymotion.com/ Dailymotion] 
+! [http://www.dailymotion.com/ Dailymotion]
 | colspan="2"|<tt>dailymotion</tt>
 | <nowiki>x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>
 | <nowiki>http://www.dailymotion.com/video/x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>

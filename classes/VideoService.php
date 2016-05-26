@@ -163,6 +163,18 @@ class VideoService {
 				'#^([\d\w-]+/[\d\w-]+)$#is'
 			]
 		],
+		'mediacccde' => [
+			'embed'     => '<iframe src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
+			'default_width' => 660,
+			'default_ratio' => 1.77777777777778, //(16 / 9),
+			'https_enabled' => true,
+			'url_regex' => [
+				'#conferences/.*?([\d\w_-]+)(?:/oembed)?.html$#is'
+			],
+			'id_regex'    => [
+				'#^([\d\w_-]+)$#is'
+			]
+		],
 		'metacafe' => [
 			'embed'			=> '<iframe src="http://www.metacafe.com/embed/%1$s/" width="%2$d" height="%3$d" frameborder="0" allowFullScreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -360,18 +372,6 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^(?:id_)?([\d\w-]+)$#is'
-			]
-		],
-		'mediacccde' => [
-			'embed'     => '<iframe src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
-			'default_width' => 660,
-			'default_ratio' => 1.77777777777778, //(16 / 9),
-			'https_enabled' => true,
-			'url_regex' => [
-				'#conferences/.*?([\d\w_-]+)(?:/oembed)?.html$#is'
-			],
-			'id_regex'    => [
-				'#^([\d\w_-]+)$#is'
 			]
 		]
 	];
