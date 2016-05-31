@@ -10,6 +10,7 @@
 	"descriptionmsg": "embedvideo_description",
 	"license-name": "MIT",
 	"type": "parserhook",
+	"callback": "EmbedVideoHooks::onExtension",
 	"MessagesDirs": {
 		"EmbedVideo": [
 			"i18n"
