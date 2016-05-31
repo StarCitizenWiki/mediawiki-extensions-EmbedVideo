@@ -1,10 +1,11 @@
 {
 	"name": "EmbedVideo",
-	"version": "2.2.9",
+	"version": "2.3.0",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
-		"Alexia E. Smith"
+		"Alexia E. Smith",
+		"Cameron M. Chunn"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:EmbedVideo",
 	"descriptionmsg": "embedvideo_description",

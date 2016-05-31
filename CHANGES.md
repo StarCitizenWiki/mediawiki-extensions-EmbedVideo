@@ -1,4 +1,8 @@
 ##Patch Notes
+
+###v2.3.0
+* Hard cut off of support for versions older then MediaWiki 1.25
+
 ###v2.2.9
 * Fixed issue with Twitch.tv switching over to HTTPS.
 * Added support for http://media.ccc.de
