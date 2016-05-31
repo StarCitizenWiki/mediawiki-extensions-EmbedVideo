@@ -201,8 +201,6 @@ class EmbedVideoHooks {
 		/* Error Checking                   */
 		/************************************/
 		if ( !$service || !$id ) {
-			var_dump($service, $id);
-			die();
 			return self::error( 'missingparams', $service, $id );
 		}
 
