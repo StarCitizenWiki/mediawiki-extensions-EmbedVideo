@@ -63,7 +63,7 @@ class EmbedVideoHooks {
 		'description'	=> null,
 		'container'		=> null,
 		'urlargs'		=> null,
-		'autoresize'	=> null,
+		'autoresize'	=> null
 	];
 
 	/**
@@ -114,7 +114,7 @@ class EmbedVideoHooks {
 
 			list( $key, $value ) = explode( '=', $argumentPair, 2 );
 
-			if ( !isset( self::$validArguments[$key] ) ) {
+			if (!array_key_exists($key, self::$validArguments)) {
 				continue;
 			}
 			$args[$key] = $value;
@@ -187,7 +187,7 @@ class EmbedVideoHooks {
 		$urlArgs		= trim( $urlArgs );
 		$width			= null;
 		$height			= null;
-		$autoResize     = (isset($autoResize) && strtolower(trim($autoResize)) == "false")?false:true;
+		$autoResize		= ( isset( $autoResize ) && strtolower( trim( $autoResize ) ) == "false" ) ? false : true;
 
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
 		if ( stristr( $dimensions, 'x' ) ) {
@@ -201,6 +201,8 @@ class EmbedVideoHooks {
 		/* Error Checking                   */
 		/************************************/
 		if ( !$service || !$id ) {
+			var_dump($service, $id);
+			die();
 			return self::error( 'missingparams', $service, $id );
 		}
 
@@ -247,10 +249,7 @@ class EmbedVideoHooks {
 			$html = self::generateWrapperHTML( $html );
 		}
 
-
-
-		$parser->getOutput()->addModuleStyles( ['ext.embedVideo'] );
-		$parser->getOutput()->addModuleScripts( ['ext.embedVideo'] );
+		$parser->getOutput()->addModules( ['ext.embedVideo'] );
 
 		return [
 			$html,
