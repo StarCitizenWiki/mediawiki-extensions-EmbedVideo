@@ -38,6 +38,10 @@ class EmbedVideoHooks {
 	 */
 	static private $container = false;
 
+
+	/**
+	 * Hook to setup defaults.
+	 */
 	public static function onExtension() {
 		global $wgEmbedVideoDefaultWidth;
 		if ( !isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1 ) {
@@ -58,7 +62,8 @@ class EmbedVideoHooks {
 		'alignment'		=> null,
 		'description'	=> null,
 		'container'		=> null,
-		'urlargs'		=> null
+		'urlargs'		=> null,
+		'autoresize'	=> null
 	];
 
 	/**
@@ -109,7 +114,7 @@ class EmbedVideoHooks {
 
 			list( $key, $value ) = explode( '=', $argumentPair, 2 );
 
-			if ( !isset( self::$validArguments[$key] ) ) {
+			if (!array_key_exists($key, self::$validArguments)) {
 				continue;
 			}
 			$args[$key] = $value;
@@ -125,7 +130,8 @@ class EmbedVideoHooks {
 			$args['alignment'],
 			$args['description'],
 			$args['container'],
-			$args['urlargs']
+			$args['urlargs'],
+			$args['autoresize']
 		);
 	}
 
@@ -150,7 +156,8 @@ class EmbedVideoHooks {
 			$args['alignment'],
 			$args['description'],
 			$args['container'],
-			$args['urlargs']
+			$args['urlargs'],
+			$args['autoresize']
 		);
 	}
 
@@ -166,9 +173,10 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Alignment of the video
 	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
 	 * @param	string	[Optional] Extra URL Arguments
+	 * @param 	string	[Optional] Automatically Resize video that will break its parent container.
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV( $parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null ) {
+	static public function parseEV( $parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null ) {
 		self::resetParameters();
 
 		$service		= trim( $service );
@@ -179,6 +187,7 @@ class EmbedVideoHooks {
 		$urlArgs		= trim( $urlArgs );
 		$width			= null;
 		$height			= null;
+		$autoResize		= ( isset( $autoResize ) && strtolower( trim( $autoResize ) ) == "false" ) ? false : true;
 
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
 		if ( stristr( $dimensions, 'x' ) ) {
@@ -232,9 +241,13 @@ class EmbedVideoHooks {
 			return self::error( 'unknown', $service );
 		}
 
-		$html = self::generateWrapperHTML( $html );
+		if ($autoResize) {
+			$html = self::generateWrapperHTML( $html, null, "autoResize" );
+		} else {
+			$html = self::generateWrapperHTML( $html );
+		}
 
-		$parser->getOutput()->addModuleStyles( ['ext.embedVideo'] );
+		$parser->getOutput()->addModules( ['ext.embedVideo'] );
 
 		return [
 			$html,
@@ -250,14 +263,21 @@ class EmbedVideoHooks {
 	 * @access	private
 	 * @param	string	[Optional] Horizontal Alignment
 	 * @param	string	[Optional] Description
+	 * @param	string  [Optional] Additional Classes to add to the wrapper
 	 * @return string
 	 */
-	static private function generateWrapperHTML( $html, $description = null ) {
+	static private function generateWrapperHTML( $html, $description = null, $addClass = null ) {
+		$classString = "embedvideo";
+
+		if ($addClass) {
+			$classString = $classString . " " . $addClass;
+		}
+
 		if ( self::getContainer() == 'frame' ) {
-			$html = "<div class='thumb embedvideo" . ( self::getAlignment() !== false ? " t" . self::getAlignment() : null ) . "'" . ( self::getAlignment() !== false ? "style='width: " . ( self::$service->getWidth() + 6 ) . "px;'" : null ) . "><div class='thumbinner' style='width: " . self::$service->getWidth() . "px;'>{$html}" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div></div>";
+			$html = "<div class='thumb " . $classString . ( self::getAlignment() !== false ? " t" . self::getAlignment() : null ) . "'" . ( self::getAlignment() !== false ? "style='width: " . ( self::$service->getWidth() + 6 ) . "px;'" : null ) . "><div class='thumbinner' style='width: " . self::$service->getWidth() . "px;'>{$html}" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div></div>";
 		} else {
 			// Normally I would avoid inline styles, but it is necessary in this case for center alignment as the stylesheet can not be dynamically modified.
-			$html = "<div class='embedvideo " . ( self::getAlignment() !== false ? " ev_" . self::getAlignment() : null ) . "' style='width: " . self::$service->getWidth() . "px;'>{$html}" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div>";
+			$html = "<div class='" . $classString . " " . ( self::getAlignment() !== false ? " ev_" . self::getAlignment() : null ) . "' style='width: " . self::$service->getWidth() . "px;'>{$html}" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div>";
 		}
 		return $html;
 	}
