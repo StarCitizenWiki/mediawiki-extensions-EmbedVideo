@@ -3,6 +3,7 @@
 ###v2.3.0
 * Hard cut off of support for versions older then MediaWiki 1.25
 * Auto Resize attribute added
+* Reverted array_key_exists() regression to fix the `<embedvideo>` tag being broken.
 
 ###v2.2.9
 * Fixed issue with Twitch.tv switching over to HTTPS.
