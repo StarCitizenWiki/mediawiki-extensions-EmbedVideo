@@ -72,6 +72,7 @@ The EmbedVideo parser function expects to be called in any of the following ways
 * `{{#ev:service|id|dimensions|alignment|description}}`
 * `{{#ev:service|id|dimensions|alignment|description|container}}`
 * `{{#ev:service|id|dimensions|alignment|description|container|urlargs}}`
+* `{{#ev:service|id|dimensions|alignment|description|container|urlargs|autoresize}}`
 
 However, if needed optional arguments may be left blank by not putting anything between the pipes:
 
@@ -104,6 +105,7 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 | `description="[wiki text]"`                 | no       | none    | Display a description under the embed container.                                                                                                                                                 |
 | `container="[frame]"`                       | no       | none    | Specifies the container type to use for the embed.<br/>`frame`: Wrap the video player in a Mediawiki thumbnail box.                                                                                                                                     |
 | `urlargs="modestbranding=1&version=3"`      | no       | none    | Allows extra URL arguments to be appended to the generated embed URL. This is useful for obscure options only supported on one service.                                                          |
+| `autoresize="false"`      | no       | true    | Automatically resize videos when their size will cause them to break outside of their container element                              |
 
 ## Examples
 

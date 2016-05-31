@@ -30,6 +30,9 @@
 			"styles": [
 				"css/embedvideo.css"
 			],
+			"scripts": [
+				"js/autoResize.js"
+			],
 			"position": "top"
 		}
 	},
