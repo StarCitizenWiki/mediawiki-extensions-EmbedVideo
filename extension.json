@@ -33,7 +33,11 @@
 			"scripts": [
 				"js/autoResize.js"
 			],
-			"position": "top"
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
