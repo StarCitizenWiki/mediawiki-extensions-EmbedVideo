@@ -5,7 +5,7 @@
 
         var autoResizerRTime;
         var autoResizerTimeout = false;
-        var autoResizerDelta = 200;
+        var autoResizerDelta = 210;
         $(window).resize(function() {
             autoResizerRTime = new Date();
             if (autoResizerTimeout === false) {
