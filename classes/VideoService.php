@@ -462,7 +462,7 @@ class VideoService {
 		if ( isset( self::$services[$service] ) ) {
 			throw new MWException( "Service already already exists: $service" );
 		}
-		self::$services[$service] = $arg;
+		self::$services[$service] = $args;
 	}
 
 	/**
