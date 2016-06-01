@@ -285,8 +285,6 @@ class EmbedVideoHooks {
 			$classString .= " " . $addClass;
 		}
 
-		//( self::getContainer() == 'frame' )
-
 		$html = "<div class='" . $classString . "' style='" . $styleString . "'>
 					<div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>
 						{$html}
