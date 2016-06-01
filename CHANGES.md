@@ -1,5 +1,11 @@
 ##Patch Notes
 
+###v3.2.1
+* Fixed issue #54 (EmbedVideo doesn't work with mw-collapsible class)
+* Fixed issue #50 ("arg" should be "args" in addService)
+* Added "inline" alignment option
+
+
 ###v2.3.0
 * Hard cut off of support for versions older then MediaWiki 1.25
 * Auto Resize attribute added

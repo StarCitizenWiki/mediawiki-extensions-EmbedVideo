@@ -12,3 +12,7 @@ div.embedvideo.ev_right {
 	clear: right;
 	float: right;
 }
+
+div.embedvideo.ev_inline {
+	display: inline-block;
+}
