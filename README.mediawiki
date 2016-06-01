@@ -4,8 +4,8 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.3.0
-|update      = 2016-06-01
+|version     = 2.3.1
+|update      = 2016-06-02
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=yes
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.3.0.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.3.1.zip Download]
 }}
 
 ==Usage==
@@ -84,9 +84,9 @@ Videos can easily be embedded with the <nowiki><embedvideo></embedvideo></nowiki
 :Examples: <tt>480</tt>, <tt>480x320</tt>, <tt>x320</tt>.  If the height is not provided it will be calculated automatically from the width and service default ratio.
 :Some services such as ''Gfycat'' do not have standard heights and should be specified for each embed.  <tt>$wgEmbedVideoDefaultWidth</tt> can be set in <tt>LocalSettings.php</tt> to override the default width.
 |-
-| <code>alignment="<nowiki>[left|center|right]</nowiki>"</code>
+| <code>alignment="<nowiki>[left|center|right|inline]</nowiki>"</code>
 | '''Required:''' no, '''Default:''' <tt>none</tt>
-:Align the placement of the video either to the left, centered, or to the right.
+:Align the placement of the video either to the left, centered, or to the right. Inline will allow multiple videos to display side by side without forced line breaks.
 |-
 | <code>description="<nowiki>[wiki text]</nowiki>"</code>
 | '''Required:''' no, '''Default:''' <tt>none</tt>
@@ -310,6 +310,13 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
+; v2.3.1
+* Fixed issue #54 (EmbedVideo doesn't work with mw-collapsible class)
+* Fixed issue #50 ("arg" should be "args" in addService)
+* Added "inline" alignment option
+* Fixed center alignment option css
+* Auto Resize now targets mobile as well
+
 ; v2.3.0
 * Hard cut off of support for versions older then MediaWiki 1.25
 * Auto Resize attribute added
