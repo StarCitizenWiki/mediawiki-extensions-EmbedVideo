@@ -4,6 +4,7 @@
 * Fixed issue #54 (EmbedVideo doesn't work with mw-collapsible class)
 * Fixed issue #50 ("arg" should be "args" in addService)
 * Added "inline" alignment option
+* Fixed center alignment option css
 
 
 ###v2.3.0
