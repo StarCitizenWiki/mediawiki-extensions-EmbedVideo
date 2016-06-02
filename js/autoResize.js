@@ -29,24 +29,27 @@
                 var parent = $(this).parent();
                 var self = $(this);
                 var iframe = self.find('iframe');
+                var wrap = self.find('.embedvideowrap');
 
                 if (iframe.width() > parent.width()) {
-                    resizeHandler(self,iframe,parent);
+                    resizeHandler(self,iframe,parent,wrap);
                 } else {
                     self.removeClass('autoResized').css('width','')
                     var originalWidth = iframe.attr("data-orig-width");
                     var originalHeight = iframe.attr("data-orig-height");
                     iframe.width(originalWidth).css('width',originalWidth).attr('width',originalWidth);
                     iframe.height(originalHeight).css('height',originalHeight).attr('height',originalHeight);
+                    wrap.width(originalWidth).css('width',originalWidth).attr('width',originalWidth);
+                    wrap.height(originalHeight).css('height',originalHeight).attr('height',originalHeight);
                 }
 
                 if (!self.hasClass('autoResized') && iframe.width() > parent.width()) {
-                    resizeHandler(self,iframe,parent);
+                    resizeHandler(self,iframe,parent,wrap);
                 }
             });
         }
 
-        function resizeHandler(self,iframe,parent) {
+        function resizeHandler(self,iframe,parent,wrap) {
             self.addClass('autoResized');
 
             if (typeof iframe.attr("data-orig-height") == 'undefined') {
@@ -61,7 +64,8 @@
             self.width(newWidth).css('width',newWidth);
             iframe.width(newWidth).css('width',newWidth).attr('width',newWidth);
             iframe.height(newHeight).css('height',newHeight).attr('height',newHeight);
-
+            wrap.width(newWidth).css('width',newWidth).attr('width',newWidth);
+            wrap.height(newHeight).css('height',newHeight).attr('height',newHeight);
         }
 
     });
