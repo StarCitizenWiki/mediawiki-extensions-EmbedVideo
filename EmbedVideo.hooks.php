@@ -285,12 +285,7 @@ class EmbedVideoHooks {
 			$classString .= " " . $addClass;
 		}
 
-		$html = "<div class='" . $classString . "' style='" . $styleString . "'>
-					<div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>
-						{$html}
-						" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "
-					</div>
-				</div>";
+		$html = "<div class='" . $classString . "' style='" . $styleString . "'><div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>{$html}" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div></div>";
 
 		return $html;
 	}
