@@ -1,5 +1,8 @@
 ##Patch Notes
 
+###v2.3.2
+* Fix auto resize breaking when leaving full screen.
+
 ###v2.3.1
 * Fixed issue #54 (EmbedVideo doesn't work with mw-collapsible class)
 * Fixed issue #50 ("arg" should be "args" in addService)
