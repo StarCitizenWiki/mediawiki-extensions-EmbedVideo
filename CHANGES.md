@@ -1,5 +1,8 @@
 ##Patch Notes
 
+###v2.3.3
+* Support for JW Player.
+
 ###v2.3.2
 * Fix auto resize breaking when leaving full screen.
 
