@@ -151,6 +151,18 @@ class VideoService {
 				'#^([\d\w]+)$#is'
 			]
 		],
+		'jwplayer' => [
+			'embed'			=> '<iframe src="//content.jwplatform.com/players/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#content\.jwplatform\.com/players/([a-zA-Z0-9]+-[a-zA-Z0-9]+)(?:.)?#is'
+			],
+			'id_regex'		=> [
+				'#([a-zA-Z0-9]+-[a-zA-Z0-9]+)#is'
+			]
+		],
 		'kickstarter' => [
 			'embed'			=> '<iframe src="//www.kickstarter.com/projects/%1$s/widget/video.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
