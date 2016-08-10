@@ -73,7 +73,7 @@ class AudioTransformOutput extends \MediaTransformOutput {
 			$inOut[] = $parameters['end'];
 		}
 
-		$html = "<audio src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
+		$html = "<audio src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></audio>";
 
 		return $html;
 	}
