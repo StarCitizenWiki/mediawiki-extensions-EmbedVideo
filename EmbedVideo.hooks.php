@@ -86,7 +86,9 @@ class EmbedVideoHooks {
 		$wgFileExtensions[] = 'mov';
 		$wgFileExtensions[] = 'mp3';
 		$wgFileExtensions[] = 'mp4';
+		$wgFileExtensions[] = 'oga';
 		$wgFileExtensions[] = 'ogg';
+		$wgFileExtensions[] = 'ogv';
 		$wgFileExtensions[] = 'wav';
 		$wgFileExtensions[] = 'webm';
 	}
