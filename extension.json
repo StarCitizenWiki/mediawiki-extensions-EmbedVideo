@@ -49,6 +49,10 @@
 		"localBasePath": "",
 		"remoteExtPath": "EmbedVideo"
 	},
+	"config": {
+		"FFmpegLocation": "/usr/bin/ffmpeg",
+		"FFprobeLocation": "/usr/bin/ffprobe"
+	},
 	"Hooks": {
 		"ParserFirstCallInit": [
 			"EmbedVideoHooks::onParserFirstCallInit"
