@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "2.4.0",
+	"version": "2.4.0-alpha",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
@@ -25,6 +25,8 @@
 		"EmbedVideo\\OEmbed": "classes/OEmbed.php",
 		"EmbedVideo\\VideoService": "classes/VideoService.php",
 		"EmbedVideo\\FFProbe": "classes/media/FFProbe.php",
+		"EmbedVideo\\AudioHandler": "classes/media/AudioHandler.php",
+		"EmbedVideo\\AudioTransformOutput": "classes/media/AudioTransformOutput.php",
 		"EmbedVideo\\VideoHandler": "classes/media/VideoHandler.php",
 		"EmbedVideo\\VideoTransformOutput": "classes/media/VideoTransformOutput.php"
 	},

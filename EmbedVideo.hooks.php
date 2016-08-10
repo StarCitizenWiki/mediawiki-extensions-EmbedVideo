@@ -68,16 +68,24 @@ class EmbedVideoHooks {
 			$wgEmbedVideoDefaultWidth = 320;
 		}
 
+		$wgMediaHandlers['audio/flac']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/ogg']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/mp4']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/wav']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/webm']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/x-flac']		= 'EmbedVideo\AudioHandler';
 		$wgMediaHandlers['video/mp4']			= 'EmbedVideo\VideoHandler';
 		$wgMediaHandlers['video/ogg']			= 'EmbedVideo\VideoHandler';
 		$wgMediaHandlers['video/quicktime']		= 'EmbedVideo\VideoHandler';
 		$wgMediaHandlers['video/webm']			= 'EmbedVideo\VideoHandler';
 		$wgMediaHandlers['video/x-matroska']	= 'EmbedVideo\VideoHandler';
 
+		$wgFileExtensions[] = 'flac';
 		$wgFileExtensions[] = 'mkv';
 		$wgFileExtensions[] = 'mov';
 		$wgFileExtensions[] = 'mp4';
 		$wgFileExtensions[] = 'ogg';
+		$wgFileExtensions[] = 'wav';
 		$wgFileExtensions[] = 'webm';
 	}
 

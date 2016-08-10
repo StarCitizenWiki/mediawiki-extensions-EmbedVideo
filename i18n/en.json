@@ -14,5 +14,7 @@
 	"error_embedvideo_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
 	"error_embedvideo_container": "The parameter provided for 'container' is invalid.",
 	"ev_video_short_desc": "$1, $2x$3",
-	"ev_video_long_desc": "$1, $2 codec, length $3, $4x$5 pixels, $6 overall"
+	"ev_video_long_desc": "$1, $2 codec, length $3, $4x$5 pixels, $6 overall",
+	"ev_audio_short_desc": "$1",
+	"ev_audio_long_desc": "$1, $2 codec, length $3, $4 overall"
 }
