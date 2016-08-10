@@ -156,4 +156,72 @@ class VideoHandler extends \MediaHandler {
 
 		return new VideoTransformOutput($file, $parameters);
 	}
+
+	/**
+	 * Shown in file history box on image description page.
+	 *
+	 * @access	public
+	 * @param	File	$file
+	 * @return	string	Dimensions
+	 */
+	public function getDimensionsString($file) {
+		global $wgLang;
+
+		$probe = new FFProbe($file->getLocalRefPath());
+
+		$format = $probe->getFormat();
+		$stream = $probe->getStream("v:0");
+
+		if ($format === false || $stream === false) {
+			return parent::getDimensionsString($file);
+		}
+
+		return wfMessage('ev_video_short_desc', $wgLang->formatTimePeriod($format->getDuration()), $stream->getWidth(), $stream->getHeight())->text();
+	}
+
+	/**
+	 * Short description. Shown on Special:Search results.
+	 *
+	 * @access	public
+	 * @param	File	$file
+	 * @return	string
+	 */
+	public function getShortDesc($file) {
+		global $wgLang;
+
+		$probe = new FFProbe($file->getLocalRefPath());
+
+		$format = $probe->getFormat();
+		$stream = $probe->getStream("v:0");
+
+		if ($format === false || $stream === false) {
+			//return self::getGeneralShortDesc($file);
+		}
+
+		return wfMessage('ev_video_short_desc', $wgLang->formatTimePeriod($format->getDuration()), $stream->getWidth(), $stream->getHeight(), $wgLang->formatSize($file->getSize()))->text();
+	}
+
+	/**
+	 * Long description. Shown under image on image description page surounded by ().
+	 *
+	 * @access	public
+	 * @param	File	$file
+	 * @return	string
+	 */
+	public function getLongDesc($file) {
+		global $wgLang;
+
+		$probe = new FFProbe($file->getLocalRefPath());
+
+		$format = $probe->getFormat();
+		$stream = $probe->getStream("v:0");
+
+		if ($format === false || $stream === false) {
+			return self::getGeneralLongDesc($file);
+		}
+
+		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);
+
+		return wfMessage('ev_video_long_desc', strtoupper($extension), $stream->getCodecName(), $wgLang->formatTimePeriod($format->getDuration()), $stream->getWidth(), $stream->getHeight(), $wgLang->formatBitrate($format->getBitRate()))->text();
+	}
 }
