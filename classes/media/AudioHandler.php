@@ -53,7 +53,7 @@ class AudioHandler extends \MediaHandler {
 	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds OR one hour and thirty minutes.
 	 *
 	 * @access	public
-	 * @param	string	Time formatted as one of: mm:ss or hh:mm:ss or dd:hh:mm:ss
+	 * @param	string	Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
 	 * @return	mixed	Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString($time) {
@@ -78,8 +78,7 @@ class AudioHandler extends \MediaHandler {
 	 * @return	string
 	 */
 	public function makeParamString($parameters) {
-		//var_dump(__METHOD__);
-		//var_dump($parameters);
+		return ''; //Width does not matter to video or audio.
 	}
 
 	/**
@@ -90,8 +89,7 @@ class AudioHandler extends \MediaHandler {
 	 * @return	mixed	Array of parameters or false on failure.
 	 */
 	public function parseParamString($string) {
-		//var_dump(__METHOD__);
-		//var_dump($string);
+		return []; //Nothing to parse.  See makeParamString above.
 	}
 
 	/**

@@ -30,30 +30,6 @@ class VideoHandler extends AudioHandler {
 	}
 
 	/**
-	 * Merge a parameter array into a string appropriate for inclusion in filenames
-	 *
-	 * @access	public
-	 * @param	array	Array of parameters that have been through normaliseParams.
-	 * @return	string
-	 */
-	public function makeParamString($parameters) {
-		//var_dump(__METHOD__);
-		//var_dump($parameters);
-	}
-
-	/**
-	 * Parse a param string made with makeParamString back into an array
-	 *
-	 * @access	public
-	 * @param 	string	The parameter string without file name (e.g. 122px)
-	 * @return	mixed	Array of parameters or false on failure.
-	 */
-	public function parseParamString($string) {
-		//var_dump(__METHOD__);
-		//var_dump($string);
-	}
-
-	/**
 	 * Changes the parameter array as necessary, ready for transformation.
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
