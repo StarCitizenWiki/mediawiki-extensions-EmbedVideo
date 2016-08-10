@@ -12,7 +12,9 @@
 $magicWords = [];
 
 $magicWords['en']  = [
-	'ev'	=> [0, 'ev'],
-	'evp'	=> [0, 'evp'],
-	'evt'	=> [0, 'evt']
+	'ev'		=> [0, 'ev'],
+	'evp'		=> [0, 'evp'],
+	'evt'		=> [0, 'evt'],
+	'ev_start'	=> [0, 'start=$1'],
+	'ev_end'	=> [0, 'end=$1'],
 ];

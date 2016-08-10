@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "2.3.3",
+	"version": "2.4.0",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
@@ -22,8 +22,11 @@
 	},
 	"AutoloadClasses": {
 		"EmbedVideoHooks": "EmbedVideo.hooks.php",
+		"EmbedVideo\\OEmbed": "classes/OEmbed.php",
 		"EmbedVideo\\VideoService": "classes/VideoService.php",
-		"EmbedVideo\\OEmbed": "classes/OEmbed.php"
+		"EmbedVideo\\FFProbe": "classes/media/FFProbe.php",
+		"EmbedVideo\\VideoHandler": "classes/media/VideoHandler.php",
+		"EmbedVideo\\VideoTransformOutput": "classes/media/VideoTransformOutput.php"
 	},
 	"ResourceModules": {
 		"ext.embedVideo": {
