@@ -36,13 +36,38 @@ class AudioHandler extends \MediaHandler {
 	 */
 	public function validateParam($name, $value) {
 		if ($name === 'width' || $name === 'width') {
-			return $value > 0;
+			return false;
 		}
 
 		if ($name === 'start' || $name === 'end') {
-			
+			if ($this->parseTimeString($value) === false) {
+				return false;
+			}
 			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Parse a time string into seconds.
+	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds OR one hour and thirty minutes.
+	 *
+	 * @access	public
+	 * @param	string	Time formatted as one of: mm:ss or hh:mm:ss or dd:hh:mm:ss
+	 * @return	mixed	Integer seconds or false for a bad format.
+	 */
+	public function parseTimeString($time) {
+		$parts = explode(":", $time);
+		if ($parts === false) {
+			return false;
+		}
+		$parts = array_reverse($parts);
+
+		$magnitude = [1, 60, 3600, 86400];
+		foreach ($parts as $index => $part) {
+			$seconds += $part * $magnitude[$index];
+		}
+		return $seconds;
 	}
 
 	/**
@@ -80,7 +105,15 @@ class AudioHandler extends \MediaHandler {
 	 * @return	boolean	Success
 	 */
 	public function normaliseParams($file, &$parameters) {
-		list($width, $height) = $this->getImageSize($file, $file->getLocalRefPath());
+		$parameters['start'] = $this->parseTimeString($parameters['start']);
+		if ($parameters['start'] === false) {
+			unset($parameters['start']);
+		}
+
+		$parameters['end'] = $this->parseTimeString($parameters['end']);
+		if ($parameters['end'] === false) {
+			unset($parameters['end']);
+		}
 
 		$parameters['page'] = 1;
 
@@ -121,10 +154,6 @@ class AudioHandler extends \MediaHandler {
 	 */
 	public function doTransform($file, $dstPath, $dstUrl, $parameters, $flags = 0) {
 		$this->normaliseParams($file, $parameters);
-
-		if (!($flags & self::TRANSFORM_LATER)) {
-			//@TODO: Thumbnail generation here.
-		}
 
 		return new AudioTransformOutput($file, $parameters);
 	}

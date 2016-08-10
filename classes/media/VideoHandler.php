@@ -12,19 +12,7 @@
 
 namespace EmbedVideo;
 
-class VideoHandler extends \MediaHandler {
-	/**
-	 * Get an associative array mapping magic word IDs to parameter names.
-	 * Will be used by the parser to identify parameters.
-	 */
-	public function getParamMap() {
-		return [
-			'img_width'	=> 'width',
-			'ev_start'	=> 'start',
-			'ev_end'	=> 'end'
-		];
-	}
-
+class VideoHandler extends AudioHandler {
 	/**
 	 * Validate a thumbnail parameter at parse time.
 	 * Return true to accept the parameter, and false to reject it.
@@ -38,11 +26,7 @@ class VideoHandler extends \MediaHandler {
 		if ($name === 'width' || $name === 'width') {
 			return $value > 0;
 		}
-
-		if ($name === 'start' || $name === 'end') {
-			
-			return true;
-		}
+		return parent::validateParam($name, $value);
 	}
 
 	/**
@@ -80,6 +64,8 @@ class VideoHandler extends \MediaHandler {
 	 * @return	boolean	Success
 	 */
 	public function normaliseParams($file, &$parameters) {
+		parent::normaliseParams($file, $parameters);
+
 		list($width, $height) = $this->getImageSize($file, $file->getLocalRefPath());
 
 		if (isset($parameters['width']) && $parameters['width'] > 0 && $parameters['width'] < $width) {
@@ -102,8 +88,6 @@ class VideoHandler extends \MediaHandler {
 		if (($height / $width) != ($parameters['height'] / $parameters['width'])) {
 			$parameters['height'] = round($height / $width * $parameters['width']);
 		}
-
-		$parameters['page'] = 1;
 
 		return true;
 	}

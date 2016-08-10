@@ -69,7 +69,16 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			$class = $options['img-class'];
 		}
 
-		$html = "<video src='{$this->url}' width='{$this->getWidth()}' height='{$this->getHeight()}'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
+		$inOut = false;
+		if (isset($parameters['start']) && $parameters['start'] !== false) {
+			$inOut[] = $parameters['start'];
+		}
+
+		if (isset($parameters['end']) && $parameters['end'] !== false) {
+			$inOut[] = $parameters['end'];
+		}
+
+		$html = "<video src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."' width='{$this->getWidth()}' height='{$this->getHeight()}'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
 
 		return $html;
 	}
