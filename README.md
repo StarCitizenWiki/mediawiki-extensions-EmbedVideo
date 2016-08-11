@@ -61,11 +61,15 @@ wfLoadExtension("EmbedVideo");
 #Usage
 
 ## Media Handler
-For locally uploaded content the process for displaying it on a page is the same as an image.  [https://www.mediawiki.org/wiki/Help:Images#Syntax See the image syntax documentation] on MediaWiki.org for complete reference on this feature.
+For locally uploaded content the process for displaying it on a page is the same as an image.  [See the image syntax documentation](https://www.mediawiki.org/wiki/Help:Images#Syntax) on MediaWiki.org for complete reference on this feature.
 
 This example would display a video in page using a HTML5 `<video>` tag.
 
 	[[File:Example.mp4]]
+
+To specify the start and end timestamps in the media use the start and end parameters.  The timestamp can be formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss.
+
+	[[File:Example.mp4|start=2|end=6]]
 
 ## Tags
 
