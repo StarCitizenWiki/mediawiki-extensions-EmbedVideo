@@ -38,18 +38,6 @@ class EmbedVideoHooks {
 	 */
 	static private $container = false;
 
-
-	/**
-	 * Hook to setup defaults.
-	 */
-	public static function onExtension() {
-		global $wgEmbedVideoDefaultWidth;
-		if ( !isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1 ) {
-			//Set a smaller default width when in mobile view.
-			$wgEmbedVideoDefaultWidth = 320;
-		}
-	}
-
 	/**
 	 * Valid Arguments for the parseEV function hook.
 	 *
@@ -65,6 +53,46 @@ class EmbedVideoHooks {
 		'urlargs'		=> null,
 		'autoresize'	=> null
 	];
+
+	/**
+	 * Hook to setup defaults.
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	public static function onExtension() {
+		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
+
+		if ( !isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1 ) {
+			//Set a smaller default width when in mobile view.
+			$wgEmbedVideoDefaultWidth = 320;
+		}
+
+		$wgMediaHandlers['application/ogg']		= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/flac']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/ogg']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/mpeg']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/mp4']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/wav']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/webm']			= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['audio/x-flac']		= 'EmbedVideo\AudioHandler';
+		$wgMediaHandlers['video/mp4']			= 'EmbedVideo\VideoHandler';
+		$wgMediaHandlers['video/ogg']			= 'EmbedVideo\VideoHandler';
+		$wgMediaHandlers['video/quicktime']		= 'EmbedVideo\VideoHandler';
+		$wgMediaHandlers['video/webm']			= 'EmbedVideo\VideoHandler';
+		$wgMediaHandlers['video/x-matroska']	= 'EmbedVideo\VideoHandler';
+
+		$wgFileExtensions[] = 'flac';
+		$wgFileExtensions[] = 'mkv';
+		$wgFileExtensions[] = 'mov';
+		$wgFileExtensions[] = 'mp3';
+		$wgFileExtensions[] = 'mp4';
+		$wgFileExtensions[] = 'oga';
+		$wgFileExtensions[] = 'ogg';
+		$wgFileExtensions[] = 'ogv';
+		$wgFileExtensions[] = 'wav';
+		$wgFileExtensions[] = 'webm';
+	}
 
 	/**
 	 * Sets up this extension's parser functions.

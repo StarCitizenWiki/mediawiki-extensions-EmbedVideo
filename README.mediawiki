@@ -4,8 +4,8 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.3.3
-|update      = 2016-07-14
+|version     = 2.4.0
+|update      = 2016-08-12
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
@@ -15,7 +15,7 @@
 |vagrant-role      = embedvideo
 }}
 
-The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.
+The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
 
 ;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
 ;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
@@ -28,10 +28,21 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=yes
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.3.3.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.4.0.zip Download]
 }}
 
 ==Usage==
+
+=== Media Handler ===
+For locally uploaded content the process for displaying it on a page is the same as an image.  [https://www.mediawiki.org/wiki/Help:Images#Syntax See the image syntax documentation] on MediaWiki.org for complete reference on this feature.
+
+This example would display a video in page using a HTML5 `<video>` tag.
+
+<pre><nowiki>[[File:Example.mp4]]</nowiki></pre>
+
+To specify the start and end timestamps in the media use the start and end parameters.  The timestamp can be formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss.
+
+<pre><nowiki>[[File:Example.mp4|start=2|end=6]]</nowiki></pre>
 
 === Tags ===
 
@@ -316,9 +327,25 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | $wgEmbedVideoDefaultWidth
 |
 | Integer - Globally override the default width of video players.  When not set this uses the video service's default width which is typically 640 pixels.
+|--
+| $wgFFmpegLocation
+| /usr/bin/ffmpeg
+| String - Set the location of the ffmpeg binary.
+|--
+| $wgFFprobeLocation
+| /usr/bin/ffprobe
+| String - Set the location of the ffprobe binary.
 |}
 
 ==Patch Notes==
+; v2.4.0
+* New media handlers to embed locally uploaded video and audio files.
+** Requires ffmpeg and ffprobe binaries to be installed.
+** Uses HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
+* Two new settings:
+** $wgFFmpegLocation - Set the location of the ffmpeg binary.
+** $wgFFprobeLocation - Set the location of the ffprobe binary.
+
 ; v2.3.3
 * Support for JW Player.
 

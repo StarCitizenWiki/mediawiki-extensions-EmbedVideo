@@ -1,14 +1,14 @@
 #About
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
 For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
 
-https://github.com/Alexia/mediawiki-embedvideo
+https://github.com/HydraWiki/mediawiki-embedvideo
 
 Issues, bug reports, and feature requests may be created at the issue tracker:
 
-https://github.com/Alexia/mediawiki-embedvideo/issues
+https://github.com/HydraWiki/mediawiki-embedvideo/issues
 
 The MediaWiki extension page is located at:
 
@@ -35,7 +35,7 @@ See LICENSE for more details
 There are three places to download the EmbedVideo extension. The first is directly from its GitHub project page, where active development takes place.  If you have git, you can use this incantation to check out a read-only copy of the extension source:
 
 ```
-git clone https://github.com/Alexia/mediawiki-embedvideo.git
+git clone https://github.com/HydraWiki/mediawiki-embedvideo.git
 ```
 
 Downloadable archive packages for numbered releases will also be available from the github project page.
@@ -59,6 +59,17 @@ wfLoadExtension("EmbedVideo");
 ```
 
 #Usage
+
+## Media Handler
+For locally uploaded content the process for displaying it on a page is the same as an image.  [See the image syntax documentation](https://www.mediawiki.org/wiki/Help:Images#Syntax) on MediaWiki.org for complete reference on this feature.
+
+This example would display a video in page using a HTML5 `<video>` tag.
+
+	[[File:Example.mp4]]
+
+To specify the start and end timestamps in the media use the start and end parameters.  The timestamp can be formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss.
+
+	[[File:Example.mp4|start=2|end=6]]
 
 ## Tags
 
@@ -109,7 +120,7 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 
 ## Examples
 
-![Example \#1](EmbedVideoExample1.jpg "Example #1")
+### Example #1
 
 For example, a video from YouTube use the 'youtube' service selector enter either the raw ID:
 
@@ -119,7 +130,7 @@ Or the full URL:
 
     {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE}}
 
-![Example \#2](EmbedVideoExample2.jpg "Example #2")
+### Example #2
 
 To display the same video as a right aligned large thumbnail with a description:
 
@@ -169,11 +180,13 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 
 #Configuration Settings
 
-| Variable                  | Default Value | Description                                                                                                                                             |
-|---------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $wgEmbedVideoMinWidth     |               | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoMaxWidth     |               | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoDefaultWidth |               | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| Variable                  | Default Value    | Description                                                                                                                                             |
+|---------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $wgEmbedVideoMinWidth     |                  | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoMaxWidth     |                  | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoDefaultWidth |                  | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| $wgFFmpegLocation         | /usr/bin/ffmpeg  | String - Set the location of the ffmpeg binary.                                                                                                         |
+| $wgFFprobeLocation        | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
 
 #Credits
 

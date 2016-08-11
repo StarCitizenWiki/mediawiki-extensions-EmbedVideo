@@ -21,3 +21,7 @@ div.embedvideo.ev_right {
 div.embedvideo.ev_inline {
 	display: inline-block;
 }
+
+video.thumbborder, audio.thumbborder {
+	border: 1pt solid #ddd;
+}
