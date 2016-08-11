@@ -116,7 +116,7 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 
 ## Examples
 
-![Example \#1](EmbedVideoExample1.jpg "Example #1")
+### Example #1
 
 For example, a video from YouTube use the 'youtube' service selector enter either the raw ID:
 
@@ -126,7 +126,7 @@ Or the full URL:
 
     {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE}}
 
-![Example \#2](EmbedVideoExample2.jpg "Example #2")
+### Example #2
 
 To display the same video as a right aligned large thumbnail with a description:
 
