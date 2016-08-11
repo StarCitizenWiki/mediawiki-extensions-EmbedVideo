@@ -44,6 +44,12 @@ class VideoHandler extends AudioHandler {
 
 		list($width, $height) = $this->getImageSize($file, $file->getLocalRefPath());
 
+		if ($width === 0 && $height === 0) {
+			//Force a reset.
+			$width = 640;
+			$height = 360;
+		}
+
 		if (isset($parameters['width']) && $parameters['width'] > 0 && $parameters['width'] < $width) {
 			$parameters['width'] = intval($parameters['width']);
 
