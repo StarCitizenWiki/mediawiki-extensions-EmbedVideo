@@ -180,11 +180,13 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 
 #Configuration Settings
 
-| Variable                  | Default Value | Description                                                                                                                                             |
-|---------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $wgEmbedVideoMinWidth     |               | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoMaxWidth     |               | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoDefaultWidth |               | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| Variable                  | Default Value    | Description                                                                                                                                             |
+|---------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $wgEmbedVideoMinWidth     |                  | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoMaxWidth     |                  | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoDefaultWidth |                  | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| $wgFFmpegLocation         | /usr/bin/ffmpeg  | String - Set the location of the ffmpeg binary.                                                                                                         |
+| $wgFFprobeLocation        | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
 
 #Credits
 
