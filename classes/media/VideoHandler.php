@@ -61,8 +61,10 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = $height;
 		}
 
-		if (($height / $width) != ($parameters['height'] / $parameters['width'])) {
-			$parameters['height'] = round($height / $width * $parameters['width']);
+		if ($width > 0 && $parameters['width'] > 0) {
+			if (($height / $width) != ($parameters['height'] / $parameters['width'])) {
+				$parameters['height'] = round($height / $width * $parameters['width']);
+			}
 		}
 
 		return true;
