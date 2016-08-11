@@ -1,6 +1,6 @@
 #About
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 <video> and <audio> tags.
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
 For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
 
@@ -63,7 +63,7 @@ wfLoadExtension("EmbedVideo");
 ## Media Handler
 For locally uploaded content the process for displaying it on a page is the same as an image.  [https://www.mediawiki.org/wiki/Help:Images#Syntax See the image syntax documentation] on MediaWiki.org for complete reference on this feature.
 
-This example would display a video in page using a HTML5 <video> tag.
+This example would display a video in page using a HTML5 `<video>` tag.
 
 	[[File:Example.mp4]]
 
