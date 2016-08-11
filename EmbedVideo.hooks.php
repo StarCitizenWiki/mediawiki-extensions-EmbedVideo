@@ -68,6 +68,7 @@ class EmbedVideoHooks {
 			$wgEmbedVideoDefaultWidth = 320;
 		}
 
+		$wgMediaHandlers['application/ogg']		= 'EmbedVideo\AudioHandler';
 		$wgMediaHandlers['audio/flac']			= 'EmbedVideo\AudioHandler';
 		$wgMediaHandlers['audio/ogg']			= 'EmbedVideo\AudioHandler';
 		$wgMediaHandlers['audio/mpeg']			= 'EmbedVideo\AudioHandler';

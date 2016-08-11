@@ -1,5 +1,13 @@
 ##Patch Notes
 
+###v2.4.0
+* New media handlers to embed locally uploaded video and audio files.
+ * Requires ffmpeg and ffprobe binaries to be installed.
+ * Uses HTML5 <video> and <audio> tags.
+* Two new settings:
+ * $wgFFmpegLocation - Set the location of the ffmpeg binary.
+ * $wgFFprobeLocation - Set the location of the ffprobe binary.
+
 ###v2.3.3
 * Support for JW Player.
 

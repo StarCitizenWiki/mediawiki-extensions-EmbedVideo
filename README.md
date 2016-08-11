@@ -1,14 +1,14 @@
 #About
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 <video> and <audio> tags.
 
 For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
 
-https://github.com/Alexia/mediawiki-embedvideo
+https://github.com/HydraWiki/mediawiki-embedvideo
 
 Issues, bug reports, and feature requests may be created at the issue tracker:
 
-https://github.com/Alexia/mediawiki-embedvideo/issues
+https://github.com/HydraWiki/mediawiki-embedvideo/issues
 
 The MediaWiki extension page is located at:
 
@@ -35,7 +35,7 @@ See LICENSE for more details
 There are three places to download the EmbedVideo extension. The first is directly from its GitHub project page, where active development takes place.  If you have git, you can use this incantation to check out a read-only copy of the extension source:
 
 ```
-git clone https://github.com/Alexia/mediawiki-embedvideo.git
+git clone https://github.com/HydraWiki/mediawiki-embedvideo.git
 ```
 
 Downloadable archive packages for numbered releases will also be available from the github project page.
@@ -59,6 +59,13 @@ wfLoadExtension("EmbedVideo");
 ```
 
 #Usage
+
+## Media Handler
+For locally uploaded content the process for displaying it on a page is the same as an image.  [https://www.mediawiki.org/wiki/Help:Images#Syntax See the image syntax documentation] on MediaWiki.org for complete reference on this feature.
+
+This example would display a video in page using a HTML5 <video> tag.
+
+	[[File:Example.mp4]]
 
 ## Tags
 
