@@ -4,8 +4,8 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.3.3
-|update      = 2016-07-14
+|version     = 2.4.0
+|update      = 2016-08-12
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
@@ -15,7 +15,7 @@
 |vagrant-role      = embedvideo
 }}
 
-The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.
+The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
 
 ;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
 ;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=yes
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.3.3.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.4.0.zip Download]
 }}
 
 ==Usage==
@@ -319,6 +319,14 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
+; v2.4.0
+* New media handlers to embed locally uploaded video and audio files.
+** Requires ffmpeg and ffprobe binaries to be installed.
+** Uses HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
+* Two new settings:
+** $wgFFmpegLocation - Set the location of the ffmpeg binary.
+** $wgFFprobeLocation - Set the location of the ffprobe binary.
+
 ; v2.3.3
 * Support for JW Player.
 
