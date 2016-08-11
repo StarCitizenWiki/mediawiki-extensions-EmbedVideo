@@ -69,8 +69,8 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			$class = $options['img-class'];
 		}
 
+		$inOut = false;
 		if ($parameters['start'] !== $parameters['end']) {
-			$inOut = false;
 			if (isset($parameters['start']) && $parameters['start'] !== false) {
 				$inOut[] = $parameters['start'];
 			}
