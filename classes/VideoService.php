@@ -260,6 +260,18 @@ class VideoService {
 				'#^([\d\w-]+)$#is'
 			]
 		],
+		'tubitv' => [
+			'embed'			=> '<iframe src="http://tubitv.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (640 / 360)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#tubitv.com/embed/([\d]+)/([\w-]+)#is',
+			],
+			'id_regex'		=> [
+				'#^([\d]+)$#is'
+			]
+		],
 		'tvpot' => [
 			'embed'			=> '<iframe src="//videofarm.daum.net/controller/video/viewer/Video.html?vid=%1$s&play_loc=undefined&alert=true" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
