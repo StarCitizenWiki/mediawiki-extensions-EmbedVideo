@@ -323,7 +323,7 @@ class VideoService {
 		'vimeo' => [
 			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, // (640 / 493)
+			'default_ratio' => 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#vimeo\.com/([\d]+)#is',
