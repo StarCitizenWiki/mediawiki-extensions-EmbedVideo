@@ -248,7 +248,7 @@ class VideoService {
 			]
 		],
 		'tudou' => [
-			'embed'			=> '<iframe src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d"></iframe>',
+			'embed'			=> '<iframe src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d" frameborder="0"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
