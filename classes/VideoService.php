@@ -107,6 +107,7 @@ class VideoService {
 				'#dailymotion\.com/(?:video|embed/video)/([a-zA-Z0-9]+)(?:_\S+?)?#is'
 			],
 			'id_regex'		=> [
+				'#^([a-zA-Z0-9]+)#is',
 				'#^([a-zA-Z0-9]+)(?:_\S+?)#is'
 			]
 		],
@@ -248,7 +249,7 @@ class VideoService {
 			]
 		],
 		'tudou' => [
-			'embed'			=> '<iframe src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d"></iframe>',
+			'embed'			=> '<iframe src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d" frameborder="0"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
@@ -258,6 +259,18 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^([\d\w-]+)$#is'
+			]
+		],
+		'tubitv' => [
+			'embed'			=> '<iframe src="http://tubitv.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (640 / 360)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#tubitv.com/embed/([\d]+)/([\w-]+)#is',
+			],
+			'id_regex'		=> [
+				'#^([\d]+)$#is'
 			]
 		],
 		'tvpot' => [
@@ -310,7 +323,7 @@ class VideoService {
 		'vimeo' => [
 			'embed'			=> '<iframe src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
-			'default_ratio' => 1.2994923857868, // (640 / 493)
+			'default_ratio' => 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
 				'#vimeo\.com/([\d]+)#is',
