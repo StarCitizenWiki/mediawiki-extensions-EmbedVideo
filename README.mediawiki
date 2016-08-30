@@ -263,6 +263,11 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <nowiki>bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
 | <nowiki>http://www.ted.com/talks/bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
 |-
+! [https://tubitv.com Tubi TV]
+| colspan="2"|<tt>tubitv</tt>
+| <nowiki>318409</nowiki>
+| <nowiki>http://tubitv.com/video/318409</nowiki>
+|-
 ! [http://www.tudou.com/ Tudou]
 | colspan="2"|<tt>tudou</tt>
 | <nowiki>mfQXfumwiew</nowiki>

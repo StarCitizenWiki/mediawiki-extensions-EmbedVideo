@@ -418,6 +418,10 @@ class EmbedVideoHooks {
 
 		$message = wfMessage( 'error_embedvideo_' . $type, $arguments )->escaped();
 
-		return "<div class='errorbox'>{$message}</div>";
+		return [
+			"<div class='errorbox'>{$message}</div>",
+			'noparse' => true,
+			'isHTML' => true
+		];
 	}
 }
