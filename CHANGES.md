@@ -1,5 +1,12 @@
 ##Patch Notes
 
+###v2.4.1
+* Merged Sophivorus' improvements and fixes.
+ * Support for TubiTV.com with the tubitv service identifier.
+ * Fixed vimeo aspect ratio.
+ * Fixed dailymotion ID regex.
+* Fixed error messages being double parsed.
+
 ###v2.4.0
 * New media handlers to embed locally uploaded video and audio files.
  * Requires ffmpeg and ffprobe binaries to be installed.
