@@ -308,7 +308,7 @@ class EmbedVideoHooks {
 
 		if (self::getAlignment() !== false) {
 			$classString .= " ev_" . self::getAlignment();
-			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;'";
+			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;";
 		}
 
 		if ($addClass) {
