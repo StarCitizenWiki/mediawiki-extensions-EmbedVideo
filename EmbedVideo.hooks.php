@@ -275,7 +275,9 @@ class EmbedVideoHooks {
 			$html = self::generateWrapperHTML( $html );
 		}
 
-		$parser->getOutput()->addModules( ['ext.embedVideo'] );
+		$out = $parser->getOutput();
+		$out->addModules( 'ext.embedVideo' );
+		$out->addModuleStyles( 'ext.embedVideo.styles' );
 
 		return [
 			$html,
