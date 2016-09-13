@@ -54,7 +54,7 @@ class VideoService {
 			]
 		],
 		'beam' => [
-			'embed'			=> '<iframe src="https://beam.pro/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//beam.pro/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -107,7 +107,8 @@ class VideoService {
 				'#dailymotion\.com/(?:video|embed/video)/([a-zA-Z0-9]+)(?:_\S+?)?#is'
 			],
 			'id_regex'		=> [
-				'#^([a-zA-Z0-9]+)(?:_\S+?)?#is'
+				'#^([a-zA-Z0-9]+)#is',
+				'#^([a-zA-Z0-9]+)(?:_\S+?)#is'
 			]
 		],
 		'disclose' => [
@@ -189,7 +190,7 @@ class VideoService {
 			]
 		],
 		'mediacccde' => [
-			'embed'     => '<iframe src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
+			'embed'     => '<iframe src="//media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
 			'default_width' => 660,
 			'default_ratio' => 1.77777777777778, //(16 / 9),
 			'https_enabled' => true,
@@ -273,7 +274,7 @@ class VideoService {
 			]
 		],
 		'tudou' => [
-			'embed'			=> '<iframe src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'embed'			=> '<iframe src="//www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" width="%2$d" height="%3$d" frameborder="0"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
@@ -298,7 +299,7 @@ class VideoService {
 			]
 		],
 		'twitch' => [
-			'embed'			=> '<iframe src="https://player.twitch.tv/?channel=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="//player.twitch.tv/?channel=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
