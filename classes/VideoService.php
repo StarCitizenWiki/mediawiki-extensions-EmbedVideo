@@ -267,7 +267,7 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#tubitv.com/(?:video|embed)/([\d]+)(/[\w-]+)?$#is',
+				'#tubitv.com/(?:video|embed)/([\d]+)/?([\w-]+)?$#is',
 			],
 			'id_regex'		=> [
 				'#^([\d]+)$#is'
