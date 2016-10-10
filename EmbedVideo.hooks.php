@@ -275,7 +275,9 @@ class EmbedVideoHooks {
 			$html = self::generateWrapperHTML( $html );
 		}
 
-		$parser->getOutput()->addModules( ['ext.embedVideo'] );
+		$out = $parser->getOutput();
+		$out->addModules( 'ext.embedVideo' );
+		$out->addModuleStyles( 'ext.embedVideo.styles' );
 
 		return [
 			$html,
@@ -306,7 +308,7 @@ class EmbedVideoHooks {
 
 		if (self::getAlignment() !== false) {
 			$classString .= " ev_" . self::getAlignment();
-			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;'";
+			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;";
 		}
 
 		if ($addClass) {

@@ -32,13 +32,19 @@
 	},
 	"ResourceModules": {
 		"ext.embedVideo": {
-			"styles": [
-				"css/embedvideo.css"
-			],
 			"scripts": [
 				"js/autoResize.js"
 			],
 			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"ext.embedVideo.styles": {
+			"styles": [
+				"css/embedvideo.css"
+			],
 			"targets": [
 				"desktop",
 				"mobile"
