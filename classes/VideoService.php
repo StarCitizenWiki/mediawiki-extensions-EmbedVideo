@@ -65,6 +65,19 @@ class VideoService {
 				'#^([\d\w\-\+]+)$#is'
 			]
 		],
+		'disclose' => [
+ 			'embed'			=> '<iframe src="//www.disclose.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+ 			'default_width'	=> 640,
+ 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
+ 			'https_enabled'	=> true,
+ 			'url_regex'		=> [
+ 				'#disclose.tv/embed/([\d]+)/([\w-]+)#is',
+ 				'#disclose.tv/action/viewvideo/([\d]+)/([\w-]+)/#is'
+ 			],
+ 			'id_regex'		=> [
+ 				'#^([\d]+)$#is'
+  			]
+  		],
 		'blip' => [
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
