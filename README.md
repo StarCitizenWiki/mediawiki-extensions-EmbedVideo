@@ -176,9 +176,9 @@ An important caveat to make note of, is that the `w` and `h` attributes only eff
 _Note that the use of the `{{#vlink}}` parser function is also acceptable here for backwards compatibility._
 
 
-    {{#evl:<video id>|<Link text>|player=<player id>}}
+    {{#evl:<video id>|<Link text>|service=youtube|player=<player id>}}
 
-In addition to all of the attributes supported by the `#evt` tag, these specific attributes apply to the `#evl` (and `#vlink`) tags.
+In addition to all of the attributes supported by the `#evt` tag, these specific attributes apply to the `#evl` (and `#vlink`) tags. To maintain backwards compatibility, if you do not define a `service` then `youtube` is assumed.
 
 | Attributes    | Required     | Default   | Description                                                                                                                                                                                                                                                                     |
 |---------------|--------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
