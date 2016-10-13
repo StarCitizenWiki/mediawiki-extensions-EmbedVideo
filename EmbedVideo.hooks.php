@@ -233,11 +233,15 @@ class EmbedVideoHooks {
 			} else {
 				// map by array.
 				foreach ($map[$host] as $possibleService) {
-					$test = \EmbedVideo\VideoService::newFromName($possibleService)->parseVideoID($url);
-					if ($test !== false && $test !== $url) {
-						// sucessful parse - safe assumption that this is correct.
-						$service = $possibleService;
-						break;
+					$evs = \EmbedVideo\VideoService::newFromName($possibleService);
+					if ($evs) {
+						$test = $evs->parseVideoID($url);
+					
+						if ($test !== false && $test !== $url) {
+							// sucessful parse - safe assumption that this is correct.
+							$service = $possibleService;
+							break;
+						}
 					}
 				}
 			}

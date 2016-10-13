@@ -99,6 +99,14 @@ The \#evt parser tag allows for key=value pairs which allows for easier templati
     |alignment=right
     }}
 
+### \#evu - Parser Tag for URLs
+
+The \#evt parser tag is like the \#evt tag, but its first parameter is a URL that will be parsed to determine the service automatically.
+
+	{{#evu:https://www.youtube.com/watch?v=pSsYTj9kCHE
+	|alignment=right
+	}}
+
 ### &lt;embedvideo&gt; - Tag Hook
 
 Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag hook. The ID/URL goes as the input between the tags and parameters can be added as the tag arguments.

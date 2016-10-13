@@ -4,7 +4,7 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.4.1
+|version     = 2.5.0
 |update      = 2016-08-30
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=yes
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.4.1.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.5.0.zip Download]
 }}
 
 ==Usage==
@@ -66,6 +66,13 @@ The <nowiki>#evt</nowiki> parser tag allows for key=value pairs which allows for
 <pre><nowiki>{{#evt:
 service=youtube
 |id=https://www.youtube.com/watch?v=pSsYTj9kCHE
+|alignment=right
+}}</nowiki></pre>
+
+====#evu - Parser Tag for URLs====
+The <nowiki>#evu</nowiki> parser tag is like the <nowiki>#evt</nowiki> tag, but its first parameter is a URL that will be parsed to determine the service automatically.
+
+<pre><nowiki>{{#evu:https://www.youtube.com/watch?v=pSsYTj9kCHE
 |alignment=right
 }}</nowiki></pre>
 
@@ -145,6 +152,99 @@ For YouTube to have the video start at a specific time code utilize the urlargs(
 URL arguments can be used to chop up a video and loop it:
 <pre>https://www.youtube.com/watch?v=pSsYTj9kCHE&start=160&end=180&loop=1</pre>
 <pre>{{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|||||start=160&end=180&loop=1}}</pre>
+
+
+= Support for VideoLink Tags =
+
+Support for the unmaintained VideoLink extension’s tags has been added since version 2.5.
+
+From the original extension documentation:
+
+<pre>The VideoLink extension allows embedding of YouTube videos in articles; allowing for multiple linked videos to be played in a single embedded video player, first shown when a user clicks on a video link.
+
+The &lt;vplayer /&gt; specifies where the player should appear within the page, and the {{#vlink}} parser function allows creation of links that load a specific video.</pre>
+=== &lt;evlplayer&gt; - Tag Hook for Video Container ===
+
+''Note that the use of the <code>&lt;vplayer&gt;</code> tag is also acceptable here for backwards compatibility.''
+
+This evlplayer tag is used to position the video player container within the page.
+
+<pre>&lt;vplayer id=&quot;player id&quot; w=&quot;width&quot; h=&quot;height&quot; class=&quot;class&quot; style=&quot;style&quot;&gt;default content&lt;/vplayer&gt;</pre>
+{|
+!width="11%"| Attributes
+!width="10%"| Required
+!width="23%"| Default
+!width="54%"| Description
+|-
+| id
+| no
+| default
+| An optional unique identifier for this container
+|-
+| w
+| no
+| 800
+| Width to send to the embedded player when its generated
+|-
+| h
+| no
+| achieve 16:9 from width
+| Height to send to the embedded player when its generated
+|-
+| class
+| no
+|
+
+| Additional CSS class to add to the container div
+|-
+| style
+| no
+|
+
+| Additional in-line CSS to apply to the container div
+|}
+
+An important caveat to make note of, is that the <code>w</code> and <code>h</code> attributes only effect the video that is being included into the container div, and not the actual container. For styling of the container, please use the <code>class</code> or <code>style</code> attributes.
+
+=== #evl - Parser Function for Video Links ===
+
+''Note that the use of the <code>{{#vlink}}</code> parser function is also acceptable here for backwards compatibility.''
+
+<pre>{{#evl:&lt;video id&gt;|&lt;Link text&gt;|service=youtube|player=&lt;player id&gt;}}</pre>
+In addition to all of the attributes supported by the <code>#evt</code> tag, these specific attributes apply to the <code>#evl</code> (and <code>#vlink</code>) tags. To maintain backwards compatibility, if you do not define a <code>service</code> then <code>youtube</code> is assumed.
+
+{|
+!width="5%"| Attributes
+!width="4%"| Required
+!width="3%"| Default
+!width="86%"| Description
+|-
+| video id
+| yes
+| none
+| The ID of the video you would like to play. ''Please note that the use of multiple video IDs separated by a semicolon is now deprecated. Please use the proper service for playlists if you would like play multiple videos from a single link''
+|-
+| link text
+| yes
+| none
+| The text to display inside the link
+|-
+| player
+| no
+| ‘default’
+| Player container to load video in. ''Note that the ID ‘default’ will only exist if you’ve defined a player with no ID.''
+|-
+| initial video
+| ''deprecated''
+|
+
+| In the original VideoLink, this would define what video to play first if multiple videos were define. Please see notes about in <code>video id</code> and <code>start</code>.
+|-
+| start
+| ''deprecated''
+| 0:00
+| In the original VideoLink, this defined the start time of a video. Since we support multiple video services, this feature can now be replicated with the <code>urlargs</code> parameter. For backwards compatibility, this attribute will be respect on videos with the service <code>youtube</code>.
+|}
 
 === Supported Services ===
 
@@ -343,6 +443,12 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
+; v2.5.0
+* Added support for VideoLink tags
+* Support for Disclose.tv added
+* Twitch VOD support updated.
+* Added <nowiki>#evu</nowiki> parser tag
+
 ; v2.4.1
 * Merged Sophivorus' improvements and fixes.
 ** Support for TubiTV.com with the tubitv service identifier.

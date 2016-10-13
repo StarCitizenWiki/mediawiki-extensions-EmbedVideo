@@ -4,6 +4,7 @@
 * Added support for VideoLink tags
 * Support for Disclose.tv added
 * Twitch VOD support updated.
+* Added #evu parser tag
 
 ###v2.4.1
 * Merged Sophivorus' improvements and fixes.
