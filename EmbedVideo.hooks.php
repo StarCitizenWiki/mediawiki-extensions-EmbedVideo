@@ -105,6 +105,8 @@ class EmbedVideoHooks {
 		$parser->setFunctionHook( "ev", "EmbedVideoHooks::parseEV" );
 		$parser->setFunctionHook( "evt", "EmbedVideoHooks::parseEVT" );
 		$parser->setFunctionHook( "evp", "EmbedVideoHooks::parseEVP" );
+		$parser->setFunctionHook( "evu", "EmbedVideoHooks::parseEVU" );
+
 		$parser->setHook( "embedvideo", "EmbedVideoHooks::parseEVTag" );
 		$parser->setHook('evlplayer', "EmbedVideoHooks::parseEVLPlayer");
 		$parser->setFunctionHook( 'evl', "EmbedVideoHooks::parseEVL");
@@ -204,6 +206,32 @@ class EmbedVideoHooks {
 
 		return [ $div, 'noParse'=> true, 'isHTML'=> 'true' ];
 	}
+
+	/**
+	 * Embeds a video based on the URL
+	 *
+	 * @access  public
+	 * @param   object Parser
+	 * @return  string Error Message
+	 */
+	static public function parseEVU( $parser, $url = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null ) {
+		if ( !$url ) {
+			return self::error( 'missingparams', $url );
+		}
+		$host = parse_url( $url, PHP_URL_HOST );
+		$parts = explode( '.', $host );
+		if ( count( $parts ) === 3 ) {
+			$service = $parts[1]; // There's a subdomain, www.youtube.com
+		} else {
+			$service = $parts[0]; // No subdomain, youtube.com
+		}
+		return self::parseEV(
+			$parser,
+			$service,
+			$url
+		);
+	}
+
 
 	/**
 	 * Adapter to call the new style tag.

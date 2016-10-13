@@ -408,6 +408,43 @@ class VideoService {
 	];
 
 	/**
+	 * Mapping of host names to services
+	 * @var array
+	 */
+	static private $serviceHostMap = [
+		'archive.org'				=> 'archiveorg',
+		'embed.bambuser.com'		=> ['bambuser', 'bambuser_channel'],
+		'beam.pro' 					=> 'beam',
+		'blip.tv'					=> 'blip',
+		'bing.com'					=> 'bing',
+		'collegehumor.com'			=> 'collegehumor',
+		'dailymotion.com'			=> 'dailymotion',
+		'divshare.com'				=> 'divshare',
+		'funnyordie.com'			=> 'funnyordie',
+		'gfycat.com'				=> 'gfycat',
+		'hitbox.tv'					=> 'hitbox',
+		'content.jwplatform.com'	=> 'jwplayer',
+		'kickstarter.com'			=> 'kickstarter',
+		'media.ccc.de'				=> 'mideacccde',
+		'metacafe.com'				=> 'metacafe',
+		'nicovideo.jp'				=> 'nico',
+		'rutube.ru'					=> 'rutube',
+		'teachertube.com'			=> 'teachertube',
+		'ted.com'					=> 'ted',
+		'tubitv.com'				=> 'tubitv',
+		'tudou.com'					=> 'todou',
+		'tvpot.daum.net'			=> 'tvpot',
+		'twitch.tv'					=> ['twitch', 'twitchvod'],
+		'89.160.51.62'				=> 'videomaten',
+		'vimeo.com'					=> 'vimeo',
+		'vine.co'					=> 'vine',
+		'screen.yahoo.com'			=> 'yahoo',
+		'youtube.com'				=> ['youtube', 'youtubeplaylist'],
+		'youku.com'					=> 'youku'
+	];
+
+
+	/**
 	 * This object instance's service information.
 	 *
 	 * @var		array

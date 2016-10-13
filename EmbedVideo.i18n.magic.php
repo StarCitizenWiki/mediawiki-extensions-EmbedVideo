@@ -17,6 +17,7 @@ $magicWords['en']  = [
 	'evt'		=> [0, 'evt'],
 	'evl'		=> [0, 'evl'],
 	'vlink'		=> [0, 'vlink'],
+	'evu'		=> [0, 'evu'],
 	'ev_start'	=> [0, 'start=$1'],
 	'ev_end'	=> [0, 'end=$1'],
 ];
