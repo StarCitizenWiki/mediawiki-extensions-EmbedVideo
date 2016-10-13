@@ -310,21 +310,15 @@ class VideoService {
 			]
 		],
 		'twitchvod' => [
-			'embed'			=> '<object id="clip_embed_player_flash" type="application/x-shockwave-flash" width="%2$d" height="%3$d" data="http://www.twitch.tv/widgets/archive_embed_player.swf" bgcolor="#000000">
-	<param name="movie" value="http://www.twitch.tv/widgets/archive_embed_player.swf" />
-	<param name="allowScriptAccess" value="always" />
-	<param name="allowNetworking" value="all" />
-	<param name="allowFullScreen" value="true" />
-	<param name="flashvars" value="channel=%1$s&amp;auto_play=false&amp;start_volume=100&amp;chapter_id=%4$d" />
-</object>',
+			'embed'			=> '<iframe src="https://player.twitch.tv/?video=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#twitch\.tv/([\d\w-]+)/c/([\d]+)(?:/\S+?)?#is'
+				'#twitch\.tv/([\d\w-]+)(?:/\S+?)?#is'
 			],
 			'id_regex'		=> [
-				'#^([\d\w-]+)/c/([\d]+)$#is'
+				'#^([\d\w-]+)$#is'
 			]
 		],
 		'videomaten' => [

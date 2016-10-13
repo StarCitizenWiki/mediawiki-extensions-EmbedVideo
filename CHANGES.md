@@ -3,6 +3,7 @@
 ###v2.5
 * Added support for VideoLink tags
 * Support for Disclose.tv added
+* Twitch VOD support updated.
 
 ###v2.4.1
 * Merged Sophivorus' improvements and fixes.
