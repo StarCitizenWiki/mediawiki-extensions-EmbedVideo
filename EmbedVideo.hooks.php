@@ -105,10 +105,104 @@ class EmbedVideoHooks {
 		$parser->setFunctionHook( "ev", "EmbedVideoHooks::parseEV" );
 		$parser->setFunctionHook( "evt", "EmbedVideoHooks::parseEVT" );
 		$parser->setFunctionHook( "evp", "EmbedVideoHooks::parseEVP" );
-
 		$parser->setHook( "embedvideo", "EmbedVideoHooks::parseEVTag" );
+		$parser->setHook('evlplayer', "EmbedVideoHooks::parseEVLPlayer");
+		$parser->setFunctionHook( 'evl', "EmbedVideoHooks::parseEVL");
+
+		// don't step on VideoLink's toes.
+		if (!class_exists('FXVideoLink')) {
+			$parser->setHook('vplayer', "EmbedVideoHooks::parseEVLPlayer");
+			$parser->setFunctionHook( 'vlink', "EmbedVideoHooks::parseEVL");
+		}
 
 		return true;
+	}
+
+	/**
+	 * Parse EVL (and vlink) Tags
+	 * @param  Parser $parser
+	 * @return array
+	 */
+	static public function parseEVL( Parser &$parser ) {
+		$args = func_get_args();
+		array_shift( $args );
+
+		// standardise first 2 arguments into strings that parse_str can handle.
+		$args[0] = "id=".$args[0];
+		$args[1] = "linktitle=".$args[1];
+
+		$options = [];
+		parse_str( implode( "&", $args ), $options );
+
+		// default service to youtube for compatibility with vlink
+		$options['service'] = isset( $options['service'] ) ? $options['service'] : "youtube";
+		$options = array_merge( self::$validArguments, $options );
+
+		// fix for youtube ids that VideoLink would have handled.
+		if ($options['service'] == 'youtube' && strpos($options['id'], ';') !== false) {
+			// transform input like Oh8KRy2WV0o;C5rePhJktn0 into Oh8KRy2WV0o
+			$options['notice'] = "Use of simi-colon delimited video lists is depricated. Only the first video in this list will play.";
+			$options['id'] = strstr($options['id'], ';', true);
+		}
+
+		// force start time on youtube videos from "start".
+		if ($options['service'] == 'youtube' && isset($options['start']) && preg_match('/^([0-9]+:){0,2}[0-9]+(?:\.[0-9]+)?$/', $options['start'])) {
+			$te = explode(':', $options['start']);
+			$tc = count($te);
+			for($i=1, $startTime = floatval($te[0]); $i<$tc; $i++) {
+				$startTime = $startTime*60 + floatval($te[$i]);
+			}
+
+			if (!isset($options['urlargs']) || empty($options['urlargs'])) {
+				// just set the url args to the start time string
+				$options['urlargs'] = "start={$startTime}";
+			} else {
+				// break down the url args and inject the start time in.
+				$urlargs = [];
+				parse_str($options['urlargs'],$urlargs);
+				$urlargs['start'] = $startTime;
+				$options['urlargs'] = http_build_query($urlargs);
+			}
+		}
+
+		$json = json_encode($options);
+
+		$link = Xml::element('a', [
+			'href' => '#',
+			'data-video-json' => $json,
+			'class' => 'embedvideo-evl vplink'
+		], $options['linktitle']);
+
+		$parser->getOutput()->addModules( ['ext.embedVideo-evl','ext.embedVideo.styles'] );
+
+		return [ $link, 'noparse' => true, 'isHTML' => true ];
+	}
+
+	/**
+	 * Parse EVLPlayer (and vplayer) Tags
+	 * @param  string  $input
+	 * @param  array   $args
+	 * @param  Parser  $parser
+	 * @param  PPFrame $frame
+	 * @return array
+	 */
+	static public function parseEVLPlayer($input, array $args, Parser $parser, PPFrame $frame ) {
+		$args = array_merge( self::$validArguments, $args );
+
+		$pid = isset($args['id']) ? $args['id'] : 'default';
+		$w = min(2000, max(240, isset($args['w']) ? (int)$args['w'] : 800));
+		$h = min(1200, max(80, isset($args['h']) ? (int)$args['h'] : (9*$w/16)));
+		$style = isset($args['style']) ? ' '.$args['style'] : '';
+		$class = isset($args['class']) ? ' '.$args['class'] : '';
+
+		$div = Xml::element('div', array(
+			'id' => 'vplayerbox-'.$pid,
+			'class' => 'embedvideo-evlbox vplayerbox'.$class,
+			'data-size' => $w.'x'.$h,
+			'style' => $style,
+		), $input);
+
+		return [ $div, 'noParse'=> true, 'isHTML'=> 'true' ];
 	}
 
 	/**
@@ -251,7 +345,12 @@ class EmbedVideoHooks {
 			return self::error( 'urlargs', $service, $urlArgs );
 		}
 
-		self::setDescription( $description, $parser );
+		if (!is_null($parser)) {
+			self::setDescription( $description, $parser );
+		} else {
+			self::setDescriptionNoParse( $description );
+		}
+
 
 		if ( !self::setContainer( $container ) ) {
 			return self::error( 'container', $container );
@@ -275,9 +374,12 @@ class EmbedVideoHooks {
 			$html = self::generateWrapperHTML( $html );
 		}
 
-		$out = $parser->getOutput();
-		$out->addModules( 'ext.embedVideo' );
-		$out->addModuleStyles( 'ext.embedVideo.styles' );
+		if ($parser) {
+			// dont call this if parser is null (such as in API usage).
+			$out = $parser->getOutput();
+			$out->addModules( 'ext.embedVideo' );
+			$out->addModuleStyles( 'ext.embedVideo.styles' );
+		}
 
 		return [
 			$html,
@@ -366,6 +468,14 @@ class EmbedVideoHooks {
 	 */
 	static private function setDescription( $description, \Parser $parser ) {
 		self::$description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+	}
+
+	/**
+	 * Set the description without using the parser
+	 * @param	string	Description
+	 */
+	static private function setDescriptionNoParse( $description ) {
+		self::$description = ( !$description ? false : $description );
 	}
 
 	/**

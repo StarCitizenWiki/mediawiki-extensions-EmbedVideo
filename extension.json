@@ -22,6 +22,7 @@
 	},
 	"AutoloadClasses": {
 		"EmbedVideoHooks": "EmbedVideo.hooks.php",
+		"ApiEmbedVideo": "classes/ApiEmbedVideo.php",
 		"EmbedVideo\\OEmbed": "classes/OEmbed.php",
 		"EmbedVideo\\VideoService": "classes/VideoService.php",
 		"EmbedVideo\\FFProbe": "classes/media/FFProbe.php",
@@ -30,10 +31,23 @@
 		"EmbedVideo\\VideoHandler": "classes/media/VideoHandler.php",
 		"EmbedVideo\\VideoTransformOutput": "classes/media/VideoTransformOutput.php"
 	},
+	"APIModules": {
+        "embedvideo": "ApiEmbedVideo"
+    },
 	"ResourceModules": {
 		"ext.embedVideo": {
 			"scripts": [
 				"js/autoResize.js"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"ext.embedVideo-evl": {
+			"scripts": [
+				"js/evlPlayer.js"
 			],
 			"position": "top",
 			"targets": [

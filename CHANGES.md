@@ -1,5 +1,9 @@
 ##Patch Notes
 
+###v2.5
+* Added support for VideoLink tags
+* Support for Disclose.tv added
+
 ###v2.4.1
 * Merged Sophivorus' improvements and fixes.
  * Support for TubiTV.com with the tubitv service identifier.

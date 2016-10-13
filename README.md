@@ -142,6 +142,53 @@ For YouTube to have the video start at a specific time code utilize the urlargs(
 
     {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|||||start=76}}
 
+# Support for VideoLink Tags
+
+Support for the unmaintained VideoLink extension's tags has been added since version 2.5.
+
+From the original extension documentation:
+
+    The VideoLink extension allows embedding of YouTube videos in articles; allowing for multiple linked videos to be played in a single embedded video player, first shown when a user clicks on a video link.
+
+    The <vplayer /> specifies where the player should appear within the page, and the {{#vlink}} parser function allows creation of links that load a specific video.
+
+
+### &lt;evlplayer&gt; - Tag Hook for Video Container
+
+_Note that the use of the `<vplayer>` tag is also acceptable here for backwards compatibility._
+
+This evlplayer tag is used to position the video player container within the page.
+
+    <vplayer id="player id" w="width" h="height" class="class" style="style">default content</vplayer>
+
+| Attributes | Required | Default                 | Description                                              |
+|------------|----------|-------------------------|----------------------------------------------------------|
+| id         | no       | default                 | An optional unique identifier for this container         |
+| w          | no       | 800                     | Width to send to the embedded player when its generated  |
+| h          | no       | achieve 16:9 from width | Height to send to the embedded player when its generated |
+| class      | no       |                         | Additional CSS class to add to the container div         |
+| style      | no       |                         | Additional in-line CSS to apply to the container div     |
+
+An important caveat to make note of, is that the `w` and `h` attributes only effect the video that is being included into the container div, and not the actual container. For styling of the container, please use the `class` or `style` attributes.
+
+### \#evl - Parser Function for Video Links
+
+_Note that the use of the `{{#vlink}}` parser function is also acceptable here for backwards compatibility._
+
+
+    {{#evl:<video id>|<Link text>|player=<player id>}}
+
+In addition to all of the attributes supported by the `#evt` tag, these specific attributes apply to the `#evl` (and `#vlink`) tags.
+
+| Attributes    | Required     | Default   | Description                                                                                                                                                                                                                                                                     |
+|---------------|--------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| video id      | yes          | none      | The ID of the video you would like to play. _Please note that the use of multiple video IDs separated by a semicolon is now deprecated. Please use the proper service for playlists if you would like play multiple videos from a single link_                                  |
+| link text     | yes          | none      | The text to display inside the link                                                                                                                                                                                                                                             |
+| player        | no           | 'default' | Player container to load video in. _Note that the ID 'default' will only exist if you've defined a player with no ID._                                                                                                                                                          |
+| initial video | _deprecated_ |           | In the original VideoLink, this would define what video to play first if multiple videos were define. Please see notes about in `video id` and `start`.                                                                                                                         |
+| start         | _deprecated_ | 0:00      | In the original VideoLink, this defined the start time of a video. Since we support multiple video services, this feature can now be replicated with the `urlargs` parameter. For backwards compatibility, this attribute will be respect on videos with the service `youtube`. |
+
+
 ## Supported Services
 
 As of version 2.x, EmbedVideo supports embedding video content from the following services:
