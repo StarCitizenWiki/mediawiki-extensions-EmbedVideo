@@ -197,7 +197,7 @@ class EmbedVideoHooks {
 		$style = isset($args['style']) ? ' '.$args['style'] : '';
 		$class = isset($args['class']) ? ' '.$args['class'] : '';
 
-		$div = Xml::element('div', array(
+		$div = Html::element('div', array(
 			'id' => 'vplayerbox-'.$pid,
 			'class' => 'embedvideo-evlbox vplayerbox'.$class,
 			'data-size' => $w.'x'.$h,
@@ -236,7 +236,7 @@ class EmbedVideoHooks {
 					$evs = \EmbedVideo\VideoService::newFromName($possibleService);
 					if ($evs) {
 						$test = $evs->parseVideoID($url);
-					
+
 						if ($test !== false && $test !== $url) {
 							// sucessful parse - safe assumption that this is correct.
 							$service = $possibleService;
