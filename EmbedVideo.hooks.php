@@ -105,6 +105,8 @@ class EmbedVideoHooks {
 		$parser->setFunctionHook( "ev", "EmbedVideoHooks::parseEV" );
 		$parser->setFunctionHook( "evt", "EmbedVideoHooks::parseEVT" );
 		$parser->setFunctionHook( "evp", "EmbedVideoHooks::parseEVP" );
+		$parser->setFunctionHook( "evu", "EmbedVideoHooks::parseEVU" );
+
 		$parser->setHook( "embedvideo", "EmbedVideoHooks::parseEVTag" );
 		$parser->setHook('evlplayer', "EmbedVideoHooks::parseEVLPlayer");
 		$parser->setFunctionHook( 'evl', "EmbedVideoHooks::parseEVL");
@@ -204,6 +206,81 @@ class EmbedVideoHooks {
 
 		return [ $div, 'noParse'=> true, 'isHTML'=> 'true' ];
 	}
+
+	/**
+	 * Embeds a video based on the URL
+	 *
+	 * @access  public
+	 * @param   object Parser
+	 * @return  string Error Message
+	 */
+	static public function parseEVU( $parser, $url = null ) {
+		if ( !$url ) {
+			return self::error( 'missingparams', $url );
+		}
+		$host = parse_url( $url, PHP_URL_HOST );
+		$host = strtolower($host);
+		$host = str_ireplace('www.','',$host); // strip www from any hostname.
+
+		$map = \EmbedVideo\VideoService::getServiceHostMap();
+
+		$service = false;
+
+		if (isset($map[$host])) {
+			if (!is_array($map[$host])) {
+				// only one possible anser. Set it.
+				$service = $map[$host];
+			} else {
+				// map by array.
+				foreach ($map[$host] as $possibleService) {
+					$test = \EmbedVideo\VideoService::newFromName($possibleService)->parseVideoID($url);
+					if ($test !== false && $test !== $url) {
+						// sucessful parse - safe assumption that this is correct.
+						$service = $possibleService;
+						break;
+					}
+				}
+			}
+		} else {
+			return self::error( 'cantdecode_evu', $url );
+		}
+
+		if (!$service) {
+			return self::error( 'cantdecode_evu', $url );
+		}
+
+		$arguments = func_get_args();
+		array_shift( $arguments );
+
+		foreach ( $arguments as $argumentPair ) {
+			$argumentPair = trim( $argumentPair );
+			if ( !strpos( $argumentPair, '=' ) ) {
+				continue;
+			}
+
+			list( $key, $value ) = explode( '=', $argumentPair, 2 );
+
+			if (!array_key_exists($key, self::$validArguments)) {
+				continue;
+			}
+			$args[$key] = $value;
+		}
+
+		$args = array_merge( self::$validArguments, $args );
+
+		return self::parseEV(
+			$parser,
+			$service,
+			$url,
+			$args['dimensions'],
+			$args['alignment'],
+			$args['description'],
+			$args['container'],
+			$args['urlargs'],
+			$args['autoresize']
+		);
+	}
+
 
 	/**
 	 * Adapter to call the new style tag.

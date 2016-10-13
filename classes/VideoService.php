@@ -408,6 +408,43 @@ class VideoService {
 	];
 
 	/**
+	 * Mapping of host names to services
+	 * @var array
+	 */
+	static private $serviceHostMap = [
+		'archive.org'				=> 'archiveorg',
+		'embed.bambuser.com'		=> ['bambuser', 'bambuser_channel'],
+		'beam.pro' 					=> 'beam',
+		'blip.tv'					=> 'blip',
+		'bing.com'					=> 'bing',
+		'collegehumor.com'			=> 'collegehumor',
+		'dailymotion.com'			=> 'dailymotion',
+		'divshare.com'				=> 'divshare',
+		'funnyordie.com'			=> 'funnyordie',
+		'gfycat.com'				=> 'gfycat',
+		'hitbox.tv'					=> 'hitbox',
+		'content.jwplatform.com'	=> 'jwplayer',
+		'kickstarter.com'			=> 'kickstarter',
+		'media.ccc.de'				=> 'mideacccde',
+		'metacafe.com'				=> 'metacafe',
+		'nicovideo.jp'				=> 'nico',
+		'rutube.ru'					=> 'rutube',
+		'teachertube.com'			=> 'teachertube',
+		'ted.com'					=> 'ted',
+		'tubitv.com'				=> 'tubitv',
+		'tudou.com'					=> 'todou',
+		'tvpot.daum.net'			=> 'tvpot',
+		'twitch.tv'					=> ['twitch', 'twitchvod'],
+		'89.160.51.62'				=> 'videomaten',
+		'vimeo.com'					=> 'vimeo',
+		'vine.co'					=> 'vine',
+		'screen.yahoo.com'			=> 'yahoo',
+		'youtube.com'				=> ['youtube', 'youtubeplaylist'],
+		'youku.com'					=> 'youku'
+	];
+
+
+	/**
 	 * This object instance's service information.
 	 *
 	 * @var		array
@@ -480,6 +517,14 @@ class VideoService {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * return the service host map array
+	 * @return array $serviceHostMap
+	 */
+	public static function getServiceHostMap() {
+		return self::$serviceHostMap;
 	}
 
 	/**
@@ -584,11 +629,11 @@ class VideoService {
 	/**
 	 * Parse the video ID/URL provided.
 	 *
-	 * @access	private
+	 * @access	public
 	 * @param	string	Video ID/URL
 	 * @return	mixed	Parsed Video ID or false on failure.
 	 */
-	private function parseVideoID( $id ) {
+	public function parseVideoID( $id ) {
 		$id = trim( $id );
 		// URL regexes are put into the array first to prevent cases where the ID regexes might accidentally match an incorrect portion of the URL.
 		$regexes = array_merge( (array) $this->service['url_regex'], (array) $this->service['id_regex'] );

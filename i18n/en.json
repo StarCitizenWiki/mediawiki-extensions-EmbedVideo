@@ -16,5 +16,6 @@
 	"ev_video_short_desc": "$1, $2x$3",
 	"ev_video_long_desc": "$1, $2 codec, length $3, $4x$5 pixels, $6 overall",
 	"ev_audio_short_desc": "$1",
-	"ev_audio_long_desc": "$1, $2 codec, length $3, $4 overall"
+	"ev_audio_long_desc": "$1, $2 codec, length $3, $4 overall",
+	"error_embedvideo_cantdecode_evu": "Couldn't parse video from $1"
 }
