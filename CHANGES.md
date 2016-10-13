@@ -1,6 +1,6 @@
 ##Patch Notes
 
-###v2.5
+###v2.5.0
 * Added support for VideoLink tags
 * Support for Disclose.tv added
 * Twitch VOD support updated.
