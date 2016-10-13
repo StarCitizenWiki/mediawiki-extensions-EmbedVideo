@@ -214,21 +214,70 @@ class EmbedVideoHooks {
 	 * @param   object Parser
 	 * @return  string Error Message
 	 */
-	static public function parseEVU( $parser, $url = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null ) {
+	static public function parseEVU( $parser, $url = null ) {
 		if ( !$url ) {
 			return self::error( 'missingparams', $url );
 		}
 		$host = parse_url( $url, PHP_URL_HOST );
-		$parts = explode( '.', $host );
-		if ( count( $parts ) === 3 ) {
-			$service = $parts[1]; // There's a subdomain, www.youtube.com
+		$host = strtolower($host);
+		$host = str_ireplace('www.','',$host); // strip www from any hostname.
+
+		$map = \EmbedVideo\VideoService::getServiceHostMap();
+
+		$service = false;
+
+		if (isset($map[$host])) {
+			if (!is_array($map[$host])) {
+				// only one possible anser. Set it.
+				$service = $map[$host];
+			} else {
+				// map by array.
+				foreach ($map[$host] as $possibleService) {
+					$test = \EmbedVideo\VideoService::newFromName($possibleService)->parseVideoID($url);
+					if ($test !== false && $test !== $url) {
+						// sucessful parse - safe assumption that this is correct.
+						$service = $possibleService;
+						break;
+					}
+				}
+			}
 		} else {
-			$service = $parts[0]; // No subdomain, youtube.com
+			return self::error( 'cantdecode_evu', $url );
 		}
+
+		if (!$service) {
+			return self::error( 'cantdecode_evu', $url );
+		}
+
+		$arguments = func_get_args();
+		array_shift( $arguments );
+
+		foreach ( $arguments as $argumentPair ) {
+			$argumentPair = trim( $argumentPair );
+			if ( !strpos( $argumentPair, '=' ) ) {
+				continue;
+			}
+
+			list( $key, $value ) = explode( '=', $argumentPair, 2 );
+
+			if (!array_key_exists($key, self::$validArguments)) {
+				continue;
+			}
+			$args[$key] = $value;
+		}
+
+		$args = array_merge( self::$validArguments, $args );
+
 		return self::parseEV(
 			$parser,
 			$service,
-			$url
+			$url,
+			$args['dimensions'],
+			$args['alignment'],
+			$args['description'],
+			$args['container'],
+			$args['urlargs'],
+			$args['autoresize']
 		);
 	}
 

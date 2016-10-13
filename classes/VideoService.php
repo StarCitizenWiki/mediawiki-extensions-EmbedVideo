@@ -520,6 +520,14 @@ class VideoService {
 	}
 
 	/**
+	 * return the service host map array
+	 * @return array $serviceHostMap
+	 */
+	public static function getServiceHostMap() {
+		return self::$serviceHostMap;
+	}
+
+	/**
 	 * Add a service
 	 *
 	 * @access	public
@@ -621,11 +629,11 @@ class VideoService {
 	/**
 	 * Parse the video ID/URL provided.
 	 *
-	 * @access	private
+	 * @access	public
 	 * @param	string	Video ID/URL
 	 * @return	mixed	Parsed Video ID or false on failure.
 	 */
-	private function parseVideoID( $id ) {
+	public function parseVideoID( $id ) {
 		$id = trim( $id );
 		// URL regexes are put into the array first to prevent cases where the ID regexes might accidentally match an incorrect portion of the URL.
 		$regexes = array_merge( (array) $this->service['url_regex'], (array) $this->service['id_regex'] );
