@@ -1,5 +1,4 @@
 (function(mw, $) {
-	console.log('Loaded evlPlayer');
 	$(function() {
 		api = new mw.Api();
 		$('a.embedvideo-evl').click(function(e){

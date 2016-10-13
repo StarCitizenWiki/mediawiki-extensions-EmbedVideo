@@ -101,7 +101,7 @@ The \#evt parser tag allows for key=value pairs which allows for easier templati
 
 ### \#evu - Parser Tag for URLs
 
-The \#evt parser tag is like the \#evt tag, but its first parameter is a URL that will be parsed to determine the service automatically.
+The \#evu parser tag is like the \#evt tag, but its first parameter is a URL that will be parsed to determine the service automatically.
 
 	{{#evu:https://www.youtube.com/watch?v=pSsYTj9kCHE
 	|alignment=right
