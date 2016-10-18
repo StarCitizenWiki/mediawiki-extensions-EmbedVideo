@@ -4,8 +4,8 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.5.0
-|update      = 2016-10-13
+|version     = 2.5.1
+|update      = 2016-??-??
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=yes
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.5.0.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.5.1.zip Download]
 }}
 
 ==Usage==
@@ -442,6 +442,9 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
+; v2.5.1
+* Added URL argument support to Twitch services.
+
 ; v2.5.0
 * Added support for VideoLink tags
 * Support for Disclose.tv added

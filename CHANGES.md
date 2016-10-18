@@ -1,5 +1,8 @@
 ##Patch Notes
 
+###v2.5.1
+* Added URL argument support to Twitch services.
+
 ###v2.5.0
 * Added support for VideoLink tags
 * Support for Disclose.tv added
