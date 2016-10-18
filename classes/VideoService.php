@@ -298,7 +298,7 @@ class VideoService {
 			]
 		],
 		'twitch' => [
-			'embed'			=> '<iframe src="https://player.twitch.tv/?channel=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="https://player.twitch.tv/?channel=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -310,7 +310,7 @@ class VideoService {
 			]
 		],
 		'twitchvod' => [
-			'embed'			=> '<iframe src="https://player.twitch.tv/?video=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="https://player.twitch.tv/?video=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
