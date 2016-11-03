@@ -194,7 +194,7 @@ class AudioHandler extends \MediaHandler {
 		$stream = $probe->getStream("a:0");
 
 		if ($format === false || $stream === false) {
-			//return self::getGeneralShortDesc($file);
+			return parent::getGeneralShortDesc($file);
 		}
 
 		return wfMessage('ev_audio_short_desc', $wgLang->formatTimePeriod($format->getDuration()), $wgLang->formatSize($file->getSize()))->text();
@@ -216,7 +216,7 @@ class AudioHandler extends \MediaHandler {
 		$stream = $probe->getStream("a:0");
 
 		if ($format === false || $stream === false) {
-			return self::getGeneralLongDesc($file);
+			return parent::getGeneralLongDesc($file);
 		}
 
 		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);

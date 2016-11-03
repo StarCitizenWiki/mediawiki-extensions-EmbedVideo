@@ -18,14 +18,14 @@ class FFProbe {
 	 *
 	 * @var		string
 	 */
-	static private $file;
+	private $file;
 
 	/**
 	 * Meta Data Cache
 	 *
 	 * @var		array
 	 */
-	static private $metadata = null;
+	private $metadata = null;
 
 	/**
 	 * Main Constructor

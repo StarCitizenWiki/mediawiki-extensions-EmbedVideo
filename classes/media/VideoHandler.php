@@ -163,7 +163,7 @@ class VideoHandler extends AudioHandler {
 		$stream = $probe->getStream("v:0");
 
 		if ($format === false || $stream === false) {
-			//return self::getGeneralShortDesc($file);
+			return parent::getGeneralShortDesc($file);
 		}
 
 		return wfMessage('ev_video_short_desc', $wgLang->formatTimePeriod($format->getDuration()), $stream->getWidth(), $stream->getHeight(), $wgLang->formatSize($file->getSize()))->text();
@@ -185,7 +185,7 @@ class VideoHandler extends AudioHandler {
 		$stream = $probe->getStream("v:0");
 
 		if ($format === false || $stream === false) {
-			return self::getGeneralLongDesc($file);
+			return parent::getGeneralLongDesc($file);
 		}
 
 		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);
