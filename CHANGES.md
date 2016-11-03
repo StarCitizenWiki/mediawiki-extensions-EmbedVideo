@@ -1,5 +1,10 @@
 ##Patch Notes
 
+###v2.5.2
+* If ffmpeg is not installed on the server the FFProbe class will no longer attempt to use and instead just return generic descriptions.
+* Fixed properties on FFProbe being incorrectly declared as static.
+* Fixed issues with not returning generic descriptions when the local file being accessed by ffprobe is not readable.
+
 ###v2.5.1
 * Added URL argument support to Twitch services.
 
