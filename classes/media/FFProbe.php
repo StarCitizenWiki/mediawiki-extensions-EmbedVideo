@@ -125,6 +125,11 @@ class FFProbe {
 	private function invokeFFProbe() {
 		global $wgFFprobeLocation;
 
+		if (!file_exists($wgFFprobeLocation)) {
+			$this->metadata = [];
+			return false;
+		}
+
 		$json = shell_exec(escapeshellcmd($wgFFprobeLocation.' -v quiet -print_format json -show_format -show_streams ').escapeshellarg($this->file));
 
 		$metadata = @json_decode($json, true);
