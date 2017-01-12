@@ -55,11 +55,11 @@ class EmbedVideoHooks {
 		'id'			=> null,
 		'dimensions'	=> null,
 		'alignment'		=> null,
-		'valignment'	=> null,
 		'description'	=> null,
 		'container'		=> null,
 		'urlargs'		=> null,
-		'autoresize'	=> null
+		'autoresize'	=> null,
+		'valignment'	=> null
 	];
 
 	/**
