@@ -36,7 +36,7 @@ class AudioHandler extends \MediaHandler {
 	 */
 	public function validateParam($name, $value) {
 		if ($name === 'width' || $name === 'width') {
-			return false;
+			return $value > 0;
 		}
 
 		if ($name === 'start' || $name === 'end') {
@@ -64,6 +64,7 @@ class AudioHandler extends \MediaHandler {
 		$parts = array_reverse($parts);
 
 		$magnitude = [1, 60, 3600, 86400];
+		$seconds = 0;
 		foreach ($parts as $index => $part) {
 			$seconds += $part * $magnitude[$index];
 		}
@@ -103,6 +104,14 @@ class AudioHandler extends \MediaHandler {
 	 * @return	boolean	Success
 	 */
 	public function normaliseParams($file, &$parameters) {
+		global $wgEmbedVideoDefaultWidth;
+
+		if (isset($parameters['width']) && $parameters['width'] > 0) {
+			$parameters['width'] = intval($parameters['width']);
+		} else {
+			$parameters['width'] = $wgEmbedVideoDefaultWidth;
+		}
+
 		$parameters['start'] = $this->parseTimeString($parameters['start']);
 		if ($parameters['start'] === false) {
 			unset($parameters['start']);

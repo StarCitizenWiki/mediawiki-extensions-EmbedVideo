@@ -125,6 +125,7 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 | `container="[frame]"`                       | no       | none    | Specifies the container type to use for the embed.<br/>`frame`: Wrap the video player in a Mediawiki thumbnail box.                                                                              |
 | `urlargs="modestbranding=1&version=3"`      | no       | none    | Allows extra URL arguments to be appended to the generated embed URL. This is useful for obscure options only supported on one service.                                                          |
 | `autoresize="false"`                        | no       | true    | Automatically resize videos when their size will cause them to break outside of their container element                                                                                          |
+| `valignment="[top|middle|bottom|baseline]"` | no       | none    | Align the vertical placement of the video either to the top, middle, bottom, or baseline of the parent element.  Using this parameter forces the alignment parameter to be inline.               |
 
 ## Examples
 

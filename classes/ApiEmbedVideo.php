@@ -24,7 +24,8 @@ class ApiEmbedVideo extends ApiBase {
 			$this->getMain()->getVal('description'),
 			$this->getMain()->getVal('container'),
 			$this->getMain()->getVal('urlargs'),
-			$this->getMain()->getVal('autoresize')
+			$this->getMain()->getVal('autoresize'),
+			$this->getMain()->getVal('valignment')
 		);
 
         if (is_array($getHTML)) {

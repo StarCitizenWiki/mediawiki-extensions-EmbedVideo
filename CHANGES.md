@@ -1,5 +1,11 @@
 ##Patch Notes
 
+###v2.6.0
+* Added support for vertically aligning videos.
+* Improved sizing of video and audio tags in Chrome and Firefox when using the media handler tags.
+* Fixed an undefined variable.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/issues/71
+
 ###v2.5.2
 * If ffmpeg is not installed on the server the FFProbe class will no longer attempt to use and instead just return generic descriptions.
 * Fixed properties on FFProbe being incorrectly declared as static.

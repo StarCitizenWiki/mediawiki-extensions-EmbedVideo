@@ -56,8 +56,14 @@ class AudioTransformOutput extends \MediaTransformOutput {
 	public function toHtml($options = []) {
 		$parameters = $this->parameters;
 
+		$style = [];
+		if (empty($options['no-dimensions'])) {
+			$parameters['width'] = $this->getWidth();
+			$style[] = "width: {$this->getWidth()}px;";
+		}
+
 		if (!empty($options['valign'])) {
-			$style = "vertical-align: {$options['valign']}";
+			$style[] = "vertical-align: {$options['valign']};";
 		}
 
 		if (!empty($options['img-class'])) {
@@ -75,7 +81,7 @@ class AudioTransformOutput extends \MediaTransformOutput {
 			}
 		}
 
-		$html = "<audio src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></audio>";
+		$html = "<audio src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."' width='{$this->getWidth()}'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='".implode(" ", $style)."'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></audio>";
 
 		return $html;
 	}

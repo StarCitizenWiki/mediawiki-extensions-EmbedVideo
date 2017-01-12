@@ -32,6 +32,13 @@ class EmbedVideoHooks {
 	static private $alignment = false;
 
 	/**
+	 * Alignment Parameter
+	 *
+	 * @var		string
+	 */
+	static private $vAlignment = false;
+
+	/**
 	 * Container Parameter
 	 *
 	 * @var		string
@@ -48,6 +55,7 @@ class EmbedVideoHooks {
 		'id'			=> null,
 		'dimensions'	=> null,
 		'alignment'		=> null,
+		'valignment'	=> null,
 		'description'	=> null,
 		'container'		=> null,
 		'urlargs'		=> null,
@@ -281,7 +289,8 @@ class EmbedVideoHooks {
 			$args['description'],
 			$args['container'],
 			$args['urlargs'],
-			$args['autoresize']
+			$args['autoresize'],
+			$args['valignment']
 		);
 	}
 
@@ -334,7 +343,8 @@ class EmbedVideoHooks {
 			$args['description'],
 			$args['container'],
 			$args['urlargs'],
-			$args['autoresize']
+			$args['autoresize'],
+			$args['valignment']
 		);
 	}
 
@@ -360,7 +370,8 @@ class EmbedVideoHooks {
 			$args['description'],
 			$args['container'],
 			$args['urlargs'],
-			$args['autoresize']
+			$args['autoresize'],
+			$args['valignment']
 		);
 	}
 
@@ -373,13 +384,14 @@ class EmbedVideoHooks {
 	 * @param	string	[Optional] Identifier Code or URL for the video on the service.
 	 * @param	string	[Optional] Dimensions of video
 	 * @param	string	[Optional] Description to show
-	 * @param	string	[Optional] Alignment of the video
+	 * @param	string	[Optional] Horizontal Alignment of the embed container.
 	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
 	 * @param	string	[Optional] Extra URL Arguments
 	 * @param 	string	[Optional] Automatically Resize video that will break its parent container.
+	 * @param	string	[Optional] Vertical Alignment of the embed container.
 	 * @return	string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV( $parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null ) {
+	static public function parseEV( $parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null, $vAlignment = null ) {
 		self::resetParameters();
 
 		$service		= trim( $service );
@@ -391,6 +403,7 @@ class EmbedVideoHooks {
 		$width			= null;
 		$height			= null;
 		$autoResize		= ( isset( $autoResize ) && strtolower( trim( $autoResize ) ) == "false" ) ? false : true;
+		$vAlignment		= trim( $vAlignment );
 
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
 		if ( stristr( $dimensions, 'x' ) ) {
@@ -439,6 +452,10 @@ class EmbedVideoHooks {
 
 		if ( !self::setAlignment( $alignment ) ) {
 			return self::error( 'alignment', $alignment );
+		}
+
+		if ( !self::setVerticalAlignment( $vAlignment ) ) {
+			return self::error( 'valignment', $vAlignment );
 		}
 
 		/************************************/
@@ -494,6 +511,10 @@ class EmbedVideoHooks {
 			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;";
 		}
 
+		if (self::getVerticalAlignment() !== false) {
+			$classString .= " ev_" . self::getVerticalAlignment();
+		}
+
 		if ($addClass) {
 			$classString .= " " . $addClass;
 		}
@@ -524,6 +545,35 @@ class EmbedVideoHooks {
 		if ( !empty( $alignment ) && ( $alignment == 'left' || $alignment == 'right' || $alignment == 'center' || $alignment == 'inline' ) ) {
 			self::$alignment = $alignment;
 		} elseif ( !empty( $alignment ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Return the valignment parameter.
+	 *
+	 * @access	public
+	 * @return	mixed	Vertical Alignment or false for not set.
+	 */
+	static private function getVerticalAlignment() {
+		return self::$vAlignment;
+	}
+
+	/**
+	 * Set the align parameter.
+	 *
+	 * @access	private
+	 * @param	string	Alignment Parameter
+	 * @return	boolean	Valid
+	 */
+	static private function setVerticalAlignment( $vAlignment ) {
+		if ( !empty( $vAlignment ) && ( $vAlignment == 'top' || $vAlignment == 'middle' || $vAlignment == 'bottom' || $vAlignment == 'baseline' ) ) {
+			if ($vAlignment != 'baseline') {
+				self::$alignment = 'inline';
+			}
+			self::$vAlignment = $vAlignment;
+		} elseif ( !empty( $vAlignment ) ) {
 			return false;
 		}
 		return true;

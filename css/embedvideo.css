@@ -22,6 +22,22 @@ div.embedvideo.ev_inline {
 	display: inline-block;
 }
 
+div.embedvideo.ev_top {
+	vertical-align: top;
+}
+
+div.embedvideo.ev_middle {
+	vertical-align: middle;
+}
+
+div.embedvideo.ev_bottom {
+	vertical-align: bottom;
+}
+
+div.embedvideo.ev_baseline {
+	vertical-align: baseline;
+}
+
 video.thumbborder, audio.thumbborder {
 	border: 1pt solid #ddd;
 }

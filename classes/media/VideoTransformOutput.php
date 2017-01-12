@@ -56,13 +56,16 @@ class VideoTransformOutput extends \MediaTransformOutput {
 	public function toHtml($options = []) {
 		$parameters = $this->parameters;
 
+		$style = [];
 		if (empty($options['no-dimensions'])) {
 			$parameters['width'] = $this->getWidth();
 			$parameters['height'] = $this->getHeight();
+			$style[] = "width: {$this->getWidth()}px;";
+			$style[] = "height: {$this->getHeight()}px;";
 		}
 
 		if (!empty($options['valign'])) {
-			$style = "vertical-align: {$options['valign']}";
+			$style[] = "vertical-align: {$options['valign']};";
 		}
 
 		if (!empty($options['img-class'])) {
@@ -80,7 +83,7 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			}
 		}
 
-		$html = "<video src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."' width='{$this->getWidth()}' height='{$this->getHeight()}'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='{$style}'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
+		$html = "<video src='{$this->url}".($inOut !== false ? '#t='.implode(',', $inOut) : '')."' width='{$this->getWidth()}' height='{$this->getHeight()}'".(!empty($class) ? " class='{$class}'" : "").(!empty($style) ? " style='".implode(" ", $style)."'" : "")." controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
 
 		return $html;
 	}
