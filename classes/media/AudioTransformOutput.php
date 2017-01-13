@@ -57,6 +57,7 @@ class AudioTransformOutput extends \MediaTransformOutput {
 		$parameters = $this->parameters;
 
 		$style = [];
+		$style[] = "max-width: 100%;";
 		if (empty($options['no-dimensions'])) {
 			$parameters['width'] = $this->getWidth();
 			$style[] = "width: {$this->getWidth()}px;";

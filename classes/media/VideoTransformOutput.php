@@ -57,6 +57,8 @@ class VideoTransformOutput extends \MediaTransformOutput {
 		$parameters = $this->parameters;
 
 		$style = [];
+		$style[] = "max-width: 100%;";
+		$style[] = "max-height: 100%;";
 		if (empty($options['no-dimensions'])) {
 			$parameters['width'] = $this->getWidth();
 			$parameters['height'] = $this->getHeight();
