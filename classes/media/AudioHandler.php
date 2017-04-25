@@ -112,14 +112,18 @@ class AudioHandler extends \MediaHandler {
 			$parameters['width'] = $wgEmbedVideoDefaultWidth;
 		}
 
-		$parameters['start'] = $this->parseTimeString($parameters['start']);
-		if ($parameters['start'] === false) {
-			unset($parameters['start']);
+		if (isset($parameters['start'])) {
+			$parameters['start'] = $this->parseTimeString($parameters['start']);
+			if ($parameters['start'] === false) {
+				unset($parameters['start']);
+			}
 		}
 
-		$parameters['end'] = $this->parseTimeString($parameters['end']);
-		if ($parameters['end'] === false) {
-			unset($parameters['end']);
+		if (isset($parameters['end'])) {
+			$parameters['end'] = $this->parseTimeString($parameters['end']);
+			if ($parameters['end'] === false) {
+				unset($parameters['end']);
+			}
 		}
 
 		$parameters['page'] = 1;

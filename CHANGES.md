@@ -1,5 +1,13 @@
 ##Patch Notes
 
+###v2.6.1
+* Added new configuration options to disable adding media handlers and file extensions.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/issues/76
+* Fixed an uninitialized array.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/issues/77
+* Fixed undefined indexes in the AudioHandler class.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/issues/78
+
 ###v2.6.0
 * Added support for vertically aligning videos.
 * Improved sizing of video and audio tags in Chrome and Firefox when using the media handler tags.
