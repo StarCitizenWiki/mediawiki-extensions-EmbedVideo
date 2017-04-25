@@ -8,11 +8,13 @@ div.embedvideo.ev_center > .embedvideowrap {
 	margin-right: auto;
 }
 
+/* @noflip */
 div.embedvideo.ev_left {
 	clear: left;
 	float: left;
 }
 
+/* @noflip */
 div.embedvideo.ev_right {
 	clear: right;
 	float: right;
