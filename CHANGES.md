@@ -7,6 +7,8 @@
  * https://github.com/HydraWiki/mediawiki-embedvideo/issues/77
 * Fixed undefined indexes in the AudioHandler class.
  * https://github.com/HydraWiki/mediawiki-embedvideo/issues/78
+* Fixed class properties that were unintentionally declared as static.
+ * https://github.com/HydraWiki/mediawiki-embedvideo/issues/75
 
 ###v2.6.0
 * Added support for vertically aligning videos.
