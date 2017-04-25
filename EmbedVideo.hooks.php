@@ -264,6 +264,7 @@ class EmbedVideoHooks {
 		$arguments = func_get_args();
 		array_shift( $arguments );
 
+		$args = [];
 		foreach ( $arguments as $argumentPair ) {
 			$argumentPair = trim( $argumentPair );
 			if ( !strpos( $argumentPair, '=' ) ) {
