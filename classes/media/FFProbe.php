@@ -150,7 +150,7 @@ class StreamInfo {
 	 *
 	 * @var		array
 	 */
-	static private $info = null;
+	private $info = null;
 
 	/**
 	 * Main Constructor
@@ -261,7 +261,7 @@ class FormatInfo {
 	 *
 	 * @var		array
 	 */
-	static private $info = null;
+	private $info = null;
 
 	/**
 	 * Main Constructor
