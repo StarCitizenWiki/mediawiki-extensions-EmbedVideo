@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=required
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.6.0.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.6.1.zip Download]
 }}
 
 ==Usage==
