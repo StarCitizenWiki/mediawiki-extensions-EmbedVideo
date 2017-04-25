@@ -1,4 +1,4 @@
-#About
+# About
 
 The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over 22 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
@@ -14,13 +14,13 @@ The MediaWiki extension page is located at:
 
 https://www.mediawiki.org/wiki/Extension:EmbedVideo
 
-##History
+## History
 
 The original version of EmbedVideo was created by Jim R. Wilson.  That version was later forked by Mohammed Derakhshani as the EmbedVideoPlus extension.  In early 2010 Andrew Whitworth took over active maintenance of both extensions and merged them together as "EmbedVideo".  Much later on in September 2014 Alexia E. Smith forcefully took over being unable to contact a current maintainer.
 
 The newer versions of EmbedVideo are intended to be fully backwards-compatible with both older EmbedVideo and EmbedVideoPlus extensions.
 
-#License
+# License
 
 EmbedVideo is released under the MIT license
 
@@ -28,9 +28,9 @@ http://www.opensource.org/licenses/mit-license.php
 
 See LICENSE for more details
 
-#Installation
+# Installation
 
-##Download
+## Download
 
 There are three places to download the EmbedVideo extension. The first is directly from its GitHub project page, where active development takes place.  If you have git, you can use this incantation to check out a read-only copy of the extension source:
 
@@ -40,7 +40,7 @@ git clone https://github.com/HydraWiki/mediawiki-embedvideo.git
 
 Downloadable archive packages for numbered releases will also be available from the github project page.
 
-##Installation Instructions
+## Installation Instructions
 
 1. Download the contents of the extension, as outlined above.
 2. Create an EmbedVideo folder in the extensions/ folder of your MediaWiki installation.
@@ -58,7 +58,7 @@ For Mediawiki 1.24 and up add the following line to your LocalSettings.php:
 wfLoadExtension("EmbedVideo");
 ```
 
-#Usage
+# Usage
 
 ## Media Handler
 For locally uploaded content the process for displaying it on a page is the same as an image.  [See the image syntax documentation](https://www.mediawiki.org/wiki/Help:Images#Syntax) on MediaWiki.org for complete reference on this feature.
@@ -236,17 +236,20 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | [YouTube](http://www.youtube.com/)                       | `youtube` - Single Videos                                                             | `youtubeplaylist` - Playlists                                                         | pSsYTj9kCHE                                                                                                    |
 | [Youku](http://www.youku.com/)                           | `youku`                                                                               | XODc3NDgzMTY4                                                                         | http://v.youku.com/v\_show/id\_XODc3NDgzMTY4.html                                                              |
 
-#Configuration Settings
+# Configuration Settings
 
-| Variable                  | Default Value    | Description                                                                                                                                             |
-|---------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $wgEmbedVideoMinWidth     |                  | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoMaxWidth     |                  | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoDefaultWidth |                  | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
-| $wgFFmpegLocation         | /usr/bin/ffmpeg  | String - Set the location of the ffmpeg binary.                                                                                                         |
-| $wgFFprobeLocation        | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
+| Variable                        | Default Value    | Description                                                                                                                                             |
+|---------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $wgEmbedVideoAddFileExtensions  | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                           |
+| $wgEmbedVideoEnableVideoHandler | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                         |
+| $wgEmbedVideoEnableAudioHandler | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                         |
+| $wgEmbedVideoDefaultWidth       |                  | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| $wgEmbedVideoMinWidth           |                  | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoMaxWidth           |                  | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
+| $wgFFmpegLocation               | /usr/bin/ffmpeg  | String - Set the location of the ffmpeg binary.                                                                                                         |
+| $wgFFprobeLocation              | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
 
-#Credits
+# Credits
 
 The original version of EmbedVideo was written by Jim R. Wilson.  Additional major upgrades made by Andrew Whitworth, Alexia E. Smith, and other contributors.
 

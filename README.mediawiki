@@ -4,18 +4,18 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.6.0
-|update      = 2017-01-12
+|version     = 2.6.1
+|update      = 2017-04-25
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
 |hook1       = ParserFirstCallInit
-|description = Adds a parser function called <tt>#ev</tt> for embedding video clips from popular video sharing services.
+|description = Adds a parser function called <code>#ev</code> for embedding video clips from popular video sharing services.
 |example     = [http://help.gamepedia.com/Extension:EmbedVideo/Example Gamepedia Help Wiki]
 |vagrant-role      = embedvideo
 }}
 
-The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <tt>#ev</tt> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
+The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <code>#ev</code> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
 
 ;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
 ;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
@@ -27,7 +27,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 ==Installation==
 
 {{TNT|ExtensionInstall
- |registration=yes
+ |registration=required
  |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.6.0.zip Download]
 }}
 
@@ -98,34 +98,34 @@ Videos can easily be embedded with the <nowiki><embedvideo></embedvideo></nowiki
 :The raw ID of the video or URL from the player page.
 |-
 | <code>dimensions="<nowiki>[WIDTH|WIDTHxHEIGHT|xHEIGHT]</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>640</tt>
-:Dimensions in pixels to size the embed container.  The standard format is width x height where either can be omitted, but the <tt>x</tt> must proceed height to indicate it as the height.
-:Examples: <tt>480</tt>, <tt>480x320</tt>, <tt>x320</tt>.  If the height is not provided it will be calculated automatically from the width and service default ratio.
-:Some services such as ''Gfycat'' do not have standard heights and should be specified for each embed.  <tt>$wgEmbedVideoDefaultWidth</tt> can be set in <tt>LocalSettings.php</tt> to override the default width.
+| '''Required:''' no, '''Default:''' <code>640</code>
+:Dimensions in pixels to size the embed container.  The standard format is width x height where either can be omitted, but the <code>x</code> must proceed height to indicate it as the height.
+:Examples: <code>480</code>, <code>480x320</code>, <code>x320</code>.  If the height is not provided it will be calculated automatically from the width and service default ratio.
+:Some services such as ''Gfycat'' do not have standard heights and should be specified for each embed.  <code>$wgEmbedVideoDefaultWidth</code> can be set in <code>LocalSettings.php</code> to override the default width.
 |-
 | <code>alignment="<nowiki>[left|center|right|inline]</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>none</tt>
+| '''Required:''' no, '''Default:''' <code>none</code>
 :Align the placement of the video either to the left, centered, or to the right. Inline will allow multiple videos to display side by side without forced line breaks.
 |-
 | <code>description="<nowiki>[wiki text]</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>none</tt>
+| '''Required:''' no, '''Default:''' <code>none</code>
 :Display a description under the embed container.
 |-
 | <code>container="<nowiki>[frame]</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>none</tt>
+| '''Required:''' no, '''Default:''' <code>none</code>
 :Specifies the container type to use for the embed.
-::<tt>frame</tt>: Wrap the video player in a Mediawiki thumbnail box.
+::<code>frame</code>: Wrap the video player in a Mediawiki thumbnail box.
 |-
 | <code>urlargs="<nowiki>modestbranding=1&version=3</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>none</tt>
+| '''Required:''' no, '''Default:''' <code>none</code>
 :Allows extra URL arguments to be appended to the generated embed URL.  This is useful for obscure options only supported on one service.
 |-
 | <code>autoresize="<nowiki>false</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>true</tt>
+| '''Required:''' no, '''Default:''' <code>true</code>
 :Automatically resize videos when their size will cause them to break outside of their container element.
 |-
 | <code>valignment="<nowiki>[top|middle|bottom|baseline]</nowiki>"</code>
-| '''Required:''' no, '''Default:''' <tt>none</tt>
+| '''Required:''' no, '''Default:''' <code>none</code>
 :Align the vertical placement of the video either to the top, middle, bottom, or baseline of the parent element.  Using this parameter forces the alignment parameter to be inline.
 |}
 
@@ -261,54 +261,54 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 ! URL Example(s)
 |-
 ! [https://archive.org/details/movies Archive.org Videos]
-| colspan="2"|<tt>archiveorg</tt>
+| colspan="2"|<code>archiveorg</code>
 | <nowiki>electricsheep-flock-244-80000-6</nowiki>
 | <nowiki>https://archive.org/details/electricsheep-flock-244-80000-6</nowiki>
   <nowiki>https://archive.org/embed/electricsheep-flock-244-80000-6</nowiki>
 |-
 ! [http://bambuser.com/ Bambuser]
-| <tt>bambuser</tt> - Broadcasts
-| <tt>bambuser_channel</tt> - Channels
+| <code>bambuser</code> - Broadcasts
+| <code>bambuser_channel</code> - Channels
 | <nowiki>5262334</nowiki>
 | <nowiki>http://bambuser.com/v/5262334</nowiki>
 |-
 ! [https://beam.pro/ Beam]
-| colspan="2"|<tt>beam</tt> - Streams
+| colspan="2"|<code>beam</code> - Streams
 | <nowiki>RocketBear</nowiki>
 | <nowiki>https://beam.pro/RocketBear</nowiki>
 |-
 ! [http://www.bing.com/videos/ Bing]
-| colspan="2"|<tt>bing</tt>
+| colspan="2"|<code>bing</code>
 | <nowiki>31ncp9r7l</nowiki>
 | <nowiki>http://www.bing.com/videos/watch/video/adorable-cats-attempt-to-eat-invisible-tuna/31ncp9r7l</nowiki>
 |-
 ! [http://www.blip.tv/ Blip.tv]
-| colspan="2"|<tt>blip</tt> - Blip requires the full URL to the video page and does not accept the raw ID.
+| colspan="2"|<code>blip</code> - Blip requires the full URL to the video page and does not accept the raw ID.
 |
 |<nowiki>http://blip.tv/vinylrewind/review-6864612</nowiki>
 |-
 ! [https://media.ccc.de/ C3TV]
-| colspan="2"|<tt>mediacccde</tt>
+| colspan="2"|<code>mediacccde</code>
 | <nowiki>32c3-7305-quantum_cryptography</nowiki>
 | <nowiki>https://media.ccc.de/v/32c3-7305-quantum_cryptography</nowiki>
 |-
 ! [http://www.collegehumor.com/ CollegeHumor]
-| colspan="2"|<tt>collegehumor</tt>
+| colspan="2"|<code>collegehumor</code>
 | <nowiki>6875289</nowiki>
 | <nowiki>http://www.collegehumor.com/video/6875289/batman-says-his-goodbyes</nowiki>
 |-
 ! [http://www.dailymotion.com/ Dailymotion]
-| colspan="2"|<tt>dailymotion</tt>
+| colspan="2"|<code>dailymotion</code>
 | <nowiki>x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>
 | <nowiki>http://www.dailymotion.com/video/x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>
 |-
 ! [http://tvpot.daum.net/ Daum TVPot]
-| colspan="2"|<tt>tvpot</tt> - Obtain the URL or ID from the share menu URL.
+| colspan="2"|<code>tvpot</code> - Obtain the URL or ID from the share menu URL.
 | <nowiki>s9011HdLzYwpLwBodQzCHRB</nowiki>
 | <nowiki>http://tvpot.daum.net/v/s9011HdLzYwpLwBodQzCHRB</nowiki>
 |-
 ! [http://www.divshare.com Div Share]
-| colspan="2"|<tt>divshare</tt>
+| colspan="2"|<code>divshare</code>
 |
 |
 |-
@@ -318,100 +318,100 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |
 |-
 ! [http://www.funnyordie.com/ FunnyOrDie]
-| colspan="2"|<tt>funnyordie</tt>
+| colspan="2"|<code>funnyordie</code>
 | <nowiki>c61fb67ac9</nowiki>
 | <nowiki>http://www.funnyordie.com/videos/c61fb67ac9/to-catch-a-predator-elastic-heart-edition</nowiki>
 |-
 ! [http://gfycat.com/ Gfycat]
-| colspan="2"|<tt>gfycat</tt>
+| colspan="2"|<code>gfycat</code>
 | <nowiki>BruisedSilentAntarcticfurseal</nowiki>
 | <nowiki>http://www.gfycat.com/BruisedSilentAntarcticfurseal</nowiki>
 |-
 ! [http://www.hitbox.tv/ Hitbox]
-| colspan="2"|<tt>hitbox</tt>
+| colspan="2"|<code>hitbox</code>
 | <nowiki>Washuu</nowiki>
 | <nowiki>http://www.hitbox.tv/Washuu</nowiki>
 |-
 ! [https://www.jwplayer.com/ JW Player]
-| colspan="2"|<tt>jwplayer</tt>
+| colspan="2"|<code>jwplayer</code>
 | <nowiki>cr5d8nbu-8ZpoNmmJ</nowiki>
 | <nowiki>https://content.jwplatform.com/players/cr5d8nbu-8ZpoNmmJ.html</nowiki>
 |-
 ! [http://www.kickstarter.com/ Kickstarter]
-| colspan="2"|<tt>kickstarter</tt>
+| colspan="2"|<code>kickstarter</code>
 | <nowiki>elanlee/exploding-kittens</nowiki>
 | <nowiki>https://www.kickstarter.com/projects/elanlee/exploding-kittens</nowiki>
 |-
 ! [http://www.metacafe.com/ Metacafe]
-| colspan="2"|<tt>metacafe</tt>
+| colspan="2"|<code>metacafe</code>
 | <nowiki>11404579</nowiki>
 | <nowiki>http://www.metacafe.com/watch/11404579/lan_party_far_cry_4/</nowiki>
 |-
 ! [http://www.nicovideo.jp/ Nico Nico Video]
-| colspan="2"|<tt>nico</tt>
+| colspan="2"|<code>nico</code>
 | <nowiki>sm24394325</nowiki>
 | <nowiki>http://www.nicovideo.jp/watch/sm24394325</nowiki>
 |-
 ! [http://rutube.ru/ RuTube]
-| colspan="2"|<tt>rutube</tt>
+| colspan="2"|<code>rutube</code>
 | <nowiki>b698163ccb67498db74d50cb0f22e556</nowiki>
 | <nowiki>http://rutube.ru/video/b698163ccb67498db74d50cb0f22e556/</nowiki>
 |-
 ! [http://teachertube.com TeacherTube]
-| colspan="2"|<tt>teachertube</tt>
+| colspan="2"|<code>teachertube</code>
 | <nowiki>370511</nowiki>
 | <nowiki>http://www.teachertube.com/video/thats-a-noun-sing-along-hd-version-370511</nowiki>
 |-
 ! [http://www.ted.com/talks/browse/ TED Talks]
-| colspan="2"|<tt>ted</tt>
+| colspan="2"|<code>ted</code>
 | <nowiki>bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
 | <nowiki>http://www.ted.com/talks/bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
 |-
 ! [https://tubitv.com Tubi TV]
-| colspan="2"|<tt>tubitv</tt>
+| colspan="2"|<code>tubitv</code>
 | <nowiki>318409</nowiki>
 | <nowiki>http://tubitv.com/video/318409</nowiki>
 |-
 ! [http://www.tudou.com/ Tudou]
-| colspan="2"|<tt>tudou</tt>
+| colspan="2"|<code>tudou</code>
 | <nowiki>mfQXfumwiew</nowiki>
 | <nowiki>http://www.tudou.com/listplay/mfQXfumwiew.html</nowiki>
 |-
 ! [http://www.twitch.tv Twitch]
-| <tt>twitch</tt> - Live Streams
-| <tt>twitchvod</tt> - Archived Videos on Demand
+| <code>twitch</code> - Live Streams
+| <code>twitchvod</code> - Archived Videos on Demand
 | <nowiki>twitchplayspokemon</nowiki>
 | <nowiki>http://www.twitch.tv/twitchplayspokemon</nowiki>
 |-
 ! [http://89.160.51.62/recordme/spelain.htm Videomaten]
-| colspan="2"|<tt>videomaten</tt>
+| colspan="2"|<code>videomaten</code>
 |
 |
 |-
 ! [http://www.vimeo.com Vimeo]
-| colspan="2"|<tt>vimeo</tt>
+| colspan="2"|<code>vimeo</code>
 | <nowiki>105035718</nowiki>
 | <nowiki>http://vimeo.com/105035718</nowiki>
 |-
 ! [http://vine.co Vine]
-| colspan="2"|<tt>vine</tt>
+| colspan="2"|<code>vine</code>
 | <nowiki>h2B7WMtuX2t</nowiki>
 | <nowiki>https://vine.co/v/h2B7WMtuX2t</nowiki>
 |-
 ! [http://screen.yahoo.com/ Yahoo Screen]
-| colspan="2"|<tt>yahoo</tt>
+| colspan="2"|<code>yahoo</code>
 | <nowiki>katy-perry-dances-sharks-2015-024409668</nowiki>
 | <nowiki>https://screen.yahoo.com/videos-for-you/katy-perry-dances-sharks-2015-024409668.html</nowiki>
 |-
 ! [http://www.youtube.com/ YouTube]
-| <tt>youtube</tt> - Single Videos
-| <tt>youtubeplaylist</tt> - Playlists
+| <code>youtube</code> - Single Videos
+| <code>youtubeplaylist</code> - Playlists
 | <nowiki>pSsYTj9kCHE</nowiki>
 | <nowiki>https://www.youtube.com/watch?v=pSsYTj9kCHE</nowiki>
   <nowiki>https://www.youtube.com/watch?v=CW_PbErQ_c8&list=PL76E80C7F756A2047</nowiki>
 |-
 ! [http://www.youku.com/ Youku]
-| colspan="2"|<tt>youku</tt>
+| colspan="2"|<code>youku</code>
 | <nowiki>XODc3NDgzMTY4</nowiki>
 | <nowiki>http://v.youku.com/v_show/id_XODc3NDgzMTY4.html</nowiki>
 |-
@@ -425,6 +425,22 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 ! Default Value
 ! Description
 |--
+| $wgEmbedVideoAddFileExtensions
+| true
+| Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.
+|--
+| $wgEmbedVideoEnableVideoHandler
+| true
+| Boolean - Enable or disable the video media handlers for displaying embedded video in articles.
+|--
+| $wgEmbedVideoEnableAudioHandler
+| true
+| Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.
+|--
+| $wgEmbedVideoDefaultWidth
+|
+| Integer - Globally override the default width of video players.  When not set this uses the video service's default width which is typically 640 pixels.
+|--
 | $wgEmbedVideoMinWidth
 |
 | Integer - Minimum width of video players.  Widths specified below this value will be automatically bounded to it.
@@ -432,10 +448,6 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | $wgEmbedVideoMaxWidth
 |
 | Integer - Maximum width of video players.  Widths specified above this value will be automatically bounded to it.
-|--
-| $wgEmbedVideoDefaultWidth
-|
-| Integer - Globally override the default width of video players.  When not set this uses the video service's default width which is typically 640 pixels.
 |--
 | $wgFFmpegLocation
 | /usr/bin/ffmpeg
@@ -558,7 +570,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 
 ==Developer Notes==
 
-The major benefit of using a parser function as the injection mechanism for video clips (as opposed to an extension tag) is that parser functions can utilize template parameters (of the form <tt><nowiki>{{{1}}}</nowiki></tt>).
+The major benefit of using a parser function as the injection mechanism for video clips (as opposed to an extension tag) is that parser functions can utilize template parameters (of the form <code><nowiki>{{{1}}}</nowiki></code>).
 
 For example, say you found yourself making a lot of YouTube videos in thumbnail size, right-aligned like an image.  You might make a template called <code>Template:Youtube_tn</code> which could contain this:
 <pre>
