@@ -45,10 +45,10 @@ video.thumbborder, audio.thumbborder {
 }
 
 a.vplink {
-    padding-left: 18px;
-    background-image: url(../img/play.png);
-    background-repeat: no-repeat;
-    background-position: left center;
+	padding-left: 18px;
+	background-image: url(../img/play.png);
+	background-repeat: no-repeat;
+	background-position: left center;
 }
 
 a.vplink:hover {
