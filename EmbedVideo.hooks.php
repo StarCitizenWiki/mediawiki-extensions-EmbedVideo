@@ -133,7 +133,62 @@ class EmbedVideoHooks {
 			$parser->setFunctionHook( 'vlink', "EmbedVideoHooks::parseEVL");
 		}
 
+		// smart handling of service name tags (if they aren't already implamented)
+		$tags = $parser->getTags();
+		$services = \EmbedVideo\VideoService::getAvailableServices();
+		$create = array_diff( $services, $tags );
+		// We now have a list of services we can create tags for that aren't already implamented
+		foreach ($create as $service) {
+			$parser->setHook( $service, "EmbedVideoHooks::parseServiceTag{$service}" );
+		}
+
 		return true;
+	}
+
+	/**
+	 * Handle passing parseServiceTagSERVICENAME to the parseServiceTag method.
+	 *
+	 * @param string $name
+	 * @param array $args
+	 * @return void
+	 */
+	public static function __callStatic( $name, $args ) {
+		if ( substr($name, 0, 15) == "parseServiceTag" ) {
+			$service = str_replace( "parseServiceTag", "", $name );
+			return self::parseServiceTag( $service, $args[0], $args[1], $args[2], $args[3] );
+		}
+	}
+
+	/**
+	 * Parse tag with service name
+	 *
+	 * @access	public
+	 * @param	string	Raw User Input
+	 * @param	array	Arguments on the tag.
+	 * @param	object	Parser object.
+	 * @param	object	PPFrame object.
+	 * @return	string	Error Message
+	 */
+	static public function parseServiceTag( $service, $input, array $args, Parser $parser, PPFrame $frame ) {
+		$args = array_merge( self::$validArguments, $args );
+
+		// accept input as default, but also allow url param.
+		if (empty($input) && isset($args['url'])) {
+			$input = $args['url'];
+		}
+
+		return self::parseEV(
+			$parser,
+			$service,
+			$input,
+			$args['dimensions'],
+			$args['alignment'],
+			$args['description'],
+			$args['container'],
+			$args['urlargs'],
+			$args['autoresize'],
+			$args['valignment']
+		);
 	}
 
 	/**
@@ -177,7 +232,7 @@ class EmbedVideoHooks {
 			} else {
 				// break down the url args and inject the start time in.
 				$urlargs = [];
-				parse_str($options['urlargs'],$urlargs);
+				parse_str($options['urlargs'], $urlargs);
 				$urlargs['start'] = $startTime;
 				$options['urlargs'] = http_build_query($urlargs);
 			}
@@ -191,7 +246,7 @@ class EmbedVideoHooks {
 			'class' => 'embedvideo-evl vplink'
 		], $options['linktitle']);
 
-		$parser->getOutput()->addModules( ['ext.embedVideo-evl','ext.embedVideo.styles'] );
+		$parser->getOutput()->addModules( ['ext.embedVideo-evl', 'ext.embedVideo.styles'] );
 
 		return [ $link, 'noparse' => true, 'isHTML' => true ];
 	}
@@ -236,7 +291,7 @@ class EmbedVideoHooks {
 		}
 		$host = parse_url( $url, PHP_URL_HOST );
 		$host = strtolower($host);
-		$host = str_ireplace('www.','',$host); // strip www from any hostname.
+		$host = str_ireplace('www.', '', $host); // strip www from any hostname.
 
 		$map = \EmbedVideo\VideoService::getServiceHostMap();
 

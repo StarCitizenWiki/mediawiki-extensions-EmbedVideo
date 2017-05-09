@@ -236,6 +236,11 @@ class VideoService {
 				'#^([a-zA-Z0-9]+)$#is'
 			]
 		],
+		'soundcloud' => [
+			'embed'			=> '<iframe src="https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true" width="%2$d" height="%3$d" scrolling="no" frameborder="no"></iframe>',
+			'default_width'	=> 186,
+			'default_ratio'	=> 2.66666
+		],
 		'teachertube' => [
 			'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -525,6 +530,15 @@ class VideoService {
 	 */
 	public static function getServiceHostMap() {
 		return self::$serviceHostMap;
+	}
+
+	/**
+	 * return an array of defined services
+	 *
+	 * @return array $services
+	 */
+	public static function getAvailableServices() {
+		return array_keys(self::$services);
 	}
 
 	/**

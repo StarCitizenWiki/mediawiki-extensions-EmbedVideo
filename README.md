@@ -113,6 +113,11 @@ Videos can easily be embedded with the &lt;embedvideo&gt;&lt;/embedvideo&gt; tag
 
     <embedvideo service="youtube">https://www.youtube.com/watch?v=pSsYTj9kCHE</embedvideo>
 
+
+Alternativly, you can also use the service id as the tag (assuming another extension isn't already using this tag).
+
+    <youtube>https://www.youtube.com/watch?v=pSsYTj9kCHE</youtube>
+
 ## Attributes for Parser Tags
 
 | Attribute                                   | Required | Default | Description                                                                                                                                                                                      |
@@ -224,6 +229,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | [Metacafe](http://www.metacafe.com/)                     | `metacafe`                                                                            | 11404579                                                                              | http://www.metacafe.com/watch/11404579/lan\_party\_far\_cry\_4/                                                |
 | [Nico Nico Video](http://www.nicovideo.jp/)              | `nico`                                                                                | sm24394325                                                                            | http://www.nicovideo.jp/watch/sm24394325                                                                       |
 | [RuTube](http://rutube.ru/)                              | `rutube`                                                                              | b698163ccb67498db74d50cb0f22e556                                                      | http://rutube.ru/video/b698163ccb67498db74d50cb0f22e556/                                                       |
+| [SoundCloud](http://soundcloud.com/)                     | `soundcloud`                                                                          |                                                                                       | https://soundcloud.com/skrillex/skrillex-rick-ross-purple-lamborghini                                                     |
 | [TeacherTube](http://teachertube.com)                    | `teachertube`                                                                         | 370511                                                                                | http://www.teachertube.com/video/thats-a-noun-sing-along-hd-version-370511                                     |
 | [TED Talks](http://www.ted.com/talks/browse/)            | `ted`                                                                                 | bruce\_aylward\_humanity\_vs\_ebola\_the\_winning\_strategies\_in\_a\_terrifying\_war | http://www.ted.com/talks/bruce\_aylward\_humanity\_vs\_ebola\_the\_winning\_strategies\_in\_a\_terrifying\_war |
 | [Tubi TV](http://tubitv.com)                             | `tubitv`                                                                              | 318409                                                                                | http://tubitv.com/video/318409                                                                                 |

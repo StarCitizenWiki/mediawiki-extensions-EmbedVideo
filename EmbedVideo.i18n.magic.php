@@ -21,3 +21,9 @@ $magicWords['en']  = [
 	'ev_start'	=> [0, 'start=$1'],
 	'ev_end'	=> [0, 'end=$1'],
 ];
+
+foreach( \EmbedVideo\VideoService::getAvailableServices() as $service ) {
+	if ( !isset($magicWords['en'][$service]) ) {
+		$magicWords['en'][$service] = [0, $service];
+	}
+}
