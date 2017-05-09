@@ -239,7 +239,11 @@ class VideoService {
 		'soundcloud' => [
 			'embed'			=> '<iframe src="https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true" width="%2$d" height="%3$d" scrolling="no" frameborder="no"></iframe>',
 			'default_width'	=> 186,
-			'default_ratio'	=> 2.66666
+			'default_ratio'	=> 2.66666,
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#^(https://soundcloud\.com/.+?/.+?)$#is',
+			]
 		],
 		'teachertube' => [
 			'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
