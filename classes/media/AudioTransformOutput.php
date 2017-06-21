@@ -24,8 +24,8 @@ class AudioTransformOutput extends \MediaTransformOutput {
 	public function __construct($file, $parameters) {
 		$this->file = $file;
 		$this->parameters = $parameters;
-		$this->width = $parameters['width'];
-		$this->height = $parameters['height'];
+		$this->width = (isset($parameters['width']) ? $parameters['width'] : null);
+		$this->height = (isset($parameters['height']) ? $parameters['height'] : null);
 		$this->path = $file->getLocalRefPath();
 		$this->lang = false;
 		$this->page = $parameters['page'];
@@ -69,6 +69,13 @@ class AudioTransformOutput extends \MediaTransformOutput {
 
 		if (!empty($options['img-class'])) {
 			$class = $options['img-class'];
+		}
+
+		if (!isset($parameters['start'])) {
+			$parameters['start'] = null;
+		}
+		if (!isset($parameters['end'])) {
+			$parameters['end'] = null;
 		}
 
 		$inOut = false;
