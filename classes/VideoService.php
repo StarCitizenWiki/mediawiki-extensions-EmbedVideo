@@ -403,7 +403,7 @@ class VideoService {
 			]
 		],
 		'youku' => [
-			'embed'			=> '<iframe src="http://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="https://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
