@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "2.7.1",
+	"version": "2.7.2",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
@@ -80,6 +80,5 @@
 		"ParserFirstCallInit": [
 			"EmbedVideoHooks::onParserFirstCallInit"
 		]
-	},
-	"manifest_version": 1
+	}
 }
