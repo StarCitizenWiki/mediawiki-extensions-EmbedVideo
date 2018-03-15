@@ -7,15 +7,17 @@
 |version     = 2.7.2
 |update      = 2017-05-08
 |mediawiki   = 1.25+
-|php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
+|php         = 5.4+
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
+|image       = EmbedVideoExample1.jpg
+|imagesize   = 350px
 |hook1       = ParserFirstCallInit
 |description = Adds a parser function called <code>#ev</code> for embedding video clips from popular video sharing services.
 |example     = [http://help.gamepedia.com/Extension:EmbedVideo/Example Gamepedia Help Wiki]
 |vagrant-role      = embedvideo
 }}
 
-The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser function called <code>#ev</code> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
+The '''EmbedVideo''' extension adds a parser function called <code>#ev</code> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
 
 ;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
 ;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
@@ -29,6 +31,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 {{TNT|ExtensionInstall
  |registration=required
  |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.2.zip Download]
+ |custom-steps=* [[#Configuration|Configure as required]]
 }}
 
 ==Usage==
@@ -48,7 +51,7 @@ To specify the start and end timestamps in the media use the start and end param
 
 The EmbedVideo parser function expects to be called in any of the following ways:
 
-====#ev - Classic Parser Tag====
+====<code>#ev</code> - Classic Parser Tag====
 * <code><nowiki>{{#ev:service|id}}</nowiki></code>
 * <code><nowiki>{{#ev:service|id|dimensions}}</nowiki></code>
 * <code><nowiki>{{#ev:service|id|dimensions|alignment}}</nowiki></code>
@@ -61,7 +64,7 @@ The EmbedVideo parser function expects to be called in any of the following ways
 However, if needed optional arguments may be left blank by not putting anything between the pipes:
 * <code><nowiki>{{#ev:service|id|||description}}</nowiki></code>
 
-====#evt - Parser Tag for Templates====
+====<code>#evt</code> - Parser Tag for Templates====
 The <nowiki>#evt</nowiki> parser tag allows for key=value pairs which allows for easier templating and readability.
 
 <pre><nowiki>{{#evt:
@@ -70,14 +73,14 @@ service=youtube
 |alignment=right
 }}</nowiki></pre>
 
-====#evu - Parser Tag for URLs====
+====<code>#evu</code> - Parser Tag for URLs====
 The <nowiki>#evu</nowiki> parser tag is like the <nowiki>#evt</nowiki> tag, but its first parameter is a URL that will be parsed to determine the service automatically.
 
 <pre><nowiki>{{#evu:https://www.youtube.com/watch?v=pSsYTj9kCHE
 |alignment=right
 }}</nowiki></pre>
 
-====<embedvideo> - Tag Hook====
+====<code><embedvideo></code> - Tag Hook====
 Videos can easily be embedded with the <nowiki><embedvideo></embedvideo></nowiki> tag hook.  The ID/URL goes as the input between the tags and parameters can be added as the tag arguments.
 
 <pre><nowiki><embedvideo service="youtube">https://www.youtube.com/watch?v=pSsYTj9kCHE</embedvideo></nowiki></pre>
@@ -228,7 +231,7 @@ A default video can be set to fill the container by default instead of default c
 
 An important caveat to make note of, is that the <code>w</code> and <code>h</code> attributes only effect the video that is being included into the container div, and not the actual container. For styling of the container, please use the <code>class</code> or <code>style</code> attributes.
 
-=== #evl - Parser Function for Video Links ===
+=== <code>#evl</code> - Parser Function for Video Links ===
 
 ''Note that the use of the <code>{{#vlink}}</code> parser function is also acceptable here for backwards compatibility.''
 
@@ -440,7 +443,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |-
 |}
 
-==Configuration Settings==
+==Configurations==
 
 {| class="wikitable"
 |--
@@ -448,40 +451,40 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 ! Default Value
 ! Description
 |--
-| $wgEmbedVideoAddFileExtensions
-| true
+| <code>$wgEmbedVideoAddFileExtensions</code>
+| <code>true</code>
 | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.
 |--
-| $wgEmbedVideoEnableVideoHandler
-| true
+| <code>$wgEmbedVideoEnableVideoHandler</code>
+| <code>true</code>
 | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.
 |--
-| $wgEmbedVideoEnableAudioHandler
-| true
+| <code>$wgEmbedVideoEnableAudioHandler</code>
+| <code>true</code>
 | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.
 |--
-| $wgEmbedVideoDefaultWidth
-|
+| <code>$wgEmbedVideoDefaultWidth</code>
+| <code>''</code>
 | Integer - Globally override the default width of video players.  When not set this uses the video service's default width which is typically 640 pixels.
 |--
-| $wgEmbedVideoMinWidth
-|
+| <code>$wgEmbedVideoMinWidth</code>
+| <code>''</code>
 | Integer - Minimum width of video players.  Widths specified below this value will be automatically bounded to it.
 |--
-| $wgEmbedVideoMaxWidth
-|
+| <code>$wgEmbedVideoMaxWidth</code>
+| <code>''</code>
 | Integer - Maximum width of video players.  Widths specified above this value will be automatically bounded to it.
 |--
-| $wgFFmpegLocation
-| /usr/bin/ffmpeg
+| <code>$wgFFmpegLocation</code>
+| <code>/usr/bin/ffmpeg</code>
 | String - Set the location of the ffmpeg binary.
 |--
-| $wgFFprobeLocation
-| /usr/bin/ffprobe
+| <code>$wgFFprobeLocation</code>
+| <code>/usr/bin/ffprobe</code>
 | String - Set the location of the ffprobe binary.
 |}
 
-==Patch Notes==
+==Version history==
 ; v2.7.2
 * Added feature to evlplayer to allow default video content
 
@@ -492,7 +495,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * Added SoundCloud support
 * Added ability to use service name as a parser tag (if not defined previously)
 
-; v2.6.1
+; v2.6.1 
 * Added new configuration options to disable adding media handlers and file extensions.
 ** https://github.com/HydraWiki/mediawiki-embedvideo/issues/76
 * Fixed an uninitialized array.
@@ -582,7 +585,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * Remove MSN as their new video service does not support embedding.
 * Standardize Tudou support per their wiki.
 
-; v2.2.3
+; v2.2.3 
 * Added support for Youku and Tudou.
 
 ; v2.2.2
@@ -597,7 +600,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * New parser tag better suited for templates; #evt.
 * New HTML like tag format that can take parameters.
 
-; v2.1.0
+; v2.1.0 
 * The width parameter was changed to dimensions.  See parameter documentation above.
 * New container parameter to use a standard MediaWiki thumb frame or default to a generic container.
 * The description parameter no longer forces the thumb frame to be used.
