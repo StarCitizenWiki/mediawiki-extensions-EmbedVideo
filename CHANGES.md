@@ -1,5 +1,11 @@
 ## Patch Notes
 
+### v2.7.2
+* Added feature to evlplayer to allow default video content
+
+### v2.7.1
+* Fixed issue with youku videos not embedding properly on https enabled wikis.
+
 ### v2.7.0
 * Added SoundCloud support
 * Added ability to use service name as a parser tag (if not defined previously)
