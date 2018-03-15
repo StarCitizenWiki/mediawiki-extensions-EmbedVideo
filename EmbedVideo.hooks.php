@@ -53,6 +53,7 @@ class EmbedVideoHooks {
 	static private $validArguments = [
 		'service'		=> null,
 		'id'			=> null,
+		'defaultid'		=> null,
 		'dimensions'	=> null,
 		'alignment'		=> null,
 		'description'	=> null,
@@ -268,6 +269,11 @@ class EmbedVideoHooks {
 		$style = isset($args['style']) ? ' '.$args['style'] : '';
 		$class = isset($args['class']) ? ' '.$args['class'] : '';
 
+		if ($args['defaultid'] && $args['service']) {
+			// so we don't have to deal with any screwy parsing of tags by the HTML class.
+			$input = "DEFAULT PLAYER REPLACEMENT";
+		}
+
 		$div = Html::element('div', array(
 			'id' => 'vplayerbox-'.$pid,
 			'class' => 'embedvideo-evlbox vplayerbox'.$class,
@@ -275,7 +281,24 @@ class EmbedVideoHooks {
 			'style' => $style,
 		), $input);
 
-		return [ $div, 'noParse'=> true, 'isHTML'=> 'true' ];
+		if ($args['defaultid'] && $args['service']) {
+			$new = self::parseEV(
+				$parser,
+				$args['service'],
+				$args['defaultid'],
+				"${w}x${h}",
+				$args['alignment'],
+				$args['description'],
+				$args['container'],
+				$args['urlargs'],
+				$args['autoresize'],
+				$args['valignment']
+			)[0];
+			// replace the default content with the new content
+			$div = str_replace( $input, $new, $div );
+		}
+
+		return [ $div, 'noParse'=> true, 'isHTML'=> true ];
 	}
 
 	/**

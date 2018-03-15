@@ -173,7 +173,11 @@ _Note that the use of the `<vplayer>` tag is also acceptable here for backwards 
 
 This evlplayer tag is used to position the video player container within the page.
 
-    <vplayer id="player id" w="width" h="height" class="class" style="style">default content</vplayer>
+    <evlplayer id="player id" w="width" h="height" class="class" style="style">default content</evlplayer>
+
+A default video can be set to fill the container by default instead of `default content` as well.
+
+    <evlplayer id="player1" w="480" h="360" service="youtube" defaultid="pSsYTj9kCHE" />
 
 | Attributes | Required | Default                 | Description                                              |
 |------------|----------|-------------------------|----------------------------------------------------------|
@@ -182,6 +186,8 @@ This evlplayer tag is used to position the video player container within the pag
 | h          | no       | achieve 16:9 from width | Height to send to the embedded player when its generated |
 | class      | no       |                         | Additional CSS class to add to the container div         |
 | style      | no       |                         | Additional in-line CSS to apply to the container div     |
+| defaultid  | no       |                         | Video ID of default video, if you want a default video.  |
+| service    | no       |                         | Service of default video, if you want a default video.   |
 
 An important caveat to make note of, is that the `w` and `h` attributes only effect the video that is being included into the container div, and not the actual container. For styling of the container, please use the `class` or `style` attributes.
 

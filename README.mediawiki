@@ -4,7 +4,7 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.7.0
+|version     = 2.7.2
 |update      = 2017-05-08
 |mediawiki   = 1.25+
 |php         = 5.4+(5.3 up to EmbedVideo 2.2.1)
@@ -28,7 +28,7 @@ The '''EmbedVideo''' Extension is a MediaWiki extension which adds a parser func
 
 {{TNT|ExtensionInstall
  |registration=required
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.0.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.2.zip Download]
 }}
 
 ==Usage==
@@ -178,7 +178,12 @@ The &lt;vplayer /&gt; specifies where the player should appear within the page, 
 
 This evlplayer tag is used to position the video player container within the page.
 
-<pre>&lt;vplayer id=&quot;player id&quot; w=&quot;width&quot; h=&quot;height&quot; class=&quot;class&quot; style=&quot;style&quot;&gt;default content&lt;/vplayer&gt;</pre>
+<pre>&lt;evlplayer id=&quot;player id&quot; w=&quot;width&quot; h=&quot;height&quot; class=&quot;class&quot; style=&quot;style&quot;&gt;default content&lt;/evlplayer&gt;</pre>
+
+A default video can be set to fill the container by default instead of default content as well.
+
+<pre>&lt;evlplayer id=&quot;player1&quot; w=&quot;480&quot; h=&quot;360&quot; service=&quot;youtube&quot; defaultid=&quot;pSsYTj9kCHE&quot; /&gt;</pre>
+
 {|
 !width="11%"| Attributes
 !width="10%"| Required
@@ -203,14 +208,22 @@ This evlplayer tag is used to position the video player container within the pag
 | class
 | no
 |
-
 | Additional CSS class to add to the container div
 |-
 | style
 | no
 |
-
 | Additional in-line CSS to apply to the container div
+|-
+| defaultid
+| no
+|
+| Video ID of default video, if you want a default video.
+|-
+| service
+| no
+|
+| Service of default video, if you want a default video.
 |}
 
 An important caveat to make note of, is that the <code>w</code> and <code>h</code> attributes only effect the video that is being included into the container div, and not the actual container. For styling of the container, please use the <code>class</code> or <code>style</code> attributes.
@@ -469,6 +482,9 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Patch Notes==
+; v2.7.2
+* Added feature to evlplayer to allow default video content
+
 ; v2.7.1
 * Fixed issue with youku videos not embedding properly on https enabled wikis.
 
