@@ -66,18 +66,18 @@ class VideoService {
 			]
 		],
 		'disclose' => [
- 			'embed'			=> '<iframe src="//www.disclose.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
- 			'default_width'	=> 640,
- 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
- 			'https_enabled'	=> true,
- 			'url_regex'		=> [
- 				'#disclose.tv/embed/([\d]+)/([\w-]+)#is',
- 				'#disclose.tv/action/viewvideo/([\d]+)/([\w-]+)/#is'
- 			],
- 			'id_regex'		=> [
- 				'#^([\d]+)$#is'
-  			]
-  		],
+			'embed'			=> '<iframe src="//www.disclose.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (640 / 360)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#disclose.tv/embed/([\d]+)/([\w-]+)#is',
+				'#disclose.tv/action/viewvideo/([\d]+)/([\w-]+)/#is'
+			],
+			'id_regex'		=> [
+				 '#^([\d]+)$#is'
+			]
+		],
 		'blip' => [
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
@@ -189,14 +189,14 @@ class VideoService {
 			]
 		],
 		'mediacccde' => [
-			'embed'     => '<iframe src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
+			'embed'	 => '<iframe src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>',
 			'default_width' => 660,
 			'default_ratio' => 1.77777777777778, //(16 / 9),
 			'https_enabled' => true,
 			'url_regex' => [
 				'#conferences/.*?([\d\w_-]+)(?:/oembed)?.html$#is'
 			],
-			'id_regex'    => [
+			'id_regex'	=> [
 				'#^([\d\w_-]+)$#is'
 			]
 		],
@@ -319,7 +319,7 @@ class VideoService {
 			]
 		],
 		'twitchvod' => [
-			'embed'			=> '<iframe src="https://player.twitch.tv/?video=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="https://player.twitch.tv/?autoplay=false&video=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -509,7 +509,7 @@ class VideoService {
 	 * @param	string	Service Name
 	 * @return	void
 	 */
-	private function __construct( $service ) {
+	private function __construct($service) {
 		$this->service = self::$services[$service];
 	}
 
@@ -520,9 +520,9 @@ class VideoService {
 	 * @param	string	Service Name
 	 * @return	mixed	New VideoService object or false on initialization error.
 	 */
-	static public function newFromName( $service ) {
-		if ( isset( self::$services[$service] ) ) {
-			return new self( $service );
+	static public function newFromName($service) {
+		if (isset(self::$services[$service]))	{
+			return new self($service);
 		} else {
 			return false;
 		}
@@ -552,9 +552,9 @@ class VideoService {
 	 * @param	string	Service Name
 	 * @param   mixed   args
 	 */
-	static public function addService( $service, $args ) {
-		if ( isset( self::$services[$service] ) ) {
-			throw new MWException( "Service already already exists: $service" );
+	static public function addService($service, $args) {
+		if (isset(self::$services[$service])) {
+			throw new MWException("Service already already exists: $service");
 		}
 		self::$services[$service] = $args;
 	}
@@ -566,36 +566,36 @@ class VideoService {
 	 * @return	mixed	String HTML to output or false on error.
 	 */
 	public function getHtml() {
-		if ( $this->getVideoID() === false || $this->getWidth() === false || $this->getHeight() === false ) {
+		if ($this->getVideoID() === false || $this->getWidth() === false || $this->getHeight() === false) {
 			return false;
 		}
 
 		$html = false;
-		if ( isset( $this->service['embed'] ) ) {
+		if (isset($this->service['embed'])) {
 			// Embed can be generated locally instead of calling out to the service to get it.
 			$data = [
 				$this->service['embed'],
-				htmlentities( $this->getVideoID(), ENT_QUOTES ),
+				htmlentities($this->getVideoID(), ENT_QUOTES),
 				$this->getWidth(),
 				$this->getHeight(),
 			];
 
-			if ( $this->getExtraIds() !== false ) {
-				foreach ( $this->getExtraIds() as $extraId ) {
-					$data[] = htmlentities( $extraId, ENT_QUOTES );
+			if ($this->getExtraIds() !== false) {
+				foreach ($this->getExtraIds() as $extraId) {
+					$data[] = htmlentities($extraId, ENT_QUOTES);
 				}
 			}
 
 			$urlArgs = $this->getUrlArgs();
-			if ( $urlArgs !== false ) {
+			if ($urlArgs !== false) {
 				$data[] = $urlArgs;
 			}
 
-			$html = call_user_func_array( 'sprintf', $data );
-		} elseif ( isset( $this->service['oembed'] ) ) {
+			$html = call_user_func_array('sprintf', $data);
+		} elseif (isset($this->service['oembed'])) {
 			// Call out to the service to get the embed HTML.
-			if ( $this->service['https_enabled'] ) {
-				if ( stristr( $this->getVideoID(), 'https:' ) !== false ) {
+			if ($this->service['https_enabled']) {
+				if (stristr($this->getVideoID(), 'https:') !== false) {
 					$protocol = 'https:';
 				} else {
 					$protocol = 'http:';
@@ -608,8 +608,8 @@ class VideoService {
 				$this->getHeight(),
 				$protocol
 			);
-			$oEmbed = OEmbed::newFromRequest( $url );
-			if ( $oEmbed !== false ) {
+			$oEmbed = OEmbed::newFromRequest($url);
+			if ($oEmbed !== false) {
 				$html = $oEmbed->getHtml();
 			}
 		}
@@ -634,9 +634,9 @@ class VideoService {
 	 * @param	string	Video ID/URL
 	 * @return	boolean	Success
 	 */
-	public function setVideoID( $id ) {
-		$id = $this->parseVideoID( $id );
-		if ( $id !== false ) {
+	public function setVideoID($id) {
+		$id = $this->parseVideoID($id);
+		if ($id !== false) {
 			$this->id = $id;
 			return true;
 		} else {
@@ -651,19 +651,19 @@ class VideoService {
 	 * @param	string	Video ID/URL
 	 * @return	mixed	Parsed Video ID or false on failure.
 	 */
-	public function parseVideoID( $id ) {
-		$id = trim( $id );
+	public function parseVideoID($id) {
+		$id = trim($id);
 		// URL regexes are put into the array first to prevent cases where the ID regexes might accidentally match an incorrect portion of the URL.
-		$regexes = array_merge( (array) $this->service['url_regex'], (array) $this->service['id_regex'] );
-		if ( is_array( $regexes ) && count( $regexes ) ) {
-			foreach ( $regexes as $regex ) {
-				if ( preg_match( $regex, $id, $matches ) ) {
+		$regexes = array_merge((array) $this->service['url_regex'], (array) $this->service['id_regex']);
+		if (is_array($regexes) && count($regexes)) {
+			foreach ($regexes as $regex) {
+				if (preg_match($regex, $id, $matches)) {
 					// Get rid of the full text match.
-					array_shift( $matches );
+					array_shift($matches);
 
-					$id = array_shift( $matches );
+					$id = array_shift($matches);
 
-					if ( count( $matches ) ) {
+					if (count($matches)) {
 						$this->extraIDs = $matches;
 					}
 
@@ -706,29 +706,29 @@ class VideoService {
 	 * @param	integer	Width
 	 * @return	void
 	 */
-	public function setWidth( $width = null ) {
+	public function setWidth($width = null) {
 		global $wgEmbedVideoMinWidth, $wgEmbedVideoMaxWidth, $wgEmbedVideoDefaultWidth;
 
-		if ( !is_numeric( $width ) ) {
-			if ( $width === null && $this->getDefaultWidth() !== false && $wgEmbedVideoDefaultWidth < 1 ) {
+		if (!is_numeric($width)) {
+			if ($width === null && $this->getDefaultWidth() !== false && $wgEmbedVideoDefaultWidth < 1) {
 				$width = $this->getDefaultWidth();
 			} else {
-				$width = ( $wgEmbedVideoDefaultWidth > 0 ? $wgEmbedVideoDefaultWidth : 640 );
+				$width = ($wgEmbedVideoDefaultWidth > 0 ? $wgEmbedVideoDefaultWidth : 640);
 			}
 		} else {
-			$width = intval( $width );
+			$width = intval($width);
 		}
 
-		if ( $wgEmbedVideoMaxWidth > 0 && $width > $wgEmbedVideoMaxWidth ) {
+		if ($wgEmbedVideoMaxWidth > 0 && $width > $wgEmbedVideoMaxWidth) {
 			$width = $wgEmbedVideoMaxWidth;
 		}
 
-		if ( $wgEmbedVideoMinWidth > 0 && $width < $wgEmbedVideoMinWidth ) {
+		if ($wgEmbedVideoMinWidth > 0 && $width < $wgEmbedVideoMinWidth) {
 			$width = $wgEmbedVideoMinWidth;
 		}
 		$this->width = $width;
 
-		if ( $this->getHeight() === false ) {
+		if ($this->getHeight() === false) {
 			$this->setHeight();
 		}
 	}
@@ -750,17 +750,17 @@ class VideoService {
 	 * @param	mixed	[Optional] Height Value
 	 * @return	void
 	 */
-	public function setHeight( $height = null ) {
-		if ( $height !== null && $height > 0 ) {
-			$this->height = intval( $height );
+	public function setHeight($height = null) {
+		if ($height !== null && $height > 0) {
+			$this->height = intval($height);
 			return;
 		}
 
 		$ratio = 16 / 9;
-		if ( $this->getDefaultRatio() !== false ) {
+		if ($this->getDefaultRatio() !== false) {
 			$ratio = $this->getDefaultRatio();
 		}
-		$this->height = round( $this->getWidth() / $ratio );
+		$this->height = round($this->getWidth() / $ratio);
 	}
 
 	/**
@@ -770,8 +770,8 @@ class VideoService {
 	 * @return	mixed	Integer value or false for not set.
 	 */
 	public function getUrlArgs() {
-		if ( $this->urlArgs !== false ) {
-			return http_build_query( $this->urlArgs );
+		if ($this->urlArgs !== false) {
+			return http_build_query($this->urlArgs);
 		}
 	}
 
@@ -782,21 +782,21 @@ class VideoService {
 	 * @param	string	Raw Arguments
 	 * @return	boolean	Success
 	 */
-	public function setUrlArgs( $urlArgs ) {
-		if ( !$urlArgs ) {
+	public function setUrlArgs($urlArgs) {
+		if (!$urlArgs) {
 			return true;
 		}
 
-		$urlArgs = urldecode( $urlArgs );
-		$_args = explode( '&', $urlArgs );
+		$urlArgs = urldecode($urlArgs);
+		$_args = explode('&', $urlArgs);
 
-		if ( is_array( $_args ) ) {
-			foreach ( $_args as $rawPair ) {
-				list( $key, $value ) = explode( "=", $rawPair, 2 );
-				if ( empty( $key ) || ( $value === null || $value === '' ) ) {
+		if (is_array($_args)) {
+			foreach ($_args as $rawPair) {
+				list($key, $value) = explode("=", $rawPair, 2);
+				if (empty($key) || ($value === null || $value === '')) {
 					return false;
 				}
-				$arguments[$key] = htmlentities( $value, ENT_QUOTES );
+				$arguments[$key] = htmlentities($value, ENT_QUOTES);
 			}
 		} else {
 			return false;
@@ -822,7 +822,7 @@ class VideoService {
 	 * @return	mixed	Integer width or false if not set.
 	 */
 	public function getDefaultWidth() {
-		return ( $this->service['default_width'] > 0 ? $this->service['default_width'] : false );
+		return ($this->service['default_width'] > 0 ? $this->service['default_width'] : false);
 	}
 
 	/**
@@ -832,6 +832,6 @@ class VideoService {
 	 * @return	mixed	Integer ratio or false if not set.
 	 */
 	public function getDefaultRatio() {
-		return ( $this->service['default_ratio'] > 0 ? $this->service['default_ratio'] : false );
+		return ($this->service['default_ratio'] > 0 ? $this->service['default_ratio'] : false);
 	}
 }
