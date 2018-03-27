@@ -4,7 +4,7 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.7.2
+|version     = 2.7.3
 |update      = 2017-05-08
 |mediawiki   = 1.25+
 |php         = 5.4+
@@ -30,7 +30,7 @@ The '''EmbedVideo''' extension adds a parser function called <code>#ev</code> fo
 
 {{TNT|ExtensionInstall
  |registration=required
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.2.zip Download]
+ |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.3.zip Download]
  |custom-steps=* [[#Configuration|Configure as required]]
 }}
 
@@ -485,6 +485,10 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Version history==
+; v2.7.3
+* Default Twitch VOD to autoplay=false by default
+* Allow videos to be sized in 1:1 aspect ratios for special use cases.
+
 ; v2.7.2
 * Added feature to evlplayer to allow default video content
 
@@ -495,7 +499,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * Added SoundCloud support
 * Added ability to use service name as a parser tag (if not defined previously)
 
-; v2.6.1 
+; v2.6.1
 * Added new configuration options to disable adding media handlers and file extensions.
 ** https://github.com/HydraWiki/mediawiki-embedvideo/issues/76
 * Fixed an uninitialized array.
@@ -585,7 +589,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * Remove MSN as their new video service does not support embedding.
 * Standardize Tudou support per their wiki.
 
-; v2.2.3 
+; v2.2.3
 * Added support for Youku and Tudou.
 
 ; v2.2.2
@@ -600,7 +604,7 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 * New parser tag better suited for templates; #evt.
 * New HTML like tag format that can take parameters.
 
-; v2.1.0 
+; v2.1.0
 * The width parameter was changed to dimensions.  See parameter documentation above.
 * New container parameter to use a standard MediaWiki thumb frame or default to a generic container.
 * The description parameter no longer forces the thumb frame to be used.
