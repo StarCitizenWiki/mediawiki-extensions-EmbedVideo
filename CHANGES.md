@@ -1,4 +1,7 @@
 ## Patch Notes
+### v2.7.3
+* Default Twitch VOD to autoplay=false by default
+* Allow videos to be sized in 1:1 aspect ratios for special use cases.
 
 ### v2.7.2
 * Added feature to evlplayer to allow default video content
