@@ -187,7 +187,7 @@ A default video can be set to fill the container by default instead of default c
 
 <pre>&lt;evlplayer id=&quot;player1&quot; w=&quot;480&quot; h=&quot;360&quot; service=&quot;youtube&quot; defaultid=&quot;pSsYTj9kCHE&quot; /&gt;</pre>
 
-{|
+{| class="wikitable"
 !width="11%"| Attributes
 !width="10%"| Required
 !width="23%"| Default
@@ -238,7 +238,7 @@ An important caveat to make note of, is that the <code>w</code> and <code>h</cod
 <pre>{{#evl:&lt;video id&gt;|&lt;Link text&gt;|service=youtube|player=&lt;player id&gt;}}</pre>
 In addition to all of the attributes supported by the <code>#evt</code> tag, these specific attributes apply to the <code>#evl</code> (and <code>#vlink</code>) tags. To maintain backwards compatibility, if you do not define a <code>service</code> then <code>youtube</code> is assumed.
 
-{|
+{|class="wikitable"
 !width="5%"| Attributes
 !width="4%"| Required
 !width="3%"| Default
