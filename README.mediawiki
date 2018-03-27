@@ -174,10 +174,10 @@ From the original extension documentation:
 
 <pre>The VideoLink extension allows embedding of YouTube videos in articles; allowing for multiple linked videos to be played in a single embedded video player, first shown when a user clicks on a video link.
 
-The &lt;vplayer /&gt; specifies where the player should appear within the page, and the {{#vlink}} parser function allows creation of links that load a specific video.</pre>
-=== &lt;evlplayer&gt; - Tag Hook for Video Container ===
+The &lt;evlplayer /&gt; specifies where the player should appear within the page, and the {{#vlink}} parser function allows creation of links that load a specific video.</pre>
+=== <code>&lt;evlplayer&gt;</code> - Tag Hook for Video Container ===
 
-''Note that the use of the <code>&lt;vplayer&gt;</code> tag is also acceptable here for backwards compatibility.''
+''Note that the use of the <code>&lt;evlplayer&gt;</code> tag is also acceptable here for backwards compatibility.''
 
 This evlplayer tag is used to position the video player container within the page.
 
