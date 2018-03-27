@@ -5,7 +5,7 @@
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
 |version     = 2.7.3
-|update      = 2017-05-08
+|update      = 2018-03-27
 |mediawiki   = 1.25+
 |php         = 5.4+
 |download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
