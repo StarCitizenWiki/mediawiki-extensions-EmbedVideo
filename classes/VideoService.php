@@ -213,7 +213,7 @@ class VideoService {
 			]
 		],
 		'nico' => [
-			'embed'                 => '<iframe allowfullscreen="allowfullscreen" frameborder="0" width="%2$d" height="%3$d" src="https://embed.nicovideo.jp/watch/sm31502176?oldScript=1&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>',
+			'embed'                 => '<iframe allowfullscreen="allowfullscreen" frameborder="0" width="%2$d" height="%3$d" src="https://embed.nicovideo.jp/watch/%1$s?oldScript=1&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.59609120521173, // (490 / 307)
 			'https_enabled'	=> false,
