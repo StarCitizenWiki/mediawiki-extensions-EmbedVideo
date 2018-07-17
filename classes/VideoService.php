@@ -402,6 +402,18 @@ class VideoService {
 				'#^([\d\w-]+)$#is'
 			]
 		],
+		'youtubevideolist' => [
+			'embed'			=> '<iframe src="//www.youtube.com/embed/%1$s?%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#playlist=([\d\w-]+)(?:&\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-]+)$#is'
+			]
+		],
 		'youku' => [
 			'embed'			=> '<iframe src="https://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -448,10 +460,9 @@ class VideoService {
 		'vimeo.com'					=> 'vimeo',
 		'vine.co'					=> 'vine',
 		'screen.yahoo.com'			=> 'yahoo',
-		'youtube.com'				=> ['youtube', 'youtubeplaylist'],
+		'youtube.com'				=> ['youtube', 'youtubeplaylist', 'youtubevideolist'],
 		'youku.com'					=> 'youku'
 	];
-
 
 	/**
 	 * This object instance's service information.

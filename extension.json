@@ -32,8 +32,8 @@
 		"EmbedVideo\\VideoTransformOutput": "classes/media/VideoTransformOutput.php"
 	},
 	"APIModules": {
-        "embedvideo": "ApiEmbedVideo"
-    },
+		"embedvideo": "ApiEmbedVideo"
+	},
 	"ResourceModules": {
 		"ext.embedVideo": {
 			"scripts": [
@@ -53,6 +53,9 @@
 			"targets": [
 				"desktop",
 				"mobile"
+			],
+			"dependencies": [
+				"mediawiki.api"
 			]
 		},
 		"ext.embedVideo.styles": {

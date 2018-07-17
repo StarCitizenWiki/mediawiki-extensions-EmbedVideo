@@ -1,4 +1,10 @@
 ## Patch Notes
+### v2.7.4
+* Added support for playlist to evlplayer
+* Added support for youtube video list
+* Updated Documentation for evlplayer
+* Added missing dependency for evlplayer in extension.json
+
 ### v2.7.3
 * Default Twitch VOD to autoplay=false by default
 * Allow videos to be sized in 1:1 aspect ratios for special use cases.
