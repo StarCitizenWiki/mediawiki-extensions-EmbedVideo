@@ -203,7 +203,7 @@ class EmbedVideoHooks {
 		
 		// handle comma separated video id list
 		$ids = explode(',', $args[0]);
-		$id = isset($args[2]) ? $args[2] - 1 : false;
+		$id = isset($args[2]) && is_numeric($args[2]) ? $args[2] - 1 : false;
 		$video = $id !== false && isset($ids[$id]) ? $ids[$id] : array_shift($ids);
 
 		// standardize first 2 arguments into strings that parse_str can handle.
@@ -216,8 +216,13 @@ class EmbedVideoHooks {
 		// default service to youtube for compatibility with vlink
 		$options['service'] = isset( $options['service'] ) ? $options['service'] : "youtube";
 
-		// force to youtubevidelink if video list is defined.
-		$options['service'] = count($ids) > 0 && ! isset($args[2]) ? "youtubevideolist" : $options['service'];
+		// force to youtubevidelink or youtube if video list is provided
+		if (count($ids) > 0) {
+			if ($options['service'] != 'youtube' || $options['service'] != 'youtbuevideolist') {
+				$options['notice'] = "The video list feature only works with the youtube service. Your service is being overridden.";
+			}
+			$options['service'] = count($ids) > 0 && $id === false ? "youtubevideolist" : "youtube";
+		}
 
 		$options = array_merge( self::$validArguments, $options );
 

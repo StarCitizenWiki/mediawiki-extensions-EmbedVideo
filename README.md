@@ -156,6 +156,12 @@ For YouTube to have the video start at a specific time code utilize the urlargs(
 
     {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|||||start=76}}
 
+### Example #3
+
+Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the 'youtubevideolist` service selector:
+
+    {{#ev:youtubevideolist|-D--GWwca0g|||||playlist=afpRzcAAZVM,gMEHZPZTAVc,lom_plwy9iA,BSWYMQEQhEo,EREaWhXj4_Q}}
+
 # Support for VideoLink Tags
 
 Support for the unmaintained VideoLink extension's tags has been added since version 2.5.
@@ -209,6 +215,15 @@ In addition to all of the attributes supported by the `#evt` tag, these specific
 | initial video | _deprecated_ |           | In the original VideoLink, this would define what video to play first if multiple videos were define. Please see notes about in `video id` and `start`.                                                                                                                         |
 | start         | _deprecated_ | 0:00      | In the original VideoLink, this defined the start time of a video. Since we support multiple video services, this feature can now be replicated with the `urlargs` parameter. For backwards compatibility, this attribute will be respect on videos with the service `youtube`. |
 
+### Video Link Playlist example:
+
+Creating a video list allows video links to create a playlist on the fly using the _youtube_ and _youtubevideolist_ service. _Note: even if you define a service the system will use youtube if a list of videos is provided._
+
+    <evlplayer style="position:relative; width: 800px; margin: 0.5em 0" id="example-player">default content</evlplayer>
+    {{#evl:pSsYTj9kCHE,pSsYTj9kCHE,pSsYTj9kCHE|Play All|player=example-player}}
+    {{#evl:pSsYTj9kCHE,pSsYTj9kCHE,pSsYTj9kCHE|Let eet Go|1|player=example-player}}
+    {{#evl:pSsYTj9kCHE,pSsYTj9kCHE,pSsYTj9kCHE|Let eet Go|2|player=example-player}}
+    {{#evl:pSsYTj9kCHE,pSsYTj9kCHE,pSsYTj9kCHE|Let eet Go|3|player=example-player}}
 
 ## Supported Services
 
