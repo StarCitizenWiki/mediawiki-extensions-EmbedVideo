@@ -200,22 +200,36 @@ class EmbedVideoHooks {
 	static public function parseEVL( Parser &$parser ) {
 		$args = func_get_args();
 		array_shift( $args );
+		
+		// handle comma separated video id list
+		$ids = explode(',', $args[0]);
+		$id = isset($args[2]) && is_numeric($args[2]) ? $args[2] - 1 : false;
+		$video = $id !== false && isset($ids[$id]) ? $ids[$id] : array_shift($ids);
 
-		// standardise first 2 arguments into strings that parse_str can handle.
-		$args[0] = "id=".$args[0];
-		$args[1] = "linktitle=".$args[1];
+		// standardize first 2 arguments into strings that parse_str can handle.
+		$args[0] = "id=" . $video;
+		$args[1] = "linktitle=" . $args[1];
 
 		$options = [];
 		parse_str( implode( "&", $args ), $options );
 
 		// default service to youtube for compatibility with vlink
 		$options['service'] = isset( $options['service'] ) ? $options['service'] : "youtube";
+
+		// force to youtubevidelink or youtube if video list is provided
+		if (count($ids) > 0) {
+			if ($options['service'] != 'youtube' || $options['service'] != 'youtbuevideolist') {
+				$options['notice'] = "The video list feature only works with the youtube service. Your service is being overridden.";
+			}
+			$options['service'] = count($ids) > 0 && $id === false ? "youtubevideolist" : "youtube";
+		}
+
 		$options = array_merge( self::$validArguments, $options );
 
 		// fix for youtube ids that VideoLink would have handled.
 		if ($options['service'] == 'youtube' && strpos($options['id'], ';') !== false) {
 			// transform input like Oh8KRy2WV0o;C5rePhJktn0 into Oh8KRy2WV0o
-			$options['notice'] = "Use of simi-colon delimited video lists is depricated. Only the first video in this list will play.";
+			$options['notice'] = "Use of semicolon delimited video lists is deprecated. Only the first video in this list will play.";
 			$options['id'] = strstr($options['id'], ';', true);
 		}
 
@@ -235,6 +249,21 @@ class EmbedVideoHooks {
 				$urlargs = [];
 				parse_str($options['urlargs'], $urlargs);
 				$urlargs['start'] = $startTime;
+				$options['urlargs'] = http_build_query($urlargs);
+			}
+		}
+
+		// handle adding playlist for video links for a play all link
+		if ($options['service'] == 'youtubevideolist' && count($ids) > 0) {
+			$playlist = implode(',', $ids);
+			if (!isset($options['urlargs']) || empty($options['urlargs'])) {
+				// just set the url args to the playlist
+				$options['urlargs'] = "playlist={$playlist}";
+			} else {
+				// break down the url args and inject the playlist.
+				$urlargs = [];
+				parse_str($options['urlargs'], $urlargs);
+				$urlargs['playlist'] = $playlist;
 				$options['urlargs'] = http_build_query($urlargs);
 			}
 		}
@@ -274,12 +303,15 @@ class EmbedVideoHooks {
 			$input = "DEFAULT PLAYER REPLACEMENT";
 		}
 
-		$div = Html::element('div', array(
+		// Parse internal content
+		$content = $parser->recursiveTagParse($input, $frame);
+
+		$div = Html::rawElement('div', array(
 			'id' => 'vplayerbox-'.$pid,
 			'class' => 'embedvideo-evlbox vplayerbox'.$class,
 			'data-size' => $w.'x'.$h,
 			'style' => $style,
-		), $input);
+		), $content);
 
 		if ($args['defaultid'] && $args['service']) {
 			$new = self::parseEV(
@@ -294,11 +326,12 @@ class EmbedVideoHooks {
 				$args['autoresize'],
 				$args['valignment']
 			)[0];
+
 			// replace the default content with the new content
-			$div = str_replace( $input, $new, $div );
+			$div = str_replace( $content, $new, $div );
 		}
 
-		return [ $div, 'noParse'=> true, 'isHTML'=> true ];
+		return [ $div, 'noparse'=> true, 'isHTML'=> true ];
 	}
 
 	/**
@@ -322,7 +355,7 @@ class EmbedVideoHooks {
 
 		if (isset($map[$host])) {
 			if (!is_array($map[$host])) {
-				// only one possible anser. Set it.
+				// only one possible answer. Set it.
 				$service = $map[$host];
 			} else {
 				// map by array.
@@ -332,7 +365,7 @@ class EmbedVideoHooks {
 						$test = $evs->parseVideoID($url);
 
 						if ($test !== false && $test !== $url) {
-							// sucessful parse - safe assumption that this is correct.
+							// successful parse - safe assumption that this is correct.
 							$service = $possibleService;
 							break;
 						}
