@@ -218,7 +218,7 @@ class EmbedVideoHooks {
 
 		// force to youtubevidelink or youtube if video list is provided
 		if (count($ids) > 0) {
-			if ($options['service'] != 'youtube' || $options['service'] != 'youtbuevideolist') {
+			if ($options['service'] != 'youtube' && $options['service'] != 'youtubevideolist') {
 				$options['notice'] = "The video list feature only works with the youtube service. Your service is being overridden.";
 			}
 			$options['service'] = count($ids) > 0 && $id === false ? "youtubevideolist" : "youtube";
