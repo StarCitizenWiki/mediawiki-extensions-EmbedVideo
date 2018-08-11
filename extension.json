@@ -76,7 +76,6 @@
 		"EmbedVideoAddFileExtensions": true,
 		"EmbedVideoEnableVideoHandler": true,
 		"EmbedVideoEnableAudioHandler": true,
-		"FFmpegLocation": "/usr/bin/ffmpeg",
 		"FFprobeLocation": "/usr/bin/ffprobe"
 	},
 	"Hooks": {
