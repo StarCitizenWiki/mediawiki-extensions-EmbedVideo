@@ -11,6 +11,9 @@
 	"descriptionmsg": "embedvideo_description",
 	"license-name": "MIT",
 	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.29.0"
+	},
 	"callback": "EmbedVideoHooks::onExtension",
 	"MessagesDirs": {
 		"EmbedVideo": [
