@@ -318,13 +318,25 @@ class VideoService {
 				'#^([\d\w-]+)$#is'
 			]
 		],
+		'twitchclip' => [
+			'embed'			=> '<iframe src="https://clips.twitch.tv/embed?autoplay=false&clip=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.64021164021164, // (620 / 378)
+			'https_enabled'	=> false,
+			'url_regex'		=> [
+				'#twitch\.tv/(?:[\d\w-]+)/(?:clip/)([\d\w-]+)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w-]+)$#is'
+			]
+		],
 		'twitchvod' => [
 			'embed'			=> '<iframe src="https://player.twitch.tv/?autoplay=false&video=%1$s&%4$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#twitch\.tv/([\d\w-]+)(?:/\S+?)?#is'
+				'#twitch\.tv/videos/([\d\w-]+)(?:/\S+?)?#is'
 			],
 			'id_regex'		=> [
 				'#^([\d\w-]+)$#is'
@@ -455,7 +467,7 @@ class VideoService {
 		'tubitv.com'				=> 'tubitv',
 		'tudou.com'					=> 'todou',
 		'tvpot.daum.net'			=> 'tvpot',
-		'twitch.tv'					=> ['twitch', 'twitchvod'],
+		'twitch.tv'					=> ['twitch', 'twitchclip', 'twitchvod'],
 		'89.160.51.62'				=> 'videomaten',
 		'vimeo.com'					=> 'vimeo',
 		'vine.co'					=> 'vine',
