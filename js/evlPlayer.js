@@ -12,7 +12,7 @@
 			var player = data['player'];
 			var container = $('#vplayerbox-'+player);
 			if (!container.length) {
-				mw.debug('No matching vplayer tag found for this link!');
+				mw.log.error('No matching vplayer tag found for this link!');
 				return;
 			}
 			// modify dimensions call to match container size if exists.
