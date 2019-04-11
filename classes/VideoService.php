@@ -152,13 +152,13 @@ class VideoService {
 				'#^([a-zA-Z]+)$#is'
 			]
 		],
-		'hitbox' => [
-			'embed'			=> '<iframe src="http://www.hitbox.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+		'smashcast' => [
+			'embed'			=> '<iframe src="https://www.smashcast.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
-			'https_enabled'	=> false,
+			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#hitbox.tv/([\d\w]+)(?:/\S+?)?#is'
+				'#smashcast.tv/([\d\w]+)(?:/\S+?)?#is'
 			],
 			'id_regex'		=> [
 				'#^([\d\w]+)$#is'
@@ -455,7 +455,7 @@ class VideoService {
 		'divshare.com'				=> 'divshare',
 		'funnyordie.com'			=> 'funnyordie',
 		'gfycat.com'				=> 'gfycat',
-		'hitbox.tv'					=> 'hitbox',
+		'smashcast.tv'					=> 'smashcast',
 		'content.jwplatform.com'	=> 'jwplayer',
 		'kickstarter.com'			=> 'kickstarter',
 		'media.ccc.de'				=> 'mideacccde',
