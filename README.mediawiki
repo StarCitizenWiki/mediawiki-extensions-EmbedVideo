@@ -247,7 +247,7 @@ In addition to all of the attributes supported by the <code>#evt</code> tag, the
 | video id
 | yes
 | none
-| The ID of the video you would like to play or a comma separated list of videos to play. ''Please note that the use of multiple video IDs separated by a semicolon is now deprecated.'' 
+| The ID of the video you would like to play or a comma separated list of videos to play. ''Please note that the use of multiple video IDs separated by a semicolon is now deprecated.''
 |-
 | link text
 | yes
@@ -491,10 +491,6 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <code>$wgEmbedVideoMaxWidth</code>
 | <code>''</code>
 | Integer - Maximum width of video players.  Widths specified above this value will be automatically bounded to it.
-|--
-| <code>$wgFFmpegLocation</code>
-| <code>/usr/bin/ffmpeg</code>
-| String - Set the location of the ffmpeg binary.
 |--
 | <code>$wgFFprobeLocation</code>
 | <code>/usr/bin/ffprobe</code>
