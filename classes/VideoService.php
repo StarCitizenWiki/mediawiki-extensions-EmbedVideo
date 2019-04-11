@@ -152,18 +152,6 @@ class VideoService {
 				'#^([a-zA-Z]+)$#is'
 			]
 		],
-		'smashcast' => [
-			'embed'			=> '<iframe src="https://www.smashcast.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
-			'default_width'	=> 640,
-			'default_ratio'	=> 1.77777777777778, // (16 / 9)
-			'https_enabled'	=> true,
-			'url_regex'		=> [
-				'#smashcast.tv/([\d\w]+)(?:/\S+?)?#is'
-			],
-			'id_regex'		=> [
-				'#^([\d\w]+)$#is'
-			]
-		],
 		'jwplayer' => [
 			'embed'			=> '<iframe src="//content.jwplatform.com/players/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -213,7 +201,7 @@ class VideoService {
 			]
 		],
 		'nico' => [
-			'embed'                 => '<iframe allowfullscreen="allowfullscreen" frameborder="0" width="%2$d" height="%3$d" src="https://embed.nicovideo.jp/watch/%1$s?oldScript=1&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>',
+			'embed'			=> '<iframe allowfullscreen="allowfullscreen" frameborder="0" width="%2$d" height="%3$d" src="https://embed.nicovideo.jp/watch/%1$s?oldScript=1&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.59609120521173, // (490 / 307)
 			'https_enabled'	=> false,
@@ -234,6 +222,18 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^([a-zA-Z0-9]+)$#is'
+			]
+		],
+		'smashcast' => [
+			'embed'			=> '<iframe src="https://www.smashcast.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#smashcast\.tv/([\d\w]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w]+)$#is'
 			]
 		],
 		'soundcloud' => [
@@ -275,7 +275,7 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
 			'url_regex'		=> [
-				'#tubitv.com/(?:video|embed)/([\d]+)(/[\w-]+)?$#is',
+				'#tubitv\.com/(?:video|embed)/([\d]+)(/[\w-]+)?$#is',
 			],
 			'id_regex'		=> [
 				'#^([\d]+)$#is'
@@ -287,8 +287,8 @@ class VideoService {
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
 			'url_regex'		=> [
-				'#tudou.com/listplay/([\d\w-]+)/([\d\w-]+).html#is',
-				'#tudou.com/listplay/([\d\w-]+).html#is'
+				'#tudou\.com/listplay/([\d\w-]+)/([\d\w-]+).html#is',
+				'#tudou\.com/listplay/([\d\w-]+).html#is'
 			],
 			'id_regex'		=> [
 				'#^([\d\w-]+)$#is'
@@ -455,13 +455,14 @@ class VideoService {
 		'divshare.com'				=> 'divshare',
 		'funnyordie.com'			=> 'funnyordie',
 		'gfycat.com'				=> 'gfycat',
-		'smashcast.tv'					=> 'smashcast',
 		'content.jwplatform.com'	=> 'jwplayer',
 		'kickstarter.com'			=> 'kickstarter',
 		'media.ccc.de'				=> 'mideacccde',
 		'metacafe.com'				=> 'metacafe',
 		'nicovideo.jp'				=> 'nico',
 		'rutube.ru'					=> 'rutube',
+		'smashcast.tv'				=> 'smashcast',
+		'soundcloud.com'			=> 'soundcloud',
 		'teachertube.com'			=> 'teachertube',
 		'ted.com'					=> 'ted',
 		'tubitv.com'				=> 'tubitv',
