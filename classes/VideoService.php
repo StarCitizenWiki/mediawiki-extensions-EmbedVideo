@@ -213,7 +213,7 @@ class VideoService {
 			]
 		],
 		'nico' => [
-			'embed'			=> '<iframe srcdoc="&lt;script type=&quot;text/javascript&quot; src=&quot;http://ext.nicovideo.jp/thumb_watch/%1$s?w=%2$d&amp;h=%3$d&quot;&gt;&lt;/script&gt;" width="%2$d" height="%3$d" frameborder="0" allowFullScreen="true"></iframe>',
+			'embed'                 => '<iframe allowfullscreen="allowfullscreen" frameborder="0" width="%2$d" height="%3$d" src="https://embed.nicovideo.jp/watch/%1$s?oldScript=1&amp;allowProgrammaticFullScreen=1" style="max-width: 100%;"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.59609120521173, // (490 / 307)
 			'https_enabled'	=> false,
