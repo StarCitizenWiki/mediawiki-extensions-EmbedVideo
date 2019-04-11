@@ -83,11 +83,11 @@ class VideoTransformOutput extends \MediaTransformOutput {
 
 		$inOut = false;
 		if ($parameters['start'] !== $parameters['end']) {
-			if (isset($parameters['start']) && $parameters['start'] !== false) {
+			if ($parameters['start'] !== false) {
 				$inOut[] = $parameters['start'];
 			}
 
-			if (isset($parameters['end']) && $parameters['end'] !== false) {
+			if ($parameters['end'] !== false) {
 				$inOut[] = $parameters['end'];
 			}
 		}
