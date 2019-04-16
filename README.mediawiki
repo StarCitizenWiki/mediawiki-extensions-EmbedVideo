@@ -30,7 +30,7 @@ The '''EmbedVideo''' extension adds a parser function called <code>#ev</code> fo
 
 {{TNT|ExtensionInstall
  |registration=required
- |download-link=[https://gitlab.com/hydrawiki/extensions/EmbedVideo/archive/v2.8.0.zip Download]
+ |download-link=[https://gitlab.com/hydrawiki/extensions/EmbedVideo/-/archive/v2.8.0/EmbedVideo-v2.8.0.zip Download]
  |custom-steps=* [[#Configuration|Configure as required]]
 }}
 
