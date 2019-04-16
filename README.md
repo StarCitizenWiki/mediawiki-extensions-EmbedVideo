@@ -4,11 +4,11 @@ The EmbedVideo Extension is a MediaWiki extension which adds a parser function c
 
 For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
 
-https://github.com/HydraWiki/mediawiki-embedvideo
+https://gitlab.com/hydrawiki/extensions/EmbedVideo
 
 Issues, bug reports, and feature requests may be created at the issue tracker:
 
-https://github.com/HydraWiki/mediawiki-embedvideo/issues
+https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues
 
 The MediaWiki extension page is located at:
 
@@ -35,7 +35,7 @@ See LICENSE for more details
 There are three places to download the EmbedVideo extension. The first is directly from its GitHub project page, where active development takes place.  If you have git, you can use this incantation to check out a read-only copy of the extension source:
 
 ```
-git clone https://github.com/HydraWiki/mediawiki-embedvideo.git
+git clone https://gitlab.com/hydrawiki/extensions/EmbedVideo.git
 ```
 
 Downloadable archive packages for numbered releases will also be available from the github project page.

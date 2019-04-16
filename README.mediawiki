@@ -4,11 +4,11 @@
 |status      = stable
 |type        = parser function
 |author      = Alexia E. Smith ([[User:Alexia E. Smith|Alexia E. Smith]]), Andrew Whitworth ([[User:Whiteknight|Whiteknight]]), Jim R. Wilson ([[User:Jimbojw|Jimbojw]]), and Mohammad Derakhshani ([[User:Mderakhs|Mderakhs]])
-|version     = 2.7.4
+|version     = 2.8.0
 |update      = 2018-07-16
-|mediawiki   = 1.25+
-|php         = 5.4+
-|download    = {{TNT|GithubDownload|HydraWiki|mediawiki-embedvideo}}
+|mediawiki   = 1.29+
+|php         = 7.0+
+|download    = {{TNT|GitlabDownload|HydraWiki/extensions|embedvideo}}
 |image       = EmbedVideoExample1.jpg
 |imagesize   = 350px
 |hook1       = ParserFirstCallInit
@@ -19,9 +19,9 @@
 
 The '''EmbedVideo''' extension adds a parser function called <code>#ev</code> for embedding video clips from over 24 popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard <nowiki>[[File:Example.mp4]]</nowiki> file links into embedded HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
 
-;Project Homepage: [https://github.com/HydraWiki/mediawiki-embedvideo Documentation at Github]
-;Source Code: [https://github.com/HydraWiki/mediawiki-embedvideo Source code at Github]
-;Bugs:[https://github.com/HydraWiki/mediawiki-embedvideo/issues issues at Github]
+;Project Homepage: [https://gitlab.com/hydrawiki/extensions/EmbedVideo Documentation at Github]
+;Source Code: [https://gitlab.com/hydrawiki/extensions/EmbedVideo Source code at Github]
+;Bugs:[https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues Issues at GitLab]
 ;Licensing: EmbedVideo is released under [http://www.opensource.org/licenses/mit-license.php The MIT License].
 
 <span style="font-weight: bold; color: darkred;">Notice:</span> As of the 2.x series the EmbedVideo extension has a new maintainer and an entirely rewritten code base.  It retains backwards compatibility with EmbedVideo 1.0 and EmbedVideoPlus.
@@ -30,7 +30,7 @@ The '''EmbedVideo''' extension adds a parser function called <code>#ev</code> fo
 
 {{TNT|ExtensionInstall
  |registration=required
- |download-link=[https://github.com/HydraWiki/mediawiki-embedvideo/archive/v2.7.3.zip Download]
+ |download-link=[https://gitlab.com/hydrawiki/extensions/EmbedVideo/archive/v2.8.0.zip Download]
  |custom-steps=* [[#Configuration|Configure as required]]
 }}
 
@@ -247,7 +247,7 @@ In addition to all of the attributes supported by the <code>#evt</code> tag, the
 | video id
 | yes
 | none
-| The ID of the video you would like to play or a comma separated list of videos to play. ''Please note that the use of multiple video IDs separated by a semicolon is now deprecated.''
+| The ID of the video you would like to play or a comma separated list of videos to play. ''Please note that the use of multiple video IDs separated by a semicolon is now deprecated.'' 
 |-
 | link text
 | yes
@@ -292,175 +292,214 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 {| class="wikitable"
 |-
 ! Site
-! colspan="2"|Service Name(s)
-! ID Example
-! URL Example(s)
+! Service name(s)
+! ID example
+! URL example(s)
+! Notes
 |-
 ! [https://archive.org/details/movies Archive.org Videos]
-| colspan="2"|<code>archiveorg</code>
-| <nowiki>electricsheep-flock-244-80000-6</nowiki>
-| <nowiki>https://archive.org/details/electricsheep-flock-244-80000-6</nowiki>
-  <nowiki>https://archive.org/embed/electricsheep-flock-244-80000-6</nowiki>
+| <code>archiveorg</code>
+| electricsheep-flock-244-80000-6
+| <nowiki>https://archive.org/embed/electricsheep-flock-244-80000-6</nowiki>
+| 
 |-
-! [http://bambuser.com/ Bambuser]
-| <code>bambuser</code> - Broadcasts
-| <code>bambuser_channel</code> - Channels
-| <nowiki>5262334</nowiki>
-| <nowiki>http://bambuser.com/v/5262334</nowiki>
+! rowspan="2" | [http://bambuser.com/ Bambuser]
+| <code>bambuser</code>
+| rowspan="2" | 5262334
+| rowspan="2" | <nowiki>http://bambuser.com/v/5262334</nowiki>
+| Broadcasts
+|-
+| <code>bambuser_channel</code>
+| Channels
 |-
 ! [https://beam.pro/ Beam]
-| colspan="2"|<code>beam</code> - Streams
-| <nowiki>RocketBear</nowiki>
+| <code>beam</code>
+| RocketBear
 | <nowiki>https://beam.pro/RocketBear</nowiki>
+| Streams
 |-
 ! [http://www.bing.com/videos/ Bing]
-| colspan="2"|<code>bing</code>
-| <nowiki>31ncp9r7l</nowiki>
+| <code>bing</code>
+| 31ncp9r7l
 | <nowiki>http://www.bing.com/videos/watch/video/adorable-cats-attempt-to-eat-invisible-tuna/31ncp9r7l</nowiki>
+| 
 |-
 ! [http://www.blip.tv/ Blip.tv]
-| colspan="2"|<code>blip</code> - Blip requires the full URL to the video page and does not accept the raw ID.
+| <code>blip</code>
 |
-|<nowiki>http://blip.tv/vinylrewind/review-6864612</nowiki>
+| <nowiki>http://blip.tv/vinylrewind/review-6864612</nowiki>
+| Blip requires the full URL to the video page and does not accept the raw ID.
 |-
 ! [https://media.ccc.de/ C3TV]
-| colspan="2"|<code>mediacccde</code>
-| <nowiki>32c3-7305-quantum_cryptography</nowiki>
+| <code>mediacccde</code>
+| 32c3-7305-quantum_cryptography
 | <nowiki>https://media.ccc.de/v/32c3-7305-quantum_cryptography</nowiki>
+| 
 |-
 ! [http://www.collegehumor.com/ CollegeHumor]
-| colspan="2"|<code>collegehumor</code>
-| <nowiki>6875289</nowiki>
+| <code>collegehumor</code>
+| 6875289
 | <nowiki>http://www.collegehumor.com/video/6875289/batman-says-his-goodbyes</nowiki>
+| 
 |-
 ! [http://www.dailymotion.com/ Dailymotion]
-| colspan="2"|<code>dailymotion</code>
-| <nowiki>x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>
+| <code>dailymotion</code>
+| x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms
 | <nowiki>http://www.dailymotion.com/video/x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms</nowiki>
+| 
 |-
 ! [http://tvpot.daum.net/ Daum TVPot]
-| colspan="2"|<code>tvpot</code> - Obtain the URL or ID from the share menu URL.
-| <nowiki>s9011HdLzYwpLwBodQzCHRB</nowiki>
+| <code>tvpot</code> - Obtain the URL or ID from the share menu URL.
+| s9011HdLzYwpLwBodQzCHRB
 | <nowiki>http://tvpot.daum.net/v/s9011HdLzYwpLwBodQzCHRB</nowiki>
+| 
 |-
 ! [http://www.divshare.com Div Share]
-| colspan="2"|<code>divshare</code>
-|
-|
+| <code>divshare</code>
+| 
+| 
+| 
 |-
 ! [http://edutopia.org Edutopia]
-| colspan="2"|Edutopia content moved to YouTube.  Please use the youtube service selector below.
-|
-|
+| 
+| 
+| 
+| Edutopia content moved to YouTube. Please use the YouTube service selector below.
 |-
 ! [http://www.funnyordie.com/ FunnyOrDie]
-| colspan="2"|<code>funnyordie</code>
-| <nowiki>c61fb67ac9</nowiki>
+| <code>funnyordie</code>
+| c61fb67ac9
 | <nowiki>http://www.funnyordie.com/videos/c61fb67ac9/to-catch-a-predator-elastic-heart-edition</nowiki>
+| 
 |-
 ! [http://gfycat.com/ Gfycat]
-| colspan="2"|<code>gfycat</code>
-| <nowiki>BruisedSilentAntarcticfurseal</nowiki>
+| <code>gfycat</code>
+| BruisedSilentAntarcticfurseal
 | <nowiki>http://www.gfycat.com/BruisedSilentAntarcticfurseal</nowiki>
+| 
 |-
 ! [http://www.hitbox.tv/ Hitbox]
-| colspan="2"|<code>hitbox</code>
-| <nowiki>Washuu</nowiki>
+| <code>hitbox</code>
+| Washuu
 | <nowiki>http://www.hitbox.tv/Washuu</nowiki>
+| 
 |-
 ! [https://www.jwplayer.com/ JW Player]
-| colspan="2"|<code>jwplayer</code>
-| <nowiki>cr5d8nbu-8ZpoNmmJ</nowiki>
+| <code>jwplayer</code>
+| cr5d8nbu-8ZpoNmmJ
 | <nowiki>https://content.jwplatform.com/players/cr5d8nbu-8ZpoNmmJ.html</nowiki>
+| 
 |-
 ! [http://www.kickstarter.com/ Kickstarter]
-| colspan="2"|<code>kickstarter</code>
-| <nowiki>elanlee/exploding-kittens</nowiki>
+| <code>kickstarter</code>
+| elanlee/exploding-kittens
 | <nowiki>https://www.kickstarter.com/projects/elanlee/exploding-kittens</nowiki>
+| 
 |-
 ! [http://www.metacafe.com/ Metacafe]
-| colspan="2"|<code>metacafe</code>
-| <nowiki>11404579</nowiki>
+| <code>metacafe</code>
+| 11404579
 | <nowiki>http://www.metacafe.com/watch/11404579/lan_party_far_cry_4/</nowiki>
+| 
 |-
 ! [http://www.nicovideo.jp/ Nico Nico Video]
-| colspan="2"|<code>nico</code>
-| <nowiki>sm24394325</nowiki>
+| <code>nico</code>
+| sm24394325
 | <nowiki>http://www.nicovideo.jp/watch/sm24394325</nowiki>
+| 
 |-
 ! [http://rutube.ru/ RuTube]
-| colspan="2"|<code>rutube</code>
-| <nowiki>b698163ccb67498db74d50cb0f22e556</nowiki>
+| <code>rutube</code>
+| b698163ccb67498db74d50cb0f22e556
 | <nowiki>http://rutube.ru/video/b698163ccb67498db74d50cb0f22e556/</nowiki>
+| 
 |-
 ! [http://soundcloud.com/ SoundCloud]
-| colspan="2"|<code>soundcloud</code>
-| <nowiki>use full url</nowiki>
+| <code>soundcloud</code>
+| 
 | <nowiki>https://soundcloud.com/skrillex/skrillex-rick-ross-purple-lamborghini</nowiki>
+| SoundCloud requires the full URL.
 |-
 ! [http://teachertube.com TeacherTube]
-| colspan="2"|<code>teachertube</code>
-| <nowiki>370511</nowiki>
+| <code>teachertube</code>
+| 370511
 | <nowiki>http://www.teachertube.com/video/thats-a-noun-sing-along-hd-version-370511</nowiki>
+| 
 |-
 ! [http://www.ted.com/talks/browse/ TED Talks]
-| colspan="2"|<code>ted</code>
-| <nowiki>bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
+| <code>ted</code>
+| bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war
 | <nowiki>http://www.ted.com/talks/bruce_aylward_humanity_vs_ebola_the_winning_strategies_in_a_terrifying_war</nowiki>
+| 
 |-
 ! [https://tubitv.com Tubi TV]
-| colspan="2"|<code>tubitv</code>
-| <nowiki>318409</nowiki>
+| <code>tubitv</code>
+| 318409
 | <nowiki>http://tubitv.com/video/318409</nowiki>
+| 
 |-
 ! [http://www.tudou.com/ Tudou]
-| colspan="2"|<code>tudou</code>
-| <nowiki>mfQXfumwiew</nowiki>
+| <code>tudou</code>
+| mfQXfumwiew
 | <nowiki>http://www.tudou.com/listplay/mfQXfumwiew.html</nowiki>
+| 
 |-
-! [http://www.twitch.tv Twitch]
-| <code>twitch</code> - Live Streams
-| <code>twitchvod</code> - Archived Videos on Demand
-| <nowiki>twitchplayspokemon</nowiki>
-| <nowiki>http://www.twitch.tv/twitchplayspokemon</nowiki>
+! rowspan="2" | [http://www.twitch.tv Twitch]
+| <code>twitch</code>
+| rowspan="2" | twitchplayspokemon
+| rowspan="2" | <nowiki>http://www.twitch.tv/twitchplayspokemon</nowiki>
+| Live Streams
+|-
+| <code>twitchvod</code>
+| Archived Videos on Demand
 |-
 ! [http://89.160.51.62/recordme/spelain.htm Videomaten]
-| colspan="2"|<code>videomaten</code>
-|
-|
+| <code>videomaten</code>
+| 
+| 
+| 
 |-
 ! [http://www.vimeo.com Vimeo]
-| colspan="2"|<code>vimeo</code>
-| <nowiki>105035718</nowiki>
+| <code>vimeo</code>
+| 105035718
 | <nowiki>http://vimeo.com/105035718</nowiki>
+| 
 |-
 ! [http://vine.co Vine]
-| colspan="2"|<code>vine</code>
-| <nowiki>h2B7WMtuX2t</nowiki>
+| <code>vine</code>
+| h2B7WMtuX2t
 | <nowiki>https://vine.co/v/h2B7WMtuX2t</nowiki>
+| 
 |-
 ! [http://screen.yahoo.com/ Yahoo Screen]
-| colspan="2"|<code>yahoo</code>
-| <nowiki>katy-perry-dances-sharks-2015-024409668</nowiki>
+| <code>yahoo</code>
+| katy-perry-dances-sharks-2015-024409668
 | <nowiki>https://screen.yahoo.com/videos-for-you/katy-perry-dances-sharks-2015-024409668.html</nowiki>
+| 
 |-
-! [http://www.youtube.com/ YouTube]
-| <code>youtube</code> - Single Videos
-| <code>youtubeplaylist</code> - Playlists
-| <code>youtubevideolist</code> - Video List
-| <nowiki>pSsYTj9kCHE</nowiki>
+! rowspan="3" | [http://www.youtube.com/ YouTube]
+| <code>youtube</code>
+| rowspan="3" | pSsYTj9kCHE
 | <nowiki>https://www.youtube.com/watch?v=pSsYTj9kCHE</nowiki>
-  <nowiki>https://www.youtube.com/watch?v=CW_PbErQ_c8&list=PL76E80C7F756A2047</nowiki>
-  <nowiki>https://www.youtube.com/watch?v=CW_PbErQ_c8&playlist=CW_PbErQ_c8,CW_PbErQ_c8</nowiki>
+| Single videos
+|-
+| <code>youtubeplaylist</code>
+| <nowiki>https://www.youtube.com/watch?v=CW_PbErQ_c8&list=PL76E80C7F756A2047</nowiki>
+| Playlists
+|-
+| <code>youtubevideolist</code>
+| <nowiki>https://www.youtube.com/watch?v=CW_PbErQ_c8&playlist=CW_PbErQ_c8,CW_PbErQ_c8</nowiki>
+| Video list
 |-
 ! [http://www.youku.com/ Youku]
-| colspan="2"|<code>youku</code>
-| <nowiki>XODc3NDgzMTY4</nowiki>
+| <code>youku</code>
+| XODc3NDgzMTY4
 | <nowiki>http://v.youku.com/v_show/id_XODc3NDgzMTY4.html</nowiki>
+| 
 |-
 |}
 
-==Configurations==
+==Configuration==
 
 {| class="wikitable"
 |--
@@ -492,12 +531,24 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <code>''</code>
 | Integer - Maximum width of video players.  Widths specified above this value will be automatically bounded to it.
 |--
+| <code>$wgFFmpegLocation</code>
+| <code>/usr/bin/ffmpeg</code>
+| String - Set the location of the ffmpeg binary.
+|--
 | <code>$wgFFprobeLocation</code>
 | <code>/usr/bin/ffprobe</code>
 | String - Set the location of the ffprobe binary.
 |}
 
 ==Version history==
+; v2.8.0
+* Renamed hitbox.tv to smashcast.tv.
+* Updated Nico Video embed code.
+* Added support for Twitch clips.
+* Fix issues with Twitch VODs.
+* Removed unused $wgFFmpegLocation that was interferring with TimedMediaHandler.
+* Added Polish translation.
+
 ; v2.7.4
 * Added support for playlist to evlplayer
 * Added support for youtube video list
@@ -520,124 +571,16 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 
 ; v2.6.1
 * Added new configuration options to disable adding media handlers and file extensions.
-** https://github.com/HydraWiki/mediawiki-embedvideo/issues/76
+** https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues/76
 * Fixed an uninitialized array.
-** https://github.com/HydraWiki/mediawiki-embedvideo/issues/77
+** https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues/77
 * Fixed undefined indexes in the AudioHandler class.
-** https://github.com/HydraWiki/mediawiki-embedvideo/issues/78
+** https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues/78
 * Fixed class properties that were unintentionally declared as static.
-** https://github.com/HydraWiki/mediawiki-embedvideo/issues/75
+** https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues/75
 * Fixed RTL language issues with CSS.
-** https://github.com/HydraWiki/mediawiki-embedvideo/pull/73
+** https://gitlab.com/hydrawiki/extensions/EmbedVideo/pull/73
 
-; v2.6.0
-* Added support for vertically aligning videos.
-* Improved sizing of video and audio tags in Chrome and Firefox when using the media handler tags.
-* Fixed an undefined variable.
-** https://github.com/HydraWiki/mediawiki-embedvideo/issues/71
-
-; v2.5.2
-* If ffmpeg is not installed on the server the FFProbe class will no longer attempt to use and instead just return generic descriptions.
-* Fixed properties on FFProbe being incorrectly declared as static.
-* Fixed issues with not returning generic descriptions when the local file being accessed by ffprobe is not readable.
-
-; v2.5.1
-* Added URL argument support to Twitch services.
-
-; v2.5.0
-* Added support for VideoLink tags
-* Support for Disclose.tv added
-* Twitch VOD support updated.
-* Added <nowiki>#evu</nowiki> parser tag
-
-; v2.4.1
-* Merged Sophivorus' improvements and fixes.
-** Support for TubiTV.com with the tubitv service identifier.
-** Fixed vimeo aspect ratio.
-** Fixed dailymotion ID regex.
-* Fixed error messages being double parsed.
-
-; v2.4.0
-* New media handlers to embed locally uploaded video and audio files.
-** Requires ffmpeg and ffprobe binaries to be installed.
-** Uses HTML5 <nowiki><video></nowiki> and <nowiki><audio></nowiki> tags.
-* Two new settings:
-** $wgFFmpegLocation - Set the location of the ffmpeg binary.
-** $wgFFprobeLocation - Set the location of the ffprobe binary.
-
-; v2.3.3
-* Support for JW Player.
-
-; v2.3.2
-* Fix auto resize breaking when leaving full screen.
-
-; v2.3.1
-* Fixed issue #54 (EmbedVideo doesn't work with mw-collapsible class)
-* Fixed issue #50 ("arg" should be "args" in addService)
-* Added "inline" alignment option
-* Fixed center alignment option css
-* Auto Resize now targets mobile as well
-
-; v2.3.0
-* Hard cut off of support for versions older then MediaWiki 1.25
-* Auto Resize attribute added
-* Reverted array_key_exists() regression to fix the <code><nowiki><embedvideo></nowiki></code> tag being broken.
-
-; v2.2.9
-* Fixed issue with Twitch.tv switching over to HTTPS.
-* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/52 Added support for http://media.ccc.de]
-* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/46 New services can now be added from other extensions programmatically.]
-
-; v2.2.8
-* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/38 Support for Daum TVPot]
-* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/40 Fix for URL arguments for youtube and youtubeplaylist].
-* Support for Beam.pro.
-* Support for Hitbox.tv.
-
-; v2.2.7
-* [https://github.com/HydraWiki/mediawiki-embedvideo/pull/35 Compatible with MediaWiki 1.24.0+]
-
-; v2.2.6
-* NicoNico Video ID fixes; will work with new ID formats.
-
-; v2.2.5
-* XSS flaws reported by [https://github.com/Mischanix/ Mischanix].
-
-; v2.2.4
-* Fix Bing to work with their new URLs.
-* Remove MSN as their new video service does not support embedding.
-* Standardize Tudou support per their wiki.
-
-; v2.2.3
-* Added support for Youku and Tudou.
-
-; v2.2.2
-* Updated regular expression replacement pattern for Twitch URLs.  Old Twitch embed URLs do not automatically redirect.
-
-; v2.2.1
-* Fixed E_NOTICE being thrown for [https://github.com/HydraWiki/mediawiki-embedvideo/issues/25 undefined array indexes].
-* Back ported some [https://github.com/HydraWiki/mediawiki-embedvideo/issues/23 PHP 5.3 compatibility changes].  Please note that future releases of EmbedVideo may not support PHP 5.3 as it is an outdated version.  Upgrading to PHP 5.4 at a minimum is recommended.
-
-; v2.2.0
-* Fixed a bug with alignment that would cause the left align to not work similar to how MediaWiki handles images and other media.
-* New parser tag better suited for templates; #evt.
-* New HTML like tag format that can take parameters.
-
-; v2.1.0
-* The width parameter was changed to dimensions.  See parameter documentation above.
-* New container parameter to use a standard MediaWiki thumb frame or default to a generic container.
-* The description parameter no longer forces the thumb frame to be used.
-* Added support for Archive.org, Blip.tv, CollegeHumor, Gfycat, Nico Nico Video, TED Talks, and Vine.
-* Ability to center align embeds.
-* CSS resource module.
-
-; v2.0
-* URLs from the player pages that contain the raw video ID can now be used as the ID parameter.
-* Validation of the raw IDs is improved.
-* Code base rewritten to have a VideoService class for future extensibility.
-* Switched to HTML5 iframes wherever possible for embeds.
-* All services overhauled to be up to date and working.
-* The 'auto' and 'center' alignment values were removed as they were not working.  They are planned to be implement properly in the future.
 
 ==Developer Notes==
 
@@ -657,7 +600,7 @@ And then call it like this:
 
 ===Reporting Bugs===
 
-There is an issue tracker set up on the [https://github.com/HydraWiki/mediawiki-embedvideo/issues Github project page].
+There is an issue tracker set up on the [https://gitlab.com/hydrawiki/extensions/EmbedVideo/issues Github project page].
 
 ===Contributing===
 
