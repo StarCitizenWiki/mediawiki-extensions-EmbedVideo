@@ -1,4 +1,4 @@
-(function(mw, $) {
+(function(mw, $, window) {
 	$(function() {
         autoResizer(); // run first thing, because we dont need a resize to be broken.
 
@@ -41,6 +41,8 @@
                 var iframe = self.find('iframe');
                 var wrap = self.find('.embedvideowrap');
 
+                $(".embedvideo").width($(".embedvideowrap").width());
+
                 if (iframe.width() > parent.width()) {
                     resizeHandler(self, iframe, parent, wrap);
                 } else {
@@ -59,6 +61,8 @@
             });
         }
 
+        window.autoResizer = autoResizer;
+        
         function resizeHandler(self, iframe, parent, wrap) {
             self.addClass('autoResized');
 
@@ -80,4 +84,4 @@
 
     });
 
-}(mediaWiki, jQuery));
+}(mediaWiki, jQuery, window));
