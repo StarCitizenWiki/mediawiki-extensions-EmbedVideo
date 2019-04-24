@@ -58,7 +58,8 @@
 				"mobile"
 			],
 			"dependencies": [
-				"mediawiki.api"
+				"mediawiki.api",
+				"ext.embedVideo"
 			]
 		},
 		"ext.embedVideo.styles": {

@@ -620,10 +620,10 @@ class EmbedVideoHooks {
 		$classString = "embedvideo";
 		$styleString = "";
 		$innerClassString = "embedvideowrap";
+		$outerClassString = "";
 
 		if ( self::getContainer() == 'frame' ) {
-			$classString .= " thumb";
-			$innerClassString .= " thumbinner";
+			$classString .= " thumbinner";
 		}
 
 		if (self::getAlignment() !== false) {
@@ -637,9 +637,10 @@ class EmbedVideoHooks {
 
 		if ($addClass) {
 			$classString .= " " . $addClass;
+			$outerClassString = $addClass;
 		}
 
-		$html = "<div class='" . $classString . "' style='" . $styleString . "'><div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>{$html}</div>" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div>";
+		$html = "<div class='thumb $outerClassString' style='width: " . (self::$service->getWidth() + 8). "px;'><div class='" . $classString . "' style='" . $styleString . "'><div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>{$html}</div>" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div></div>";
 
 		return $html;
 	}

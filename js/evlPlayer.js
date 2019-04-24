@@ -1,4 +1,4 @@
-(function(mw, $) {
+(function(mw, $, window) {
 	$(function() {
 		api = new mw.Api();
 		$('a.embedvideo-evl').click(function(e){
@@ -30,7 +30,8 @@
 					content = content + "<small>" + data.notice + "</small>";
 				}
 				container.html(content);
+				window.autoResizer();
 			} );
 		});
     });
-}(mediaWiki, jQuery));
+}(mediaWiki, jQuery, window));
