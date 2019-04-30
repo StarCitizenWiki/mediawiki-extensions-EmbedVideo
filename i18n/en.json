@@ -8,7 +8,7 @@
 	"error_embedvideo_id": "EmbedVideo received the bad id \"$2\" for the service \"$1\".",
 	"error_embedvideo_width": "EmbedVideo received the bad width parameter \"$1\".",
 	"error_embedvideo_height": "EmbedVideo received the bad height parameter \"$1\".",
-	"error_embedvideo_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"center\", or \"right\".",
+	"error_embedvideo_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"center\", \"right\", or \"inline\".",
 	"error_embedvideo_valignment": "EmbedVideo was given an illegal value for the valignment parameter \"$1\".  Valid values are \"top\", \"middle\", \"bottom\", or \"baseline\".",
 	"error_embedvideo_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
 	"error_embedvideo_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
