@@ -3,20 +3,18 @@
  * EmbedVideo
  * ApiEmbedVideo class
  *
- * @license		MIT
- * @package		EmbedVideo
- * @link		https://gitlab.com/hydrawiki/extensions/EmbedVideo
- *
+ * @license MIT
+ * @package EmbedVideo
+ * @link    https://gitlab.com/hydrawiki/extensions/EmbedVideo
  **/
+
 class ApiEmbedVideo extends ApiBase {
-
-    /**
-     * Execute the API call.
-     */
-    public function execute() {
-
-        $getHTML = \EmbedVideoHooks::parseEV(
-			NULL,
+	/**
+	 * Execute the API call.
+	 */
+	public function execute() {
+		$getHTML = \EmbedVideoHooks::parseEV(
+			null,
 			$this->getMain()->getVal('service'),
 			$this->getMain()->getVal('id'),
 			$this->getMain()->getVal('dimensions'),
@@ -28,69 +26,71 @@ class ApiEmbedVideo extends ApiBase {
 			$this->getMain()->getVal('valignment')
 		);
 
-        if (is_array($getHTML)) {
-            $HTML = $getHTML[0];
-        } else {
-            $HTML = "Unable to load video from API.";
-        }
+		if (is_array($getHTML)) {
+			$HTML = $getHTML[0];
+		} else {
+			$HTML = "Unable to load video from API.";
+		}
 
-		$this->getResult()->addValue(null, $this->getModuleName(), array ( 'html' => $HTML ) );
+		$this->getResult()->addValue(null, $this->getModuleName(), ['html' => $HTML]);
 		return true;
 	}
 
 	/**
 	 * [getDescription description]
+	 *
 	 * @return [type] [description]
 	 */
 	public function getDescription() {
 		return 'Get generated embed code for given parameters';
 	}
 
-    /**
-     * Setup the allowed and required parameters
-     * @return array
-     */
-    public function getAllowedParams() {
-		return array_merge( parent::getAllowedParams(), array(
-			'service' => array (
+	/**
+	 * Setup the allowed and required parameters
+	 *
+	 * @return array
+	 */
+	public function getAllowedParams() {
+		return array_merge(parent::getAllowedParams(), [
+			'service' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
-			),
-            'id' => array (
+			],
+			'id' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
-			),
-            'dimensions' => array (
+			],
+			'dimensions' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-            'alignment' => array (
+			],
+			'alignment' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-            'description' => array (
+			],
+			'description' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-            'container' => array (
+			],
+			'container' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-            'urlargs' => array (
+			],
+			'urlargs' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-            'autoresize' => array (
+			],
+			'autoresize' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			),
-		) );
+			],
+		]);
 	}
 
 	// Describe the parameter
 	public function getParamDescription() {
-		return array_merge( parent::getParamDescription(), array(
-            'service' => 'Name of the service (youtube, twitch, ect)',
+		return array_merge(parent::getParamDescription(), [
+			'service' => 'Name of the service (youtube, twitch, ect)',
 			'id' => 'The ID of the video for that service',
 			'dimensions' => 'Either a numeric width (100) or width by height (100x100)',
 			'alignment' => 'Alignment of video',
@@ -98,7 +98,6 @@ class ApiEmbedVideo extends ApiBase {
 			'container' => 'Accepts frame, or leave empty',
 			'urlargs' => 'Additional arguments to pass in the video url (for some services)',
 			'autoresize' => 'Auto resize video? (true or false)'
-		) );
+		]);
 	}
-
 }

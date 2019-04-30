@@ -3,15 +3,14 @@
  * EmbedVideo
  * EmbedVideo Magic Words
  *
- * @license		MIT
- * @package		EmbedVideo
- * @link		https://www.mediawiki.org/wiki/Extension:EmbedVideo
- *
+ * @license MIT
+ * @package EmbedVideo
+ * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
 $magicWords = [];
 
-$magicWords['en']  = [
+$magicWords['en'] = [
 	'ev'		=> [0, 'ev'],
 	'evp'		=> [0, 'evp'],
 	'evt'		=> [0, 'evt'],
@@ -22,8 +21,8 @@ $magicWords['en']  = [
 	'ev_end'	=> [0, 'end=$1'],
 ];
 
-foreach( \EmbedVideo\VideoService::getAvailableServices() as $service ) {
-	if ( !isset($magicWords['en'][$service]) ) {
+foreach (\EmbedVideo\VideoService::getAvailableServices() as $service) {
+	if (!isset($magicWords['en'][$service])) {
 		$magicWords['en'][$service] = [0, $service];
 	}
 }

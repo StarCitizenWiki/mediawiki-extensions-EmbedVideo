@@ -3,11 +3,10 @@
  * EmbedVideo
  * FFProbe
  *
- * @author		Alexia E. Smith
- * @license		MIT
- * @package		EmbedVideo
- * @link		https://www.mediawiki.org/wiki/Extension:EmbedVideo
- *
+ * @author  Alexia E. Smith
+ * @license MIT
+ * @package EmbedVideo
+ * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
 namespace EmbedVideo;
@@ -16,23 +15,23 @@ class FFProbe {
 	/**
 	 * File Location
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	private $file;
 
 	/**
 	 * Meta Data Cache
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $metadata = null;
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	string	File Location on Disk
-	 * @return	void
+	 * @access public
+	 * @param  string	File Location on Disk
+	 * @return void
 	 */
 	public function __construct($file) {
 		$this->file = $file;
@@ -41,8 +40,8 @@ class FFProbe {
 	/**
 	 * Return the entire cache of meta data.
 	 *
-	 * @access	public
-	 * @return	array	Meta Data
+	 * @access public
+	 * @return array	Meta Data
 	 */
 	public function getMetaData() {
 		if (!is_array($this->metadata)) {
@@ -54,8 +53,8 @@ class FFProbe {
 	/**
 	 * Get a selected stream.  Follows ffmpeg's stream selection style.
 	 *
-	 * @access	public
-	 * @param	string	Stream identifier
+	 * @access public
+	 * @param  string	Stream identifier
 	 * Examples:
 	 *		"v:0" - Select the first video stream
 	 * 		"a:1" - Second audio stream
@@ -63,7 +62,7 @@ class FFProbe {
 	 * 		"s:2" - Third subtitle
 	 * 		"d:0" - First generic data stream
 	 * 		"t:1" - Second attachment
-	 * @return	mixed	StreamInfo object or false if does not exist.
+	 * @return mixed	StreamInfo object or false if does not exist.
 	 */
 	public function getStream($select) {
 		$this->getMetaData();
@@ -103,8 +102,8 @@ class FFProbe {
 	/**
 	 * Get the FormatInfo object.
 	 *
-	 * @access	public
-	 * @return	mixed	FormatInfo object or false if does not exist.
+	 * @access public
+	 * @return mixed	FormatInfo object or false if does not exist.
 	 */
 	public function getFormat() {
 		$this->getMetaData();
@@ -119,8 +118,8 @@ class FFProbe {
 	/**
 	 * Invoke ffprobe on the command line.
 	 *
-	 * @access	private
-	 * @return	boolean	Success
+	 * @access private
+	 * @return boolean	Success
 	 */
 	private function invokeFFProbe() {
 		global $wgFFprobeLocation;
@@ -130,7 +129,7 @@ class FFProbe {
 			return false;
 		}
 
-		$json = shell_exec(escapeshellcmd($wgFFprobeLocation.' -v quiet -print_format json -show_format -show_streams ').escapeshellarg($this->file));
+		$json = shell_exec(escapeshellcmd($wgFFprobeLocation . ' -v quiet -print_format json -show_format -show_streams ') . escapeshellarg($this->file));
 
 		$metadata = @json_decode($json, true);
 
@@ -148,16 +147,16 @@ class StreamInfo {
 	/**
 	 * Stream Info
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $info = null;
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	array	Stream Info from FFProbe
-	 * @return	void
+	 * @access public
+	 * @param  array	Stream Info from FFProbe
+	 * @return void
 	 */
 	public function __construct($info) {
 		$this->info = $info;
@@ -166,9 +165,9 @@ class StreamInfo {
 	/**
 	 * Simple helper instead of repeating an if statement everything.
 	 *
-	 * @access	private
-	 * @param	string	Field Name
-	 * @return	void
+	 * @access private
+	 * @param  string	Field Name
+	 * @return void
 	 */
 	private function getField($field) {
 		return (isset($this->info[$field]) ? $this->info[$field] : false);
@@ -177,8 +176,8 @@ class StreamInfo {
 	/**
 	 * Return the codec type.
 	 *
-	 * @access	public
-	 * @return 	string	Codec type or false if unavailable.
+	 * @access public
+	 * @return string	Codec type or false if unavailable.
 	 */
 	public function getType() {
 		return $this->getField('codec_type');
@@ -187,8 +186,8 @@ class StreamInfo {
 	/**
 	 * Return the codec name.
 	 *
-	 * @access	public
-	 * @return 	string	Codec name or false if unavailable.
+	 * @access public
+	 * @return string	Codec name or false if unavailable.
 	 */
 	public function getCodecName() {
 		return $this->getField('codec_name');
@@ -197,8 +196,8 @@ class StreamInfo {
 	/**
 	 * Return the codec long name.
 	 *
-	 * @access	public
-	 * @return 	string	Codec long name or false if unavailable.
+	 * @access public
+	 * @return string	Codec long name or false if unavailable.
 	 */
 	public function getCodecLongName() {
 		return $this->getField('codec_long_name');
@@ -207,8 +206,8 @@ class StreamInfo {
 	/**
 	 * Return the width of the stream.
 	 *
-	 * @access	public
-	 * @return 	integer	Width or false if unavailable.
+	 * @access public
+	 * @return integer	Width or false if unavailable.
 	 */
 	public function getWidth() {
 		return $this->getField('width');
@@ -217,8 +216,8 @@ class StreamInfo {
 	/**
 	 * Return the height of the stream.
 	 *
-	 * @access	public
-	 * @return 	integer	Height or false if unavailable.
+	 * @access public
+	 * @return integer	Height or false if unavailable.
 	 */
 	public function getHeight() {
 		return $this->getField('height');
@@ -227,8 +226,8 @@ class StreamInfo {
 	/**
 	 * Return bit depth for a video or thumbnail.
 	 *
-	 * @access	public
-	 * @return 	integer	Bit Depth or false if unavailable.
+	 * @access public
+	 * @return integer	Bit Depth or false if unavailable.
 	 */
 	public function getBitDepth() {
 		return $this->getField('bits_per_raw_sample');
@@ -237,8 +236,8 @@ class StreamInfo {
 	/**
 	 * Get the duration in seconds.
 	 *
-	 * @access	public
-	 * @return 	mixed	Duration in seconds or false if unavailable.
+	 * @access public
+	 * @return mixed	Duration in seconds or false if unavailable.
 	 */
 	public function getDuration() {
 		return $this->getField('duration');
@@ -247,8 +246,8 @@ class StreamInfo {
 	/**
 	 * Bit rate in bPS.
 	 *
-	 * @access	public
-	 * @return 	mixed	Bite rate in bPS or false if unavailable.
+	 * @access public
+	 * @return mixed	Bite rate in bPS or false if unavailable.
 	 */
 	public function getBitRate() {
 		return $this->getField('bit_rate');
@@ -259,16 +258,16 @@ class FormatInfo {
 	/**
 	 * Format Info
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $info = null;
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	array	Format Info from FFProbe
-	 * @return	void
+	 * @access public
+	 * @param  array	Format Info from FFProbe
+	 * @return void
 	 */
 	public function __construct($info) {
 		$this->info = $info;
@@ -277,9 +276,9 @@ class FormatInfo {
 	/**
 	 * Simple helper instead of repeating an if statement everything.
 	 *
-	 * @access	private
-	 * @param	string	Field Name
-	 * @return	void
+	 * @access private
+	 * @param  string	Field Name
+	 * @return void
 	 */
 	private function getField($field) {
 		return (isset($this->info[$field]) ? $this->info[$field] : false);
@@ -288,8 +287,8 @@ class FormatInfo {
 	/**
 	 * Get the file path.
 	 *
-	 * @access	public
-	 * @return 	mixed	File path or false if unavailable.
+	 * @access public
+	 * @return mixed	File path or false if unavailable.
 	 */
 	public function getFilePath() {
 		return $this->getField('filename');
@@ -298,8 +297,8 @@ class FormatInfo {
 	/**
 	 * Get the duration in seconds.
 	 *
-	 * @access	public
-	 * @return 	mixed	Duration in seconds or false if unavailable.
+	 * @access public
+	 * @return mixed	Duration in seconds or false if unavailable.
 	 */
 	public function getDuration() {
 		return $this->getField('duration');
@@ -308,8 +307,8 @@ class FormatInfo {
 	/**
 	 * Bit rate in bPS.
 	 *
-	 * @access	public
-	 * @return 	mixed	Bite rate in bPS or false if unavailable.
+	 * @access public
+	 * @return mixed	Bite rate in bPS or false if unavailable.
 	 */
 	public function getBitRate() {
 		return $this->getField('bit_rate');
