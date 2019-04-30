@@ -41,7 +41,15 @@
                 var iframe = self.find('iframe');
                 var wrap = self.find('.embedvideowrap');
 
-                $(".embedvideo").width($(".embedvideowrap").width());
+                if(self.hasClass("thumb")) {
+                    if(parent.width() < iframe.width()) {
+                        self.width(parent.width());
+                    }
+                    else {
+                        self.width(parseInt(iframe.attr("data-orig-width")) + 8);
+                    }
+                    return;
+                }
 
                 if (iframe.width() > parent.width()) {
                     resizeHandler(self, iframe, parent, wrap);
