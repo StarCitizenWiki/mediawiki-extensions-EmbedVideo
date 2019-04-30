@@ -312,12 +312,6 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <code>bambuser_channel</code>
 | Channels
 |-
-! [https://beam.pro/ Beam]
-| <code>beam</code>
-| RocketBear
-| <nowiki>https://beam.pro/RocketBear</nowiki>
-| Streams
-|-
 ! [http://www.bing.com/videos/ Bing]
 | <code>bing</code>
 | 31ncp9r7l
@@ -400,6 +394,13 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <code>metacafe</code>
 | 11404579
 | <nowiki>http://www.metacafe.com/watch/11404579/lan_party_far_cry_4/</nowiki>
+| 
+|-
+! [http://www.mixer.com/ Mixer]
+| <code>mixer</code>
+| RocketBear
+| <nowiki>https://mixer.com/RocketBear</nowiki>
+| Beam and Mixer Streams
 | 
 |-
 ! [http://www.nicovideo.jp/ Nico Nico Video]

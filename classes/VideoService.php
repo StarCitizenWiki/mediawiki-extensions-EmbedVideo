@@ -54,7 +54,7 @@ class VideoService {
 			]
 		],
 		'beam' => [
-			'embed'			=> '<iframe src="https://beam.pro/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'embed'			=> '<iframe src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -198,6 +198,18 @@ class VideoService {
 			],
 			'id_regex'		=> [
 				'#^([\d]+)$#is'
+			]
+		],
+		'mixer' => [
+			'embed'			=> '<iframe src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#mixer.com/([\d\w\-\+]+)(?:/\S+?)?#is'
+			],
+			'id_regex'		=> [
+				'#^([\d\w\-\+]+)$#is'
 			]
 		],
 		'nico' => [
@@ -459,6 +471,7 @@ class VideoService {
 		'kickstarter.com'			=> 'kickstarter',
 		'media.ccc.de'				=> 'mideacccde',
 		'metacafe.com'				=> 'metacafe',
+		'mixer.com'					=> 'mixer',
 		'nicovideo.jp'				=> 'nico',
 		'rutube.ru'					=> 'rutube',
 		'smashcast.tv'				=> 'smashcast',
