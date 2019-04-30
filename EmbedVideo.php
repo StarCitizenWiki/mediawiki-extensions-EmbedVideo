@@ -6,14 +6,13 @@
  * See README for details. For licensing information, see LICENSE. For a
  * complete list of contributors, see CREDITS
  *
- * @license		MIT
- * @package		EmbedVideo
- * @link		https://www.mediawiki.org/wiki/Extension:EmbedVideo
- *
+ * @license MIT
+ * @package EmbedVideo
+ * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
-if ( function_exists( 'wfLoadExtension' ) ) {
-	wfLoadExtension( 'EmbedVideo' );
+if (function_exists('wfLoadExtension')) {
+	wfLoadExtension('EmbedVideo');
 	// Keep i18n globals so mergeMessageFileList.php doesn't break
 	$wgMessagesDirs['EmbedVideo'] = __DIR__ . '/i18n';
 	$wgExtensionMessagesFiles['EmbedVideoMagic']	= __DIR__ . '/EmbedVideo.i18n.magic.php';
@@ -23,5 +22,5 @@ if ( function_exists( 'wfLoadExtension' ) ) {
 	);
 	return;
 } else {
-	die( 'This version of the EmbedVideo extension requires MediaWiki 1.25+' );
+	die('This version of the EmbedVideo extension requires MediaWiki 1.25+');
 }

@@ -3,52 +3,51 @@
  * EmbedVideo
  * EmbedVideo Hooks
  *
- * @license		MIT
- * @package		EmbedVideo
- * @link		https://www.mediawiki.org/wiki/Extension:EmbedVideo
- *
+ * @license MIT
+ * @package EmbedVideo
+ * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
 class EmbedVideoHooks {
 	/**
 	 * Temporary storage for the current service object.
 	 *
-	 * @var		object
+	 * @var object
 	 */
 	static private $service;
 
 	/**
 	 * Description Parameter
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	static private $description = false;
 
 	/**
 	 * Alignment Parameter
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	static private $alignment = false;
 
 	/**
 	 * Alignment Parameter
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	static private $vAlignment = false;
 
 	/**
 	 * Container Parameter
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	static private $container = false;
 
 	/**
 	 * Valid Arguments for the parseEV function hook.
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	static private $validArguments = [
 		'service'		=> null,
@@ -66,8 +65,8 @@ class EmbedVideoHooks {
 	/**
 	 * Hook to setup defaults.
 	 *
-	 * @access	public
-	 * @return	void
+	 * @access public
+	 * @return void
 	 */
 	public static function onExtension() {
 		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
@@ -75,7 +74,7 @@ class EmbedVideoHooks {
 		$config = ConfigFactory::getDefaultInstance()->makeConfig('main');
 
 		if (!isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1) {
-			//Set a smaller default width when in mobile view.
+			// Set a smaller default width when in mobile view.
 			$wgEmbedVideoDefaultWidth = 320;
 		}
 
@@ -114,33 +113,33 @@ class EmbedVideoHooks {
 	/**
 	 * Sets up this extension's parser functions.
 	 *
-	 * @access	public
-	 * @param	object	Parser object passed as a reference.
-	 * @return	boolean	true
+	 * @access public
+	 * @param  object	Parser object passed as a reference.
+	 * @return boolean	true
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setFunctionHook( "ev", "EmbedVideoHooks::parseEV" );
-		$parser->setFunctionHook( "evt", "EmbedVideoHooks::parseEVT" );
-		$parser->setFunctionHook( "evp", "EmbedVideoHooks::parseEVP" );
-		$parser->setFunctionHook( "evu", "EmbedVideoHooks::parseEVU" );
+	public static function onParserFirstCallInit(Parser &$parser) {
+		$parser->setFunctionHook("ev", "EmbedVideoHooks::parseEV");
+		$parser->setFunctionHook("evt", "EmbedVideoHooks::parseEVT");
+		$parser->setFunctionHook("evp", "EmbedVideoHooks::parseEVP");
+		$parser->setFunctionHook("evu", "EmbedVideoHooks::parseEVU");
 
-		$parser->setHook( "embedvideo", "EmbedVideoHooks::parseEVTag" );
+		$parser->setHook("embedvideo", "EmbedVideoHooks::parseEVTag");
 		$parser->setHook('evlplayer', "EmbedVideoHooks::parseEVLPlayer");
-		$parser->setFunctionHook( 'evl', "EmbedVideoHooks::parseEVL");
+		$parser->setFunctionHook('evl', "EmbedVideoHooks::parseEVL");
 
 		// don't step on VideoLink's toes.
 		if (!class_exists('FXVideoLink')) {
 			$parser->setHook('vplayer', "EmbedVideoHooks::parseEVLPlayer");
-			$parser->setFunctionHook( 'vlink', "EmbedVideoHooks::parseEVL");
+			$parser->setFunctionHook('vlink', "EmbedVideoHooks::parseEVL");
 		}
 
 		// smart handling of service name tags (if they aren't already implamented)
 		$tags = $parser->getTags();
 		$services = \EmbedVideo\VideoService::getAvailableServices();
-		$create = array_diff( $services, $tags );
+		$create = array_diff($services, $tags);
 		// We now have a list of services we can create tags for that aren't already implamented
 		foreach ($create as $service) {
-			$parser->setHook( $service, "EmbedVideoHooks::parseServiceTag{$service}" );
+			$parser->setHook($service, "EmbedVideoHooks::parseServiceTag{$service}");
 		}
 
 		return true;
@@ -149,29 +148,29 @@ class EmbedVideoHooks {
 	/**
 	 * Handle passing parseServiceTagSERVICENAME to the parseServiceTag method.
 	 *
-	 * @param string $name
-	 * @param array $args
+	 * @param  string $name
+	 * @param  array  $args
 	 * @return void
 	 */
-	public static function __callStatic( $name, $args ) {
-		if ( substr($name, 0, 15) == "parseServiceTag" ) {
-			$service = str_replace( "parseServiceTag", "", $name );
-			return self::parseServiceTag( $service, $args[0], $args[1], $args[2], $args[3] );
+	public static function __callStatic($name, $args) {
+		if (substr($name, 0, 15) == "parseServiceTag") {
+			$service = str_replace("parseServiceTag", "", $name);
+			return self::parseServiceTag($service, $args[0], $args[1], $args[2], $args[3]);
 		}
 	}
 
 	/**
 	 * Parse tag with service name
 	 *
-	 * @access	public
-	 * @param	string	Raw User Input
-	 * @param	array	Arguments on the tag.
-	 * @param	object	Parser object.
-	 * @param	object	PPFrame object.
-	 * @return	string	Error Message
+	 * @access public
+	 * @param  string	Raw User Input
+	 * @param  array	Arguments on the tag.
+	 * @param  object	Parser object.
+	 * @param  object	PPFrame object.
+	 * @return string	Error Message
 	 */
-	static public function parseServiceTag( $service, $input, array $args, Parser $parser, PPFrame $frame ) {
-		$args = array_merge( self::$validArguments, $args );
+	public static function parseServiceTag($service, $input, array $args, Parser $parser, PPFrame $frame) {
+		$args = array_merge(self::$validArguments, $args);
 
 		// accept input as default, but also allow url param.
 		if (empty($input) && isset($args['url'])) {
@@ -194,13 +193,14 @@ class EmbedVideoHooks {
 
 	/**
 	 * Parse EVL (and vlink) Tags
+	 *
 	 * @param  Parser $parser
 	 * @return array
 	 */
-	static public function parseEVL( Parser &$parser ) {
+	public static function parseEVL(Parser &$parser) {
 		$args = func_get_args();
-		array_shift( $args );
-		
+		array_shift($args);
+
 		// handle comma separated video id list
 		$ids = explode(',', $args[0]);
 		$id = isset($args[2]) && is_numeric($args[2]) ? $args[2] - 1 : false;
@@ -211,10 +211,10 @@ class EmbedVideoHooks {
 		$args[1] = "linktitle=" . $args[1];
 
 		$options = [];
-		parse_str( implode( "&", $args ), $options );
+		parse_str(implode("&", $args), $options);
 
 		// default service to youtube for compatibility with vlink
-		$options['service'] = isset( $options['service'] ) ? $options['service'] : "youtube";
+		$options['service'] = isset($options['service']) ? $options['service'] : "youtube";
 
 		// force to youtubevidelink or youtube if video list is provided
 		if (count($ids) > 0) {
@@ -224,7 +224,7 @@ class EmbedVideoHooks {
 			$options['service'] = count($ids) > 0 && $id === false ? "youtubevideolist" : "youtube";
 		}
 
-		$options = array_merge( self::$validArguments, $options );
+		$options = array_merge(self::$validArguments, $options);
 
 		// fix for youtube ids that VideoLink would have handled.
 		if ($options['service'] == 'youtube' && strpos($options['id'], ';') !== false) {
@@ -237,8 +237,8 @@ class EmbedVideoHooks {
 		if ($options['service'] == 'youtube' && isset($options['start']) && preg_match('/^([0-9]+:){0,2}[0-9]+(?:\.[0-9]+)?$/', $options['start'])) {
 			$te = explode(':', $options['start']);
 			$tc = count($te);
-			for($i=1, $startTime = floatval($te[0]); $i<$tc; $i++) {
-				$startTime = $startTime*60 + floatval($te[$i]);
+			for ($i = 1, $startTime = floatval($te[0]); $i < $tc; $i++) {
+				$startTime = $startTime * 60 + floatval($te[$i]);
 			}
 
 			if (!isset($options['urlargs']) || empty($options['urlargs'])) {
@@ -276,27 +276,28 @@ class EmbedVideoHooks {
 			'class' => 'embedvideo-evl vplink'
 		], $options['linktitle']);
 
-		$parser->getOutput()->addModules( ['ext.embedVideo-evl', 'ext.embedVideo.styles'] );
+		$parser->getOutput()->addModules(['ext.embedVideo-evl', 'ext.embedVideo.styles']);
 
-		return [ $link, 'noparse' => true, 'isHTML' => true ];
+		return [$link, 'noparse' => true, 'isHTML' => true];
 	}
 
 	/**
 	 * Parse EVLPlayer (and vplayer) Tags
+	 *
 	 * @param  string  $input
 	 * @param  array   $args
 	 * @param  Parser  $parser
 	 * @param  PPFrame $frame
 	 * @return array
 	 */
-	static public function parseEVLPlayer($input, array $args, Parser $parser, PPFrame $frame ) {
-		$args = array_merge( self::$validArguments, $args );
+	public static function parseEVLPlayer($input, array $args, Parser $parser, PPFrame $frame) {
+		$args = array_merge(self::$validArguments, $args);
 
 		$pid = isset($args['id']) ? $args['id'] : 'default';
 		$w = min(2000, max(240, isset($args['w']) ? (int)$args['w'] : 800));
-		$h = min(1200, max(80, isset($args['h']) ? (int)$args['h'] : (9*$w/16)));
-		$style = isset($args['style']) ? ' '.$args['style'] : '';
-		$class = isset($args['class']) ? ' '.$args['class'] : '';
+		$h = min(1200, max(80, isset($args['h']) ? (int)$args['h'] : (9 * $w / 16)));
+		$style = isset($args['style']) ? ' ' . $args['style'] : '';
+		$class = isset($args['class']) ? ' ' . $args['class'] : '';
 
 		if ($args['defaultid'] && $args['service']) {
 			// so we don't have to deal with any screwy parsing of tags by the HTML class.
@@ -306,12 +307,12 @@ class EmbedVideoHooks {
 		// Parse internal content
 		$content = $parser->recursiveTagParse($input, $frame);
 
-		$div = Html::rawElement('div', array(
-			'id' => 'vplayerbox-'.$pid,
-			'class' => 'embedvideo-evlbox vplayerbox'.$class,
-			'data-size' => $w.'x'.$h,
+		$div = Html::rawElement('div', [
+			'id' => 'vplayerbox-' . $pid,
+			'class' => 'embedvideo-evlbox vplayerbox' . $class,
+			'data-size' => $w . 'x' . $h,
 			'style' => $style,
-		), $content);
+		], $content);
 
 		if ($args['defaultid'] && $args['service']) {
 			$new = self::parseEV(
@@ -328,24 +329,24 @@ class EmbedVideoHooks {
 			)[0];
 
 			// replace the default content with the new content
-			$div = str_replace( $content, $new, $div );
+			$div = str_replace($content, $new, $div);
 		}
 
-		return [ $div, 'noparse'=> true, 'isHTML'=> true ];
+		return [$div, 'noparse' => true, 'isHTML' => true];
 	}
 
 	/**
 	 * Embeds a video based on the URL
 	 *
-	 * @access  public
-	 * @param   object Parser
-	 * @return  string Error Message
+	 * @access public
+	 * @param  object Parser
+	 * @return string Error Message
 	 */
-	static public function parseEVU( $parser, $url = null ) {
-		if ( !$url ) {
-			return self::error( 'missingparams', $url );
+	public static function parseEVU($parser, $url = null) {
+		if (!$url) {
+			return self::error('missingparams', $url);
 		}
-		$host = parse_url( $url, PHP_URL_HOST );
+		$host = parse_url($url, PHP_URL_HOST);
 		$host = strtolower($host);
 		$host = str_ireplace('www.', '', $host); // strip www from any hostname.
 
@@ -373,24 +374,24 @@ class EmbedVideoHooks {
 				}
 			}
 		} else {
-			return self::error( 'cantdecode_evu', $url );
+			return self::error('cantdecode_evu', $url);
 		}
 
 		if (!$service) {
-			return self::error( 'cantdecode_evu', $url );
+			return self::error('cantdecode_evu', $url);
 		}
 
 		$arguments = func_get_args();
-		array_shift( $arguments );
+		array_shift($arguments);
 
 		$args = [];
-		foreach ( $arguments as $argumentPair ) {
-			$argumentPair = trim( $argumentPair );
-			if ( !strpos( $argumentPair, '=' ) ) {
+		foreach ($arguments as $argumentPair) {
+			$argumentPair = trim($argumentPair);
+			if (!strpos($argumentPair, '=')) {
 				continue;
 			}
 
-			list( $key, $value ) = explode( '=', $argumentPair, 2 );
+			list( $key, $value ) = explode('=', $argumentPair, 2);
 
 			if (!array_key_exists($key, self::$validArguments)) {
 				continue;
@@ -398,7 +399,7 @@ class EmbedVideoHooks {
 			$args[$key] = $value;
 		}
 
-		$args = array_merge( self::$validArguments, $args );
+		$args = array_merge(self::$validArguments, $args);
 
 		return self::parseEV(
 			$parser,
@@ -414,37 +415,36 @@ class EmbedVideoHooks {
 		);
 	}
 
-
 	/**
 	 * Adapter to call the new style tag.
 	 *
-	 * @access	public
-	 * @param	object	Parser
-	 * @return	string	Error Message
+	 * @access public
+	 * @param  object	Parser
+	 * @return string	Error Message
 	 */
-	static public function parseEVP( $parser ) {
-		wfDeprecated( __METHOD__, '2.0', 'EmbedVideo' );
-		return self::error( 'evp_deprecated' );
+	public static function parseEVP($parser) {
+		wfDeprecated(__METHOD__, '2.0', 'EmbedVideo');
+		return self::error('evp_deprecated');
 	}
 
 	/**
 	 * Adapter to call the EV parser tag with template like calls.
 	 *
-	 * @access	public
-	 * @param	object	Parser
-	 * @return	string	Error Message
+	 * @access public
+	 * @param  object	Parser
+	 * @return string	Error Message
 	 */
-	static public function parseEVT( $parser ) {
+	public static function parseEVT($parser) {
 		$arguments = func_get_args();
-		array_shift( $arguments );
+		array_shift($arguments);
 
-		foreach ( $arguments as $argumentPair ) {
-			$argumentPair = trim( $argumentPair );
-			if ( !strpos( $argumentPair, '=' ) ) {
+		foreach ($arguments as $argumentPair) {
+			$argumentPair = trim($argumentPair);
+			if (!strpos($argumentPair, '=')) {
 				continue;
 			}
 
-			list( $key, $value ) = explode( '=', $argumentPair, 2 );
+			list( $key, $value ) = explode('=', $argumentPair, 2);
 
 			if (!array_key_exists($key, self::$validArguments)) {
 				continue;
@@ -452,7 +452,7 @@ class EmbedVideoHooks {
 			$args[$key] = $value;
 		}
 
-		$args = array_merge( self::$validArguments, $args );
+		$args = array_merge(self::$validArguments, $args);
 
 		return self::parseEV(
 			$parser,
@@ -471,15 +471,15 @@ class EmbedVideoHooks {
 	/**
 	 * Adapter to call the parser hook.
 	 *
-	 * @access	public
-	 * @param	string	Raw User Input
-	 * @param	array	Arguments on the tag.
-	 * @param	object	Parser object.
-	 * @param	object	PPFrame object.
-	 * @return	string	Error Message
+	 * @access public
+	 * @param  string	Raw User Input
+	 * @param  array	Arguments on the tag.
+	 * @param  object	Parser object.
+	 * @param  object	PPFrame object.
+	 * @return string	Error Message
 	 */
-	static public function parseEVTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$args = array_merge( self::$validArguments, $args );
+	public static function parseEVTag($input, array $args, Parser $parser, PPFrame $frame) {
+		$args = array_merge(self::$validArguments, $args);
 
 		return self::parseEV(
 			$parser,
@@ -498,105 +498,104 @@ class EmbedVideoHooks {
 	/**
 	 * Embeds a video of the chosen service.
 	 *
-	 * @access	public
-	 * @param	object	Parser
-	 * @param	string	[Optional] Which online service has the video.
-	 * @param	string	[Optional] Identifier Code or URL for the video on the service.
-	 * @param	string	[Optional] Dimensions of video
-	 * @param	string	[Optional] Description to show
-	 * @param	string	[Optional] Horizontal Alignment of the embed container.
-	 * @param	string	[Optional] Container to use.(Frame is currently the only option.)
-	 * @param	string	[Optional] Extra URL Arguments
-	 * @param 	string	[Optional] Automatically Resize video that will break its parent container.
-	 * @param	string	[Optional] Vertical Alignment of the embed container.
-	 * @return	string	Encoded representation of input params (to be processed later)
+	 * @access public
+	 * @param  object	Parser
+	 * @param  string	[Optional] Which online service has the video.
+	 * @param  string	[Optional] Identifier Code or URL for the video on the service.
+	 * @param  string	[Optional] Dimensions of video
+	 * @param  string	[Optional] Description to show
+	 * @param  string	[Optional] Horizontal Alignment of the embed container.
+	 * @param  string	[Optional] Container to use.(Frame is currently the only option.)
+	 * @param  string	[Optional] Extra URL Arguments
+	 * @param  string	[Optional] Automatically Resize video that will break its parent container.
+	 * @param  string	[Optional] Vertical Alignment of the embed container.
+	 * @return string	Encoded representation of input params (to be processed later)
 	 */
-	static public function parseEV( $parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null, $vAlignment = null ) {
+	public static function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null, $vAlignment = null) {
 		self::resetParameters();
 
-		$service		= trim( $service );
-		$id				= trim( $id );
-		$alignment		= trim( $alignment );
-		$description	= trim( $description );
-		$dimensions		= trim( $dimensions );
-		$urlArgs		= trim( $urlArgs );
+		$service		= trim($service);
+		$id				= trim($id);
+		$alignment		= trim($alignment);
+		$description	= trim($description);
+		$dimensions		= trim($dimensions);
+		$urlArgs		= trim($urlArgs);
 		$width			= null;
 		$height			= null;
-		$autoResize		= ( isset( $autoResize ) && strtolower( trim( $autoResize ) ) == "false" ) ? false : true;
-		$vAlignment		= trim( $vAlignment );
+		$autoResize		= (isset($autoResize) && strtolower(trim($autoResize)) == "false") ? false : true;
+		$vAlignment		= trim($vAlignment);
 
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
-		if ( stristr( $dimensions, 'x' ) ) {
-			$dimensions = strtolower( $dimensions );
-			list( $width, $height ) = explode( 'x', $dimensions );
-		} elseif ( is_numeric( $dimensions ) ) {
+		if (stristr($dimensions, 'x')) {
+			$dimensions = strtolower($dimensions);
+			list( $width, $height ) = explode('x', $dimensions);
+		} elseif (is_numeric($dimensions)) {
 			$width = $dimensions;
 		}
 
 		/************************************/
 		/* Error Checking                   */
 		/************************************/
-		if ( !$service || !$id ) {
-			return self::error( 'missingparams', $service, $id );
+		if (!$service || !$id) {
+			return self::error('missingparams', $service, $id);
 		}
 
-		self::$service = \EmbedVideo\VideoService::newFromName( $service );
-		if ( !self::$service ) {
-			return self::error( 'service', $service );
+		self::$service = \EmbedVideo\VideoService::newFromName($service);
+		if (!self::$service) {
+			return self::error('service', $service);
 		}
 
 		// Let the service automatically handle bad dimensional values.
-		self::$service->setWidth( $width );
+		self::$service->setWidth($width);
 
-		self::$service->setHeight( $height );
+		self::$service->setHeight($height);
 
 		// If the service has an ID pattern specified, verify the id number.
-		if ( !self::$service->setVideoID( $id ) ) {
-			return self::error( 'id', $service, $id );
+		if (!self::$service->setVideoID($id)) {
+			return self::error('id', $service, $id);
 		}
 
-		if ( !self::$service->setUrlArgs( $urlArgs ) ) {
-			return self::error( 'urlargs', $service, $urlArgs );
+		if (!self::$service->setUrlArgs($urlArgs)) {
+			return self::error('urlargs', $service, $urlArgs);
 		}
 
 		if (!is_null($parser)) {
-			self::setDescription( $description, $parser );
+			self::setDescription($description, $parser);
 		} else {
-			self::setDescriptionNoParse( $description );
+			self::setDescriptionNoParse($description);
 		}
 
-
-		if ( !self::setContainer( $container ) ) {
-			return self::error( 'container', $container );
+		if (!self::setContainer($container)) {
+			return self::error('container', $container);
 		}
 
-		if ( !self::setAlignment( $alignment ) ) {
-			return self::error( 'alignment', $alignment );
+		if (!self::setAlignment($alignment)) {
+			return self::error('alignment', $alignment);
 		}
 
-		if ( !self::setVerticalAlignment( $vAlignment ) ) {
-			return self::error( 'valignment', $vAlignment );
+		if (!self::setVerticalAlignment($vAlignment)) {
+			return self::error('valignment', $vAlignment);
 		}
 
 		/************************************/
 		/* HMTL Generation                  */
 		/************************************/
 		$html = self::$service->getHtml();
-		if ( !$html ) {
-			return self::error( 'unknown', $service );
+		if (!$html) {
+			return self::error('unknown', $service);
 		}
 
 		if ($autoResize) {
-			$html = self::generateWrapperHTML( $html, null, "autoResize" );
+			$html = self::generateWrapperHTML($html, null, "autoResize");
 		} else {
-			$html = self::generateWrapperHTML( $html );
+			$html = self::generateWrapperHTML($html);
 		}
 
 		if ($parser) {
 			// dont call this if parser is null (such as in API usage).
 			$out = $parser->getOutput();
-			$out->addModules( 'ext.embedVideo' );
-			$out->addModuleStyles( 'ext.embedVideo.styles' );
+			$out->addModules('ext.embedVideo');
+			$out->addModuleStyles('ext.embedVideo.styles');
 		}
 
 		return [
@@ -610,29 +609,29 @@ class EmbedVideoHooks {
 	 * Generate the HTML necessary to embed the video with the given alignment
 	 * and text description
 	 *
-	 * @access	private
-	 * @param	string	[Optional] Horizontal Alignment
-	 * @param	string	[Optional] Description
-	 * @param	string  [Optional] Additional Classes to add to the wrapper
+	 * @access private
+	 * @param  string	[Optional] Horizontal Alignment
+	 * @param  string	[Optional] Description
+	 * @param  string  [Optional] Additional Classes to add to the wrapper
 	 * @return string
 	 */
-	static private function generateWrapperHTML( $html, $description = null, $addClass = null ) {
+	private static function generateWrapperHTML($html, $description = null, $addClass = null) {
 		$classString = "embedvideo";
 		$styleString = "";
 		$innerClassString = "embedvideowrap";
 		$outerClassString = "embedvideo ";
 
-		if ( self::getContainer() == 'frame' ) {
+		if (self::getContainer() == 'frame') {
 			$classString .= " thumbinner";
 		}
 
 		if (self::getAlignment() !== false) {
-			$outerClassString .= " ev_" . self::getAlignment() ." ";
-			$styleString .= " width: " . ( self::$service->getWidth() + 6 ) . "px;";
+			$outerClassString .= " ev_" . self::getAlignment() . " ";
+			$styleString .= " width: " . (self::$service->getWidth() + 6) . "px;";
 		}
 
 		if (self::getVerticalAlignment() !== false) {
-			$outerClassString .= " ev_" . self::getVerticalAlignment()." ";
+			$outerClassString .= " ev_" . self::getVerticalAlignment() . " ";
 		}
 
 		if ($addClass) {
@@ -640,7 +639,7 @@ class EmbedVideoHooks {
 			$outerClassString .= $addClass;
 		}
 
-		$html = "<div class='thumb $outerClassString' style='width: " . (self::$service->getWidth() + 8). "px;'><div class='" . $classString . "' style='" . $styleString . "'><div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>{$html}</div>" . ( self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null ) . "</div></div>";
+		$html = "<div class='thumb $outerClassString' style='width: " . (self::$service->getWidth() + 8) . "px;'><div class='" . $classString . "' style='" . $styleString . "'><div class='" . $innerClassString . "' style='width: " . self::$service->getWidth() . "px;'>{$html}</div>" . (self::getDescription() !== false ? "<div class='thumbcaption'>" . self::getDescription() . "</div>" : null) . "</div></div>";
 
 		return $html;
 	}
@@ -648,24 +647,24 @@ class EmbedVideoHooks {
 	/**
 	 * Return the alignment parameter.
 	 *
-	 * @access	public
-	 * @return	mixed	Alignment or false for not set.
+	 * @access public
+	 * @return mixed	Alignment or false for not set.
 	 */
-	static private function getAlignment() {
+	private static function getAlignment() {
 		return self::$alignment;
 	}
 
 	/**
 	 * Set the align parameter.
 	 *
-	 * @access	private
-	 * @param	string	Alignment Parameter
-	 * @return	boolean	Valid
+	 * @access private
+	 * @param  string	Alignment Parameter
+	 * @return boolean	Valid
 	 */
-	static private function setAlignment( $alignment ) {
-		if ( !empty( $alignment ) && ( $alignment == 'left' || $alignment == 'right' || $alignment == 'center' || $alignment == 'inline' ) ) {
+	private static function setAlignment($alignment) {
+		if (!empty($alignment) && ($alignment == 'left' || $alignment == 'right' || $alignment == 'center' || $alignment == 'inline')) {
 			self::$alignment = $alignment;
-		} elseif ( !empty( $alignment ) ) {
+		} elseif (!empty($alignment)) {
 			return false;
 		}
 		return true;
@@ -674,27 +673,27 @@ class EmbedVideoHooks {
 	/**
 	 * Return the valignment parameter.
 	 *
-	 * @access	public
-	 * @return	mixed	Vertical Alignment or false for not set.
+	 * @access public
+	 * @return mixed	Vertical Alignment or false for not set.
 	 */
-	static private function getVerticalAlignment() {
+	private static function getVerticalAlignment() {
 		return self::$vAlignment;
 	}
 
 	/**
 	 * Set the align parameter.
 	 *
-	 * @access	private
-	 * @param	string	Alignment Parameter
-	 * @return	boolean	Valid
+	 * @access private
+	 * @param  string	Alignment Parameter
+	 * @return boolean	Valid
 	 */
-	static private function setVerticalAlignment( $vAlignment ) {
-		if ( !empty( $vAlignment ) && ( $vAlignment == 'top' || $vAlignment == 'middle' || $vAlignment == 'bottom' || $vAlignment == 'baseline' ) ) {
+	private static function setVerticalAlignment($vAlignment) {
+		if (!empty($vAlignment) && ($vAlignment == 'top' || $vAlignment == 'middle' || $vAlignment == 'bottom' || $vAlignment == 'baseline')) {
 			if ($vAlignment != 'baseline') {
 				self::$alignment = 'inline';
 			}
 			self::$vAlignment = $vAlignment;
-		} elseif ( !empty( $vAlignment ) ) {
+		} elseif (!empty($vAlignment)) {
 			return false;
 		}
 		return true;
@@ -703,54 +702,55 @@ class EmbedVideoHooks {
 	/**
 	 * Return description text.
 	 *
-	 * @access	private
-	 * @return	mixed	String description or false for not set.
+	 * @access private
+	 * @return mixed	String description or false for not set.
 	 */
-	static private function getDescription() {
+	private static function getDescription() {
 		return self::$description;
 	}
 
 	/**
 	 * Set the description.
 	 *
-	 * @access	private
-	 * @param	string	Description
-	 * @param	object	Mediawiki Parser object
-	 * @return	void
+	 * @access private
+	 * @param  string	Description
+	 * @param  object	Mediawiki Parser object
+	 * @return void
 	 */
-	static private function setDescription( $description, \Parser $parser ) {
-		self::$description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+	private static function setDescription($description, \Parser $parser) {
+		self::$description = (!$description ? false : $parser->recursiveTagParse($description));
 	}
 
 	/**
 	 * Set the description without using the parser
-	 * @param	string	Description
+	 *
+	 * @param string	Description
 	 */
-	static private function setDescriptionNoParse( $description ) {
-		self::$description = ( !$description ? false : $description );
+	private static function setDescriptionNoParse($description) {
+		self::$description = (!$description ? false : $description);
 	}
 
 	/**
 	 * Return container type.
 	 *
-	 * @access	private
-	 * @return	mixed	String container type or false for not set.
+	 * @access private
+	 * @return mixed	String container type or false for not set.
 	 */
-	static private function getContainer() {
+	private static function getContainer() {
 		return self::$container;
 	}
 
 	/**
 	 * Set the container type.
 	 *
-	 * @access	private
-	 * @param	string	Container
-	 * @return	boolean	Success
+	 * @access private
+	 * @param  string	Container
+	 * @return boolean	Success
 	 */
-	static private function setContainer( $container ) {
-		if ( !empty( $container ) && ( $container == 'frame' ) ) {
+	private static function setContainer($container) {
+		if (!empty($container) && ($container == 'frame')) {
 			self::$container = $container;
-		} elseif ( !empty( $container ) ) {
+		} elseif (!empty($container)) {
 			return false;
 		}
 		return true;
@@ -759,10 +759,10 @@ class EmbedVideoHooks {
 	/**
 	 * Reset parameters between parses.
 	 *
-	 * @access	private
-	 * @return	void
+	 * @access private
+	 * @return void
 	 */
-	static private function resetParameters() {
+	private static function resetParameters() {
 		self::$description	= false;
 		self::$alignment	= false;
 		self::$container	= false;
@@ -771,16 +771,16 @@ class EmbedVideoHooks {
 	/**
 	 * Error Handler
 	 *
-	 * @access	private
-	 * @param	string	[Optional] Error Type
-	 * @param	mixed	[...] Multiple arguments to be retrieved with func_get_args().
-	 * @return	string	Printable Error Message
+	 * @access private
+	 * @param  string	[Optional] Error Type
+	 * @param  mixed	[...] Multiple arguments to be retrieved with func_get_args().
+	 * @return string	Printable Error Message
 	 */
-	static private function error( $type = 'unknown' ) {
+	private static function error($type = 'unknown') {
 		$arguments = func_get_args();
-		array_shift( $arguments );
+		array_shift($arguments);
 
-		$message = wfMessage( 'error_embedvideo_' . $type, $arguments )->escaped();
+		$message = wfMessage('error_embedvideo_' . $type, $arguments)->escaped();
 
 		return [
 			"<div class='errorbox'>{$message}</div>",
