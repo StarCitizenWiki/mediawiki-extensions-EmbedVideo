@@ -268,6 +268,10 @@ class EmbedVideoHooks {
 			}
 		}
 
+		if ($options['linktitle'] == "") {
+			$options['linktitle'] = wfMessage('ev_default_play_desc')->text();
+		}
+
 		$json = json_encode($options);
 
 		$link = Xml::element('a', [
