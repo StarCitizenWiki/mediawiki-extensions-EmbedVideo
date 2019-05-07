@@ -421,6 +421,24 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <nowiki>https://soundcloud.com/skrillex/skrillex-rick-ross-purple-lamborghini</nowiki>
 | SoundCloud requires the full URL.
 |-
+! [http://spotify.com/ Spotify]
+| <code>spotifyalbum</code>
+| 1EoDsNmgTLtmwe1BDAVxV5
+| <nowiki>https://open.spotify.com/album/1EoDsNmgTLtmwe1BDAVxV5</nowiki>
+| 
+|-
+! [http://spotify.com/ Spotify]
+| <code>spotifyartist</code>
+| 06HL4z0CvFAxyc27GXpf02
+| <nowiki>https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02</nowiki>
+| 
+|-
+! [http://spotify.com/ Spotify]
+| <code>spotifytrack</code>
+| 1EoDsNmgTLtmwe1BDAVxV5
+| <nowiki>https://open.spotify.com/track/72jCZdH0Lhg93z6Z4hBjgj</nowiki>
+| 
+|-
 ! [http://teachertube.com TeacherTube]
 | <code>teachertube</code>
 | 370511

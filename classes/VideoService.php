@@ -257,6 +257,42 @@ class VideoService {
 				'#^(https://soundcloud\.com/.+?/.+?)$#is',
 			]
 		],
+		'spotifyalbum' => [
+			'embed'			=> '<iframe src="https://open.spotify.com/embed/album/%1$s" width="%2$d" height="%3$d" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>',
+			'default_width'	=> 300,
+			'default_ratio'	=> 0.7895,
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#open\.spotify\.com/album/([a-zA-Z0-9]+)#is',
+			],
+			'id_regex'		=> [
+				'#^([a-zA-Z0-9]+)$#is'
+			]
+		],
+		'spotifyartist' => [
+			'embed'			=> '<iframe src="https://open.spotify.com/embed/artist/%1$s" width="%2$d" height="%3$d" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>',
+			'default_width'	=> 300,
+			'default_ratio'	=> 0.7895,
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#open\.spotify\.com/artist/([a-zA-Z0-9]+)#is',
+			],
+			'id_regex'		=> [
+				'#^([a-zA-Z0-9]+)$#is'
+			]
+		],
+		'spotifytrack' => [
+			'embed'			=> '<iframe src="https://open.spotify.com/embed/track/%1$s" width="%2$d" height="%3$d" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>',
+			'default_width'	=> 300,
+			'default_ratio'	=> 0.7895,
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#open\.spotify\.com/track/([a-zA-Z0-9]+)#is',
+			],
+			'id_regex'		=> [
+				'#^([a-zA-Z0-9]+)$#is'
+			]
+		],
 		'teachertube' => [
 			'embed'			=> '<iframe src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -477,6 +513,7 @@ class VideoService {
 		'rutube.ru'					=> 'rutube',
 		'smashcast.tv'				=> 'smashcast',
 		'soundcloud.com'			=> 'soundcloud',
+		'spotify.com'				=> ['spotifyalbum', 'spotifyartist', 'spotifytrack'],
 		'teachertube.com'			=> 'teachertube',
 		'ted.com'					=> 'ted',
 		'tubitv.com'				=> 'tubitv',
