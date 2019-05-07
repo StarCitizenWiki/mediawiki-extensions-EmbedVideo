@@ -366,6 +366,12 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <nowiki>http://www.funnyordie.com/videos/c61fb67ac9/to-catch-a-predator-elastic-heart-edition</nowiki>
 | 
 |-
+! [http://www.facebook.com/ Facebook]
+| <code>facebook</code>
+| 
+| <nowiki>https://www.facebook.com/Warcraft/videos/10155717024919034/</nowiki>
+| 
+|-
 ! [http://gfycat.com/ Gfycat]
 | <code>gfycat</code>
 | BruisedSilentAntarcticfurseal
