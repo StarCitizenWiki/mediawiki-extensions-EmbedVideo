@@ -42,20 +42,11 @@
                 var wrap = self.find('.embedvideowrap');
 
                 if(self.hasClass("thumb")) {
-                    
-                    var originalWidth = iframe.attr("data-orig-width");
-                    if(originalWidth == undefined) {
-                        originalWidth = iframe.width();
-                    }
-
                     if(parent.width() < iframe.width()) {
                         self.width(parent.width());
                     }
-                    else if(parent.width() > originalWidth) {
-                        self.width(originalWidth).css('width', originalWidth).attr('width', originalWidth);
-                    }
-                    else{ 
-                        resizeHandler(self, iframe, parent, wrap);
+                    else {
+                        self.width(parseInt(iframe.attr("data-orig-width")) + 8);
                     }
                     return;
                 }
@@ -72,7 +63,7 @@
                     wrap.height(originalHeight).css('height', originalHeight).attr('height', originalHeight);
                 }
 
-                if (!self.hasClass('autoResized') && iframe.width() >= parent.width()) {
+                if (!self.hasClass('autoResized') && iframe.width() > parent.width()) {
                     resizeHandler(self, iframe, parent, wrap);
                 }
             });
