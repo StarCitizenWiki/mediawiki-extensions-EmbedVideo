@@ -129,6 +129,15 @@ class VideoService {
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true
 		],
+		'facebook' => [
+			'embed'			=> '<iframe src="https://www.facebook.com/plugins/video.php?href=%1$s&show_text=0" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
+			'default_width'	=> 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled'	=> true,
+			'url_regex'		=> [
+				'#(https?://(?:www\.)?facebook\.com/(?:[a-zA-Z0-9]+)/(?:videos)/([0-9]+))#is'
+			]
+		],
 		'funnyordie' => [
 			'embed'			=> '<iframe src="http://www.funnyordie.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -503,6 +512,7 @@ class VideoService {
 		'dailymotion.com'			=> 'dailymotion',
 		'divshare.com'				=> 'divshare',
 		'funnyordie.com'			=> 'funnyordie',
+		'facebook.com'			=> 'facebook',
 		'gfycat.com'				=> 'gfycat',
 		'content.jwplatform.com'	=> 'jwplayer',
 		'kickstarter.com'			=> 'kickstarter',
