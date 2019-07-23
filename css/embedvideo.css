@@ -9,6 +9,10 @@ div.embedvideo.ev_center > .embedvideowrap {
 	margin-right: auto;
 }
 
+div.embedvideo.ev_center .thumbcaption {
+	text-align: center;
+}
+
 /* @noflip */
 div.embedvideo.ev_left {
 	clear: left;
