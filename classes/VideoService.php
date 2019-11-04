@@ -209,6 +209,18 @@ class VideoService {
 				'#^([\d]+)$#is'
 			]
 		],
+		'microsoftstream' => [
+			'embed'			=> '<iframe src="https://web.microsoftstream.com/embed/video/%1$s?autoplay=false&amp;showinfo=true" width="%2$d" height="%3$d"  allowfullscreen="true" style="border:none;"></iframe>'
+			'default_width' => 640,
+			'default_ratio'	=> 1.77777777777778, // (16 / 9)
+			'https_enabled' => true,
+			'url_regex'		=> [
+				'#web\.microsoftstream\.com/(?:embed/)?video/([0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12})#is'
+			],
+			'id_regex'		=> [
+				'#^[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}$#is'
+			]
+		],
 		'mixer' => [
 			'embed'			=> '<iframe src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true"></iframe>',
 			'default_width'	=> 640,
@@ -512,12 +524,13 @@ class VideoService {
 		'dailymotion.com'			=> 'dailymotion',
 		'divshare.com'				=> 'divshare',
 		'funnyordie.com'			=> 'funnyordie',
-		'facebook.com'			=> 'facebook',
+		'facebook.com'				=> 'facebook',
 		'gfycat.com'				=> 'gfycat',
 		'content.jwplatform.com'	=> 'jwplayer',
 		'kickstarter.com'			=> 'kickstarter',
 		'media.ccc.de'				=> 'mideacccde',
 		'metacafe.com'				=> 'metacafe',
+		'microsoftstream.com'		=> 'microsoftstream',
 		'mixer.com'					=> 'mixer',
 		'nicovideo.jp'				=> 'nico',
 		'rutube.ru'					=> 'rutube',
