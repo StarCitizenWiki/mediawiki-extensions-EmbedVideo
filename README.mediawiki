@@ -402,6 +402,12 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 | <nowiki>http://www.metacafe.com/watch/11404579/lan_party_far_cry_4/</nowiki>
 | 
 |-
+| [https://www.microsoftstream.com Microsoft Stream]
+| <code>microsoftstream</code>
+| 3aaec3c4-01b7-46e1-b2fb-1a9b1ee444f5
+| <nowiki>https://web.microsoftstream.com/video/3aaec3c4-01b7-46e1-b2fb-1a9b1ee444f5</nowiki>
+| Videos require authentication to Office 365 services to view
+|-
 ! [http://www.mixer.com/ Mixer]
 | <code>mixer</code>
 | RocketBear
