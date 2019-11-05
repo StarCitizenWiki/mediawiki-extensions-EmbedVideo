@@ -210,7 +210,7 @@ class VideoService {
 			]
 		],
 		'microsoftstream' => [
-			'embed'			=> '<iframe src="https://web.microsoftstream.com/embed/video/%1$s?autoplay=false&amp;showinfo=true" width="%2$d" height="%3$d"  allowfullscreen="true" style="border:none;"></iframe>'
+			'embed'			=> '<iframe src="https://web.microsoftstream.com/embed/video/%1$s?autoplay=false&amp;showinfo=true" width="%2$d" height="%3$d"  allowfullscreen="true" style="border:none;"></iframe>',
 			'default_width' => 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled' => true,
