@@ -812,7 +812,7 @@ class VideoService {
 	 * @return String, defaulting to message 'ev_default_play_desc'
 	 */
 	public function getIframeTitle() {
-		if($this->iframeTitle == "") {
+		if ($this->iframeTitle == "") {
 			return wfMessage('ev_default_play_desc')->text();
 		}
 
