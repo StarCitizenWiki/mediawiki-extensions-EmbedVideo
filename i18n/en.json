@@ -19,5 +19,14 @@
 	"ev_audio_short_desc": "$1",
 	"ev_audio_long_desc": "$1, $2 codec, length $3, $4 overall",
 	"error_embedvideo_cantdecode_evu": "Couldn't parse video from $1",
-	"ev_default_play_desc": "Play video"
+	"ev_default_play_desc": "Play video",
+	"apihelp-embedvideo-summary": "Get generated video embed code for given parameters.",
+	"apihelp-embedvideo-param-service": "Name of the service (youtube, twitch, ect)",
+	"apihelp-embedvideo-param-id": "The ID of the video for that service",
+	"apihelp-embedvideo-param-dimensions": "Either a numeric width (100) or width by height (100x100)",
+	"apihelp-embedvideo-param-alignment": "Alignment of video",
+	"apihelp-embedvideo-param-description": "Description of video",
+	"apihelp-embedvideo-param-container": "Accepts frame, or leave empty",
+	"apihelp-embedvideo-param-urlargs": "Additional arguments to pass in the video url (for some services)",
+	"apihelp-embedvideo-param-autoresize": "Auto resize video? (true or false)"
 }
