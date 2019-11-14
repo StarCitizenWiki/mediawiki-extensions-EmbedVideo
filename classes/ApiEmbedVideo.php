@@ -37,15 +37,6 @@ class ApiEmbedVideo extends ApiBase {
 	}
 
 	/**
-	 * [getDescription description]
-	 *
-	 * @return [type] [description]
-	 */
-	public function getDescription() {
-		return 'Get generated embed code for given parameters';
-	}
-
-	/**
 	 * Setup the allowed and required parameters
 	 *
 	 * @return array
@@ -84,20 +75,6 @@ class ApiEmbedVideo extends ApiBase {
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			],
-		]);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array_merge(parent::getParamDescription(), [
-			'service' => 'Name of the service (youtube, twitch, ect)',
-			'id' => 'The ID of the video for that service',
-			'dimensions' => 'Either a numeric width (100) or width by height (100x100)',
-			'alignment' => 'Alignment of video',
-			'description' => 'Description of video',
-			'container' => 'Accepts frame, or leave empty',
-			'urlargs' => 'Additional arguments to pass in the video url (for some services)',
-			'autoresize' => 'Auto resize video? (true or false)'
 		]);
 	}
 }
