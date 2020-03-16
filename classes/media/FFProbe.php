@@ -167,7 +167,7 @@ class StreamInfo {
 	 *
 	 * @access private
 	 * @param  string	Field Name
-	 * @return void
+	 * @return mixed
 	 */
 	private function getField($field) {
 		return (isset($this->info[$field]) ? $this->info[$field] : false);
@@ -278,7 +278,7 @@ class FormatInfo {
 	 *
 	 * @access private
 	 * @param  string	Field Name
-	 * @return void
+	 * @return mixed
 	 */
 	private function getField($field) {
 		return (isset($this->info[$field]) ? $this->info[$field] : false);

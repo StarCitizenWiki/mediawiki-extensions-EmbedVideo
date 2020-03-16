@@ -142,7 +142,7 @@ class AudioHandler extends \MediaHandler {
 	 *  first page.
 	 *
 	 * @access public
-	 * @param  File   $image The image object, or false if there isn't one
+	 * @param  \File   $file The file object, or false if there isn't one
 	 * @param  string $path  The filename
 	 * @return mixed	An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
@@ -154,26 +154,26 @@ class AudioHandler extends \MediaHandler {
 	 * Get a MediaTransformOutput object representing the transformed output. Does the
 	 * transform unless $flags contains self::TRANSFORM_LATER.
 	 *
-	 * @param  File    $image   The image object
+	 * @param  \File   $file   The file object
 	 * @param  string  $dstPath Filesystem destination path
 	 * @param  string  $dstUrl  Destination URL to use in output HTML
 	 * @param  array   $params  Arbitrary set of parameters validated by $this->validateParam()
 	 *                          Note: These parameters have *not* gone through
 	 *                          $this->normaliseParams()
 	 * @param  integer $flags   A bitfield, may contain self::TRANSFORM_LATER
-	 * @return MediaTransformOutput
+	 * @return \MediaTransformOutput
 	 */
-	public function doTransform($file, $dstPath, $dstUrl, $parameters, $flags = 0) {
-		$this->normaliseParams($file, $parameters);
+	public function doTransform($file, $dstPath, $dstUrl, $params, $flags = 0) {
+		$this->normaliseParams($file, $params);
 
-		return new AudioTransformOutput($file, $parameters);
+		return new AudioTransformOutput($file, $params);
 	}
 
 	/**
 	 * Shown in file history box on image description page.
 	 *
 	 * @access public
-	 * @param  File $file
+	 * @param  \File $file
 	 * @return string	Dimensions
 	 */
 	public function getDimensionsString($file) {
@@ -195,7 +195,7 @@ class AudioHandler extends \MediaHandler {
 	 * Short description. Shown on Special:Search results.
 	 *
 	 * @access public
-	 * @param  File $file
+	 * @param  \File $file
 	 * @return string
 	 */
 	public function getShortDesc($file) {
@@ -217,7 +217,7 @@ class AudioHandler extends \MediaHandler {
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
 	 * @access public
-	 * @param  File $file
+	 * @param  \File $file
 	 * @return string
 	 */
 	public function getLongDesc($file) {

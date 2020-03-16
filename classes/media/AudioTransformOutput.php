@@ -12,12 +12,15 @@
 namespace EmbedVideo;
 
 class AudioTransformOutput extends \MediaTransformOutput {
+	/** @var array */
+	private $parameters;
+
 	/**
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  object	File
-	 * @param  array	Parameters for constructing HTML.
+	 * @param  \File $file
+	 * @param  array $parameters	Parameters for constructing HTML.
 	 * @return void
 	 */
 	public function __construct($file, $parameters) {

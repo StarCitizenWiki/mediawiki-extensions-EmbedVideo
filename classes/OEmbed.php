@@ -230,7 +230,7 @@ class OEmbed {
 
 		$page = curl_exec($ch);
 
-		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($responseCode == 503 || $responseCode == 404 || $responseCode == 501 || $responseCode == 401) {
 			return false;
 		}
