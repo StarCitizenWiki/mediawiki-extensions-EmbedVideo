@@ -660,7 +660,7 @@ class VideoService {
 	 */
 	public static function addService($service, $args) {
 		if (isset(self::$services[$service])) {
-			throw new MWException("Service already already exists: $service");
+			throw new \MWException("Service already already exists: $service");
 		}
 		self::$services[$service] = $args;
 	}
@@ -701,12 +701,12 @@ class VideoService {
 			$html = call_user_func_array('sprintf', $data);
 		} elseif (isset($this->service['oembed'])) {
 			// Call out to the service to get the embed HTML.
-			if ($this->service['https_enabled']) {
-				if (stristr($this->getVideoID(), 'https:') !== false) {
-					$protocol = 'https:';
-				} else {
-					$protocol = 'http:';
-				}
+			if ($this->service['https_enabled']
+				&& stristr($this->getVideoID(), 'https:') !== false
+			) {
+				$protocol = 'https:';
+			} else {
+				$protocol = 'http:';
 			}
 			$url = sprintf(
 				$this->service['oembed'],
@@ -789,7 +789,7 @@ class VideoService {
 	 * Return extra IDs.
 	 *
 	 * @access public
-	 * @return boolean	Array of extra information or false if not set.
+	 * @return array|boolean	Array of extra information or false if not set.
 	 */
 	public function getExtraIDs() {
 		return $this->extraIDs;
@@ -910,6 +910,7 @@ class VideoService {
 
 		$urlArgs = urldecode($urlArgs);
 		$_args = explode('&', $urlArgs);
+		$arguments = [];
 
 		if (is_array($_args)) {
 			foreach ($_args as $rawPair) {

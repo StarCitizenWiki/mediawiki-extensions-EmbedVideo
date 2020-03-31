@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * EmbedVideo
  * EmbedVideo Hooks
@@ -47,7 +50,7 @@ class EmbedVideoHooks {
 	/**
 	 * Valid Arguments for the parseEV function hook.
 	 *
-	 * @var string
+	 * @var array
 	 */
 	static private $validArguments = [
 		'service'		=> null,
@@ -71,7 +74,7 @@ class EmbedVideoHooks {
 	public static function onExtension() {
 		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
 
-		$config = ConfigFactory::getDefaultInstance()->makeConfig('main');
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig('main');
 
 		if (!isset($wgEmbedVideoDefaultWidth) && (isset($_SERVER['HTTP_X_MOBILE']) && $_SERVER['HTTP_X_MOBILE'] == 'true') && $_COOKIE['stopMobileRedirect'] != 1) {
 			// Set a smaller default width when in mobile view.
@@ -114,7 +117,7 @@ class EmbedVideoHooks {
 	 * Sets up this extension's parser functions.
 	 *
 	 * @access public
-	 * @param  object	Parser object passed as a reference.
+	 * @param  Parser $parser	Parser object passed as a reference.
 	 * @return boolean	true
 	 */
 	public static function onParserFirstCallInit(Parser &$parser) {
@@ -150,7 +153,7 @@ class EmbedVideoHooks {
 	 *
 	 * @param  string $name
 	 * @param  array  $args
-	 * @return void
+	 * @return mixed
 	 */
 	public static function __callStatic($name, $args) {
 		if (substr($name, 0, 15) == "parseServiceTag") {
@@ -163,11 +166,12 @@ class EmbedVideoHooks {
 	 * Parse tag with service name
 	 *
 	 * @access public
-	 * @param  string	Raw User Input
-	 * @param  array	Arguments on the tag.
-	 * @param  object	Parser object.
-	 * @param  object	PPFrame object.
-	 * @return string	Error Message
+	 * @param  string $service
+	 * @param  string $input	Raw User Input
+	 * @param  array $args	Arguments on the tag.
+	 * @param  Parser $parser	Parser object.
+	 * @param  PPFrame $frame	PPFrame object.
+	 * @return array	Error Message
 	 */
 	public static function parseServiceTag($service, $input, array $args, Parser $parser, PPFrame $frame) {
 		$args = array_merge(self::$validArguments, $args);
@@ -343,8 +347,9 @@ class EmbedVideoHooks {
 	 * Embeds a video based on the URL
 	 *
 	 * @access public
-	 * @param  object Parser
-	 * @return string Error Message
+	 * @param  Parser $parser
+	 * @param string|null $url
+	 * @return array Error Message
 	 */
 	public static function parseEVU($parser, $url = null) {
 		if (!$url) {
@@ -424,7 +429,7 @@ class EmbedVideoHooks {
 	 *
 	 * @access public
 	 * @param  object	Parser
-	 * @return string	Error Message
+	 * @return array	Error Message
 	 */
 	public static function parseEVP($parser) {
 		wfDeprecated(__METHOD__, '2.0', 'EmbedVideo');
@@ -436,12 +441,13 @@ class EmbedVideoHooks {
 	 *
 	 * @access public
 	 * @param  object	Parser
-	 * @return string	Error Message
+	 * @return array	Error Message
 	 */
 	public static function parseEVT($parser) {
 		$arguments = func_get_args();
 		array_shift($arguments);
 
+		$args = [];
 		foreach ($arguments as $argumentPair) {
 			$argumentPair = trim($argumentPair);
 			if (!strpos($argumentPair, '=')) {
@@ -476,11 +482,11 @@ class EmbedVideoHooks {
 	 * Adapter to call the parser hook.
 	 *
 	 * @access public
-	 * @param  string	Raw User Input
-	 * @param  array	Arguments on the tag.
-	 * @param  object	Parser object.
-	 * @param  object	PPFrame object.
-	 * @return string	Error Message
+	 * @param  string $input	Raw User Input
+	 * @param  array $args	Arguments on the tag.
+	 * @param  Parser $parser	Parser object.
+	 * @param  PPFrame $frame	PPFrame object.
+	 * @return array	Error Message
 	 */
 	public static function parseEVTag($input, array $args, Parser $parser, PPFrame $frame) {
 		$args = array_merge(self::$validArguments, $args);
@@ -503,17 +509,17 @@ class EmbedVideoHooks {
 	 * Embeds a video of the chosen service.
 	 *
 	 * @access public
-	 * @param  object	Parser
-	 * @param  string	[Optional] Which online service has the video.
-	 * @param  string	[Optional] Identifier Code or URL for the video on the service.
-	 * @param  string	[Optional] Dimensions of video
-	 * @param  string	[Optional] Description to show
-	 * @param  string	[Optional] Horizontal Alignment of the embed container.
-	 * @param  string	[Optional] Container to use.(Frame is currently the only option.)
-	 * @param  string	[Optional] Extra URL Arguments
-	 * @param  string	[Optional] Automatically Resize video that will break its parent container.
-	 * @param  string	[Optional] Vertical Alignment of the embed container.
-	 * @return string	Encoded representation of input params (to be processed later)
+	 * @param  Parser $parser	Parser
+	 * @param  ?string $service	[Optional] Which online service has the video.
+	 * @param  ?string $id 	[Optional] Identifier Code or URL for the video on the service.
+	 * @param  ?string $dimensions	[Optional] Dimensions of video
+	 * @param  ?string $alignment	[Optional] Horizontal Alignment of the embed container.
+	 * @param  ?string $description	[Optional] Description to show
+	 * @param  ?string $container	[Optional] Container to use.(Frame is currently the only option.)
+	 * @param  ?string $urlArgs	[Optional] Extra URL Arguments
+	 * @param  ?string $autoResize	[Optional] Automatically Resize video that will break its parent container.
+	 * @param  ?string $vAlignment	[Optional] Vertical Alignment of the embed container.
+	 * @return array	Encoded representation of input params (to be processed later)
 	 */
 	public static function parseEV($parser, $service = null, $id = null, $dimensions = null, $alignment = null, $description = null, $container = null, $urlArgs = null, $autoResize = null, $vAlignment = null) {
 		self::resetParameters();
@@ -717,8 +723,8 @@ class EmbedVideoHooks {
 	 * Set the description.
 	 *
 	 * @access private
-	 * @param  string	Description
-	 * @param  object	Mediawiki Parser object
+	 * @param  string $description	Description
+	 * @param  \Parser $parser	Mediawiki Parser object
 	 * @return void
 	 */
 	private static function setDescription($description, \Parser $parser) {
@@ -778,7 +784,7 @@ class EmbedVideoHooks {
 	 * @access private
 	 * @param  string	[Optional] Error Type
 	 * @param  mixed	[...] Multiple arguments to be retrieved with func_get_args().
-	 * @return string	Printable Error Message
+	 * @return array	Printable Error Message
 	 */
 	private static function error($type = 'unknown') {
 		$arguments = func_get_args();
