@@ -544,6 +544,24 @@ class EmbedVideoHooks {
 		}
 
 		/************************************/
+		/* Twitch Fixes                     */
+		/************************************/
+		// Add parent attribute for Twitch embeds
+		if ($service == 'twitch' || $service == 'twitchclip' || $service == 'twitchvod') {
+			global $wgServerName;
+			if (!isset($urlArgs) || empty($urlArgs)) {
+				// Set the url args to the parent domain
+				$urlArgs = "parent=$wgServerName";
+			} else {
+				// Break down the url args and inject the parent
+				$urlargsArr = [];
+				parse_str($urlArgs, $urlargsArr);
+				$urlargsArr['parent'] = $wgServerName;
+				$urlArgs = http_build_query($urlargsArr);
+			}
+		}
+
+		/************************************/
 		/* Error Checking                   */
 		/************************************/
 		if (!$service || !$id) {
