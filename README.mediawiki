@@ -572,6 +572,22 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 |}
 
 ==Version history==
+; v2.9.0
+* Fix stored XSS in AudioTransformOutput and VideoTransformOutput.
+* Fix autoResize on mobile.
+* Fix video caption escaping the container.
+* Handle multiple video sizes per page in resize.
+* Move beam service to mixer.
+* Add a default link title for #evl/#vlink.
+* Add spotify playlist embeds.
+* Add facebook video embeds.
+* Fix centering of videos.
+* Add Microsoft Stream service.
+* Add title to iframes.
+* Add API help messages for 1.33 compatibility.
+* Fix static analysis issues.
+* Fix Twitch embeds.
+
 ; v2.8.0
 * Renamed hitbox.tv to smashcast.tv.
 * Updated Nico Video embed code.
