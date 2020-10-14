@@ -11,6 +11,8 @@
 
 namespace EmbedVideo;
 
+use Html;
+
 class VideoTransformOutput extends \MediaTransformOutput {
 	/** @var array */
 	private $parameters;
@@ -90,8 +92,15 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			}
 		}
 
-		$html = "<video src='{$this->url}" . ($inOut !== false ? '#t=' . implode(',', $inOut) : '') . "' width='{$this->getWidth()}' height='{$this->getHeight()}'" . (!empty($class) ? " class='{$class}'" : "") . (!empty($style) ? " style='" . implode(" ", $style) . "'" : "") . " controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></video>";
+		$descLink = Html::element( 'a', [ 'href' => $parameters['descriptionUrl'] ], $parameters['descriptionUrl'] );
 
-		return $html;
+		return Html::rawElement( 'video', [
+			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
+			'width' => $this->getWidth(),
+			'height' => $this->getHeight(),
+			'class' => $class ?: false,
+			'style' => $style ? implode( ' ', $style ) : false,
+			'controls' => true,
+		], $descLink );
 	}
 }

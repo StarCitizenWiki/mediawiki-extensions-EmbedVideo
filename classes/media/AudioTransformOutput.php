@@ -11,6 +11,8 @@
 
 namespace EmbedVideo;
 
+use Html;
+
 class AudioTransformOutput extends \MediaTransformOutput {
 	/** @var array */
 	private $parameters;
@@ -92,8 +94,14 @@ class AudioTransformOutput extends \MediaTransformOutput {
 			}
 		}
 
-		$html = "<audio src='{$this->url}" . ($inOut !== false ? '#t=' . implode(',', $inOut) : '') . "' width='{$this->getWidth()}'" . (!empty($class) ? " class='{$class}'" : "") . (!empty($style) ? " style='" . implode(" ", $style) . "'" : "") . " controls><a href='{$parameters['descriptionUrl']}'>{$parameters['descriptionUrl']}</a></audio>";
+		$descLink = Html::element( 'a', [ 'href' => $parameters['descriptionUrl'] ], $parameters['descriptionUrl'] );
 
-		return $html;
+		return Html::rawElement( 'audio', [
+			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
+			'width' => $this->getWidth(),
+			'class' => $class ?: false,
+			'style' => $style ? implode( ' ', $style ) : false,
+			'controls' => true,
+		], $descLink );
 	}
 }
