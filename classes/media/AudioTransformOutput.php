@@ -28,7 +28,7 @@ class AudioTransformOutput extends \MediaTransformOutput {
 		$this->parameters = $parameters;
 		$this->width = (isset($parameters['width']) ? $parameters['width'] : null);
 		$this->height = (isset($parameters['height']) ? $parameters['height'] : null);
-		$this->path = $file->getLocalRefPath();
+		$this->path = null;
 		$this->lang = false;
 		$this->page = $parameters['page'];
 		$this->url = $file->getFullUrl();
