@@ -98,7 +98,7 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
 			'width' => $this->getWidth(),
 			'height' => $this->getHeight(),
-			'class' => $class ?: false,
+			'class' => $class ?? false,
 			'style' => $style ? implode( ' ', $style ) : false,
 			'controls' => true,
 		], $descLink );

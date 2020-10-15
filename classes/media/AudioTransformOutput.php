@@ -99,7 +99,7 @@ class AudioTransformOutput extends \MediaTransformOutput {
 		return Html::rawElement( 'audio', [
 			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
 			'width' => $this->getWidth(),
-			'class' => $class ?: false,
+			'class' => $class ?? false,
 			'style' => $style ? implode( ' ', $style ) : false,
 			'controls' => true,
 		], $descLink );
