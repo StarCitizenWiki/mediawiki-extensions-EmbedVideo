@@ -179,7 +179,7 @@ class AudioHandler extends \MediaHandler {
 	public function getDimensionsString($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("a:0");
@@ -201,7 +201,7 @@ class AudioHandler extends \MediaHandler {
 	public function getShortDesc($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("a:0");
@@ -223,7 +223,7 @@ class AudioHandler extends \MediaHandler {
 	public function getLongDesc($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("a:0");
