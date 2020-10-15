@@ -41,7 +41,8 @@ class VideoHandler extends AudioHandler {
 	public function normaliseParams($file, &$parameters) {
 		parent::normaliseParams($file, $parameters);
 
-		list($width, $height) = $this->getImageSize($file, $file->getLocalRefPath());
+		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
+		list($width, $height) = $this->getImageSize($file, '');
 
 		if ($width === 0 && $height === 0) {
 			// Force a reset.
@@ -97,7 +98,7 @@ class VideoHandler extends AudioHandler {
 	 * @return mixed	An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
 	public function getImageSize($file, $path) {
-		$probe = new FFProbe($path);
+		$probe = new FFProbe($file);
 
 		$stream = $probe->getStream("v:0");
 
@@ -140,7 +141,7 @@ class VideoHandler extends AudioHandler {
 	public function getDimensionsString($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("v:0");
@@ -162,7 +163,7 @@ class VideoHandler extends AudioHandler {
 	public function getShortDesc($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("v:0");
@@ -184,7 +185,7 @@ class VideoHandler extends AudioHandler {
 	public function getLongDesc($file) {
 		global $wgLang;
 
-		$probe = new FFProbe($file->getLocalRefPath());
+		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("v:0");

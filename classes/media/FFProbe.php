@@ -13,9 +13,9 @@ namespace EmbedVideo;
 
 class FFProbe {
 	/**
-	 * File Location
+	 * MediaWiki File
 	 *
-	 * @var string
+	 * @var \File
 	 */
 	private $file;
 
@@ -30,7 +30,7 @@ class FFProbe {
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  string	File Location on Disk
+	 * @param  \File MediaWiki File
 	 * @return void
 	 */
 	public function __construct($file) {
@@ -115,6 +115,10 @@ class FFProbe {
 		return new FormatInfo($this->metadata['format']);
 	}
 
+	private function getFilePath() {
+		return $this->file->getLocalRefPath();
+	}
+
 	/**
 	 * Invoke ffprobe on the command line.
 	 *
@@ -129,7 +133,7 @@ class FFProbe {
 			return false;
 		}
 
-		$json = shell_exec(escapeshellcmd($wgFFprobeLocation . ' -v quiet -print_format json -show_format -show_streams ') . escapeshellarg($this->file));
+		$json = shell_exec(escapeshellcmd($wgFFprobeLocation . ' -v quiet -print_format json -show_format -show_streams ') . escapeshellarg($this->getFilePath()));
 
 		$metadata = @json_decode($json, true);
 
