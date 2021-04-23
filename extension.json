@@ -49,6 +49,9 @@
 			"scripts": [
 				"resources/ext.embedVideo.consent.js"
 			],
+			"styles": [
+				"resources/ext.embedVideo.consent.less"
+			],
 			"position": "top",
 			"targets": [
 				"desktop",
