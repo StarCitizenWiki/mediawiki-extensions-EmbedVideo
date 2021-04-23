@@ -1,10 +1,13 @@
 (function () {
 	const fetchThumb = async (url, parent, outerDiv) => {
 		let callUrl;
-		if (outerDiv.classList.contains('youtube')) {
+		if (outerDiv.classList.contains('youtube') || outerDiv.classList.contains('youtubevideolist') || outerDiv.classList.contains('youtubeplaylist')) {
 			callUrl = 'https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=';
 		} else if(outerDiv.classList.contains('vimeo')) {
 			callUrl = 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/'
+		} else if(outerDiv.classList.contains('spotifytrack')) {
+			// does not work callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/track/'
+			return;
 		} else {
 			return;
 		}
@@ -46,6 +49,12 @@
 				image.setAttribute('loading', 'lazy');
 				image.classList.add('embedvideo-consent__thumbnail');
 				parent.appendChild(image);
+
+				if (typeof json.title !== 'undefined' && json.title.length > 0) {
+					const title = document.createElement('small');
+					title.innerText = json.title;
+					parent.querySelector('span').appendChild(title);
+				}
 			})
 			.catch(error => {
 				//

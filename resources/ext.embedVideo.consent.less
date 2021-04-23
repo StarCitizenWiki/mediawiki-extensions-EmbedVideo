@@ -18,7 +18,7 @@
 
 	&__message {
 		cursor: pointer;
-		z-index: 2;
+		z-index: 1;
 		background-color: rgba(0,0,0,0.55);
 		color: #fff;
 		display: flex;
@@ -30,8 +30,13 @@
 
 		&-inner {
 			border: 1px solid #fff;
+			margin: 1rem;
 			padding: 0.5rem;
 			transition: background-color 0.2s ease;
+
+			small {
+				display: block;
+			}
 		}
 	}
 

@@ -112,7 +112,7 @@ class EmbedVideoHooks {
 	 * Sets up this extension's parser functions.
 	 *
 	 * @access public
-	 * @param Parser $parser Parser object passed as a reference.
+	 * @param  Parser $parser Parser object passed as a reference.
 	 * @return boolean    true
 	 * @throws MWException
 	 */

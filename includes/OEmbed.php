@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace MediaWiki\Extension\EmbedVideo;
 
+use JsonException;
 use MediaWiki\MediaWikiServices;
 
 class OEmbed {
@@ -43,12 +44,18 @@ class OEmbed {
 	public static function newFromRequest($url) {
 		$data = self::curlGet($url);
 		if ($data !== false) {
-			// Error suppression is required as json_decode() tosses E_WARNING in contradiction to its documentation.
-			$data = @json_decode($data, true);
+
+			try {
+				$data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+			} catch (JsonException $e) {
+				return false;
+			}
 		}
+
 		if (!$data || !is_array($data)) {
 			return false;
 		}
+
 		return new self($data);
 	}
 
@@ -59,19 +66,19 @@ class OEmbed {
 	 * @return mixed	String HTML or false on error.
 	 */
 	public function getHtml() {
-		if (isset($this->data['html'])) {
-			// Remove any extra HTML besides the iframe.
-			$iframeStart = strpos($this->data['html'], '<iframe');
-			$iframeEnd = strpos($this->data['html'], '</iframe>');
-			if ($iframeStart !== false) {
-				// Only strip if an iframe was found.
-				$this->data['html'] = substr($this->data['html'], $iframeStart, $iframeEnd + 9);
-			}
-
-			return $this->data['html'];
+		if (!isset($this->data['html'])) {
+			return false;
 		}
 
-		return false;
+		// Remove any extra HTML besides the iframe.
+		$iframeStart = strpos($this->data['html'], '<iframe');
+		$iframeEnd = strpos($this->data['html'], '</iframe>');
+		if ($iframeStart !== false) {
+			// Only strip if an iframe was found.
+			$this->data['html'] = substr($this->data['html'], $iframeStart, $iframeEnd + 9);
+		}
+
+		return $this->data['html'];
 	}
 
 	/**

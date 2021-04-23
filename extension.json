@@ -58,20 +58,6 @@
 				"mobile"
 			]
 		},
-		"ext.embedVideo-evl": {
-			"scripts": [
-				"resources/ext.embedVideo-evl.js"
-			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"dependencies": [
-				"mediawiki.api",
-				"ext.embedVideo"
-			]
-		},
 		"ext.embedVideo.styles": {
 			"styles": [
 				"resources/ext.embedVideo.styles.less"
