@@ -23,7 +23,7 @@ class VideoService {
 	 */
 	static private $services = [
 		'archiveorg' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
 			'https_enabled'	=> true,
@@ -80,7 +80,7 @@ class VideoService {
 			]
 		],
 		'twitch' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://player.twitch.tv/?channel=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://player.twitch.tv/?channel=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -92,7 +92,7 @@ class VideoService {
 			]
 		],
 		'twitchclip' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://clips.twitch.tv/embed?autoplay=false&clip=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://clips.twitch.tv/embed?autoplay=false&clip=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -104,7 +104,7 @@ class VideoService {
 			]
 		],
 		'twitchvod' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://player.twitch.tv/?autoplay=false&video=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="https://player.twitch.tv/?autoplay=false&video=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -116,7 +116,7 @@ class VideoService {
 			]
 		],
 		'vimeo' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
@@ -130,7 +130,7 @@ class VideoService {
 			'oembed'		=> '%4$s//vimeo.com/api/oembed.json?url=%1$s&width=%2$d&maxwidth=%2$d'
 		],
 		'youtube' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -147,7 +147,7 @@ class VideoService {
 			]
 		],
 		'youtubeplaylist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -159,7 +159,7 @@ class VideoService {
 			]
 		],
 		'youtubevideolist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" %6$s="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
