@@ -69,6 +69,10 @@ Additionally a cover image can be set for video files by specifying a `cover=` k
 
 	[[File:Example.mp4|start=2|end=6|cover=File:LocalFile.png]]
 
+### Example
+![](docs/local_file_with_cover.png)  
+Example of a local file with a custom cover image.
+
 ## Tags
 
 The EmbedVideo parser function expects to be called in any of the following ways:
