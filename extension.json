@@ -1,20 +1,25 @@
 {
 	"name": "EmbedVideo",
-	"version": "2.8.0",
+	"version": "2.8.1",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
 		"Alexia E. Smith",
-		"Cameron M. Chunn"
+		"Cameron M. Chunn",
+		"Octfx"
 	],
-	"url": "https://www.mediawiki.org/wiki/Extension:EmbedVideo",
+	"url": "https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo",
 	"descriptionmsg": "embedvideo_description",
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.29.0"
+		"MediaWiki": ">= 1.35.0",
+		"platform": {
+			"php": ">=7.2.0",
+			"ext-curl": "*"
+		}
 	},
-	"callback": "EmbedVideoHooks::onExtension",
+	"callback": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onExtension",
 	"MessagesDirs": {
 		"EmbedVideo": [
 			"i18n"
@@ -23,24 +28,26 @@
 	"ExtensionMessagesFiles": {
 		"EmbedVideoMagic": "EmbedVideo.i18n.magic.php"
 	},
-	"AutoloadClasses": {
-		"EmbedVideoHooks": "EmbedVideo.hooks.php",
-		"ApiEmbedVideo": "classes/ApiEmbedVideo.php",
-		"EmbedVideo\\OEmbed": "classes/OEmbed.php",
-		"EmbedVideo\\VideoService": "classes/VideoService.php",
-		"EmbedVideo\\FFProbe": "classes/media/FFProbe.php",
-		"EmbedVideo\\AudioHandler": "classes/media/AudioHandler.php",
-		"EmbedVideo\\AudioTransformOutput": "classes/media/AudioTransformOutput.php",
-		"EmbedVideo\\VideoHandler": "classes/media/VideoHandler.php",
-		"EmbedVideo\\VideoTransformOutput": "classes/media/VideoTransformOutput.php"
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\EmbedVideo\\": "includes/"
 	},
 	"APIModules": {
-		"embedvideo": "ApiEmbedVideo"
+		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
 	},
 	"ResourceModules": {
 		"ext.embedVideo": {
 			"scripts": [
 				"js/autoResize.js"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"ext.embedVideo.consent": {
+			"scripts": [
+				"js/consent.js"
 			],
 			"position": "top",
 			"targets": [
@@ -77,16 +84,47 @@
 		"remoteExtPath": "EmbedVideo"
 	},
 	"config": {
-		"EmbedVideoAddFileExtensions": true,
-		"EmbedVideoEnableVideoHandler": true,
-		"EmbedVideoEnableAudioHandler": true,
-		"FFprobeLocation": "/usr/bin/ffprobe",
-		"EmbedVideoEnabledServices": []
+		"EmbedVideoAddFileExtensions": {
+			"description": "",
+			"value": true
+		},
+		"EmbedVideoEnableVideoHandler": {
+			"description": "",
+			"value": true
+		},
+		"EmbedVideoEnableAudioHandler": {
+			"description": "",
+			"value": true
+		},
+		"EmbedVideoMinWidth": {
+			"description": "",
+			"value": null
+		},
+		"EmbedVideoMaxWidth": {
+			"description": "",
+			"value": null
+		},
+		"EmbedVideoDefaultWidth": {
+			"description": "",
+			"value": 320
+		},
+		"FFprobeLocation": {
+			"description": "Location to ffprobe",
+			"value": "/usr/bin/ffprobe"
+		},
+		"EmbedVideoEnabledServices": {
+			"description": "List of services to enable, if empty, enable all",
+			"value": []
+		},
+		"EmbedVideoRequireConsent": {
+			"description": "Explicitly require consent by only loading the iframe if the user clicks it",
+			"value": true
+		}
 	},
 	"Hooks": {
 		"ParserFirstCallInit": [
-			"EmbedVideoHooks::onParserFirstCallInit"
+			"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onParserFirstCallInit"
 		]
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }

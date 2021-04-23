@@ -9,13 +9,18 @@
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
-namespace EmbedVideo;
+declare(strict_types=1);
+
+namespace MediaWiki\Extension\EmbedVideo\Media;
+
+use File;
+use MediaWiki\MediaWikiServices;
 
 class FFProbe {
 	/**
 	 * MediaWiki File
 	 *
-	 * @var \File
+	 * @var File
 	 */
 	private $file;
 
@@ -24,13 +29,13 @@ class FFProbe {
 	 *
 	 * @var array
 	 */
-	private $metadata = null;
+	private $metadata;
 
 	/**
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  \File MediaWiki File
+	 * @param  File MediaWiki File
 	 * @return void
 	 */
 	public function __construct($file) {
@@ -80,8 +85,8 @@ class FFProbe {
 			return false;
 		}
 
-		list($type, $index) = explode(":", $select);
-		$index = intval($index);
+		[$type, $index] = explode(":", $select);
+		$index = (int)$index;
 
 		$type = (isset($types[$type]) ? $types[$type] : false);
 
@@ -126,14 +131,14 @@ class FFProbe {
 	 * @return boolean	Success
 	 */
 	private function invokeFFProbe() {
-		global $wgFFprobeLocation;
+		$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get('FFProbeLocation');
 
-		if (!file_exists($wgFFprobeLocation)) {
+		if (!file_exists($ffprobeLocation)) {
 			$this->metadata = [];
 			return false;
 		}
 
-		$json = shell_exec(escapeshellcmd($wgFFprobeLocation . ' -v quiet -print_format json -show_format -show_streams ') . escapeshellarg($this->getFilePath()));
+		$json = shell_exec(escapeshellcmd($ffprobeLocation . ' -v quiet -print_format json -show_format -show_streams ') . escapeshellarg($this->getFilePath()));
 
 		$metadata = @json_decode($json, true);
 
@@ -264,7 +269,7 @@ class FormatInfo {
 	 *
 	 * @var array
 	 */
-	private $info = null;
+	private $info;
 
 	/**
 	 * Main Constructor
@@ -285,7 +290,7 @@ class FormatInfo {
 	 * @return mixed
 	 */
 	private function getField($field) {
-		return (isset($this->info[$field]) ? $this->info[$field] : false);
+		return ($this->info[$field] ?? false);
 	}
 
 	/**

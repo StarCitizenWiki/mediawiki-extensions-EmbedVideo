@@ -8,12 +8,18 @@
  * @link    https://gitlab.com/hydrawiki/extensions/EmbedVideo
  **/
 
+declare(strict_types=1);
+
+namespace MediaWiki\Extension\EmbedVideo;
+
+use ApiBase;
+
 class ApiEmbedVideo extends ApiBase {
 	/**
 	 * Execute the API call.
 	 */
 	public function execute() {
-		$getHTML = \EmbedVideoHooks::parseEV(
+		$getHTML = EmbedVideoHooks::parseEV(
 			null,
 			$this->getMain()->getVal('service'),
 			$this->getMain()->getVal('id'),

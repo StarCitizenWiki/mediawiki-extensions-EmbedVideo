@@ -9,9 +9,16 @@
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
-namespace EmbedVideo;
+declare(strict_types=1);
 
-class AudioHandler extends \MediaHandler {
+namespace MediaWiki\Extension\EmbedVideo\Media;
+
+use File;
+use MediaHandler;
+use MediaTransformOutput;
+use MediaWiki\MediaWikiServices;
+
+class AudioHandler extends MediaHandler {
 	/**
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
@@ -32,18 +39,17 @@ class AudioHandler extends \MediaHandler {
 	 * @access public
 	 * @param  string $name
 	 * @param  mixed  $value
+	 * @return bool
 	 */
 	public function validateParam($name, $value) {
-		if ($name === 'width' || $name === 'width') {
+		if ($name === 'width') {
 			return $value > 0;
 		}
 
 		if ($name === 'start' || $name === 'end') {
-			if ($this->parseTimeString($value) === false) {
-				return false;
-			}
-			return true;
+			return $this->parseTimeString($value) !== false;
 		}
+
 		return false;
 	}
 
@@ -77,7 +83,7 @@ class AudioHandler extends \MediaHandler {
 	 * @param  array	Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
-	public function makeParamString($parameters) {
+	public function makeParamString($parameters): string {
 		return ''; // Width does not matter to video or audio.
 	}
 
@@ -88,7 +94,7 @@ class AudioHandler extends \MediaHandler {
 	 * @param  string	The parameter string without file name (e.g. 122px)
 	 * @return mixed	Array of parameters or false on failure.
 	 */
-	public function parseParamString($string) {
+	public function parseParamString($string): array {
 		return []; // Nothing to parse.  See makeParamString above.
 	}
 
@@ -102,11 +108,11 @@ class AudioHandler extends \MediaHandler {
 	 * @param  array	Parameters
 	 * @return boolean	Success
 	 */
-	public function normaliseParams($file, &$parameters) {
+	public function normaliseParams($file, &$parameters): bool {
 		global $wgEmbedVideoDefaultWidth;
 
 		if (isset($parameters['width']) && $parameters['width'] > 0) {
-			$parameters['width'] = intval($parameters['width']);
+			$parameters['width'] = (int)$parameters['width'];
 		} else {
 			$parameters['width'] = $wgEmbedVideoDefaultWidth;
 		}
@@ -142,8 +148,8 @@ class AudioHandler extends \MediaHandler {
 	 *  first page.
 	 *
 	 * @access public
-	 * @param  \File   $file The file object, or false if there isn't one
-	 * @param  string $path  The filename
+	 * @param  File   $file The file object, or false if there isn't one
+	 * @param  string $path The filename
 	 * @return mixed	An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
 	public function getImageSize($file, $path) {
@@ -154,14 +160,14 @@ class AudioHandler extends \MediaHandler {
 	 * Get a MediaTransformOutput object representing the transformed output. Does the
 	 * transform unless $flags contains self::TRANSFORM_LATER.
 	 *
-	 * @param  \File   $file   The file object
+	 * @param  File    $file    The file object
 	 * @param  string  $dstPath Filesystem destination path
 	 * @param  string  $dstUrl  Destination URL to use in output HTML
 	 * @param  array   $params  Arbitrary set of parameters validated by $this->validateParam()
 	 *                          Note: These parameters have *not* gone through
 	 *                          $this->normaliseParams()
 	 * @param  integer $flags   A bitfield, may contain self::TRANSFORM_LATER
-	 * @return \MediaTransformOutput
+	 * @return MediaTransformOutput
 	 */
 	public function doTransform($file, $dstPath, $dstUrl, $params, $flags = 0) {
 		$this->normaliseParams($file, $params);
@@ -173,12 +179,10 @@ class AudioHandler extends \MediaHandler {
 	 * Shown in file history box on image description page.
 	 *
 	 * @access public
-	 * @param  \File $file
+	 * @param  File $file
 	 * @return string	Dimensions
 	 */
 	public function getDimensionsString($file) {
-		global $wgLang;
-
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
@@ -188,19 +192,17 @@ class AudioHandler extends \MediaHandler {
 			return parent::getDimensionsString($file);
 		}
 
-		return wfMessage('ev_audio_short_desc', $wgLang->formatTimePeriod($format->getDuration()))->text();
+		return wfMessage('ev_audio_short_desc', MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()))->text();
 	}
 
 	/**
 	 * Short description. Shown on Special:Search results.
 	 *
 	 * @access public
-	 * @param  \File $file
+	 * @param  File $file
 	 * @return string
 	 */
 	public function getShortDesc($file) {
-		global $wgLang;
-
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
@@ -210,19 +212,17 @@ class AudioHandler extends \MediaHandler {
 			return parent::getGeneralShortDesc($file);
 		}
 
-		return wfMessage('ev_audio_short_desc', $wgLang->formatTimePeriod($format->getDuration()), $wgLang->formatSize($file->getSize()))->text();
+		return wfMessage('ev_audio_short_desc', MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()), MediaWikiServices::getInstance()->getContentLanguage()->formatSize($file->getSize()))->text();
 	}
 
 	/**
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
 	 * @access public
-	 * @param  \File $file
+	 * @param  File $file
 	 * @return string
 	 */
 	public function getLongDesc($file) {
-		global $wgLang;
-
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
@@ -234,6 +234,12 @@ class AudioHandler extends \MediaHandler {
 
 		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);
 
-		return wfMessage('ev_audio_long_desc', strtoupper($extension), $stream->getCodecName(), $wgLang->formatTimePeriod($format->getDuration()), $wgLang->formatBitrate($format->getBitRate()))->text();
+		return wfMessage(
+			'ev_audio_long_desc',
+			strtoupper($extension),
+			$stream->getCodecName(),
+			MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()),
+			MediaWikiServices::getInstance()->getContentLanguage()->formatBitrate($format->getBitRate())
+		)->text();
 	}
 }

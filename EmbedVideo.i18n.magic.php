@@ -8,6 +8,8 @@
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
+use MediaWiki\Extension\EmbedVideo\VideoService;
+
 $magicWords = [];
 
 $magicWords['en'] = [
@@ -21,7 +23,7 @@ $magicWords['en'] = [
 	'ev_end'	=> [0, 'end=$1'],
 ];
 
-foreach (\EmbedVideo\VideoService::getAvailableServices() as $service) {
+foreach (VideoService::getAvailableServices() as $service) {
 	if (!isset($magicWords['en'][$service])) {
 		$magicWords['en'][$service] = [0, $service];
 	}

@@ -8,7 +8,11 @@
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  **/
 
-namespace EmbedVideo;
+declare(strict_types=1);
+
+namespace MediaWiki\Extension\EmbedVideo;
+
+use MediaWiki\MediaWikiServices;
 
 class OEmbed {
 	/**
@@ -16,7 +20,7 @@ class OEmbed {
 	 *
 	 * @var array
 	 */
-	private $data = [];
+	private $data;
 
 	/**
 	 * Main Constructor
@@ -65,9 +69,9 @@ class OEmbed {
 			}
 
 			return $this->data['html'];
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	/**
@@ -77,11 +81,7 @@ class OEmbed {
 	 * @return mixed	String or false on error.
 	 */
 	public function getTitle() {
-		if (isset($this->data['title'])) {
-			return $this->data['title'];
-		} else {
-			return false;
-		}
+		return $this->data['title'] ?? false;
 	}
 
 	/**
@@ -91,11 +91,7 @@ class OEmbed {
 	 * @return mixed	String or false on error.
 	 */
 	public function getAuthorName() {
-		if (isset($this->data['author_name'])) {
-			return $this->data['author_name'];
-		} else {
-			return false;
-		}
+		return $this->data['author_name'] ?? false;
 	}
 
 	/**
@@ -105,11 +101,7 @@ class OEmbed {
 	 * @return mixed	String or false on error.
 	 */
 	public function getAuthorUrl() {
-		if (isset($this->data['author_url'])) {
-			return $this->data['author_url'];
-		} else {
-			return false;
-		}
+		return $this->data['author_url'] ?? false;
 	}
 
 	/**
@@ -119,11 +111,7 @@ class OEmbed {
 	 * @return mixed	String or false on error.
 	 */
 	public function getProviderName() {
-		if (isset($this->data['provider_name'])) {
-			return $this->data['provider_name'];
-		} else {
-			return false;
-		}
+		return $this->data['provider_name'] ?? false;
 	}
 
 	/**
@@ -133,11 +121,7 @@ class OEmbed {
 	 * @return mixed	String or false on error.
 	 */
 	public function getProviderUrl() {
-		if (isset($this->data['provider_url'])) {
-			return $this->data['provider_url'];
-		} else {
-			return false;
-		}
+		return $this->data['provider_url'] ?? false;
 	}
 
 	/**
@@ -148,10 +132,10 @@ class OEmbed {
 	 */
 	public function getWidth() {
 		if (isset($this->data['width'])) {
-			return intval($this->data['width']);
-		} else {
-			return false;
+			return (int)$this->data['width'];
 		}
+
+		return false;
 	}
 
 	/**
@@ -162,10 +146,10 @@ class OEmbed {
 	 */
 	public function getHeight() {
 		if (isset($this->data['height'])) {
-			return intval($this->data['height']);
-		} else {
-			return false;
+			return (int)$this->data['height'];
 		}
+
+		return false;
 	}
 
 	/**
@@ -176,10 +160,10 @@ class OEmbed {
 	 */
 	public function getThumbnailWidth() {
 		if (isset($this->data['thumbnail_width'])) {
-			return intval($this->data['thumbnail_width']);
-		} else {
-			return false;
+			return (int)$this->data['thumbnail_width'];
 		}
+
+		return false;
 	}
 
 	/**
@@ -190,10 +174,10 @@ class OEmbed {
 	 */
 	public function getThumbnailHeight() {
 		if (isset($this->data['thumbnail_height'])) {
-			return intval($this->data['thumbnail_height']);
-		} else {
-			return false;
+			return (int)$this->data['thumbnail_height'];
 		}
+
+		return false;
 	}
 
 	/**
@@ -204,12 +188,10 @@ class OEmbed {
 	 * @return mixed
 	 */
 	private static function curlGet($location) {
-		global $wgServer;
-
 		$ch = curl_init();
 
 		$timeout = 10;
-		$useragent = "EmbedVideo/1.0/" . $wgServer;
+		$useragent = "EmbedVideo/1.0/" . MediaWikiServices::getInstance()->getMainConfig()->get('Server');
 		$dateTime = gmdate("D, d M Y H:i:s", time()) . " GMT";
 		$headers = ['Date: ' . $dateTime];
 
