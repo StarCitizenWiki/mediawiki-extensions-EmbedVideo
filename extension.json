@@ -71,7 +71,7 @@
 		},
 		"ext.embedVideo.styles": {
 			"styles": [
-				"resources/ext.embedVideo.styles.css"
+				"resources/ext.embedVideo.styles.less"
 			],
 			"targets": [
 				"desktop",
