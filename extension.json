@@ -80,7 +80,8 @@
 		"EmbedVideoAddFileExtensions": true,
 		"EmbedVideoEnableVideoHandler": true,
 		"EmbedVideoEnableAudioHandler": true,
-		"FFprobeLocation": "/usr/bin/ffprobe"
+		"FFprobeLocation": "/usr/bin/ffprobe",
+		"EmbedVideoEnabledServices": []
 	},
 	"Hooks": {
 		"ParserFirstCallInit": [

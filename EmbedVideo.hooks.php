@@ -535,6 +535,15 @@ class EmbedVideoHooks {
 		$autoResize		= (isset($autoResize) && strtolower(trim($autoResize)) == "false") ? false : true;
 		$vAlignment		= trim($vAlignment);
 
+		try {
+			$enabledServices = MediaWikiServices::getInstance()->getMainConfig()->get('EmbedVideoEnabledServices') ?? [];
+			if (!empty($enabledServices) && !in_array($service, $enabledServices, true)) {
+				return self::error('service', sprintf('%s (as it is disabled)', $service));
+			}
+		} catch (ConfigException $e) {
+			// Pass through
+		}
+
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
 		if (stristr($dimensions, 'x')) {
 			$dimensions = strtolower($dimensions);
