@@ -6,7 +6,8 @@
 		"Andrew Whitworth",
 		"Alexia E. Smith",
 		"Cameron M. Chunn",
-		"Octfx"
+		"Octfx",
+		"Alistair3149"
 	],
 	"url": "https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo",
 	"descriptionmsg": "embedvideo_description",
@@ -97,7 +98,7 @@
 			"description": "",
 			"value": 320
 		},
-		"FFprobeLocation": {
+		"FFProbeLocation": {
 			"description": "Location to ffprobe",
 			"value": "/usr/bin/ffprobe"
 		},

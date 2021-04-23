@@ -27,7 +27,8 @@ class AudioHandler extends MediaHandler {
 		return [
 			'img_width'	=> 'width',
 			'ev_start'	=> 'start',
-			'ev_end'	=> 'end'
+			'ev_end'	=> 'end',
+			'cover' => 'cover',
 		];
 	}
 

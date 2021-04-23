@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
+use ConfigException;
 use File;
 use MediaWiki\MediaWikiServices;
 
@@ -35,7 +36,7 @@ class FFProbe {
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  File MediaWiki File
+	 * @param  \FSFile MediaWiki File
 	 * @return void
 	 */
 	public function __construct($file) {
@@ -121,7 +122,7 @@ class FFProbe {
 	}
 
 	private function getFilePath() {
-		return $this->file->getLocalRefPath();
+		return $this->file->getPath();
 	}
 
 	/**
@@ -131,7 +132,11 @@ class FFProbe {
 	 * @return boolean	Success
 	 */
 	private function invokeFFProbe() {
-		$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get('FFProbeLocation');
+		try {
+			$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get('FFProbeLocation');
+		} catch (ConfigException $e) {
+			return false;
+		}
 
 		if (!file_exists($ffprobeLocation)) {
 			$this->metadata = [];

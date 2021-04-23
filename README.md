@@ -63,6 +63,10 @@ To specify the start and end timestamps in the media use the start and end param
 
 	[[File:Example.mp4|start=2|end=6]]
 
+Additionally a cover image can be set for video files by specifying a `cover=` key.
+
+	[[File:Example.mp4|start=2|end=6|cover=File:LocalFile.png]]
+
 ## Tags
 
 The EmbedVideo parser function expects to be called in any of the following ways:

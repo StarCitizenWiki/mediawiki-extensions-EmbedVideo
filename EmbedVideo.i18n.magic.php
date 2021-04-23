@@ -21,6 +21,7 @@ $magicWords['en'] = [
 	'evu'		=> [0, 'evu'],
 	'ev_start'	=> [0, 'start=$1'],
 	'ev_end'	=> [0, 'end=$1'],
+	'cover'		=> [0, 'cover=$1'],
 ];
 
 foreach (VideoService::getAvailableServices() as $service) {

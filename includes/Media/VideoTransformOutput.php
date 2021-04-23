@@ -106,6 +106,7 @@ class VideoTransformOutput extends \MediaTransformOutput {
 			'class' => $class ?? false,
 			'style' => $style ? implode(' ', $style) : false,
 			'controls' => true,
+			'poster' => $parameters['cover'] ?? null,
 		], $descLink);
 	}
 }
