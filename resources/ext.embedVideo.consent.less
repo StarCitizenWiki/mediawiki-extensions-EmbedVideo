@@ -1,0 +1,46 @@
+.embedvideo-consent {
+	&__overlay {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		text-align: center;
+		overflow: hidden;
+
+		&:hover {
+			.embedvideo-consent__message-inner {
+				background-color: #fff;
+				color: #333;
+			}
+		}
+	}
+
+	&__message {
+		cursor: pointer;
+		z-index: 2;
+		background-color: rgba(0,0,0,0.55);
+		color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		position: relative;
+
+		&-inner {
+			border: 1px solid #fff;
+			padding: 0.5rem;
+			transition: background-color 0.2s ease;
+		}
+	}
+
+	&__thumbnail {
+		width: 100%;
+		height: 100%;
+		top: 0;
+		position: absolute;
+		left: 0;
+		object-fit: cover;
+	}
+}

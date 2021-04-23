@@ -37,7 +37,7 @@
 	"ResourceModules": {
 		"ext.embedVideo": {
 			"scripts": [
-				"js/autoResize.js"
+				"resources/ext.embedVideo.js"
 			],
 			"position": "top",
 			"targets": [
@@ -47,7 +47,10 @@
 		},
 		"ext.embedVideo.consent": {
 			"scripts": [
-				"js/consent.js"
+				"resources/ext.embedVideo.consent.js"
+			],
+			"styles": [
+				"resources/ext.embedVideo.consent.less"
 			],
 			"position": "top",
 			"targets": [
@@ -57,7 +60,7 @@
 		},
 		"ext.embedVideo-evl": {
 			"scripts": [
-				"js/evlPlayer.js"
+				"resources/ext.embedVideo-evl.js"
 			],
 			"position": "top",
 			"targets": [
@@ -71,7 +74,7 @@
 		},
 		"ext.embedVideo.styles": {
 			"styles": [
-				"css/embedvideo.css"
+				"resources/ext.embedVideo.styles.less"
 			],
 			"targets": [
 				"desktop",
