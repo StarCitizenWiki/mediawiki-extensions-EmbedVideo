@@ -18,7 +18,7 @@ class VideoService {
 	 */
 	static private $services = [
 		'archiveorg' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//archive.org/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
 			'https_enabled'	=> true,
@@ -30,7 +30,7 @@ class VideoService {
 			]
 		],
 		'bambuser' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//embed.bambuser.com/broadcast/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//embed.bambuser.com/broadcast/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
 			'https_enabled'	=> true,
@@ -42,7 +42,7 @@ class VideoService {
 			]
 		],
 		'bambuser_channel' => [
-			'embed' 		=> '<iframe loading="lazy" title="%4$s" src="//embed.bambuser.com/channel/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed' 		=> '<iframe loading="lazy" title="%4$s" src="//embed.bambuser.com/channel/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.2994923857868, // (640 / 493)
 			'https_enabled'	=> true,
@@ -54,7 +54,7 @@ class VideoService {
 			]
 		],
 		'beam' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -66,7 +66,7 @@ class VideoService {
 			]
 		],
 		'disclose' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.disclose.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.disclose.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
@@ -88,7 +88,7 @@ class VideoService {
 			'oembed'		=> 'http://blip.tv/oembed/?url=%1$s&width=%2$d&maxwidth=%2$d'
 		],
 		'bing' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//hub.video.msn.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" scrolling="no" noscroll allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -100,7 +100,7 @@ class VideoService {
 			]
 		],
 		'collegehumor' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.collegehumor.com/e/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.collegehumor.com/e/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.6260162601626, // (600 / 369)
 			'https_enabled'	=> true,
@@ -112,7 +112,7 @@ class VideoService {
 			]
 		],
 		'dailymotion' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.dailymotion.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.dailymotion.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -124,13 +124,13 @@ class VideoService {
 			]
 		],
 		'divshare' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.divshare.com/flash/video2?myId=%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.divshare.com/flash/video2?myId=%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true
 		],
 		'facebook' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://www.facebook.com/plugins/video.php?href=%1$s&show_text=0" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://www.facebook.com/plugins/video.php?href=%1$s&show_text=0" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -139,7 +139,7 @@ class VideoService {
 			]
 		],
 		'funnyordie' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.funnyordie.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.funnyordie.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64102564102564, // (640 / 390)
 			'https_enabled'	=> false,
@@ -151,7 +151,7 @@ class VideoService {
 			]
 		],
 		'gfycat' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//gfycat.com/ifr/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" scrolling="no" style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//gfycat.com/ifr/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture" scrolling="no" style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ></iframe>',
 			'default_width'	=> 640,
 			'https_enabled'	=> true,
 			'url_regex'		=> [
@@ -162,7 +162,7 @@ class VideoService {
 			]
 		],
 		'jwplayer' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//content.jwplatform.com/players/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//content.jwplatform.com/players/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -174,7 +174,7 @@ class VideoService {
 			]
 		],
 		'kickstarter' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.kickstarter.com/projects/%1$s/widget/video.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.kickstarter.com/projects/%1$s/widget/video.html" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -186,7 +186,7 @@ class VideoService {
 			]
 		],
 		'mediacccde' => [
-			'embed'	 => '<iframe loading="lazy" title="%4$s" src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" scrolling="no"></iframe>',
+			'embed'	 => '<iframe loading="lazy" title="%4$s" src="https://media.ccc.de/v/%1$s/oembed" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture" scrolling="no"></iframe>',
 			'default_width' => 660,
 			'default_ratio' => 1.77777777777778, // (16 / 9),
 			'https_enabled' => true,
@@ -198,7 +198,7 @@ class VideoService {
 			]
 		],
 		'metacafe' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.metacafe.com/embed/%1$s/" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.metacafe.com/embed/%1$s/" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> false,
@@ -210,7 +210,7 @@ class VideoService {
 			]
 		],
 		'microsoftstream' => [
-			'embed'			=> '<iframe loading="lazy" src="https://web.microsoftstream.com/embed/video/%1$s?autoplay=false&amp;showinfo=true" width="%2$d" height="%3$d"  allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:none;"></iframe>',
+			'embed'			=> '<iframe loading="lazy" src="https://web.microsoftstream.com/embed/video/%1$s?autoplay=false&amp;showinfo=true" width="%2$d" height="%3$d"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture" style="border:none;"></iframe>',
 			'default_width' => 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled' => true,
@@ -222,7 +222,7 @@ class VideoService {
 			]
 		],
 		'mixer' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://mixer.com/embed/player/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -246,7 +246,7 @@ class VideoService {
 			]
 		],
 		'rutube' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//rutube.ru/play/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//rutube.ru/play/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -258,7 +258,7 @@ class VideoService {
 			]
 		],
 		'smashcast' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://www.smashcast.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://www.smashcast.tv/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -315,7 +315,7 @@ class VideoService {
 			]
 		],
 		'teachertube' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.teachertube.com/embed/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.72972972972973, // (640 / 370)
 			'https_enabled'	=> false,
@@ -327,7 +327,7 @@ class VideoService {
 			]
 		],
 		'ted' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//embed-ssl.ted.com/talks/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//embed-ssl.ted.com/talks/%1$s.html" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -339,7 +339,7 @@ class VideoService {
 			]
 		],
 		'tubitv' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//tubitv.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//tubitv.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
@@ -351,7 +351,7 @@ class VideoService {
 			]
 		],
 		'tudou' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" width="%2$d" height="%3$d" frameborder="0"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="http://www.tudou.com/programs/view/html5embed.action?code=%1$s&autoPlay=false&playType=AUTO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture" width="%2$d" height="%3$d" frameborder="0"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
@@ -364,7 +364,7 @@ class VideoService {
 			]
 		],
 		'tvpot' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//videofarm.daum.net/controller/video/viewer/Video.html?vid=%1$s&play_loc=undefined&alert=true" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//videofarm.daum.net/controller/video/viewer/Video.html?vid=%1$s&play_loc=undefined&alert=true" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -376,7 +376,7 @@ class VideoService {
 			]
 		],
 		'twitch' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.twitch.tv/?channel=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.twitch.tv/?channel=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -388,7 +388,7 @@ class VideoService {
 			]
 		],
 		'twitchclip' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://clips.twitch.tv/embed?autoplay=false&clip=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://clips.twitch.tv/embed?autoplay=false&clip=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -400,7 +400,7 @@ class VideoService {
 			]
 		],
 		'twitchvod' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.twitch.tv/?autoplay=false&video=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.twitch.tv/?autoplay=false&video=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.64021164021164, // (620 / 378)
 			'https_enabled'	=> false,
@@ -417,7 +417,7 @@ class VideoService {
 			'https_enabled'	=> false
 		],
 		'vimeo' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//player.vimeo.com/video/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio' => 1.77777777777778, // (640 / 360)
 			'https_enabled'	=> true,
@@ -443,7 +443,7 @@ class VideoService {
 			]
 		],
 		'yahoo' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//screen.yahoo.com/%1$s.html?format=embed" width="%2$d" height="%3$d" scrolling="no" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowtransparency="true"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//screen.yahoo.com/%1$s.html?format=embed" width="%2$d" height="%3$d" scrolling="no" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture" allowtransparency="true"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -455,7 +455,7 @@ class VideoService {
 			]
 		],
 		'youtube' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -472,7 +472,7 @@ class VideoService {
 			]
 		],
 		'youtubeplaylist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -484,7 +484,7 @@ class VideoService {
 			]
 		],
 		'youtubevideolist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -496,7 +496,7 @@ class VideoService {
 			]
 		],
 		'youku' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="https://player.youku.com/embed/%1$s" width="%2$d" height="%3$d" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.6,
 			'https_enabled'	=> false,
