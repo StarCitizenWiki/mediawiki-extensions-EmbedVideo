@@ -57,7 +57,7 @@
 		},
 		"ext.embedVideo-evl": {
 			"scripts": [
-				"resources/ext.embedVideo.consent.js"
+				"resources/ext.embedVideo-evl.js"
 			],
 			"position": "top",
 			"targets": [
