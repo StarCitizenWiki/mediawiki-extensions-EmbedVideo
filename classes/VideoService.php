@@ -455,7 +455,7 @@ class VideoService {
 			]
 		],
 		'youtube' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -472,7 +472,7 @@ class VideoService {
 			]
 		],
 		'youtubeplaylist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/videoseries?list=%1$s&%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
@@ -484,7 +484,7 @@ class VideoService {
 			]
 		],
 		'youtubevideolist' => [
-			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
+			'embed'			=> '<iframe loading="lazy" title="%4$s" src="//www.youtube-nocookie.com/embed/%1$s?%5$s" width="%2$d" height="%3$d" frameborder="0" modestbranding="1" allowfullscreen="true" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>',
 			'default_width'	=> 640,
 			'default_ratio'	=> 1.77777777777778, // (16 / 9)
 			'https_enabled'	=> true,
