@@ -1,7 +1,7 @@
 <?php
 /**
  * EmbedVideo
- * AudioTransformOutput Class
+ * VideoTransformOutput Class
  *
  * @author  Alexia E. Smith
  * @license MIT
@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-namespace MediaWiki\Extension\EmbedVideo\Media;
+namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
 use File;
 use Html;
 use MediaTransformOutput;
 
-class AudioTransformOutput extends MediaTransformOutput {
+class VideoTransformOutput extends MediaTransformOutput {
 	/**
- * @var array
-*/
+	 * @var array
+	*/
 	private $parameters;
 
 	/**
@@ -34,8 +34,8 @@ class AudioTransformOutput extends MediaTransformOutput {
 	public function __construct($file, $parameters) {
 		$this->file = $file;
 		$this->parameters = $parameters;
-		$this->width = (isset($parameters['width']) ? $parameters['width'] : null);
-		$this->height = (isset($parameters['height']) ? $parameters['height'] : null);
+		$this->width = $parameters['width'] ?? null;
+		$this->height = $parameters['height'] ?? null;
 		$this->path = null;
 		$this->lang = false;
 		$this->page = $parameters['page'];
@@ -47,20 +47,15 @@ class AudioTransformOutput extends MediaTransformOutput {
 	 *
 	 * @access public
 	 * @param  array $options Associative array of options. Boolean options
-	 *                        should be indicated with a value of true for
-	 *                        true, and false or absent for false. alt
-	 *                        Alternate text or caption desc-link
-	 *                        Boolean, show a description link file-link
-	 *                        Boolean, show a file download link
+	 *                        should be indicated with a value of true for true, and false or
+	 *                        absent for false.
+	 *                        alt                Alternate text or caption
+	 *                        desc-link          Boolean, show a description link
+	 *                        file-link          Boolean, show a file download link
 	 *                        custom-url-link    Custom URL to link to
-	 *                        custom-title-link  Custom Title object to
-	 *                        link to valign       vertical-align property,
-	 *                        if the output is an inline element img-class
-	 *                        Class applied to the "<img>" tag, if there
-	 *                        is such a tag For images, desc-link and
-	 *                        file-link are implemented as a click-through.
-	 *                        For sounds and videos, they may be displayed
-	 *                        in other ways.
+	 *                        custom-title-link  Custom Title object to link to
+	 *                        valign             vertical-align property, if the output is an inline element
+	 *                        img-class          Class applied to the "<img>" tag, if there is such a tag
 	 *
 	 * @return string	HTML
 	 */
@@ -69,9 +64,12 @@ class AudioTransformOutput extends MediaTransformOutput {
 
 		$style = [];
 		$style[] = "max-width: 100%;";
+		$style[] = "max-height: 100%;";
 		if (empty($options['no-dimensions'])) {
 			$parameters['width'] = $this->getWidth();
+			$parameters['height'] = $this->getHeight();
 			$style[] = "width: {$this->getWidth()}px;";
+			$style[] = "height: {$this->getHeight()}px;";
 		}
 
 		if (!empty($options['valign'])) {
@@ -91,23 +89,25 @@ class AudioTransformOutput extends MediaTransformOutput {
 
 		$inOut = false;
 		if ($parameters['start'] !== $parameters['end']) {
-			if (isset($parameters['start']) && $parameters['start'] !== false) {
+			if ($parameters['start'] !== false) {
 				$inOut[] = $parameters['start'];
 			}
 
-			if (isset($parameters['end']) && $parameters['end'] !== false) {
+			if ($parameters['end'] !== false) {
 				$inOut[] = $parameters['end'];
 			}
 		}
 
 		$descLink = Html::element('a', ['href' => $parameters['descriptionUrl']], $parameters['descriptionUrl']);
 
-		return Html::rawElement('audio', [
+		return Html::rawElement('video', [
 			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
 			'width' => $this->getWidth(),
+			'height' => $this->getHeight(),
 			'class' => $class ?? false,
 			'style' => $style ? implode(' ', $style) : false,
 			'controls' => true,
+			'poster' => $parameters['cover'] ?? null,
 		], $descLink);
 	}
 }

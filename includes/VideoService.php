@@ -179,7 +179,6 @@ class VideoService {
 	 */
 	static private $serviceHostMap = [
 		'archive.org'				=> 'archiveorg',
-		'mixer.com'					=> 'mixer',
 		'soundcloud.com'			=> 'soundcloud',
 		'spotify.com'				=> ['spotifyalbum', 'spotifyartist', 'spotifytrack'],
 		'twitch.tv'					=> ['twitch', 'twitchclip', 'twitchvod'],

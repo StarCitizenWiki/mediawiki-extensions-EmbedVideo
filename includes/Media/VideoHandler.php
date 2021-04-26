@@ -16,6 +16,8 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use Exception;
 use File;
 use MediaTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\MediaWikiServices;
 use Title;
 
@@ -64,7 +66,7 @@ class VideoHandler extends AudioHandler {
 			$height = 360;
 		}
 
-		if (isset($parameters['width']) && isset($parameters['height']) && $parameters['width'] > 0 && $parameters['height'] === $parameters['width']) {
+		if (isset($parameters['width'], $parameters['height']) && $parameters['width'] > 0 && $parameters['height'] === $parameters['width']) {
 			// special allowance for square video embeds needed by some wikis, otherwise forced 16:9 ratios are followed.
 			return true;
 		}
@@ -86,10 +88,8 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = $height;
 		}
 
-		if ($width > 0 && $parameters['width'] > 0) {
-			if (($height / $width) != ($parameters['height'] / $parameters['width'])) {
-				$parameters['height'] = round($height / $width * $parameters['width']);
-			}
+		if ($width > 0 && $parameters['width'] > 0 && ($height / $width) !== ($parameters['height'] / $parameters['width'])) {
+			$parameters['height'] = round($height / $width * $parameters['width']);
 		}
 
 		if (isset($parameters['cover'])) {
@@ -120,22 +120,28 @@ class VideoHandler extends AudioHandler {
 	 * from an image. The results are stored in the database in the img_width,
 	 * img_height, img_bits fields.
 	 *
-	 * @note If this is a multipage file, return the width and height of the
-	 *  first page.
+	 * @note If this is a multipage file, return the width and height of the first page.
 	 *
 	 * @access public
 	 * @param  File   $file The file object, or false if there isn't one
 	 * @param  string $path The filename
-	 * @return mixed	An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @return mixed  An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
 	public function getImageSize($file, $path) {
 		$probe = new FFProbe($file);
 
-		$stream = $probe->getStream("v:0");
+		$stream = $probe->getStream('v:0');
 
 		if ($stream !== false) {
-			return [$stream->getWidth(), $stream->getHeight(), 0, "width=\"{$stream->getWidth()}\" height=\"{$stream->getHeight()}\"", 'bits' => $stream->getBitDepth()];
+			return [
+				$stream->getWidth(),
+				$stream->getHeight(),
+				0,
+				sprintf('width="%s" height="%s"', $stream->getWidth(), $stream->getHeight()),
+				'bits' => $stream->getBitDepth()
+			];
 		}
+
 		return [0, 0, 0, 'width="0" height="0"', 'bits' => 0];
 	}
 
@@ -169,7 +175,7 @@ class VideoHandler extends AudioHandler {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("v:0");
+		$stream = $probe->getStream('v:0');
 
 		if ($format === false || $stream === false) {
 			return parent::getDimensionsString($file);
@@ -177,7 +183,7 @@ class VideoHandler extends AudioHandler {
 
 		return wfMessage(
 			'ev_video_short_desc',
-			MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()),
+			$this->contentLanguage->formatTimePeriod($format->getDuration()),
 			$stream->getWidth(),
 			$stream->getHeight()
 		)->text();
@@ -194,7 +200,7 @@ class VideoHandler extends AudioHandler {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("v:0");
+		$stream = $probe->getStream('v:0');
 
 		if ($format === false || $stream === false) {
 			return parent::getGeneralShortDesc($file);
@@ -202,10 +208,10 @@ class VideoHandler extends AudioHandler {
 
 		return wfMessage(
 			'ev_video_short_desc',
-			MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()),
+			$this->contentLanguage->formatTimePeriod($format->getDuration()),
 			$stream->getWidth(),
 			$stream->getHeight(),
-			MediaWikiServices::getInstance()->getContentLanguage()->formatSize($file->getSize())
+			$this->contentLanguage->formatSize($file->getSize())
 		)->text();
 	}
 
@@ -220,7 +226,7 @@ class VideoHandler extends AudioHandler {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("v:0");
+		$stream = $probe->getStream('v:0');
 
 		if ($format === false || $stream === false) {
 			return parent::getGeneralLongDesc($file);
@@ -232,10 +238,10 @@ class VideoHandler extends AudioHandler {
 			'ev_video_long_desc',
 			strtoupper($extension),
 			$stream->getCodecName(),
-			MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()),
+			$this->contentLanguage->formatTimePeriod($format->getDuration()),
 			$stream->getWidth(),
 			$stream->getHeight(),
-			MediaWikiServices::getInstance()->getContentLanguage()->formatBitrate($format->getBitRate())
+			$this->contentLanguage->formatBitrate($format->getBitRate())
 		)->text();
 	}
 }

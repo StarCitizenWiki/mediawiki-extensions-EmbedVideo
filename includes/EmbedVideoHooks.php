@@ -86,6 +86,7 @@ class EmbedVideoHooks {
 			$wgMediaHandlers['audio/webm']			= $audioHandler;
 			$wgMediaHandlers['audio/x-flac']		= $audioHandler;
 		}
+
 		if ($config->get('EmbedVideoEnableVideoHandler')) {
 			$wgMediaHandlers['video/mp4']			= $videoHandler;
 			$wgMediaHandlers['video/ogg']			= $videoHandler;
@@ -117,7 +118,7 @@ class EmbedVideoHooks {
 	 * @throws MWException
 	 */
 	public static function onParserFirstCallInit(Parser $parser) {
-		$parser->setFunctionHook("ev", "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::parseEV");
+		$parser->setFunctionHook('ev', 'MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::parseEV');
 
 		return true;
 	}
@@ -149,7 +150,7 @@ class EmbedVideoHooks {
 		$urlArgs		= trim($urlArgs ?? '');
 		$width			= null;
 		$height			= null;
-		$autoResize		= (isset($autoResize) && strtolower(trim($autoResize)) == "false") ? false : true;
+		$autoResize		= !(isset($autoResize) && strtolower(trim($autoResize)) === "false");
 		$vAlignment		= trim($vAlignment ?? '');
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
@@ -241,11 +242,7 @@ class EmbedVideoHooks {
 			return self::error('unknown', $service);
 		}
 
-		if ($autoResize) {
-			$html = self::generateWrapperHTML($html, "autoResize", $service);
-		} else {
-			$html = self::generateWrapperHTML($html, null, $service);
-		}
+		$html = self::generateWrapperHTML($html, $autoResize ? 'autoResize' : null, $service);
 
 		if ($parser) {
 			// dont call this if parser is null (such as in API usage).
@@ -276,34 +273,37 @@ class EmbedVideoHooks {
 	 * @return string
 	 */
 	private static function generateWrapperHTML($html, $addClass = null, string $service = '') {
-		$classString = "embedvideo";
-		$styleString = "";
-		$innerClassString = implode(' ', [
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$classString = 'embedvideo';
+		$styleString = '';
+		$innerClassString = implode(' ', array_filter([
 			'embedvideowrap',
-			$service
-		]);
-		$outerClassString = "embedvideo ";
+			$service,
+			// This should probably be added as a RL variable
+			$config->get('EmbedVideoFetchExternalThumbnails') ?: 'no-fetch'
+		]));
+		$outerClassString = 'embedvideo ';
 
 		if (self::getContainer() === 'frame') {
-			$classString .= " thumbinner";
+			$classString .= ' thumbinner';
 		}
 
 		if (self::getAlignment() !== false) {
-			$outerClassString .= " ev_" . self::getAlignment() . " ";
-			$styleString .= " width: " . (self::$service->getWidth() + 6) . "px;";
+			$outerClassString .= sprintf(' ev_%s ', self::getAlignment());
+			$styleString .= sprintf(' width: %dpx;', (self::$service->getWidth() + 6));
 		}
 
 		if (self::getVerticalAlignment() !== false) {
-			$outerClassString .= " ev_" . self::getVerticalAlignment() . " ";
+			$outerClassString .= sprintf(' ev_%s ', self::getVerticalAlignment());
 		}
 
 		if ($addClass) {
-			$classString .= " " . $addClass;
+			$classString .= ' ' . $addClass;
 			$outerClassString .= $addClass;
 		}
 
 		$consentClickContainer = '';
-		if (MediaWikiServices::getInstance()->getMainConfig()->get('EmbedVideoRequireConsent')) {
+		if ($config->get('EmbedVideoRequireConsent')) {
 			$consentClickContainer = sprintf(
 				'<div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message"><span class="embedvideo-consent__message-inner">%s</span></div></div>',
 				(new Message('embedvideo_consent_text'))->text()
@@ -336,11 +336,12 @@ class EmbedVideoHooks {
 	 * @return boolean	Valid
 	 */
 	private static function setAlignment($alignment) {
-		if (!empty($alignment) && ($alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment == 'inline')) {
+		if (!empty($alignment) && ($alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment === 'inline')) {
 			self::$alignment = $alignment;
 		} elseif (!empty($alignment)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -370,6 +371,7 @@ class EmbedVideoHooks {
 		} elseif (!empty($vAlignment)) {
 			return false;
 		}
+
 		return true;
 	}
 

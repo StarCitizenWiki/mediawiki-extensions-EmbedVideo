@@ -12,6 +12,7 @@
 			return;
 		}
 
+		// Some url manipulation foo which tries to get the id of the requested video
 		if (url.substr(0, 1) === '/') {
 			url = 'http:' + url;
 		}
@@ -32,6 +33,7 @@
 			id = id.substr(0, id.length - 1)
 		}
 
+		// Do the actual fetch
 		await fetch(callUrl + id, {
 			credentials: "omit",
 			cache: "force-cache"
@@ -81,6 +83,8 @@
 
 		consentDiv.addEventListener('click', clickListener);
 
-		fetchThumb(div.querySelector('iframe').dataset.src, consentDiv, div);
+		if (!div.classList.contains('no-fetch')) {
+			fetchThumb(div.querySelector('iframe').dataset.src, consentDiv, div);
+		}
 	})
 })();

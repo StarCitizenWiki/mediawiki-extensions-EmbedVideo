@@ -75,27 +75,27 @@
 	},
 	"config": {
 		"EmbedVideoAddFileExtensions": {
-			"description": "",
+			"description": "Adds 'flac', 'mkv', 'mov', 'mp3', 'mp4', 'oga', 'ogg', 'ogv', 'wav', 'webm' to $wgFileExtensions.",
 			"value": true
 		},
 		"EmbedVideoEnableVideoHandler": {
-			"description": "",
+			"description": "Enables the video handler which displays local videos using the html5 <video> tag.",
 			"value": true
 		},
 		"EmbedVideoEnableAudioHandler": {
-			"description": "",
+			"description": "Enables the audio handler which displays local videos using the html5 <audio> tag.",
 			"value": true
 		},
 		"EmbedVideoMinWidth": {
-			"description": "",
+			"description": "Minimum width of the embedded iframe.",
 			"value": null
 		},
 		"EmbedVideoMaxWidth": {
-			"description": "",
+			"description": "Maximum width of the embedded iframe.",
 			"value": null
 		},
 		"EmbedVideoDefaultWidth": {
-			"description": "",
+			"description": "Default fallback width",
 			"value": 320
 		},
 		"FFProbeLocation": {
@@ -108,6 +108,10 @@
 		},
 		"EmbedVideoRequireConsent": {
 			"description": "Explicitly require consent by only loading the iframe if the user clicks it",
+			"value": true
+		},
+		"EmbedVideoFetchExternalThumbnails": {
+			"description": "Don't try to fetch thumbnails when consent is required.",
 			"value": true
 		}
 	},

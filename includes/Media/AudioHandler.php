@@ -16,9 +16,17 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use File;
 use MediaHandler;
 use MediaTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\MediaWikiServices;
 
 class AudioHandler extends MediaHandler {
+	protected $contentLanguage;
+
+	public function __construct() {
+		$this->contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
+	}
+
 	/**
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
@@ -193,7 +201,10 @@ class AudioHandler extends MediaHandler {
 			return parent::getDimensionsString($file);
 		}
 
-		return wfMessage('ev_audio_short_desc', MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()))->text();
+		return wfMessage(
+			'ev_audio_short_desc',
+			$this->contentLanguage->formatTimePeriod($format->getDuration())
+		)->text();
 	}
 
 	/**
@@ -213,7 +224,11 @@ class AudioHandler extends MediaHandler {
 			return parent::getGeneralShortDesc($file);
 		}
 
-		return wfMessage('ev_audio_short_desc', MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()), MediaWikiServices::getInstance()->getContentLanguage()->formatSize($file->getSize()))->text();
+		return wfMessage(
+			'ev_audio_short_desc',
+			$this->contentLanguage->formatTimePeriod($format->getDuration()),
+			$this->contentLanguage->formatSize($file->getSize())
+		)->text();
 	}
 
 	/**
@@ -239,8 +254,8 @@ class AudioHandler extends MediaHandler {
 			'ev_audio_long_desc',
 			strtoupper($extension),
 			$stream->getCodecName(),
-			MediaWikiServices::getInstance()->getContentLanguage()->formatTimePeriod($format->getDuration()),
-			MediaWikiServices::getInstance()->getContentLanguage()->formatBitrate($format->getBitRate())
+			$this->contentLanguage->formatTimePeriod($format->getDuration()),
+			$this->contentLanguage->formatBitrate($format->getBitRate())
 		)->text();
 	}
 }
