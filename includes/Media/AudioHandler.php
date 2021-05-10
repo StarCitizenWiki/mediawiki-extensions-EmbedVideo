@@ -31,7 +31,7 @@ class AudioHandler extends MediaHandler {
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
 	 */
-	public function getParamMap() {
+	public function getParamMap(): array {
 		return [
 			'img_width'	=> 'width',
 			'ev_start'	=> 'start',
@@ -50,7 +50,7 @@ class AudioHandler extends MediaHandler {
 	 * @param  mixed  $value
 	 * @return bool
 	 */
-	public function validateParam($name, $value) {
+	public function validateParam($name, $value): bool {
 		if ($name === 'width') {
 			return $value > 0;
 		}
@@ -68,7 +68,7 @@ class AudioHandler extends MediaHandler {
 	 *
 	 * @access public
 	 * @param  string	Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
-	 * @return mixed	Integer seconds or false for a bad format.
+	 * @return false|float|int    Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString($time) {
 		$parts = explode(":", $time);
@@ -191,7 +191,7 @@ class AudioHandler extends MediaHandler {
 	 * @param  File $file
 	 * @return string	Dimensions
 	 */
-	public function getDimensionsString($file) {
+	public function getDimensionsString($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
@@ -214,14 +214,14 @@ class AudioHandler extends MediaHandler {
 	 * @param  File $file
 	 * @return string
 	 */
-	public function getShortDesc($file) {
+	public function getShortDesc($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("a:0");
 
 		if ($format === false || $stream === false) {
-			return parent::getGeneralShortDesc($file);
+			return self::getGeneralShortDesc($file);
 		}
 
 		return wfMessage(
@@ -238,14 +238,14 @@ class AudioHandler extends MediaHandler {
 	 * @param  File $file
 	 * @return string
 	 */
-	public function getLongDesc($file) {
+	public function getLongDesc($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream("a:0");
 
 		if ($format === false || $stream === false) {
-			return parent::getGeneralLongDesc($file);
+			return self::getGeneralLongDesc($file);
 		}
 
 		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);

@@ -32,7 +32,7 @@ class VideoHandler extends AudioHandler {
 	 * @param  mixed  $value
 	 * @return bool
 	 */
-	public function validateParam($name, $value) {
+	public function validateParam($name, $value) :bool {
 		if ($name === 'width' || $name === 'height') {
 			return $value > 0;
 		}
@@ -125,9 +125,9 @@ class VideoHandler extends AudioHandler {
 	 * @access public
 	 * @param  File   $file The file object, or false if there isn't one
 	 * @param  string $path The filename
-	 * @return mixed  An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @return array  An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
-	public function getImageSize($file, $path) {
+	public function getImageSize($file, $path): array {
 		$probe = new FFProbe($file);
 
 		$stream = $probe->getStream('v:0');
@@ -171,7 +171,7 @@ class VideoHandler extends AudioHandler {
 	 * @param  File $file
 	 * @return string	Dimensions
 	 */
-	public function getDimensionsString($file) {
+	public function getDimensionsString($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
@@ -196,14 +196,14 @@ class VideoHandler extends AudioHandler {
 	 * @param  File $file
 	 * @return string
 	 */
-	public function getShortDesc($file) {
+	public function getShortDesc($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream('v:0');
 
 		if ($format === false || $stream === false) {
-			return parent::getGeneralShortDesc($file);
+			return self::getGeneralShortDesc($file);
 		}
 
 		return wfMessage(
@@ -222,14 +222,14 @@ class VideoHandler extends AudioHandler {
 	 * @param  File $file
 	 * @return string
 	 */
-	public function getLongDesc($file) {
+	public function getLongDesc($file): string {
 		$probe = new FFProbe($file);
 
 		$format = $probe->getFormat();
 		$stream = $probe->getStream('v:0');
 
 		if ($format === false || $stream === false) {
-			return parent::getGeneralLongDesc($file);
+			return self::getGeneralLongDesc($file);
 		}
 
 		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);

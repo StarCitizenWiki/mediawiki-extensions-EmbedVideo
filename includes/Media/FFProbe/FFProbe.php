@@ -41,7 +41,7 @@ class FFProbe {
 	 * @access public
 	 * @return array	Meta Data
 	 */
-	public function getMetaData() {
+	public function getMetaData(): array {
 		if (!is_array($this->metadata)) {
 			$this->invokeFFProbe();
 		}
@@ -60,7 +60,7 @@ class FFProbe {
 	 * 		"s:2" - Third subtitle
 	 * 		"d:0" - First generic data stream
 	 * 		"t:1" - Second attachment
-	 * @return mixed	StreamInfo object or false if does not exist.
+	 * @return false|StreamInfo    StreamInfo object or false if does not exist.
 	 */
 	public function getStream($select) {
 		$this->getMetaData();
@@ -101,7 +101,7 @@ class FFProbe {
 	 * Get the FormatInfo object.
 	 *
 	 * @access public
-	 * @return mixed	FormatInfo object or false if does not exist.
+	 * @return false|FormatInfo    FormatInfo object or false if does not exist.
 	 */
 	public function getFormat() {
 		$this->getMetaData();

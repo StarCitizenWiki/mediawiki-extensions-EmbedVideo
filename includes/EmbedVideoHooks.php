@@ -117,7 +117,7 @@ class EmbedVideoHooks {
 	 * @return boolean    true
 	 * @throws MWException
 	 */
-	public static function onParserFirstCallInit(Parser $parser) {
+	public static function onParserFirstCallInit(Parser $parser): bool {
 		$parser->setFunctionHook('ev', 'MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::parseEV');
 
 		return true;
@@ -272,7 +272,7 @@ class EmbedVideoHooks {
 	 * @param  string  [Optional] Additional Classes to add to the wrapper
 	 * @return string
 	 */
-	private static function generateWrapperHTML($html, $addClass = null, string $service = '') {
+	private static function generateWrapperHTML($html, $addClass = null, string $service = ''): string {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 		$classString = 'embedvideo';
 		$styleString = '';
@@ -322,7 +322,7 @@ class EmbedVideoHooks {
 	 * Return the alignment parameter.
 	 *
 	 * @access public
-	 * @return mixed	Alignment or false for not set.
+	 * @return bool|string    Alignment or false for not set.
 	 */
 	private static function getAlignment() {
 		return self::$alignment;
@@ -335,7 +335,7 @@ class EmbedVideoHooks {
 	 * @param  string	Alignment Parameter
 	 * @return boolean	Valid
 	 */
-	private static function setAlignment($alignment) {
+	private static function setAlignment($alignment): bool {
 		if (!empty($alignment) && ($alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment === 'inline')) {
 			self::$alignment = $alignment;
 		} elseif (!empty($alignment)) {
@@ -349,7 +349,7 @@ class EmbedVideoHooks {
 	 * Return the valignment parameter.
 	 *
 	 * @access public
-	 * @return mixed	Vertical Alignment or false for not set.
+	 * @return bool|string    Vertical Alignment or false for not set.
 	 */
 	private static function getVerticalAlignment() {
 		return self::$vAlignment;
@@ -362,7 +362,7 @@ class EmbedVideoHooks {
 	 * @param  string	Alignment Parameter
 	 * @return boolean	Valid
 	 */
-	private static function setVerticalAlignment($vAlignment) {
+	private static function setVerticalAlignment($vAlignment): bool {
 		if (!empty($vAlignment) && ($vAlignment === 'top' || $vAlignment === 'middle' || $vAlignment === 'bottom' || $vAlignment === 'baseline')) {
 			if ($vAlignment !== 'baseline') {
 				self::$alignment = 'inline';
@@ -379,7 +379,7 @@ class EmbedVideoHooks {
 	 * Return description text.
 	 *
 	 * @access private
-	 * @return mixed	String description or false for not set.
+	 * @return bool|string    String description or false for not set.
 	 */
 	private static function getDescription() {
 		return self::$description;
@@ -393,7 +393,7 @@ class EmbedVideoHooks {
 	 * @param  Parser $parser      Mediawiki Parser object
 	 * @return void
 	 */
-	private static function setDescription($description, Parser $parser) {
+	private static function setDescription(string $description, Parser $parser): void {
 		self::$description = (!$description ? false : $parser->recursiveTagParse($description));
 	}
 
@@ -402,7 +402,7 @@ class EmbedVideoHooks {
 	 *
 	 * @param string	Description
 	 */
-	private static function setDescriptionNoParse($description) {
+	private static function setDescriptionNoParse($description): void {
 		self::$description = (!$description ? false : $description);
 	}
 
@@ -410,7 +410,7 @@ class EmbedVideoHooks {
 	 * Return container type.
 	 *
 	 * @access private
-	 * @return mixed	String container type or false for not set.
+	 * @return bool|string    String container type or false for not set.
 	 */
 	private static function getContainer() {
 		return self::$container;
@@ -423,7 +423,7 @@ class EmbedVideoHooks {
 	 * @param  string	Container
 	 * @return boolean	Success
 	 */
-	private static function setContainer($container) {
+	private static function setContainer($container): bool {
 		if (!empty($container) && ($container === 'frame')) {
 			self::$container = $container;
 		} elseif (!empty($container)) {
@@ -438,7 +438,7 @@ class EmbedVideoHooks {
 	 * @access private
 	 * @return void
 	 */
-	private static function resetParameters() {
+	private static function resetParameters(): void {
 		self::$description	= false;
 		self::$alignment	= false;
 		self::$container	= false;
@@ -452,7 +452,7 @@ class EmbedVideoHooks {
 	 * @param  mixed	[...] Multiple arguments to be retrieved with func_get_args().
 	 * @return array	Printable Error Message
 	 */
-	private static function error($type = 'unknown') {
+	private static function error($type = 'unknown'): array {
 		$arguments = func_get_args();
 		array_shift($arguments);
 

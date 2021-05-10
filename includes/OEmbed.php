@@ -39,7 +39,7 @@ class OEmbed {
 	 *
 	 * @access public
 	 * @param  string	Full oEmbed URL to process.
-	 * @return mixed	New OEmbed object or false on initialization failure.
+	 * @return false|OEmbed    New OEmbed object or false on initialization failure.
 	 */
 	public static function newFromRequest($url) {
 		$data = self::curlGet($url);
@@ -135,7 +135,7 @@ class OEmbed {
 	 * Return the width from the data.
 	 *
 	 * @access public
-	 * @return mixed	Integer or false on error.
+	 * @return false|int    Integer or false on error.
 	 */
 	public function getWidth() {
 		if (isset($this->data['width'])) {
@@ -149,7 +149,7 @@ class OEmbed {
 	 * Return the height from the data.
 	 *
 	 * @access public
-	 * @return mixed	Integer or false on error.
+	 * @return false|int    Integer or false on error.
 	 */
 	public function getHeight() {
 		if (isset($this->data['height'])) {
@@ -163,7 +163,7 @@ class OEmbed {
 	 * Return the thumbnail width from the data.
 	 *
 	 * @access public
-	 * @return mixed	Integer or false on error.
+	 * @return false|int    Integer or false on error.
 	 */
 	public function getThumbnailWidth() {
 		if (isset($this->data['thumbnail_width'])) {
@@ -177,7 +177,7 @@ class OEmbed {
 	 * Return the thumbnail height from the data.
 	 *
 	 * @access public
-	 * @return mixed	Integer or false on error.
+	 * @return false|int    Integer or false on error.
 	 */
 	public function getThumbnailHeight() {
 		if (isset($this->data['thumbnail_height'])) {
@@ -192,7 +192,7 @@ class OEmbed {
 	 *
 	 * @access private
 	 * @param  string	URL
-	 * @return mixed
+	 * @return bool|string
 	 */
 	private static function curlGet($location) {
 		$ch = curl_init();

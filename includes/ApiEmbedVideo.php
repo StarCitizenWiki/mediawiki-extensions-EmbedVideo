@@ -18,7 +18,7 @@ class ApiEmbedVideo extends ApiBase {
 	/**
 	 * Execute the API call.
 	 */
-	public function execute() {
+	public function execute(): bool {
 		$getHTML = EmbedVideoHooks::parseEV(
 			null,
 			$this->getMain()->getVal('service'),
@@ -47,7 +47,7 @@ class ApiEmbedVideo extends ApiBase {
 	 *
 	 * @return array
 	 */
-	public function getAllowedParams() {
+	public function getAllowedParams(): array {
 		return array_merge(parent::getAllowedParams(), [
 			'service' => [
 				ApiBase::PARAM_TYPE => 'string',

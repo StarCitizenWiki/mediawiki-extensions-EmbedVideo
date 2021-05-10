@@ -15,10 +15,7 @@
         });
 
 		function isFullscreen() {
-			if (document.fullscreenElement != null || document.mozFullScreenElement != null || document.webkitFullscreenElement != null) {
-				return true;
-			}
-			return false;
+			return document.fullscreenElement != null || document.mozFullScreenElement != null || document.webkitFullscreenElement != null;
 		}
 
         function autoResizerResizeEnd() {
@@ -40,25 +37,23 @@
                 var self = $(this);
                 var iframe = self.find('iframe');
                 var wrap = self.find('.embedvideowrap');
-                
+
                 if(parent.width() <= 0) {
                     return;
                 }
 
                 if(self.hasClass("thumb")) {
-                    
+
                     var originalWidth = iframe.attr("data-orig-width");
-                    if(originalWidth == undefined) {
+                    if(originalWidth === undefined) {
                         originalWidth = iframe.width();
                     }
 
                     if(parent.width() < iframe.width()) {
                         self.width(parent.width());
-                    }
-                    else if(parent.width() > originalWidth) {
+                    } else if(parent.width() > originalWidth) {
                         self.width(originalWidth).css('width', originalWidth).attr('width', originalWidth);
-                    }
-                    else{ 
+                    } else{
                         resizeHandler(self, iframe, parent, wrap);
                     }
                     return;
@@ -83,7 +78,7 @@
         }
 
         window.autoResizer = autoResizer;
-        
+
         function resizeHandler(self, iframe, parent, wrap) {
             self.addClass('autoResized');
 

@@ -59,7 +59,7 @@ class VideoTransformOutput extends MediaTransformOutput {
 	 *
 	 * @return string	HTML
 	 */
-	public function toHtml($options = []) {
+	public function toHtml($options = []): string {
 		$parameters = $this->parameters;
 
 		$style = [];

@@ -195,7 +195,7 @@ class VideoService {
 	/**
 	 * Video ID
 	 *
-	 * @var array
+	 * @var string|false
 	 */
 	private $id = false;
 
@@ -250,7 +250,7 @@ class VideoService {
 	 *
 	 * @access public
 	 * @param  string	Service Name
-	 * @return mixed	New VideoService object or false on initialization error.
+	 * @return false|VideoService    New VideoService object or false on initialization error.
 	 */
 	public static function newFromName($service) {
 		if (isset(self::$services[$service])) {
@@ -372,7 +372,7 @@ class VideoService {
 	 * Return Video ID
 	 *
 	 * @access public
-	 * @return mixed	Parsed Video ID or false for one that is not set.
+	 * @return bool|string    Parsed Video ID or false for one that is not set.
 	 */
 	public function getVideoID() {
 		return $this->id;
@@ -385,7 +385,7 @@ class VideoService {
 	 * @param  string	Video ID/URL
 	 * @return boolean	Success
 	 */
-	public function setVideoID($id) {
+	public function setVideoID($id): bool {
 		$id = $this->parseVideoID($id);
 		if ($id !== false) {
 			$this->id = $id;
@@ -443,7 +443,7 @@ class VideoService {
 	 * Return the width.
 	 *
 	 * @access public
-	 * @return mixed	Integer value or false for not set.
+	 * @return bool|int    Integer value or false for not set.
 	 */
 	public function getWidth() {
 		return $this->width;
@@ -455,7 +455,7 @@ class VideoService {
 	 * @access public
 	 * @return String, defaulting to message 'ev_default_play_desc'
 	 */
-	public function getIframeTitle() {
+	public function getIframeTitle(): string {
 		if ($this->iframeTitle === '') {
 			return wfMessage('ev_default_play_desc')->text();
 		}
@@ -471,7 +471,7 @@ class VideoService {
 	 * @param  integer	Width
 	 * @return void
 	 */
-	public function setWidth($width = null) {
+	public function setWidth($width = null): void {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 		$videoMinWidth = $config->get('EmbedVideoMinWidth');
 		$videoMaxWidth = $config->get('EmbedVideoMaxWidth');
@@ -505,7 +505,7 @@ class VideoService {
 	 * Return the height.
 	 *
 	 * @access public
-	 * @return mixed	Integer value or false for not set.
+	 * @return bool|int    Integer value or false for not set.
 	 */
 	public function getHeight() {
 		return $this->height;
@@ -518,7 +518,7 @@ class VideoService {
 	 * @param  mixed	[Optional] Height Value
 	 * @return void
 	 */
-	public function setHeight($height = null) {
+	public function setHeight($height = null): void {
 		if ($height !== null && $height > 0) {
 			$this->height = (int)$height;
 			return;
@@ -535,7 +535,7 @@ class VideoService {
 	 * Return the optional URL arguments.
 	 *
 	 * @access public
-	 * @return mixed	Integer value or false for not set.
+	 * @return false|string    Integer value or false for not set.
 	 */
 	public function getUrlArgs() {
 		if ($this->urlArgs !== false) {
@@ -552,7 +552,7 @@ class VideoService {
 	 * @param  string	Raw Arguments
 	 * @return boolean	Success
 	 */
-	public function setUrlArgs($urlArgs) {
+	public function setUrlArgs($urlArgs): bool {
 		if (!$urlArgs) {
 			return true;
 		}
@@ -582,7 +582,7 @@ class VideoService {
 	 * @access public
 	 * @return boolean
 	 */
-	public function isHttpsEnabled() {
+	public function isHttpsEnabled(): bool {
 		return (bool)$this->service['https_enabled'];
 	}
 
