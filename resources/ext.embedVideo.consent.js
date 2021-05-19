@@ -63,28 +63,29 @@
 			})
 	}
 
-	document.querySelectorAll('.embedvideowrap').forEach(function (div) {
-		const clickListener = function (event) {
+	mw.hook( 'wikipage.content' ).add( () => {
+		document.querySelectorAll('.embedvideowrap').forEach(function (div) {
+			const clickListener = function (event) {
+				if (iframe !== null) {
+					iframe.src = iframe.dataset.src ?? '';
+				}
+
+				event.target.removeEventListener('click', clickListener);
+				div.removeChild(consentDiv);
+			};
+
+			const consentDiv = div.querySelector('.embedvideo-consent__overlay');
 			const iframe = div.querySelector('iframe');
 
-			if (iframe !== null) {
-				iframe.src = iframe.dataset.src ?? '';
+			if (consentDiv === null || iframe === null) {
+				return;
 			}
 
-			event.target.removeEventListener('click', clickListener);
-			div.removeChild(consentDiv);
-		};
+			consentDiv.addEventListener('click', clickListener);
 
-		const consentDiv = div.querySelector('.embedvideo-consent__overlay');
-
-		if (consentDiv === null) {
-			return;
-		}
-
-		consentDiv.addEventListener('click', clickListener);
-
-		if (!div.classList.contains('no-fetch')) {
-			fetchThumb(div.querySelector('iframe').dataset.src, consentDiv, div);
-		}
-	})
+			if (!div.classList.contains('no-fetch')) {
+				fetchThumb(iframe.dataset.src, consentDiv, div);
+			}
+		})
+	} );
 })();
