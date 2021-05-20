@@ -1,25 +1,15 @@
 .embedvideo-consent {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+
 	&__overlay {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		text-align: center;
-		overflow: hidden;
-
-		&:hover {
-			.embedvideo-consent__message-inner {
-				background-color: #fff;
-				color: #333;
-			}
-		}
-	}
-
-	&__message {
 		cursor: pointer;
 		z-index: 1;
-		background-color: rgba(0,0,0,0.55);
+		background: linear-gradient(to bottom, black, 40%, transparent);
 		color: #fff;
 		display: flex;
 		justify-content: center;
@@ -27,17 +17,26 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
+		font-size: 0.875rem;
+	}
 
-		&-inner {
-			border: 1px solid #fff;
-			margin: 1rem;
-			padding: 0.5rem;
-			transition: background-color 0.2s ease;
+	&__title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 1rem;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
 
-			small {
-				display: block;
-			}
-		}
+	&__message {
+		border: 1px solid #fff;
+		margin: 1rem;
+		padding: 0.5rem 1rem;
+		border-radius: 100px;
+		transition: background-color 0.2s ease;
 	}
 
 	&__thumbnail {

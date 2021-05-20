@@ -305,7 +305,7 @@ class EmbedVideoHooks {
 		$consentClickContainer = '';
 		if ($config->get('EmbedVideoRequireConsent')) {
 			$consentClickContainer = sprintf(
-				'<div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message"><span class="embedvideo-consent__message-inner">%s</span></div></div>',
+				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message">%s</div></div></div>',
 				(new Message('embedvideo_consent_text'))->text()
 			);
 		}
