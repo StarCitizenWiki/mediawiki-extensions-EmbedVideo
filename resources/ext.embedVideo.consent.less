@@ -9,7 +9,6 @@
 	&__overlay {
 		cursor: pointer;
 		z-index: 1;
-		background: linear-gradient(to bottom, black, 40%, transparent);
 		color: #fff;
 		display: flex;
 		justify-content: center;
@@ -18,6 +17,18 @@
 		height: 100%;
 		position: relative;
 		font-size: 0.875rem;
+		
+		// Use pseudo element so it can be animated separately 
+		&:before {
+			background: linear-gradient(to bottom, #000000, 40%, transparent);
+			content: "";
+			display: block;
+			width: inherit;
+			height: inherit;
+			position: absolute;
+			z-index: -1;
+			transition: opacity 250ms ease;
+		}
 	}
 
 	&__title {
@@ -29,6 +40,7 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+		transition: opacity 250ms ease;
 	}
 
 	&__message {
@@ -36,7 +48,7 @@
 		margin: 1rem;
 		padding: 0.5rem 1rem;
 		border-radius: 100px;
-		transition: background-color 0.2s ease;
+		transition: background-color 250ms ease, border-color 250ms ease;
 	}
 
 	&__thumbnail {
@@ -46,5 +58,19 @@
 		position: absolute;
 		left: 0;
 		object-fit: cover;
+	}
+
+	&:hover {
+		.embedvideo-consent {
+			&__overlay:before,
+			&__title {
+				opacity: 0;
+			}
+
+			&__message {
+				background-color: #36c;
+				border-color: #36c;
+			}
+		}
 	}
 }
