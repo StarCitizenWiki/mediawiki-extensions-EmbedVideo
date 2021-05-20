@@ -17,7 +17,7 @@
 		height: 100%;
 		position: relative;
 		font-size: 0.875rem;
-		
+
 		// Use pseudo element so it can be animated separately 
 		&:before {
 			background: linear-gradient(to bottom, #000000, 40%, transparent);
@@ -56,8 +56,12 @@
 		height: 100%;
 		top: 0;
 		position: absolute;
-		left: 0;
-		object-fit: cover;
+
+		&__image {
+			width: inherit;
+			height: inherit;
+			object-fit: cover;
+		}
 	}
 
 	&:hover {

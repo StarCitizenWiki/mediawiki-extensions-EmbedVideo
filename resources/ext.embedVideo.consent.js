@@ -46,11 +46,15 @@
 					return;
 				}
 
-				const image = document.createElement('img');
+				const picture = document.createElement('picture'),
+					image = document.createElement('img');
+
+				picture.classList.add('embedvideo-consent__thumbnail');
 				image.src = json.thumbnail_url;
 				image.setAttribute('loading', 'lazy');
-				image.classList.add('embedvideo-consent__thumbnail');
-				parent.appendChild(image);
+				image.classList.add('embedvideo-consent__thumbnail__image');
+				picture.appendChild(image);
+				parent.appendChild(picture);
 
 				if (typeof json.title !== 'undefined' && json.title.length > 0) {
 					const title = document.createElement('div');
