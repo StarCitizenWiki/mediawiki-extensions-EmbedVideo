@@ -100,7 +100,11 @@ class AudioTransformOutput extends MediaTransformOutput {
 			}
 		}
 
-		$descLink = Html::element('a', ['href' => $parameters['descriptionUrl']], $parameters['descriptionUrl']);
+		if (isset($parameters['descriptionUrl'])) {
+			$descLink = Html::element('a', ['href' => $parameters['descriptionUrl']], $parameters['descriptionUrl']);
+		} else {
+			$descLink = '';
+		}
 
 		return Html::rawElement('audio', [
 			'src' => $this->url . ($inOut !== false ? '#t=' . implode(',', $inOut) : ''),
