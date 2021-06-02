@@ -14,6 +14,7 @@ namespace MediaWiki\Extension\EmbedVideo;
 
 use JsonException;
 use MediaWiki\MediaWikiServices;
+use MWException;
 
 class OEmbed {
 	/**
@@ -42,9 +43,9 @@ class OEmbed {
 	 * @return false|OEmbed    New OEmbed object or false on initialization failure.
 	 */
 	public static function newFromRequest($url) {
-		$data = self::curlGet($url);
-		if ($data !== false) {
+		$data = self::get($url);
 
+		if ($data !== false) {
 			try {
 				$data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 			} catch (JsonException $e) {
@@ -194,36 +195,31 @@ class OEmbed {
 	 * @param  string	URL
 	 * @return bool|string
 	 */
-	private static function curlGet($location) {
-		$ch = curl_init();
-
+	private static function get($location) {
 		$timeout = 10;
-		$useragent = "EmbedVideo/1.0/" . MediaWikiServices::getInstance()->getMainConfig()->get('Server');
-		$dateTime = gmdate("D, d M Y H:i:s", time()) . " GMT";
-		$headers = ['Date: ' . $dateTime];
 
-		$curlOptions = [
-			CURLOPT_TIMEOUT		   => $timeout,
-			CURLOPT_USERAGENT	   => $useragent,
-			CURLOPT_URL			   => $location,
-			CURLOPT_CONNECTTIMEOUT  => $timeout,
-			CURLOPT_FOLLOWLOCATION  => true,
-			CURLOPT_MAXREDIRS	   => 10,
-			CURLOPT_COOKIEFILE	   => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'curlget',
-			CURLOPT_COOKIEJAR	   => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'curlget',
-			CURLOPT_RETURNTRANSFER  => true,
-			CURLOPT_HTTPHEADER	   => $headers
-		];
+		$req = MediaWikiServices::getInstance()->getHttpRequestFactory()->create($location, [
+			'timeout' => $timeout,
+			'connectTimeout' => $timeout,
+			'userAgent' => sprintf('EmbedVideo/1.0/%s', MediaWikiServices::getInstance()->getMainConfig()->get('Server')),
+			'followRedirects' => true,
+			'maxRedirects' => 10,
+		]);
 
-		curl_setopt_array($ch, $curlOptions);
+		$req->setHeader('Date', gmdate("D, d M Y H:i:s", time()) . " GMT");
 
-		$page = curl_exec($ch);
+		try {
+			$status = $req->execute();
 
-		$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($responseCode == 503 || $responseCode == 404 || $responseCode == 501 || $responseCode == 401) {
+			if (!$status->isOK()) {
+				return false;
+			}
+
+			return $req->getContent();
+		} catch (MWException $e) {
+			wfLogWarning($e->getMessage());
+
 			return false;
 		}
-
-		return $page;
 	}
 }
