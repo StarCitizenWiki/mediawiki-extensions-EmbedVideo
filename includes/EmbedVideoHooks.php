@@ -5,19 +5,13 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo;
 
 use ConfigException;
-use MediaWiki;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
-use MediaWiki\Hook\BeforeInitializeHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\MediaWikiServices;
 use Message;
 use MWException;
-use OutputPage;
 use Parser;
-use Title;
-use User;
-use WebRequest;
 
 /**
  * EmbedVideo
@@ -28,7 +22,7 @@ use WebRequest;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks implements BeforeInitializeHook, ParserFirstCallInitHook {
+class EmbedVideoHooks implements ParserFirstCallInitHook {
 	/**
 	 * Temporary storage for the current service object.
 	 *
@@ -67,16 +61,10 @@ class EmbedVideoHooks implements BeforeInitializeHook, ParserFirstCallInitHook {
 	/**
 	 * Adds the appropriate audio and video handlers
 	 *
-	 * @param Title $title
-	 * @param null $unused
-	 * @param OutputPage $output
-	 * @param User $user
-	 * @param WebRequest $request
-	 * @param MediaWiki $mediaWiki
 	 * @return void
 	 */
-	public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediaWiki ): void {
-		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
+	public static function setup(): void {
+		global $wgEmbedVideoDefaultWidth, $wgFileExtensions, $wgMediaHandlers;
 
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 

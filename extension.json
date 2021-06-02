@@ -114,13 +114,15 @@
 			"value": true
 		}
 	},
+	"ExtensionFunctions": [
+		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
+	],
 	"HookHandlers": {
 		"EmbedVideoHooks": {
 			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks"
 		}
 	},
 	"Hooks": {
-		"BeforeInitialize": "EmbedVideoHooks",
 		"ParserFirstCallInit": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
