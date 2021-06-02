@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media\FFProbe;
 
@@ -31,7 +31,7 @@ class FFProbe {
 	 * @param  \FSFile MediaWiki File
 	 * @return void
 	 */
-	public function __construct($file) {
+	public function __construct( $file ) {
 		$this->file = $file;
 	}
 
@@ -39,10 +39,10 @@ class FFProbe {
 	 * Return the entire cache of meta data.
 	 *
 	 * @access public
-	 * @return array	Meta Data
+	 * @return array Meta Data
 	 */
 	public function getMetaData(): array {
-		if (!is_array($this->metadata)) {
+		if ( !is_array( $this->metadata ) ) {
 			$this->invokeFFProbe();
 		}
 		return $this->metadata;
@@ -60,9 +60,9 @@ class FFProbe {
 	 * 		"s:2" - Third subtitle
 	 * 		"d:0" - First generic data stream
 	 * 		"t:1" - Second attachment
-	 * @return false|StreamInfo    StreamInfo object or false if does not exist.
+	 * @return false|StreamInfo StreamInfo object or false if does not exist.
 	 */
-	public function getStream($select) {
+	public function getStream( $select ) {
 		$this->getMetaData();
 
 		$types = [
@@ -74,23 +74,23 @@ class FFProbe {
 			't'	=> 'attachment'
 		];
 
-		if (!isset($this->metadata['streams'])) {
+		if ( !isset( $this->metadata['streams'] ) ) {
 			return false;
 		}
 
-		[$type, $index] = explode(":", $select);
+		[ $type, $index ] = explode( ":", $select );
 		$index = (int)$index;
 
-		$type = ($types[$type] ?? false);
+		$type = ( $types[$type] ?? false );
 
 		$i = 0;
-		foreach ($this->metadata['streams'] as $stream) {
-			if ($type !== false && isset($stream['codec_type'])) {
-				if ($index === $i && $stream['codec_type'] === $type) {
-					return new StreamInfo($stream);
+		foreach ( $this->metadata['streams'] as $stream ) {
+			if ( $type !== false && isset( $stream['codec_type'] ) ) {
+				if ( $index === $i && $stream['codec_type'] === $type ) {
+					return new StreamInfo( $stream );
 				}
 			}
-			if ($type === false || $stream['codec_type'] === $type) {
+			if ( $type === false || $stream['codec_type'] === $type ) {
 				$i++;
 			}
 		}
@@ -101,16 +101,16 @@ class FFProbe {
 	 * Get the FormatInfo object.
 	 *
 	 * @access public
-	 * @return false|FormatInfo    FormatInfo object or false if does not exist.
+	 * @return false|FormatInfo FormatInfo object or false if does not exist.
 	 */
 	public function getFormat() {
 		$this->getMetaData();
 
-		if (!isset($this->metadata['format'])) {
+		if ( !isset( $this->metadata['format'] ) ) {
 			return false;
 		}
 
-		return new FormatInfo($this->metadata['format']);
+		return new FormatInfo( $this->metadata['format'] );
 	}
 
 	private function getFilePath() {
@@ -120,17 +120,17 @@ class FFProbe {
 	/**
 	 * Invoke ffprobe on the command line.
 	 *
-	 * @access private
-	 * @return boolean	Success
+	 * @private
+	 * @return bool Success
 	 */
 	private function invokeFFProbe() {
 		try {
-			$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get('FFProbeLocation');
-		} catch (ConfigException $e) {
+			$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get( 'FFProbeLocation' );
+		} catch ( ConfigException $e ) {
 			return false;
 		}
 
-		if (!file_exists($ffprobeLocation)) {
+		if ( !file_exists( $ffprobeLocation ) ) {
 			$this->metadata = [];
 			return false;
 		}
@@ -140,19 +140,19 @@ class FFProbe {
 				sprintf(
 					'%s -v quiet -print_format json -show_format -show_streams %s',
 					$ffprobeLocation,
-					escapeshellarg($this->getFilePath())
+					escapeshellarg( $this->getFilePath() )
 				)
 			)
 		);
 
 		try {
-			$metadata = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-		} catch (JsonException $e) {
+			$metadata = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
+		} catch ( JsonException $e ) {
 			$this->metadata = [];
 			return false;
 		}
 
-		if (is_array($metadata)) {
+		if ( is_array( $metadata ) ) {
 			$this->metadata = $metadata;
 		} else {
 			$this->metadata = [];

@@ -1,4 +1,8 @@
 ## Patch Notes
+### v3.0.0
+* Added explicit consent setting
+* Code Cleanup
+
 ### v2.8.0
 * Renamed hitbox.tv to smashcast.tv.
 * Updated Nico Video embed code.

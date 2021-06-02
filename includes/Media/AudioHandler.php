@@ -7,17 +7,17 @@
  * @license MIT
  * @package EmbedVideo
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
- **/
+ */
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use File;
 use MediaHandler;
 use MediaTransformOutput;
-use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
 
 class AudioHandler extends MediaHandler {
@@ -46,17 +46,17 @@ class AudioHandler extends MediaHandler {
 	 * If you return false, the parser will do something quiet and forgiving.
 	 *
 	 * @access public
-	 * @param  string $name
-	 * @param  mixed  $value
+	 * @param string $name
+	 * @param mixed $value
 	 * @return bool
 	 */
-	public function validateParam($name, $value): bool {
-		if ($name === 'width') {
+	public function validateParam( $name, $value ): bool {
+		if ( $name === 'width' ) {
 			return $value > 0;
 		}
 
-		if ($name === 'start' || $name === 'end') {
-			return $this->parseTimeString($value) !== false;
+		if ( $name === 'start' || $name === 'end' ) {
+			return $this->parseTimeString( $value ) !== false;
 		}
 
 		return false;
@@ -68,18 +68,18 @@ class AudioHandler extends MediaHandler {
 	 *
 	 * @access public
 	 * @param  string	Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
-	 * @return false|float|int    Integer seconds or false for a bad format.
+	 * @return false|float|int Integer seconds or false for a bad format.
 	 */
-	public function parseTimeString($time) {
-		$parts = explode(":", $time);
-		if ($parts === false) {
+	public function parseTimeString( $time ) {
+		$parts = explode( ":", $time );
+		if ( $parts === false ) {
 			return false;
 		}
-		$parts = array_reverse($parts);
+		$parts = array_reverse( $parts );
 
-		$magnitude = [1, 60, 3600, 86400];
+		$magnitude = [ 1, 60, 3600, 86400 ];
 		$seconds = 0;
-		foreach ($parts as $index => $part) {
+		foreach ( $parts as $index => $part ) {
 			$seconds += $part * $magnitude[$index];
 		}
 		return $seconds;
@@ -92,7 +92,7 @@ class AudioHandler extends MediaHandler {
 	 * @param  array	Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
-	public function makeParamString($parameters): string {
+	public function makeParamString( $parameters ): string {
 		return ''; // Width does not matter to video or audio.
 	}
 
@@ -101,9 +101,9 @@ class AudioHandler extends MediaHandler {
 	 *
 	 * @access public
 	 * @param  string	The parameter string without file name (e.g. 122px)
-	 * @return mixed	Array of parameters or false on failure.
+	 * @return mixed Array of parameters or false on failure.
 	 */
-	public function parseParamString($string): array {
+	public function parseParamString( $string ): array {
 		return []; // Nothing to parse.  See makeParamString above.
 	}
 
@@ -115,28 +115,28 @@ class AudioHandler extends MediaHandler {
 	 * @access public
 	 * @param  object	File
 	 * @param  array	Parameters
-	 * @return boolean	Success
+	 * @return bool Success
 	 */
-	public function normaliseParams($file, &$parameters): bool {
+	public function normaliseParams( $file, &$parameters ): bool {
 		global $wgEmbedVideoDefaultWidth;
 
-		if (isset($parameters['width']) && $parameters['width'] > 0) {
+		if ( isset( $parameters['width'] ) && $parameters['width'] > 0 ) {
 			$parameters['width'] = (int)$parameters['width'];
 		} else {
 			$parameters['width'] = $wgEmbedVideoDefaultWidth;
 		}
 
-		if (isset($parameters['start'])) {
-			$parameters['start'] = $this->parseTimeString($parameters['start']);
-			if ($parameters['start'] === false) {
-				unset($parameters['start']);
+		if ( isset( $parameters['start'] ) ) {
+			$parameters['start'] = $this->parseTimeString( $parameters['start'] );
+			if ( $parameters['start'] === false ) {
+				unset( $parameters['start'] );
 			}
 		}
 
-		if (isset($parameters['end'])) {
-			$parameters['end'] = $this->parseTimeString($parameters['end']);
-			if ($parameters['end'] === false) {
-				unset($parameters['end']);
+		if ( isset( $parameters['end'] ) ) {
+			$parameters['end'] = $this->parseTimeString( $parameters['end'] );
+			if ( $parameters['end'] === false ) {
+				unset( $parameters['end'] );
 			}
 		}
 
@@ -157,11 +157,11 @@ class AudioHandler extends MediaHandler {
 	 *  first page.
 	 *
 	 * @access public
-	 * @param  File   $file The file object, or false if there isn't one
-	 * @param  string $path The filename
-	 * @return mixed	An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @param File $file The file object, or false if there isn't one
+	 * @param string $path The filename
+	 * @return mixed An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
-	public function getImageSize($file, $path) {
+	public function getImageSize( $file, $path ) {
 		return false;
 	}
 
@@ -169,41 +169,41 @@ class AudioHandler extends MediaHandler {
 	 * Get a MediaTransformOutput object representing the transformed output. Does the
 	 * transform unless $flags contains self::TRANSFORM_LATER.
 	 *
-	 * @param  File    $file    The file object
-	 * @param  string  $dstPath Filesystem destination path
-	 * @param  string  $dstUrl  Destination URL to use in output HTML
-	 * @param  array   $params  Arbitrary set of parameters validated by $this->validateParam()
+	 * @param File $file The file object
+	 * @param string $dstPath Filesystem destination path
+	 * @param string $dstUrl Destination URL to use in output HTML
+	 * @param array $params Arbitrary set of parameters validated by $this->validateParam()
 	 *                          Note: These parameters have *not* gone through
 	 *                          $this->normaliseParams()
-	 * @param  integer $flags   A bitfield, may contain self::TRANSFORM_LATER
+	 * @param int $flags A bitfield, may contain self::TRANSFORM_LATER
 	 * @return MediaTransformOutput
 	 */
-	public function doTransform($file, $dstPath, $dstUrl, $params, $flags = 0) {
-		$this->normaliseParams($file, $params);
+	public function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ) {
+		$this->normaliseParams( $file, $params );
 
-		return new AudioTransformOutput($file, $params);
+		return new AudioTransformOutput( $file, $params );
 	}
 
 	/**
 	 * Shown in file history box on image description page.
 	 *
 	 * @access public
-	 * @param  File $file
-	 * @return string	Dimensions
+	 * @param File $file
+	 * @return string Dimensions
 	 */
-	public function getDimensionsString($file): string {
-		$probe = new FFProbe($file);
+	public function getDimensionsString( $file ): string {
+		$probe = new FFProbe( $file );
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("a:0");
+		$stream = $probe->getStream( "a:0" );
 
-		if ($format === false || $stream === false) {
-			return parent::getDimensionsString($file);
+		if ( $format === false || $stream === false ) {
+			return parent::getDimensionsString( $file );
 		}
 
 		return wfMessage(
 			'ev_audio_short_desc',
-			$this->contentLanguage->formatTimePeriod($format->getDuration())
+			$this->contentLanguage->formatTimePeriod( $format->getDuration() )
 		)->text();
 	}
 
@@ -211,23 +211,23 @@ class AudioHandler extends MediaHandler {
 	 * Short description. Shown on Special:Search results.
 	 *
 	 * @access public
-	 * @param  File $file
+	 * @param File $file
 	 * @return string
 	 */
-	public function getShortDesc($file): string {
-		$probe = new FFProbe($file);
+	public function getShortDesc( $file ): string {
+		$probe = new FFProbe( $file );
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("a:0");
+		$stream = $probe->getStream( "a:0" );
 
-		if ($format === false || $stream === false) {
-			return self::getGeneralShortDesc($file);
+		if ( $format === false || $stream === false ) {
+			return self::getGeneralShortDesc( $file );
 		}
 
 		return wfMessage(
 			'ev_audio_short_desc',
-			$this->contentLanguage->formatTimePeriod($format->getDuration()),
-			$this->contentLanguage->formatSize($file->getSize())
+			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
+			$this->contentLanguage->formatSize( $file->getSize() )
 		)->text();
 	}
 
@@ -235,27 +235,27 @@ class AudioHandler extends MediaHandler {
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
 	 * @access public
-	 * @param  File $file
+	 * @param File $file
 	 * @return string
 	 */
-	public function getLongDesc($file): string {
-		$probe = new FFProbe($file);
+	public function getLongDesc( $file ): string {
+		$probe = new FFProbe( $file );
 
 		$format = $probe->getFormat();
-		$stream = $probe->getStream("a:0");
+		$stream = $probe->getStream( "a:0" );
 
-		if ($format === false || $stream === false) {
-			return self::getGeneralLongDesc($file);
+		if ( $format === false || $stream === false ) {
+			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo($file->getLocalRefPath(), PATHINFO_EXTENSION);
+		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
 			'ev_audio_long_desc',
-			strtoupper($extension),
+			strtoupper( $extension ),
 			$stream->getCodecName(),
-			$this->contentLanguage->formatTimePeriod($format->getDuration()),
-			$this->contentLanguage->formatBitrate($format->getBitRate())
+			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
+			$this->contentLanguage->formatBitrate( $format->getBitRate() )
 		)->text();
 	}
 }
