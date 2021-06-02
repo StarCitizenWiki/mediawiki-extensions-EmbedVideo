@@ -2,11 +2,12 @@
 
 ![](docs/example.png)
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called #ev for embedding video clips from over various popular video sharing services in multiple languages and countries.  It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` for embedding video clips from various video sharing services.  
+It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
-For more information about EmbedVideo, to download, to contribute, and to report bugs and problems, visit the GitHub project page:
+This privacy enhanced fork adds a toggleable setting that only loads external content _after_ the user gave explicit consent by clicking the video.  
+Do note that thumbnails are still fetched from the respective service, which results in a connection to an external url. This behaviour can be disabled by setting `$wgEmbedVideoFetchExternalThumbnails` to `false`.
 
-https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo
 
 Issues, bug reports, and feature requests may be created at the issue tracker:
 
@@ -18,7 +19,7 @@ https://www.mediawiki.org/wiki/Extension:EmbedVideo
 
 ## History
 
-Large parts of the codebase are taken from Extension:EmbedVideo v2.9.0
+Large parts of the codebase are taken from [Extension:EmbedVideo v2.9.0](https://gitlab.com/hydrawiki/extensions/EmbedVideo/-/releases/v2.9.0).
 
 # License
 
@@ -123,7 +124,7 @@ Creating a video list for Youtube. This allows you to queue a set of video in a 
 
 ## Supported Services
 
-As of version 2.x, EmbedVideo supports embedding video content from the following services:
+As of version 3.x, EmbedVideo supports embedding video content from the following services:
 
 | Site                                                     | Service Name(s)                                                                       | ID Example                                                                            | URL Example(s)                                                                                                 |
 |----------------------------------------------------------|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
@@ -140,18 +141,18 @@ As of version 2.x, EmbedVideo supports embedding video content from the followin
 
 # Configuration Settings
 
-| Variable                           | Default Value    | Description                                                                                                                                             |
-|------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $wgEmbedVideoAddFileExtensions     | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                           |
-| $wgEmbedVideoEnableVideoHandler    | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                         |
-| $wgEmbedVideoEnableAudioHandler    | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                         |
-| $wgEmbedVideoDefaultWidth          | 320              | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
-| $wgEmbedVideoMinWidth              | null             | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoMaxWidth              | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgFFprobeLocation                 | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
-| $wgEmbedVideoEnabledServices       | null             | Array - Array of service names that are allowed, if empty all services are available.                                                                   |
-| $wgEmbedVideoRequireConsent        | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                  |
-| $EmbedVideoFetchExternalThumbnails | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.               |
+| Variable                             | Default Value    | Description                                                                                                                                             |
+|--------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $wgEmbedVideoAddFileExtensions       | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                           |
+| $wgEmbedVideoEnableVideoHandler      | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                         |
+| $wgEmbedVideoEnableAudioHandler      | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                         |
+| $wgEmbedVideoDefaultWidth            | 320              | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
+| $wgEmbedVideoMinWidth                | null             | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
+| $wgEmbedVideoMaxWidth                | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
+| $wgFFprobeLocation                   | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
+| $wgEmbedVideoEnabledServices         | null             | Array - Array of service names that are allowed, if empty all services are available.                                                                   |
+| $wgEmbedVideoRequireConsent          | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                  |
+| $wgEmbedVideoFetchExternalThumbnails | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.               |
 
 # Credits
 
