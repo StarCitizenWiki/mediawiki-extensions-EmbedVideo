@@ -5,12 +5,19 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo;
 
 use ConfigException;
+use MediaWiki;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
+use MediaWiki\Hook\BeforeInitializeHook;
+use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\MediaWikiServices;
 use Message;
 use MWException;
+use OutputPage;
 use Parser;
+use Title;
+use User;
+use WebRequest;
 
 /**
  * EmbedVideo
@@ -21,7 +28,7 @@ use Parser;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks {
+class EmbedVideoHooks implements BeforeInitializeHook, ParserFirstCallInitHook {
 	/**
 	 * Temporary storage for the current service object.
 	 *
@@ -58,17 +65,22 @@ class EmbedVideoHooks {
 	private static $container = false;
 
 	/**
-	 * Hook to setup defaults.
+	 * Adds the appropriate audio and video handlers
 	 *
-	 * @access public
+	 * @param Title $title
+	 * @param null $unused
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $request
+	 * @param MediaWiki $mediaWiki
 	 * @return void
 	 */
-	public static function onExtension(): void {
+	public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediaWiki ): void {
 		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
 
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
-		if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] === 'true' ) && $_COOKIE['stopMobileRedirect'] != 1 ) {
+		if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] === 'true' ) && $_COOKIE['stopMobileRedirect'] !== 1 ) {
 			// Set a smaller default width when in mobile view.
 			$wgEmbedVideoDefaultWidth = 320;
 		}
@@ -117,7 +129,7 @@ class EmbedVideoHooks {
 	 * @return bool true
 	 * @throws MWException
 	 */
-	public static function onParserFirstCallInit( Parser $parser ): bool {
+	public function onParserFirstCallInit( $parser ): bool {
 		$parser->setFunctionHook( 'ev', 'MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::parseEV' );
 
 		return true;

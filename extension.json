@@ -20,7 +20,6 @@
 			"ext-curl": "*"
 		}
 	},
-	"callback": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onExtension",
 	"MessagesDirs": {
 		"EmbedVideo": [
 			"i18n"
@@ -115,10 +114,14 @@
 			"value": true
 		}
 	},
+	"HookHandlers": {
+		"EmbedVideoHooks": {
+			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks"
+		}
+	},
 	"Hooks": {
-		"ParserFirstCallInit": [
-			"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onParserFirstCallInit"
-		]
+		"BeforeInitialize": "EmbedVideoHooks",
+		"ParserFirstCallInit": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
 }
