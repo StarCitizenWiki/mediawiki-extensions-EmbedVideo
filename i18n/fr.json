@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"embedvideo_description": "Ajout d'une fonction d'analyse syntaxique permettant d'intégrer des vidéos provenant de sources populaires.",
+	"embedvideo_consent_text": "Cliquez pour charger le contenu",
+	"error_embedvideo_missingparams": "Il manque un paramètre obligatoire à EmbedVideo.",
+	"error_embedvideo_service": "EmbedVideo ne reconnaît pas le service vidéo \"$1\".",
+	"error_embedvideo_id": "EmbedVideo a reçu le bad id \"$2\" pour le service \"$1\".",
+	"error_embedvideo_width": "EmbedVideo a reçu le mauvais paramètre de largeur \"$1\".",
+	"error_embedvideo_height": "EmbedVideo a reçu le mauvais paramètre de hauteur \"$1\".",
+	"error_embedvideo_alignment": "EmbedVideo a reçu une valeur incorrecte pour le paramètre d'alignement. \"$1\".  Les valeurs valides sont \"left\", \"center\", \"right\", ou \"inline\".",
+	"error_embedvideo_valignment": "EmbedVideo was given an illegal value for the valignment parameter \"$1\".  Valid values are \"top\", \"middle\", \"bottom\", or \"baseline\".",
+	"error_embedvideo_urlargs": "EmbedVideo a reçu une liste d'arguments URL contenant des données malformées ou des arguments vides.",
+	"error_embedvideo_unknown": "EmbedVideo a rencontré une erreur inconnue en essayant de générer ce bloc d'intégration vidéo.  ($1)",
+	"error_embedvideo_evp_deprecated": "La fonction d'analyseur #evp a été supprimée dans EmbedVideo 2.0.  Veuillez convertir votre balise de fonction d'analyseur en #ev.",
+	"error_embedvideo_container": "Le paramètre fourni pour 'container' n'est pas valide.",
+	"ev_video_short_desc": "$1, $2x$3",
+	"ev_video_long_desc": "$1, $2 codec, longueur $3, $4x$5 pixels, $6 au total",
+	"ev_audio_short_desc": "$1",
+	"ev_audio_long_desc": "$1, $2 codec, longueur 3, 4 $ au total",
+	"error_embedvideo_cantdecode_evu": "Impossible d'analyser la vidéo de $1",
+	"ev_default_play_desc": "Lancer la vidéo",
+	"apihelp-embedvideo-summary": "Obtenez le code d'intégration de la vidéo généré pour les paramètres donnés.",
+	"apihelp-embedvideo-param-service": "Nom du service (youtube, twitch, ect)",
+	"apihelp-embedvideo-param-id": "L'ID de la vidéo pour ce service",
+	"apihelp-embedvideo-param-dimensions": "Soit une largeur numérique (100), soit la largeur par la hauteur (100x100).",
+	"apihelp-embedvideo-param-alignment": "Alignement de la vidéo",
+	"apihelp-embedvideo-param-description": "Description de la vidéo",
+	"apihelp-embedvideo-param-container": "Accepte le cadre, ou laisse vide",
+	"apihelp-embedvideo-param-urlargs": "Arguments supplémentaires à ajouter dans l'url de la vidéo (pour certains services)",
+	"apihelp-embedvideo-param-autoresize": "Redimensionnement automatique des vidéos ? (true or false)"
+}
