@@ -7,6 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo;
 use ConfigException;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
+use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\MediaWikiServices;
 use Message;
 use MWException;
@@ -21,7 +22,7 @@ use Parser;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks {
+class EmbedVideoHooks implements ParserFirstCallInitHook {
 	/**
 	 * Temporary storage for the current service object.
 	 *
@@ -58,17 +59,16 @@ class EmbedVideoHooks {
 	private static $container = false;
 
 	/**
-	 * Hook to setup defaults.
+	 * Adds the appropriate audio and video handlers
 	 *
-	 * @access public
 	 * @return void
 	 */
-	public static function onExtension(): void {
-		global $wgEmbedVideoDefaultWidth, $wgMediaHandlers, $wgFileExtensions;
+	public static function setup(): void {
+		global $wgEmbedVideoDefaultWidth, $wgFileExtensions, $wgMediaHandlers;
 
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
-		if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] === 'true' ) && $_COOKIE['stopMobileRedirect'] != 1 ) {
+		if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] === 'true' ) && $_COOKIE['stopMobileRedirect'] !== 1 ) {
 			// Set a smaller default width when in mobile view.
 			$wgEmbedVideoDefaultWidth = 320;
 		}
@@ -117,7 +117,7 @@ class EmbedVideoHooks {
 	 * @return bool true
 	 * @throws MWException
 	 */
-	public static function onParserFirstCallInit( Parser $parser ): bool {
+	public function onParserFirstCallInit( $parser ): bool {
 		$parser->setFunctionHook( 'ev', 'MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::parseEV' );
 
 		return true;

@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
@@ -20,7 +20,6 @@
 			"ext-curl": "*"
 		}
 	},
-	"callback": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onExtension",
 	"MessagesDirs": {
 		"EmbedVideo": [
 			"i18n"
@@ -115,10 +114,16 @@
 			"value": true
 		}
 	},
+	"ExtensionFunctions": [
+		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
+	],
+	"HookHandlers": {
+		"EmbedVideoHooks": {
+			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks"
+		}
+	},
 	"Hooks": {
-		"ParserFirstCallInit": [
-			"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::onParserFirstCallInit"
-		]
+		"ParserFirstCallInit": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
 }
