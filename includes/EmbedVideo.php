@@ -148,7 +148,6 @@ class EmbedVideo {
 	public function output(): array {
 		[
 			'service' => $service,
-			'urlArgs' => $urlArgs,
 			'autoResize' => $autoResize,
 		] = $this->args;
 
@@ -160,8 +159,6 @@ class EmbedVideo {
 		} catch ( ConfigException $e ) {
 			// Pass through
 		}
-
-		$this->doTwitchFixes( $service, $urlArgs );
 
 		try {
 			$this->init();
@@ -236,6 +233,8 @@ class EmbedVideo {
 		if ( !$this->service->setVideoID( $id ) ) {
 			throw new InvalidArgumentException( $this->error( 'id', $service, $id )[0] );
 		}
+
+		$this->doTwitchFixes( $service, $urlArgs );
 
 		if ( !$this->service->setUrlArgs( $urlArgs ) ) {
 			throw new InvalidArgumentException( $this->error( 'urlargs', $service, $urlArgs )[0] );
