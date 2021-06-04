@@ -12,6 +12,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
+use ConfigException;
 use MediaWiki\MediaWikiServices;
 use MWException;
 
@@ -312,7 +313,7 @@ class VideoService {
 			if ( $consent === true ) {
 				$srcType = 'data-src';
 			}
-		} catch ( \ConfigException $e ) {
+		} catch ( ConfigException $e ) {
 			//
 		}
 
