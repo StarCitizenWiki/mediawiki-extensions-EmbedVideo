@@ -70,56 +70,6 @@ class EmbedVideo {
 	}
 
 	/**
-	 * Parses the arguments given to the parser function
-	 *
-	 * @param array $args
-	 * @return array
-	 */
-	private function parseArgs( array $args ): array {
-		$results = [
-			'id' => '',
-			'alignment' => '',
-			'description' => '',
-			'dimensions' => '',
-			'urlArgs' => '',
-			'width' => null,
-			'height' => null,
-			'autoResize' => true,
-			'vAlignment' => '',
-		];
-
-		$keys = array_keys( $results );
-
-		$serviceName = array_shift( $args );
-
-		$counter = 0;
-
-		foreach ( $args as $arg ) {
-			$pair = explode( '=', $arg, 2 );
-			$pair = array_map( 'trim', $pair );
-
-			if ( count( $pair ) === 2 ) {
-				[ $name, $value ] = $pair;
-				$results[$name] = $value;
-			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
-				$pair = $pair[0];
-
-				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
-					$pair = false;
-				}
-
-				$results[$keys[$counter]] = $pair;
-			}
-
-			++$counter;
-		}
-
-		$results['service'] = $serviceName;
-
-		return $results;
-	}
-
-	/**
 	 * Parse the values input from the {{#ev}} parser function
 	 *
 	 * @param Parser $parser The active Parser instance
@@ -184,6 +134,77 @@ class EmbedVideo {
 
 		return [
 			$html,
+			'noparse' => true,
+			'isHTML' => true
+		];
+	}
+
+	/**
+	 * Parses the arguments given to the parser function
+	 *
+	 * @param array $args
+	 * @return array
+	 */
+	private function parseArgs( array $args ): array {
+		$results = [
+			'id' => '',
+			'alignment' => '',
+			'description' => '',
+			'dimensions' => '',
+			'urlArgs' => '',
+			'width' => null,
+			'height' => null,
+			'autoResize' => true,
+			'vAlignment' => '',
+		];
+
+		$keys = array_keys( $results );
+
+		$serviceName = array_shift( $args );
+
+		$counter = 0;
+
+		foreach ( $args as $arg ) {
+			$pair = explode( '=', $arg, 2 );
+			$pair = array_map( 'trim', $pair );
+
+			if ( count( $pair ) === 2 ) {
+				[ $name, $value ] = $pair;
+				$results[$name] = $value;
+			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
+				$pair = $pair[0];
+
+				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
+					$pair = false;
+				}
+
+				$results[$keys[$counter]] = $pair;
+			}
+
+			++$counter;
+		}
+
+		$results['service'] = $serviceName;
+
+		return $results;
+	}
+
+	/**
+	 * Error Handler
+	 *
+	 * @private
+	 * @param string    [Optional] Error Type
+	 * @param mixed    [...] Multiple arguments to be retrieved with func_get_args().
+	 * @return array Printable Error Message
+	 */
+	private function error( $type = 'unknown' ): array {
+		$arguments = func_get_args();
+		array_shift( $arguments );
+
+		$message = wfMessage( 'error_embedvideo_' . $type, $arguments )->escaped();
+
+		return [
+			"<div class='errorbox'>{$message}</div>",
 			'noparse' => true,
 			'isHTML' => true
 		];
@@ -285,20 +306,77 @@ class EmbedVideo {
 	}
 
 	/**
-	 * Adds all relevant modules if the parser is present
+	 * Set the description.
+	 *
+	 * @private
+	 * @param string $description Description
+	 * @param Parser $parser Mediawiki Parser object
+	 * @return void
 	 */
-	private function addModules(): void {
-		if ( $this->parser === null ) {
-			return;
+	private function setDescription( string $description, Parser $parser ): void {
+		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+	}
+
+	/**
+	 * Set the description without using the parser
+	 *
+	 * @param string    Description
+	 */
+	private function setDescriptionNoParse( $description ): void {
+		$this->description = ( !$description ? false : $description );
+	}
+
+	/**
+	 * Set the container type.
+	 *
+	 * @private
+	 * @param string    Container
+	 * @return bool Success
+	 */
+	private function setContainer( $container ): bool {
+		if ( !empty( $container ) && ( $container === 'frame' ) ) {
+			$this->container = $container;
+		} elseif ( !empty( $container ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Set the align parameter.
+	 *
+	 * @private
+	 * @param string    Alignment Parameter
+	 * @return bool Valid
+	 */
+	private function setAlignment( $alignment ): bool {
+		if ( !empty( $alignment ) && ( $alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment === 'inline' ) ) {
+			$this->alignment = $alignment;
+		} elseif ( !empty( $alignment ) ) {
+			return false;
 		}
 
-		$out = $this->parser->getOutput();
-		$out->addModules( 'ext.embedVideo' );
-		$out->addModuleStyles( 'ext.embedVideo.styles' );
+		return true;
+	}
 
-		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
-			$this->parser->getOutput()->addModules( 'ext.embedVideo.consent' );
+	/**
+	 * Set the align parameter.
+	 *
+	 * @private
+	 * @param string    Alignment Parameter
+	 * @return bool Valid
+	 */
+	private function setVerticalAlignment( $vAlignment ): bool {
+		if ( !empty( $vAlignment ) && ( $vAlignment === 'top' || $vAlignment === 'middle' || $vAlignment === 'bottom' || $vAlignment === 'baseline' ) ) {
+			if ( $vAlignment !== 'baseline' ) {
+				$this->alignment = 'inline';
+			}
+			$this->vAlignment = $vAlignment;
+		} elseif ( !empty( $vAlignment ) ) {
+			return false;
 		}
+
+		return true;
 	}
 
 	/**
@@ -306,9 +384,9 @@ class EmbedVideo {
 	 * and text description
 	 *
 	 * @private
-	 * @param  string	[Optional] Horizontal Alignment
-	 * @param  string	[Optional] Description
-	 * @param  string  [Optional] Additional Classes to add to the wrapper
+	 * @param string    [Optional] Horizontal Alignment
+	 * @param string    [Optional] Description
+	 * @param string  [Optional] Additional Classes to add to the wrapper
 	 * @return string
 	 */
 	private function generateWrapperHTML( $html, $addClass = null, string $service = '' ): string {
@@ -363,97 +441,19 @@ HTML;
 	}
 
 	/**
-	 * Set the align parameter.
-	 *
-	 * @private
-	 * @param  string	Alignment Parameter
-	 * @return bool Valid
+	 * Adds all relevant modules if the parser is present
 	 */
-	private function setAlignment( $alignment ): bool {
-		if ( !empty( $alignment ) && ( $alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment === 'inline' ) ) {
-			$this->alignment = $alignment;
-		} elseif ( !empty( $alignment ) ) {
-			return false;
+	private function addModules(): void {
+		if ( $this->parser === null ) {
+			return;
 		}
 
-		return true;
-	}
+		$out = $this->parser->getOutput();
+		$out->addModules( 'ext.embedVideo' );
+		$out->addModuleStyles( 'ext.embedVideo.styles' );
 
-	/**
-	 * Set the align parameter.
-	 *
-	 * @private
-	 * @param  string	Alignment Parameter
-	 * @return bool Valid
-	 */
-	private function setVerticalAlignment( $vAlignment ): bool {
-		if ( !empty( $vAlignment ) && ( $vAlignment === 'top' || $vAlignment === 'middle' || $vAlignment === 'bottom' || $vAlignment === 'baseline' ) ) {
-			if ( $vAlignment !== 'baseline' ) {
-				$this->alignment = 'inline';
-			}
-			$this->vAlignment = $vAlignment;
-		} elseif ( !empty( $vAlignment ) ) {
-			return false;
+		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
+			$this->parser->getOutput()->addModules( 'ext.embedVideo.consent' );
 		}
-
-		return true;
-	}
-
-	/**
-	 * Set the description.
-	 *
-	 * @private
-	 * @param string $description Description
-	 * @param Parser $parser Mediawiki Parser object
-	 * @return void
-	 */
-	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
-	}
-
-	/**
-	 * Set the description without using the parser
-	 *
-	 * @param string	Description
-	 */
-	private function setDescriptionNoParse( $description ): void {
-		$this->description = ( !$description ? false : $description );
-	}
-
-	/**
-	 * Set the container type.
-	 *
-	 * @private
-	 * @param  string	Container
-	 * @return bool Success
-	 */
-	private function setContainer( $container ): bool {
-		if ( !empty( $container ) && ( $container === 'frame' ) ) {
-			$this->container = $container;
-		} elseif ( !empty( $container ) ) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Error Handler
-	 *
-	 * @private
-	 * @param  string	[Optional] Error Type
-	 * @param  mixed	[...] Multiple arguments to be retrieved with func_get_args().
-	 * @return array Printable Error Message
-	 */
-	private function error( $type = 'unknown' ): array {
-		$arguments = func_get_args();
-		array_shift( $arguments );
-
-		$message = wfMessage( 'error_embedvideo_' . $type, $arguments )->escaped();
-
-		return [
-			"<div class='errorbox'>{$message}</div>",
-			'noparse' => true,
-			'isHTML' => true
-		];
 	}
 }
