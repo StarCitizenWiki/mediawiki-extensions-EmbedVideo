@@ -16,7 +16,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.35.0",
 		"platform": {
-			"php": ">=7.2.0",
+			"php": ">=7.3.0",
 			"ext-curl": "*"
 		}
 	},
@@ -113,6 +113,9 @@
 			"description": "Don't try to fetch thumbnails when consent is required.",
 			"value": true
 		}
+	},
+	"ConfigRegistry": {
+		"EmbedVideo": "GlobalVarConfig::newInstance"
 	},
 	"ExtensionFunctions": [
 		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
