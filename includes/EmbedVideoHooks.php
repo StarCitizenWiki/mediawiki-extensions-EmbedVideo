@@ -75,7 +75,6 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 	/**
 	 * Sets up this extension's parser functions.
 	 *
-	 * @access public
 	 * @param Parser $parser Parser object passed as a reference.
 	 * @return bool true
 	 * @throws MWException
