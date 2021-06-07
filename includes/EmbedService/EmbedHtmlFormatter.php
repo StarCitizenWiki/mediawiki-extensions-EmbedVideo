@@ -5,7 +5,9 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use ConfigException;
+use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\MediaWikiServices;
+use UnexpectedValueException;
 
 final class EmbedHtmlFormatter {
 	/**
@@ -15,6 +17,15 @@ final class EmbedHtmlFormatter {
 	 * @return string
 	 */
 	public static function toHtml( AbstractEmbedService $service ): string {
+		if ( $service instanceof OEmbedServiceInterface ) {
+			try {
+				$data = OEmbed::newFromRequest( $service->getUrl() );
+				return $data->getHtml();
+			} catch ( UnexpectedValueException $e ) {
+				return $e->getMessage();
+			}
+		}
+
 		$attributes = $service->getIframeAttributes();
 		$attributes['width'] = $service->getWidth();
 		$attributes['height'] = $service->getHeight();

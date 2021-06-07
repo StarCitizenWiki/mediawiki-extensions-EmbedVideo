@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
+use MediaWiki\Extension\EmbedVideo\EmbedService\OEmbedServiceInterface;
 use MediaWiki\MediaWikiServices;
 use Message;
 use Parser;
@@ -383,7 +384,7 @@ class EmbedVideo {
 		}
 
 		$consentClickContainer = '';
-		if ( $this->config->get( 'EmbedVideoRequireConsent' ) ) {
+		if ( !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ) ) {
 			$consentClickContainer = sprintf(
 				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message">%s</div></div></div>',
 				( new Message( 'embedvideo_consent_text' ) )->text()
@@ -408,7 +409,7 @@ HTML;
 	 * Adds all relevant modules if the parser is present
 	 */
 	private function addModules(): void {
-		if ( $this->parser === null ) {
+		if ( $this->parser === null || $this->service instanceof OEmbedServiceInterface ) {
 			return;
 		}
 

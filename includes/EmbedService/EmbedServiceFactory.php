@@ -12,6 +12,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\Twitch;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchClip;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchVod;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTube;
+use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeOEmbed;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubePlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeVideoList;
 
@@ -51,6 +52,9 @@ final class EmbedServiceFactory {
 
 			case 'vimeo':
 				return new Vimeo( $id );
+
+			case 'youtubeoembed':
+				return new YouTubeOEmbed( $id );
 
 			case 'youtube':
 				return new YouTube( $id );
