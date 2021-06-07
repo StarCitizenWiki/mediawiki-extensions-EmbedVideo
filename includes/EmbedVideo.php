@@ -7,6 +7,9 @@ namespace MediaWiki\Extension\EmbedVideo;
 use Config;
 use ConfigException;
 use InvalidArgumentException;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
+use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
+use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\MediaWikiServices;
 use Message;
 use Parser;
@@ -31,7 +34,7 @@ class EmbedVideo {
 	/**
 	 * Temporary storage for the current service object.
 	 *
-	 * @var VideoService
+	 * @var AbstractEmbedService
 	 */
 	private $service;
 
@@ -120,10 +123,7 @@ class EmbedVideo {
 			];
 		}
 
-		/************************************/
-		/* HTML Generation                  */
-		/************************************/
-		$html = $this->service->getHtml();
+		$html = EmbedHtmlFormatter::toHtml( $this->service );
 		if ( !$html ) {
 			return $this->error( 'unknown', $service );
 		}
@@ -239,23 +239,12 @@ class EmbedVideo {
 			throw new InvalidArgumentException( $this->error( 'missingparams', $service, $id )[0] );
 		}
 
-		$this->service = VideoService::newFromName( $service );
-
-		if ( $this->service === false ) {
-			throw new InvalidArgumentException( $this->error( 'service', $service )[0] );
-		}
+		$this->service = EmbedServiceFactory::newFromName( $service, $id );
 
 		// Let the service automatically handle bad dimensional values.
 		$this->service->setWidth( $width );
 
 		$this->service->setHeight( $height );
-
-		// If the service has an ID pattern specified, verify the id number.
-		if ( !$this->service->setVideoID( $id ) ) {
-			throw new InvalidArgumentException( $this->error( 'id', $service, $id )[0] );
-		}
-
-		$this->doTwitchFixes( $service, $urlArgs );
 
 		if ( !$this->service->setUrlArgs( $urlArgs ) ) {
 			throw new InvalidArgumentException( $this->error( 'urlargs', $service, $urlArgs )[0] );
@@ -277,31 +266,6 @@ class EmbedVideo {
 
 		if ( !$this->setVerticalAlignment( $vAlignment ) ) {
 			throw new InvalidArgumentException( $this->error( 'valignment', $vAlignment )[0] );
-		}
-	}
-
-	/**
-	 * Add parent attribute for Twitch embeds
-	 *
-	 * @param $service
-	 * @param &$urlArgs
-	 */
-	private function doTwitchFixes( $service, &$urlArgs ): void {
-		if ( !in_array( $service, [ 'twitch', 'twitchclip', 'twitchvod' ] ) ) {
-			return;
-		}
-
-		$serverName = $this->config->get( 'ServerName' );
-
-		if ( !isset( $urlArgs ) || empty( $urlArgs ) ) {
-			// Set the url args to the parent domain
-			$urlArgs = "parent=$serverName";
-		} else {
-			// Break down the url args and inject the parent
-			$urlargsArr = [];
-			parse_str( $urlArgs, $urlargsArr );
-			$urlargsArr['parent'] = $serverName;
-			$urlArgs = http_build_query( $urlargsArr );
 		}
 	}
 
