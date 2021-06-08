@@ -64,9 +64,8 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 	 * @return void
 	 */
 	public static function setup(): void {
-		global $wgEmbedVideoDefaultWidth, $wgFileExtensions, $wgMediaHandlers;
-
-		$config = MediaWikiServices::getInstance()->getMainConfig();
+		global $wgFileExtensions, $wgMediaHandlers, $wgEmbedVideoDefaultWidth,
+			   $wgEmbedVideoEnableAudioHandler, $wgEmbedVideoEnableVideoHandler, $wgEmbedVideoAddFileExtensions;
 
 		if ( !isset( $wgEmbedVideoDefaultWidth ) && ( isset( $_SERVER['HTTP_X_MOBILE'] ) && $_SERVER['HTTP_X_MOBILE'] === 'true' ) && $_COOKIE['stopMobileRedirect'] !== 1 ) {
 			// Set a smaller default width when in mobile view.
@@ -76,7 +75,7 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 		$audioHandler = AudioHandler::class;
 		$videoHandler = VideoHandler::class;
 
-		if ( $config->get( 'EmbedVideoEnableAudioHandler' ) ) {
+		if ( $wgEmbedVideoEnableAudioHandler ) {
 			$wgMediaHandlers['application/ogg']		= $audioHandler;
 			$wgMediaHandlers['audio/flac']			= $audioHandler;
 			$wgMediaHandlers['audio/ogg']			= $audioHandler;
@@ -87,7 +86,7 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 			$wgMediaHandlers['audio/x-flac']		= $audioHandler;
 		}
 
-		if ( $config->get( 'EmbedVideoEnableVideoHandler' ) ) {
+		if ( $wgEmbedVideoEnableVideoHandler ) {
 			$wgMediaHandlers['video/mp4']			= $videoHandler;
 			$wgMediaHandlers['video/ogg']			= $videoHandler;
 			$wgMediaHandlers['video/quicktime']		= $videoHandler;
@@ -95,7 +94,7 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 			$wgMediaHandlers['video/x-matroska']	= $videoHandler;
 		}
 
-		if ( $config->get( 'EmbedVideoAddFileExtensions' ) ) {
+		if ( $wgEmbedVideoAddFileExtensions ) {
 			$wgFileExtensions[] = 'flac';
 			$wgFileExtensions[] = 'mkv';
 			$wgFileExtensions[] = 'mov';
