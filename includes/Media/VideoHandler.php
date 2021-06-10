@@ -178,7 +178,7 @@ class VideoHandler extends AudioHandler {
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo_video_short_desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight()
@@ -202,7 +202,7 @@ class VideoHandler extends AudioHandler {
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo_video_short_desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight(),
@@ -229,7 +229,7 @@ class VideoHandler extends AudioHandler {
 		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
-			'ev_video_long_desc',
+			'embedvideo_video_long_desc',
 			strtoupper( $extension ),
 			$stream->getCodecName(),
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
