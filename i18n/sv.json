@@ -5,14 +5,14 @@
 		]
 	},
 	"embedvideo_description": "Adds a parser function embedding video from popular sources.",
-	"error_embedvideo_missingparams": "EmbedVideo - En obligatorisk parameter har utelämnats.  De två första parametrarna, service och id, som anger videotjänst respektive videoidentitet är obligatoriska",
-	"error_embedvideo_service": "EmbedVideo - Känner inte till videotjänsten \"$1\".",
-	"error_embedvideo_id": "EmbedVideo - Felaktig id \"$2\" för tjänsten \"$1\" har angivits.",
-	"error_embedvideo_width": "EmbedVideo - Felaktigt värde \"$1\" har angivits som bredd.",
-	"error_embedvideo_height": "EmbedVideo - Felaktigt värde \"$1\" har angivits som höjd.",
-	"error_embedvideo_alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad.",
-	"error_embedvideo_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
-	"error_embedvideo_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
-	"error_embedvideo_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
-	"error_embedvideo_container": "The parameter provided for 'container' is invalid."
+	"embedvideo_error_missingparams": "EmbedVideo - En obligatorisk parameter har utelämnats.  De två första parametrarna, service och id, som anger videotjänst respektive videoidentitet är obligatoriska",
+	"embedvideo_error_service": "EmbedVideo - Känner inte till videotjänsten \"$1\".",
+	"embedvideo_error_id": "EmbedVideo - Felaktig id \"$2\" för tjänsten \"$1\" har angivits.",
+	"embedvideo_error_width": "EmbedVideo - Felaktigt värde \"$1\" har angivits som bredd.",
+	"embedvideo_error_height": "EmbedVideo - Felaktigt värde \"$1\" har angivits som höjd.",
+	"embedvideo_error_alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad.",
+	"embedvideo_error_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
+	"embedvideo_error_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
+	"embedvideo_error_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
+	"embedvideo_error_container": "The parameter provided for 'container' is invalid."
 }

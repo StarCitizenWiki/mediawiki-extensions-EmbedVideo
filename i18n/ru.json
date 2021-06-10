@@ -5,15 +5,15 @@
 		]
 	},
 	"embedvideo_description": "Добавляет функцию синтаксического анализатора для встраивания видео с популярных видеохостингов.",
-	"error_embedvideo_missingparams": "В теге EmbedVideo отуствует обязательный параметр.",
-	"error_embedvideo_service": "Тег EmbedVideo не может распознать сервис \"$1\".",
-	"error_embedvideo_id": "В тег EmbedVideo введен неверный id \"$2\" видео для сервиса \"$1\".",
-	"error_embedvideo_width": "В тег EmbedVideo введен неверный параметр ширины \"$1\".",
-	"error_embedvideo_height": "В тег EmbedVideo введен неверный параметр высота \"$1\".",
-	"error_embedvideo_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"center\", or \"right\".",
-	"error_embedvideo_valignment": "EmbedVideo was given an illegal value for the valignment parameter \"$1\".  Valid values are \"top\", \"middle\", \"bottom\", or \"baseline\".",
-	"error_embedvideo_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
-	"error_embedvideo_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
-	"error_embedvideo_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
-	"error_embedvideo_container": "The parameter provided for 'container' is invalid."
+	"embedvideo_error_missingparams": "В теге EmbedVideo отуствует обязательный параметр.",
+	"embedvideo_error_service": "Тег EmbedVideo не может распознать сервис \"$1\".",
+	"embedvideo_error_id": "В тег EmbedVideo введен неверный id \"$2\" видео для сервиса \"$1\".",
+	"embedvideo_error_width": "В тег EmbedVideo введен неверный параметр ширины \"$1\".",
+	"embedvideo_error_height": "В тег EmbedVideo введен неверный параметр высота \"$1\".",
+	"embedvideo_error_alignment": "EmbedVideo was given an illegal value for the alignment parameter \"$1\".  Valid values are \"left\", \"center\", or \"right\".",
+	"embedvideo_error_valignment": "EmbedVideo was given an illegal value for the valignment parameter \"$1\".  Valid values are \"top\", \"middle\", \"bottom\", or \"baseline\".",
+	"embedvideo_error_urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
+	"embedvideo_error_unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
+	"embedvideo_error_evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
+	"embedvideo_error_container": "The parameter provided for 'container' is invalid."
 }
