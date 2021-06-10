@@ -202,7 +202,7 @@ class EmbedVideo {
 		$arguments = func_get_args();
 		array_shift( $arguments );
 
-		$message = wfMessage( 'error_embedvideo_' . $type, $arguments )->escaped();
+		$message = wfMessage( 'embedvideo_error_' . $type, $arguments )->escaped();
 
 		return [
 			"<div class='errorbox'>{$message}</div>",
