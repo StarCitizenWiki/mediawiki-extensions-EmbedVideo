@@ -202,7 +202,7 @@ class EmbedVideo {
 		$arguments = func_get_args();
 		array_shift( $arguments );
 
-		$message = wfMessage( 'embedvideo_error_' . $type, $arguments )->escaped();
+		$message = wfMessage( 'embedvideo-error-' . $type, $arguments )->escaped();
 
 		return [
 			"<div class='errorbox'>{$message}</div>",
@@ -387,7 +387,7 @@ class EmbedVideo {
 		if ( !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ) ) {
 			$consentClickContainer = sprintf(
 				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message">%s</div></div></div>',
-				( new Message( 'embedvideo_consent_text' ) )->text()
+				( new Message( 'embedvideo-consent-text' ) )->text()
 			);
 		}
 

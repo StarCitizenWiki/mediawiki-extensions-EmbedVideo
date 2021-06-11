@@ -10,7 +10,7 @@
 		"Alistair3149"
 	],
 	"url": "https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo",
-	"descriptionmsg": "embedvideo_description",
+	"descriptionmsg": "embedvideo-description",
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
