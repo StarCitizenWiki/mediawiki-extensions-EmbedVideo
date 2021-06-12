@@ -85,18 +85,18 @@ abstract class AbstractEmbedService {
 	/**
 	 * Get the width of the iframe
 	 *
-	 * @return float
+	 * @return float|string
 	 */
-	public function getWidth(): float {
+	public function getWidth() {
 		return $this->width ?? $this->getDefaultWidth();
 	}
 
 	/**
 	 * Get the height of the iframe
 	 *
-	 * @return float
+	 * @return float|string
 	 */
-	public function getHeight(): float {
+	public function getHeight() {
 		return $this->height ?? $this->getDefaultHeight();
 	}
 
@@ -104,7 +104,7 @@ abstract class AbstractEmbedService {
 	 * @return string
 	 */
 	public function getId(): string {
-		return $this->id;
+		return (string)$this->id;
 	}
 
 	/**
