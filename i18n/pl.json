@@ -14,9 +14,9 @@
 	"embedvideo-error-unknown": "EmbedVideo napotkał nieznany błąd podczas próby wygenerowania tego pliku wideo. ($1)",
 	"embedvideo-error-evp_deprecated": "Funkcja parsera #evp jest przestarzała od EmbedVideo w wersji 2.0. Prosimy przekonwertować funkcję na #ev.",
 	"embedvideo-error-container": "Podany parametr dla wartości „container” nie jest poprawny.",
-	"embedvideo_video_short_desc": "$1, $2x$3",
-	"embedvideo_video_long_desc": "$1, $2 codec, length $3, $4x$5 pixels, $6 overall",
-	"embedvideo_audio_short_desc": "$1",
-	"embedvideo_audio_long_desc": "$1, $2 codec, length $3, $4 overall",
+	"embedvideo-video-short-desc": "$1, $2x$3",
+	"embedvideo-video-long-desc": "$1, $2 codec, length $3, $4x$5 pixels, $6 overall",
+	"embedvideo-audio-short-desc": "$1",
+	"embedvideo-audio-long-desc": "$1, $2 codec, length $3, $4 overall",
 	"embedvideo-error-cantdecode_evu": "Parsowanie wideo z $1 nie powiodło się"
 }
