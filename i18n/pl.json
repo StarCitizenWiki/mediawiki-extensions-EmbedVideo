@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": [ "Railfail536" ]
+		"authors": [
+			"Railfail536"
+		]
 	},
 	"embedvideo-description": "Dadaje funkcje parsera do osadzania plików wideo z popularnych serwisów",
 	"embedvideo-error-missingparams": "Nie podano wymaganego parametru EmbedVideo.",

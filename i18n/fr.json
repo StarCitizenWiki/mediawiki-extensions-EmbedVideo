@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Gomoko"
+		]
 	},
 	"embedvideo-description": "Ajout d'une fonction d'analyse syntaxique permettant d'intégrer des vidéos provenant de sources populaires.",
 	"embedvideo-consent-text": "Cliquez pour charger le contenu",
@@ -18,7 +20,7 @@
 	"embedvideo-video-short-desc": "$1, $2x$3",
 	"embedvideo-video-long-desc": "$1, $2 codec, longueur $3, $4x$5 pixels, $6 au total",
 	"embedvideo-audio-short-desc": "$1",
-	"embedvideo-audio-long-desc": "$1, $2 codec, longueur 3, 4 $ au total",
+	"embedvideo-audio-long-desc": "$1, $2 codec, longueur $3, $4 au total",
 	"embedvideo-error-cantdecode_evu": "Impossible d'analyser la vidéo de $1",
 	"apihelp-embedvideo-summary": "Obtenez le code d'intégration de la vidéo généré pour les paramètres donnés.",
 	"apihelp-embedvideo-param-service": "Nom du service (youtube, twitch, ect)",
