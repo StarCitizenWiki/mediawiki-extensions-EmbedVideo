@@ -27,7 +27,6 @@ class VideoHandler extends AudioHandler {
 	 * Return true to accept the parameter, and false to reject it.
 	 * If you return false, the parser will do something quiet and forgiving.
 	 *
-	 * @access public
 	 * @param string $name
 	 * @param mixed $value
 	 * @return bool
@@ -49,9 +48,8 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @access public
-	 * @param  object	File
-	 * @param  array	Parameters
+	 * @param object File
+	 * @param array Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
@@ -122,7 +120,6 @@ class VideoHandler extends AudioHandler {
 	 *
 	 * @note If this is a multipage file, return the width and height of the first page.
 	 *
-	 * @access public
 	 * @param File $file The file object, or false if there isn't one
 	 * @param string $path The filename
 	 * @return array An array following the format of PHP getimagesize() internal function or false if not supported.
@@ -167,7 +164,6 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Shown in file history box on image description page.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string Dimensions
 	 */
@@ -182,7 +178,7 @@ class VideoHandler extends AudioHandler {
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo-video-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight()
@@ -192,7 +188,6 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Short description. Shown on Special:Search results.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
@@ -207,7 +202,7 @@ class VideoHandler extends AudioHandler {
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo-video-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight(),
@@ -218,7 +213,6 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
@@ -235,7 +229,7 @@ class VideoHandler extends AudioHandler {
 		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
-			'ev_video_long_desc',
+			'embedvideo-video-long-desc',
 			strtoupper( $extension ),
 			$stream->getCodecName(),
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),

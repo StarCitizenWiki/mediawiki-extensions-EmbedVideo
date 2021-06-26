@@ -15,6 +15,7 @@ namespace MediaWiki\Extension\EmbedVideo;
 use JsonException;
 use MediaWiki\MediaWikiServices;
 use MWException;
+use UnexpectedValueException;
 
 class OEmbed {
 	/**
@@ -27,9 +28,7 @@ class OEmbed {
 	/**
 	 * Main Constructor
 	 *
-	 * @private
-	 * @param  array	Data return from oEmbed service.
-	 * @return void
+	 * @param array Data return from oEmbed service.
 	 */
 	private function __construct( $data ) {
 		$this->data = $data;
@@ -38,23 +37,25 @@ class OEmbed {
 	/**
 	 * Create a new object from an oEmbed URL.
 	 *
-	 * @access public
-	 * @param  string	Full oEmbed URL to process.
-	 * @return false|OEmbed New OEmbed object or false on initialization failure.
+	 * @param string Full oEmbed URL to process.
+	 * @return OEmbed New OEmbed object or false on initialization failure.
+	 * @throws UnexpectedValueException
 	 */
-	public static function newFromRequest( $url ) {
+	public static function newFromRequest( $url ): OEmbed {
 		$data = self::get( $url );
 
-		if ( $data !== false ) {
-			try {
-				$data = json_decode( $data, true, 512, JSON_THROW_ON_ERROR );
-			} catch ( JsonException $e ) {
-				return false;
-			}
+		if ( $data === false ) {
+			throw new UnexpectedValueException( "OEmbed request failed" );
 		}
 
-		if ( !$data || !is_array( $data ) ) {
-			return false;
+		try {
+			$data = json_decode( $data, true, 512, JSON_THROW_ON_ERROR );
+		} catch ( JsonException $e ) {
+			$data = false;
+		}
+
+		if ( $data === false || !is_array( $data ) ) {
+			throw new UnexpectedValueException( "OEmbed data could not be decoded" );
 		}
 
 		return new self( $data );
@@ -63,12 +64,12 @@ class OEmbed {
 	/**
 	 * Return the HTML from the data, typically an iframe.
 	 *
-	 * @access public
-	 * @return mixed String HTML or false on error.
+	 * @return string String HTML or false on error.
+	 * @throws UnexpectedValueException
 	 */
-	public function getHtml() {
+	public function getHtml(): string {
 		if ( !isset( $this->data['html'] ) ) {
-			return false;
+			throw new UnexpectedValueException( "IFrame HTML not set" );
 		}
 
 		// Remove any extra HTML besides the iframe.
@@ -85,7 +86,6 @@ class OEmbed {
 	/**
 	 * Return the title from the data.
 	 *
-	 * @access public
 	 * @return mixed String or false on error.
 	 */
 	public function getTitle() {
@@ -95,7 +95,6 @@ class OEmbed {
 	/**
 	 * Return the author name from the data.
 	 *
-	 * @access public
 	 * @return mixed String or false on error.
 	 */
 	public function getAuthorName() {
@@ -105,7 +104,6 @@ class OEmbed {
 	/**
 	 * Return the author URL from the data.
 	 *
-	 * @access public
 	 * @return mixed String or false on error.
 	 */
 	public function getAuthorUrl() {
@@ -115,7 +113,6 @@ class OEmbed {
 	/**
 	 * Return the provider name from the data.
 	 *
-	 * @access public
 	 * @return mixed String or false on error.
 	 */
 	public function getProviderName() {
@@ -125,7 +122,6 @@ class OEmbed {
 	/**
 	 * Return the provider URL from the data.
 	 *
-	 * @access public
 	 * @return mixed String or false on error.
 	 */
 	public function getProviderUrl() {
@@ -135,7 +131,6 @@ class OEmbed {
 	/**
 	 * Return the width from the data.
 	 *
-	 * @access public
 	 * @return false|int Integer or false on error.
 	 */
 	public function getWidth() {
@@ -149,7 +144,6 @@ class OEmbed {
 	/**
 	 * Return the height from the data.
 	 *
-	 * @access public
 	 * @return false|int Integer or false on error.
 	 */
 	public function getHeight() {
@@ -163,7 +157,6 @@ class OEmbed {
 	/**
 	 * Return the thumbnail width from the data.
 	 *
-	 * @access public
 	 * @return false|int Integer or false on error.
 	 */
 	public function getThumbnailWidth() {
@@ -177,7 +170,6 @@ class OEmbed {
 	/**
 	 * Return the thumbnail height from the data.
 	 *
-	 * @access public
 	 * @return false|int Integer or false on error.
 	 */
 	public function getThumbnailHeight() {
@@ -191,8 +183,7 @@ class OEmbed {
 	/**
 	 * Perform a Curl GET request.
 	 *
-	 * @private
-	 * @param  string	URL
+	 * @param string URL
 	 * @return bool|string
 	 */
 	private static function get( $location ) {
@@ -201,7 +192,7 @@ class OEmbed {
 		$req = MediaWikiServices::getInstance()->getHttpRequestFactory()->create( $location, [
 			'timeout' => $timeout,
 			'connectTimeout' => $timeout,
-			'userAgent' => sprintf( 'EmbedVideo/1.0/%s', MediaWikiServices::getInstance()->getMainConfig()->get( 'Server' ) ),
+			'userAgent' => sprintf( 'EmbedVideo/3.0/%s', MediaWikiServices::getInstance()->getMainConfig()->get( 'Server' ) ),
 			'followRedirects' => true,
 			'maxRedirects' => 10,
 		] );

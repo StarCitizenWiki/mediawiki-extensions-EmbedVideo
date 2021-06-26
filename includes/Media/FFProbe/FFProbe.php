@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\Media\FFProbe;
 
 use ConfigException;
 use File;
+use FSFile;
 use JsonException;
 use MediaWiki\MediaWikiServices;
 
@@ -28,7 +29,7 @@ class FFProbe {
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  \FSFile MediaWiki File
+	 * @param  FSFile MediaWiki File
 	 * @return void
 	 */
 	public function __construct( $file ) {
@@ -123,9 +124,12 @@ class FFProbe {
 	 * @private
 	 * @return bool Success
 	 */
-	private function invokeFFProbe() {
+	private function invokeFFProbe(): bool {
 		try {
-			$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get( 'FFProbeLocation' );
+			$ffprobeLocation = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'FFProbeLocation' );
 		} catch ( ConfigException $e ) {
 			return false;
 		}
@@ -146,14 +150,14 @@ class FFProbe {
 		);
 
 		try {
-			$metadata = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
+			$json = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
 		} catch ( JsonException $e ) {
 			$this->metadata = [];
 			return false;
 		}
 
-		if ( is_array( $metadata ) ) {
-			$this->metadata = $metadata;
+		if ( is_array( $json ) ) {
+			$this->metadata = $json;
 		} else {
 			$this->metadata = [];
 			return false;
