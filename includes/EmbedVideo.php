@@ -418,7 +418,7 @@ HTML;
 		// Add CSP if needed
 		$defaultSrcArr = $this->service->getCSPUrls();
 		if ( $defaultSrcArr ) {
-			foreach ( $defaultSrcArr as &$defaultSrc ) {
+			foreach ( $defaultSrcArr as $defaultSrc ) {
 				$out->addExtraCSPDefaultSrc( $defaultSrc );
 			}
 		}
