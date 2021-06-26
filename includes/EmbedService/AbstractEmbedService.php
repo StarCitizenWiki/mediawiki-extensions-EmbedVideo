@@ -162,6 +162,13 @@ abstract class AbstractEmbedService {
 	}
 
 	/**
+	 * Returns an array of Content Security Policy urls for this service.
+	 *
+	 * @return array
+	 */
+	abstract public function getCSPUrls(): array;
+
+	/**
 	 * Set the width of the player.  This also will set the height automatically.
 	 * Width will be automatically constrained to the minimum and maximum widths.
 	 *

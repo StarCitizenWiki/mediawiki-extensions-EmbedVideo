@@ -75,4 +75,13 @@ class Twitch extends AbstractEmbedService {
 
 		return sprintf( '%s&%s', sprintf( $this->getBaseUrl(), $this->getId() ), $urlArgs );
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'https://player.twitch.tv'
+		];
+	}
 }

@@ -55,4 +55,13 @@ final class SoundCloud extends AbstractEmbedService {
 	protected function getIdRegex(): array {
 		return [];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'https://w.soundcloud.com'
+		];
+	}
 }

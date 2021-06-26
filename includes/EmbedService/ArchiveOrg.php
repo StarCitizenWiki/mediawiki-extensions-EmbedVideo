@@ -51,4 +51,13 @@ final class ArchiveOrg extends AbstractEmbedService {
 			'#^([\d\w\-_][^/\?\#]+)$#is'
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'https://archive.org'
+		];
+	}
 }

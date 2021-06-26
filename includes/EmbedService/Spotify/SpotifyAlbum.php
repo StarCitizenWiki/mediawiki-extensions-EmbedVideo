@@ -56,4 +56,13 @@ class SpotifyAlbum extends AbstractEmbedService {
 			'#^([a-zA-Z0-9]+)$#is'
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'https://open.spotify.com'
+		];
+	}
 }
