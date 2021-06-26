@@ -52,4 +52,15 @@ final class Vimeo extends AbstractEmbedService {
 			'#^([\d]+)$#is'
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'https://vimeo.com',
+			'https://i.vimeocdn.com',
+			'https://player.vimeo.com'
+		];
+	}
 }
