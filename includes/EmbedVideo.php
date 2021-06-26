@@ -166,7 +166,11 @@ class EmbedVideo {
 		$counter = 0;
 
 		foreach ( $args as $arg ) {
-			$pair = explode( '=', $arg, 2 );
+			$pair = [ $arg ];
+			// Only split arg if it is not an url
+			if ( preg_match( '/https?:/', $arg ) !== 1 ) {
+				$pair = explode( '=', $arg, 2 );
+			}
 			$pair = array_map( 'trim', $pair );
 
 			if ( count( $pair ) === 2 ) {
