@@ -72,4 +72,14 @@ class YouTube extends AbstractEmbedService {
 
 		return parent::getUrl();
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSPUrls(): array {
+		return [
+			'//www.youtube-nocookie.com',
+			'//i.ytimg.com'
+		];
+	}
 }

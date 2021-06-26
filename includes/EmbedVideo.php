@@ -414,6 +414,15 @@ HTML;
 		}
 
 		$out = $this->parser->getOutput();
+
+		// Add CSP if needed
+		$defaultSrcArr = $this->service->getCSPUrls();
+		if ( $defaultSrcArr ) {
+			foreach ( $defaultSrcArr as &$defaultSrc ) {
+				$out->addExtraCSPDefaultSrc( $defaultSrc );
+			}
+		}
+
 		$out->addModules( 'ext.embedVideo' );
 		$out->addModuleStyles( 'ext.embedVideo.styles' );
 
