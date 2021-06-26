@@ -57,10 +57,12 @@
 				parent.appendChild(picture);
 
 				if (typeof json.title !== 'undefined' && json.title.length > 0) {
-					const title = document.createElement('div');
+					const title = document.createElement('div'),
+						overlay = parent.querySelector('.embedvideo-consent__overlay');
 					title.classList.add('embedvideo-consent__title');
 					title.innerText = json.title;
-					parent.querySelector('.embedvideo-consent__overlay').prepend(title);
+					overlay.classList.add('embedvideo-consent__overlay--hastitle');
+					overlay.prepend(title);
 				}
 			})
 			.catch(error => {

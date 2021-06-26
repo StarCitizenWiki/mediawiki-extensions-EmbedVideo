@@ -5,11 +5,12 @@
 	top: 0;
 	bottom: 0;
 	overflow: hidden;
+	background-color: #eaecf0;
 
 	&__overlay {
 		cursor: pointer;
 		z-index: 1;
-		color: #fff;
+		color: #54595d;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -18,16 +19,20 @@
 		position: relative;
 		font-size: 0.875rem;
 
-		// Use pseudo element so it can be animated separately
-		&:before {
-			background: linear-gradient(to bottom, #000000, 40%, transparent);
-			content: "";
-			display: block;
-			width: inherit;
-			height: inherit;
-			position: absolute;
-			z-index: -1;
-			transition: opacity 250ms ease;
+		&--hastitle {
+			color: #fff;
+
+			// Use pseudo element so it can be animated separately
+			&:before {
+				background: linear-gradient(to bottom, #000000, 40%, transparent);
+				content: "";
+				display: block;
+				width: inherit;
+				height: inherit;
+				position: absolute;
+				z-index: -1;
+				transition: opacity 250ms ease;
+			}
 		}
 	}
 
@@ -44,7 +49,7 @@
 	}
 
 	&__message {
-		border: 1px solid #fff;
+		border: 1px solid currentColor;
 		margin: 1rem;
 		padding: 0.5rem 1rem;
 		border-radius: 100px;
@@ -75,6 +80,7 @@
 			&__message {
 				background-color: #36c;
 				border-color: #36c;
+				color: #fff;
 			}
 		}
 	}
