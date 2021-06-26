@@ -78,8 +78,8 @@ class YouTube extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'//www.youtube-nocookie.com',
-			'//i.ytimg.com'
+			'https://www.youtube-nocookie.com',
+			'https://i.ytimg.com'
 		];
 	}
 }
