@@ -14,11 +14,14 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use File;
+use FSFile;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
+use MWException;
+use PoolCounterWorkViaCallback;
 
 class AudioHandler extends MediaHandler {
 	protected $contentLanguage;
@@ -185,10 +188,10 @@ class AudioHandler extends MediaHandler {
 	 * @return string Dimensions
 	 */
 	public function getDimensionsString( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -207,10 +210,10 @@ class AudioHandler extends MediaHandler {
 	 * @return string
 	 */
 	public function getShortDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -230,10 +233,10 @@ class AudioHandler extends MediaHandler {
 	 * @return string
 	 */
 	public function getLongDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
@@ -248,5 +251,43 @@ class AudioHandler extends MediaHandler {
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$this->contentLanguage->formatBitrate( $format->getBitRate() )
 		)->text();
+	}
+
+	/**
+	 * Runs FFProbe through the pool counter
+	 * TODO: Cache results somehow?
+	 *
+	 * @param FSFile|File $file The file to work on
+	 * @param string $select Video / Audio track to select
+	 * @return bool|mixed
+	 */
+	protected function getMakeProbeFromPool( $file, string $select = 'v:0' ) {
+		if ( $file instanceof FSFile ) {
+			$poolKey = $file->getSha1Base36();
+		} else {
+			$poolKey = $file->getSha1();
+		}
+
+		try {
+			$work = new PoolCounterWorkViaCallback( 'EmbedVideoFFProbeCall',
+				'_ev:ffprobe:' . $poolKey,
+				[ 'doWork' => static function () use ( $file, $select ) {
+					$probe = new FFProbe( $file );
+
+					return [
+						'stream' => $probe->getStream( $select ),
+						'format' => $probe->getFormat()
+					];
+				} ] );
+		} catch ( MWException $e ) {
+			wfLogWarning( $e->getMessage() );
+
+			return [
+				'stream' => false,
+				'format' => false,
+			];
+		}
+
+		return $work->execute();
 	}
 }

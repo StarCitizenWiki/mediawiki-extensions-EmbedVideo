@@ -16,7 +16,6 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use Exception;
 use File;
 use MediaTransformOutput;
-use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
 use Title;
@@ -111,23 +110,13 @@ class VideoHandler extends AudioHandler {
 	}
 
 	/**
-	 * Get an image size array like that returned by getimagesize(), or false if it
-	 * can't be determined.
-	 *
-	 * This function is used for determining the width, height and bitdepth directly
-	 * from an image. The results are stored in the database in the img_width,
-	 * img_height, img_bits fields.
-	 *
-	 * @note If this is a multipage file, return the width and height of the first page.
-	 *
-	 * @param File $file The file object, or false if there isn't one
-	 * @param string $path The filename
-	 * @return array An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @inheritDoc
+	 * TODO: This should be offloaded and cached somewhere, as a page with lots of videos will hang the server
 	 */
 	public function getImageSize( $file, $path ): array {
-		$probe = new FFProbe( $file );
-
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $stream !== false ) {
 			return [
@@ -168,10 +157,10 @@ class VideoHandler extends AudioHandler {
 	 * @return string Dimensions
 	 */
 	public function getDimensionsString( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -192,10 +181,10 @@ class VideoHandler extends AudioHandler {
 	 * @return string
 	 */
 	public function getShortDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -217,10 +206,10 @@ class VideoHandler extends AudioHandler {
 	 * @return string
 	 */
 	public function getLongDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
