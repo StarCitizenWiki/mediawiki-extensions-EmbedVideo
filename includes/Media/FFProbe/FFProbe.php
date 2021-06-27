@@ -46,6 +46,7 @@ class FFProbe {
 		if ( !is_array( $this->metadata ) ) {
 			$this->invokeFFProbe();
 		}
+
 		return $this->metadata;
 	}
 
@@ -115,7 +116,7 @@ class FFProbe {
 	}
 
 	private function getFilePath() {
-		return $this->file->getPath();
+		return $this->file->getLocalRefPath();
 	}
 
 	/**
