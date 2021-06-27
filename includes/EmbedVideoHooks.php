@@ -74,16 +74,12 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 	 * Sets up this extension's parser functions.
 	 *
 	 * @param Parser $parser Parser object passed as a reference.
-	 * @return bool true
-	 * @throws MWException
 	 */
-	public function onParserFirstCallInit( $parser ): bool {
+	public function onParserFirstCallInit( Parser $parser ): void {
 		$parser->setFunctionHook(
 			'ev',
-			'MediaWiki\\Extension\\EmbedVideo\\EmbedVideo::parseEV',
+			[ EmbedVideo::class, 'parseEV' ],
 			Parser::SFH_OBJECT_ARGS
 		);
-
-		return true;
 	}
 }
