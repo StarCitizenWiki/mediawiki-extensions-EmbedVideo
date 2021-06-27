@@ -75,7 +75,7 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 	 *
 	 * @param Parser $parser Parser object passed as a reference.
 	 */
-	public function onParserFirstCallInit( Parser $parser ): void {
+	public function onParserFirstCallInit( $parser ): void {
 		$parser->setFunctionHook(
 			'ev',
 			[ EmbedVideo::class, 'parseEV' ],
