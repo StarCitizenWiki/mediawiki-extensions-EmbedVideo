@@ -270,12 +270,24 @@ class AudioHandler extends MediaHandler {
 			'format' => $format,
 		] = $this->getMakeProbeFromPool( $image );
 
-		return serialize( [
-			'duration' => $stream->getDuration(),
-			'codec' => $stream->getCodecName(),
-			'bitrate' => $format->getBitRate(),
-			'bitdepth' => $stream->getBitDepth(),
-		] );
+		$streamData = [];
+		$formatData = [];
+
+		if ( $stream !== false ) {
+			$streamData = [
+				'duration' => $stream->getDuration(),
+				'codec' => $stream->getCodecName(),
+				'bitdepth' => $stream->getBitDepth(),
+			];
+		}
+
+		if ( $format !== false ) {
+			$formatData = [
+				'bitrate' => $format->getBitRate(),
+			];
+		}
+
+		return serialize( array_merge( $streamData, $formatData ) );
 	}
 
 	/**
