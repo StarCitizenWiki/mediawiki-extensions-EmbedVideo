@@ -119,8 +119,11 @@ class FFProbe {
 		return new FormatInfo( $this->metadata['format'] );
 	}
 
+	/**
+	 * @return bool|string
+	 */
 	private function getFilePath() {
-		return $this->file->getLocalRefPath();
+		return $this->file->getPath();
 	}
 
 	/**
@@ -158,7 +161,6 @@ class FFProbe {
 			$result = $command->execute();
 
 			$json = json_decode( $result->getStdout(), true, 512, JSON_THROW_ON_ERROR );
-
 		} catch ( Exception | JsonException | ShellDisabledError | ProcOpenError $e ) {
 			wfLogWarning( $e->getMessage() );
 			$this->metadata = [];

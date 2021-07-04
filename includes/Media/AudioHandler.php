@@ -24,6 +24,14 @@ use MWException;
 use PoolCounterWorkViaCallback;
 
 class AudioHandler extends MediaHandler {
+	/**
+	 * Temporary map
+	 * Saving work results to file key
+	 *
+	 * @var array
+	 */
+	protected static $workResultMap = [];
+
 	protected $contentLanguage;
 
 	public function __construct() {
@@ -242,7 +250,7 @@ class AudioHandler extends MediaHandler {
 			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
+		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
 			'embedvideo-audio-long-desc',
@@ -254,18 +262,41 @@ class AudioHandler extends MediaHandler {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function getMetadata( $image, $path ): string {
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $image );
+
+		return serialize( [
+			'duration' => $stream->getDuration(),
+			'codec' => $stream->getCodecName(),
+			'bitrate' => $format->getBitRate(),
+			'bitdepth' => $stream->getBitDepth(),
+		] );
+	}
+
+	/**
 	 * Runs FFProbe through the pool counter
-	 * TODO: Cache results somehow?
 	 *
 	 * @param FSFile|File $file The file to work on
 	 * @param string $select Video / Audio track to select
-	 * @return bool|mixed
+	 * @return bool|array
 	 */
 	protected function getMakeProbeFromPool( $file, string $select = 'v:0' ) {
 		if ( $file instanceof FSFile ) {
 			$poolKey = $file->getSha1Base36();
 		} else {
 			$poolKey = $file->getSha1();
+		}
+
+		/**
+		 * TODO: Cache results "correct" somewhere?
+		 */
+		if ( isset( self::$workResultMap[$poolKey] ) ) {
+			return self::$workResultMap[$poolKey];
 		}
 
 		try {
@@ -279,6 +310,7 @@ class AudioHandler extends MediaHandler {
 						'format' => $probe->getFormat()
 					];
 				} ] );
+
 		} catch ( MWException $e ) {
 			wfLogWarning( $e->getMessage() );
 
@@ -288,6 +320,8 @@ class AudioHandler extends MediaHandler {
 			];
 		}
 
-		return $work->execute();
+		self::$workResultMap[$poolKey] = $work->execute();
+
+		return self::$workResultMap[$poolKey];
 	}
 }

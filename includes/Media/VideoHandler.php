@@ -47,7 +47,7 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param object File
+	 * @param File File
 	 * @param array Parameters
 	 * @return bool Success
 	 */
@@ -111,7 +111,6 @@ class VideoHandler extends AudioHandler {
 
 	/**
 	 * @inheritDoc
-	 * TODO: This should be offloaded and cached somewhere, as a page with lots of videos will hang the server
 	 */
 	public function getImageSize( $file, $path ): array {
 		[
@@ -215,7 +214,7 @@ class VideoHandler extends AudioHandler {
 			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
+		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
 			'embedvideo-video-long-desc',

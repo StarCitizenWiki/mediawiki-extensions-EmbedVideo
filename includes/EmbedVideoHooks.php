@@ -7,7 +7,6 @@ namespace MediaWiki\Extension\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\ParserFirstCallInitHook;
-use MWException;
 use Parser;
 
 /**
