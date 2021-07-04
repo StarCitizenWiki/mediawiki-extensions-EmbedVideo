@@ -35,7 +35,7 @@ class VideoHandler extends AudioHandler {
 			return $value > 0;
 		}
 
-		if ( $name === 'cover' ) {
+		if ( $name === 'cover' || $name === 'gif' || $name === 'muted' ) {
 			return true;
 		}
 

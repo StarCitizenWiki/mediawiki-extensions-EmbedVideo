@@ -111,7 +111,9 @@ class AudioTransformOutput extends MediaTransformOutput {
 			'width' => $this->getWidth(),
 			'class' => $class ?? false,
 			'style' => $style ? implode( ' ', $style ) : false,
-			'controls' => true,
+			'controls' => !isset( $this->parameters['nocontrols'] ),
+			'autoplay' => isset( $this->parameters['autoplay'] ),
+			'loop' => isset( $this->parameters['loop'] ),
 		], $descLink );
 	}
 }

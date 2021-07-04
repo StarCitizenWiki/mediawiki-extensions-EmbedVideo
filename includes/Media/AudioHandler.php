@@ -45,9 +45,14 @@ class AudioHandler extends MediaHandler {
 	public function getParamMap(): array {
 		return [
 			'img_width'	=> 'width',
-			'ev_start'	=> 'start',
-			'ev_end'	=> 'end',
+			'ev_start' => 'start',
+			'ev_end' => 'end',
+			'gif' => 'gif',
 			'cover' => 'cover',
+			'autoplay' => 'autoplay',
+			'loop' => 'loop',
+			'nocontrols' => 'nocontrols',
+			'muted'	=> 'muted',
 		];
 	}
 
@@ -67,6 +72,10 @@ class AudioHandler extends MediaHandler {
 
 		if ( $name === 'start' || $name === 'end' ) {
 			return $this->parseTimeString( $value ) !== false;
+		}
+
+		if ( $name === 'autoplay' || $name === 'loop' || $name === 'nocontrols' ) {
+			return true;
 		}
 
 		return false;

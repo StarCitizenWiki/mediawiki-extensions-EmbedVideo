@@ -40,6 +40,13 @@ class VideoTransformOutput extends MediaTransformOutput {
 		$this->lang = false;
 		$this->page = $parameters['page'];
 		$this->url = $file->getFullUrl();
+
+		if ( isset( $parameters['gif'] ) ) {
+			$this->parameters['autoplay'] = true;
+			$this->parameters['loop'] = true;
+			$this->parameters['nocontrols'] = true;
+			$this->parameters['muted'] = true;
+		}
 	}
 
 	/**
@@ -110,8 +117,11 @@ class VideoTransformOutput extends MediaTransformOutput {
 			'height' => $this->getHeight(),
 			'class' => $class ?? false,
 			'style' => $style ? implode( ' ', $style ) : false,
-			'controls' => true,
 			'poster' => $parameters['cover'] ?? null,
+			'controls' => !isset( $this->parameters['nocontrols'] ),
+			'autoplay' => isset( $this->parameters['autoplay'] ),
+			'loop' => isset( $this->parameters['loop'] ),
+			'muted' => isset( $this->parameters['muted'] ),
 		], $descLink );
 	}
 }
