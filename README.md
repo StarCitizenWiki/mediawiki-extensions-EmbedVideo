@@ -74,6 +74,26 @@ Additionally a cover image can be set for video files by specifying a `cover=` k
 ![](docs/local_file_with_cover.png)  
 Example of a local file with a custom cover image.
 
+### Available options
+The following options are available when using the media handler for local files.  
+Options are added to the wikitext like `|cover=File:...` or `|start=2`.
+
+* loop
+  * Loops the audio / video
+* autoplay
+  * Automatically plays the file
+* nocontrols
+  * Disables the control elements
+
+Options only available for video files:
+* cover
+  * Sets a local image file as the cover of the video
+* muted
+  * Mutes the audio track of the video (required for autoplay)
+* gif
+  * Special option that sets autoplay, muted, loop and nocontrols
+	e.g. makes the video behave like a gif
+
 ## Tags
 
 The EmbedVideo parser function expects to be called in any of the following ways:
