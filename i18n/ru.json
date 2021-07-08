@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kareyac",
 			"P@S@f"
 		]
 	},
@@ -15,5 +16,7 @@
 	"embedvideo-error-urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
 	"embedvideo-error-unknown": "EmbedVideo encountered an unknown error while trying to generate this video embed block.  ($1)",
 	"embedvideo-error-evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
-	"embedvideo-error-container": "The parameter provided for 'container' is invalid."
+	"embedvideo-error-container": "The parameter provided for 'container' is invalid.",
+	"apihelp-embedvideo-param-alignment": "Выравнивание видео",
+	"apihelp-embedvideo-param-description": "Описание видео"
 }

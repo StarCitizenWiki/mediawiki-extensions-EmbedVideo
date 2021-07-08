@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Lorem Ipsum",
 			"Messerjokke79"
 		]
 	},
@@ -16,5 +17,6 @@
 	"embedvideo-error-urlargs": "EmbedVideo erhielt eine Liste von URL-Argumenten, die unbrauchbare Daten oder leere Argumente aufwiesen.",
 	"embedvideo-error-unknown": "EmbedVideo stieß auf einen Fehler während das Video eingebettet werden sollte. ($1)",
 	"embedvideo-error-evp_deprecated": "Die Parserfunktion „#evp“ wurde in EmbedVideo 2.0 verworfen; alle Parserfunktionen-Tags sind in „#ev“ zu ändern.",
-	"embedvideo-error-container": "Der Wert für „container“ ist ungültig."
+	"embedvideo-error-container": "Der Wert für „container“ ist ungültig.",
+	"apihelp-embedvideo-param-description": "Beschreibung des Videos"
 }
