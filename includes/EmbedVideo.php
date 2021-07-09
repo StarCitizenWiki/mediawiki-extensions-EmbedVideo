@@ -189,19 +189,20 @@ class EmbedVideo {
 	 * Parses the arguments given to the parser function
 	 *
 	 * @param array $args
+	 * @param bool $fromTag
 	 * @return array
 	 */
 	private function parseArgs( array $args, bool $fromTag ): array {
 		$results = [
 			'id' => '',
+			'dimensions' => '',
 			'alignment' => '',
 			'description' => '',
-			'dimensions' => '',
+			'autoResize' => true,
+			'vAlignment' => '',
 			'urlArgs' => '',
 			'width' => null,
 			'height' => null,
-			'autoResize' => true,
-			'vAlignment' => '',
 		];
 
 		if ( $fromTag === true ) {
