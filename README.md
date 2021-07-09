@@ -2,7 +2,7 @@
 
 ![](docs/example.png)
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` for embedding video clips from various video sharing services.  
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` and various parser tags like `<youtube>` for embedding video clips from various video sharing services.  
 It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
 This privacy enhanced fork adds a toggleable setting that only loads external content _after_ the user gave explicit consent by clicking the video.  
@@ -74,6 +74,26 @@ Additionally a cover image can be set for video files by specifying a `cover=` k
 ![](docs/local_file_with_cover.png)  
 Example of a local file with a custom cover image.
 
+### Available options
+The following options are available when using the media handler for local files.  
+Options are added to the wikitext like `|cover=File:...` or `|start=2`.
+
+* loop
+  * Loops the audio / video
+* autoplay
+  * Automatically plays the file
+* nocontrols
+  * Disables the control elements
+
+Options only available for video files:
+* cover
+  * Sets a local image file as the cover of the video
+* muted
+  * Mutes the audio track of the video (required for autoplay)
+* gif
+  * Special option that sets autoplay, muted, loop and nocontrols
+	e.g. makes the video behave like a gif
+
 ## Tags
 
 The EmbedVideo parser function expects to be called in any of the following ways:
@@ -121,6 +141,11 @@ For YouTube to have the video start at a specific time code utilize the urlargs(
 Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the 'youtubevideolist` service selector:
 
     {{#ev:youtubevideolist|-D--GWwca0g|||||playlist=afpRzcAAZVM,gMEHZPZTAVc,lom_plwy9iA,BSWYMQEQhEo,EREaWhXj4_Q}}
+
+### Example #4
+Using the service name as a parser tag
+
+    <youtube>https://www.youtube.com/watch?v=eAORm-8b1Eg</youtube>
 
 ## Supported Services
 

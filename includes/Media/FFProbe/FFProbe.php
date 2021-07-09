@@ -5,9 +5,14 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media\FFProbe;
 
 use ConfigException;
+use Exception;
 use File;
+use FSFile;
 use JsonException;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\ProcOpenError;
+use MediaWiki\Shell\Shell;
+use MediaWiki\ShellDisabledError;
 
 class FFProbe {
 	/**
@@ -28,7 +33,7 @@ class FFProbe {
 	 * Main Constructor
 	 *
 	 * @access public
-	 * @param  \FSFile MediaWiki File
+	 * @param  FSFile MediaWiki File
 	 * @return void
 	 */
 	public function __construct( $file ) {
@@ -45,6 +50,7 @@ class FFProbe {
 		if ( !is_array( $this->metadata ) ) {
 			$this->invokeFFProbe();
 		}
+
 		return $this->metadata;
 	}
 
@@ -113,6 +119,9 @@ class FFProbe {
 		return new FormatInfo( $this->metadata['format'] );
 	}
 
+	/**
+	 * @return bool|string
+	 */
 	private function getFilePath() {
 		return $this->file->getPath();
 	}
@@ -123,37 +132,43 @@ class FFProbe {
 	 * @private
 	 * @return bool Success
 	 */
-	private function invokeFFProbe() {
+	private function invokeFFProbe(): bool {
 		try {
-			$ffprobeLocation = MediaWikiServices::getInstance()->getMainConfig()->get( 'FFProbeLocation' );
+			$ffprobeLocation = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'FFProbeLocation' );
 		} catch ( ConfigException $e ) {
 			return false;
 		}
 
-		if ( !file_exists( $ffprobeLocation ) ) {
+		if ( Shell::isDisabled() || $ffprobeLocation === false || !file_exists( $ffprobeLocation ) ) {
 			$this->metadata = [];
 			return false;
 		}
 
-		$json = shell_exec(
-			escapeshellcmd(
-				sprintf(
-					'%s -v quiet -print_format json -show_format -show_streams %s',
-					$ffprobeLocation,
-					escapeshellarg( $this->getFilePath() )
-				)
-			)
-		);
+		$command = Shell::command( $ffprobeLocation );
+
+		$command->unsafeParams( [
+			'-v quiet',
+			'-print_format json',
+			'-show_format',
+			'-show_streams',
+			$this->getFilePath(),
+		] );
 
 		try {
-			$metadata = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
-		} catch ( JsonException $e ) {
+			$result = $command->execute();
+
+			$json = json_decode( $result->getStdout(), true, 512, JSON_THROW_ON_ERROR );
+		} catch ( Exception | JsonException | ShellDisabledError | ProcOpenError $e ) {
+			wfLogWarning( $e->getMessage() );
 			$this->metadata = [];
 			return false;
 		}
 
-		if ( is_array( $metadata ) ) {
-			$this->metadata = $metadata;
+		if ( is_array( $json ) ) {
+			$this->metadata = $json;
 		} else {
 			$this->metadata = [];
 			return false;

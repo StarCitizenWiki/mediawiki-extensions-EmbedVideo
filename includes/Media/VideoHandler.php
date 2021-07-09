@@ -16,7 +16,6 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use Exception;
 use File;
 use MediaTransformOutput;
-use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
 use Title;
@@ -27,7 +26,6 @@ class VideoHandler extends AudioHandler {
 	 * Return true to accept the parameter, and false to reject it.
 	 * If you return false, the parser will do something quiet and forgiving.
 	 *
-	 * @access public
 	 * @param string $name
 	 * @param mixed $value
 	 * @return bool
@@ -37,7 +35,7 @@ class VideoHandler extends AudioHandler {
 			return $value > 0;
 		}
 
-		if ( $name === 'cover' ) {
+		if ( $name === 'cover' || $name === 'gif' || $name === 'muted' ) {
 			return true;
 		}
 
@@ -49,9 +47,8 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @access public
-	 * @param  object	File
-	 * @param  array	Parameters
+	 * @param File File
+	 * @param array Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
@@ -113,24 +110,12 @@ class VideoHandler extends AudioHandler {
 	}
 
 	/**
-	 * Get an image size array like that returned by getimagesize(), or false if it
-	 * can't be determined.
-	 *
-	 * This function is used for determining the width, height and bitdepth directly
-	 * from an image. The results are stored in the database in the img_width,
-	 * img_height, img_bits fields.
-	 *
-	 * @note If this is a multipage file, return the width and height of the first page.
-	 *
-	 * @access public
-	 * @param File $file The file object, or false if there isn't one
-	 * @param string $path The filename
-	 * @return array An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @inheritDoc
 	 */
 	public function getImageSize( $file, $path ): array {
-		$probe = new FFProbe( $file );
-
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $stream !== false ) {
 			return [
@@ -167,22 +152,21 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Shown in file history box on image description page.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string Dimensions
 	 */
 	public function getDimensionsString( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo-video-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight()
@@ -192,22 +176,21 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Short description. Shown on Special:Search results.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
 	public function getShortDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
 		}
 
 		return wfMessage(
-			'ev_video_short_desc',
+			'embedvideo-video-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$stream->getWidth(),
 			$stream->getHeight(),
@@ -218,24 +201,23 @@ class VideoHandler extends AudioHandler {
 	/**
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
 	public function getLongDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( 'v:0' );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
+		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
-			'ev_video_long_desc',
+			'embedvideo-video-long-desc',
 			strtoupper( $extension ),
 			$stream->getCodecName(),
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),

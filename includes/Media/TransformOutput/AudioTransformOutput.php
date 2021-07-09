@@ -21,7 +21,7 @@ class AudioTransformOutput extends MediaTransformOutput {
 	/**
 	 * @var array
 	 */
-	private $parameters;
+	protected $parameters;
 
 	/**
 	 * Main Constructor
@@ -65,12 +65,50 @@ class AudioTransformOutput extends MediaTransformOutput {
 	 * @return string HTML
 	 */
 	public function toHtml( $options = [] ): string {
-		$parameters = $this->parameters;
+		return Html::rawElement( 'audio', [
+			'src' => $this->getSrc(),
+			'width' => $this->getWidth(),
+			'class' => $options['img-class'] ?? false,
+			'style' => $this->getStyle( $options ),
+			'controls' => !isset( $this->parameters['nocontrols'] ),
+			'autoplay' => isset( $this->parameters['autoplay'] ),
+			'loop' => isset( $this->parameters['loop'] ),
+		], $this->getDescription() );
+	}
 
+	/**
+	 * Get the source of the medium, including start (in) and end (out) times if set
+	 *
+	 * @return string
+	 */
+	protected function getSrc(): string {
+		$inOut = [];
+
+		if ( ( $this->parameters['start'] ?? null ) !== ( $this->parameters['end'] ?? null ) ) {
+			if ( isset( $this->parameters['start'] ) && $this->parameters['start'] !== false ) {
+				$inOut[] = $this->parameters['start'];
+			}
+
+			if ( isset( $this->parameters['end'] ) && $this->parameters['end'] !== false ) {
+				$inOut[] = $this->parameters['end'];
+			}
+		}
+
+		return $this->url . ( !empty( $inOut ) ? '#t=' . implode( ',', $inOut ) : '' );
+	}
+
+	/**
+	 * Inline style added to the html tag
+	 *
+	 * @param array $options
+	 * @return string
+	 */
+	protected function getStyle( array $options ): string {
 		$style = [];
+
 		$style[] = "max-width: 100%;";
+
 		if ( empty( $options['no-dimensions'] ) ) {
-			$parameters['width'] = $this->getWidth();
 			$style[] = "width: {$this->getWidth()}px;";
 		}
 
@@ -78,40 +116,25 @@ class AudioTransformOutput extends MediaTransformOutput {
 			$style[] = "vertical-align: {$options['valign']};";
 		}
 
-		if ( !empty( $options['img-class'] ) ) {
-			$class = $options['img-class'];
+		return implode( ' ', $style );
+	}
+
+	/**
+	 * Description link added to the html tag
+	 *
+	 * @return string
+	 */
+	protected function getDescription(): string {
+		if ( isset( $this->parameters['descriptionUrl'] ) ) {
+			return Html::element(
+				'a',
+				[
+					'href' => $this->parameters['descriptionUrl']
+				],
+				$this->parameters['descriptionUrl']
+			);
 		}
 
-		if ( !isset( $parameters['start'] ) ) {
-			$parameters['start'] = null;
-		}
-		if ( !isset( $parameters['end'] ) ) {
-			$parameters['end'] = null;
-		}
-
-		$inOut = false;
-		if ( $parameters['start'] !== $parameters['end'] ) {
-			if ( isset( $parameters['start'] ) && $parameters['start'] !== false ) {
-				$inOut[] = $parameters['start'];
-			}
-
-			if ( isset( $parameters['end'] ) && $parameters['end'] !== false ) {
-				$inOut[] = $parameters['end'];
-			}
-		}
-
-		if ( isset( $parameters['descriptionUrl'] ) ) {
-			$descLink = Html::element( 'a', [ 'href' => $parameters['descriptionUrl'] ], $parameters['descriptionUrl'] );
-		} else {
-			$descLink = '';
-		}
-
-		return Html::rawElement( 'audio', [
-			'src' => $this->url . ( $inOut !== false ? '#t=' . implode( ',', $inOut ) : '' ),
-			'width' => $this->getWidth(),
-			'class' => $class ?? false,
-			'style' => $style ? implode( ' ', $style ) : false,
-			'controls' => true,
-		], $descLink );
+		return '';
 	}
 }

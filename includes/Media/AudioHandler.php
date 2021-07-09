@@ -14,13 +14,24 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use File;
+use FSFile;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
+use MWException;
+use PoolCounterWorkViaCallback;
 
 class AudioHandler extends MediaHandler {
+	/**
+	 * Temporary map
+	 * Saving work results to file key
+	 *
+	 * @var array
+	 */
+	protected static $workResultMap = [];
+
 	protected $contentLanguage;
 
 	public function __construct() {
@@ -34,9 +45,14 @@ class AudioHandler extends MediaHandler {
 	public function getParamMap(): array {
 		return [
 			'img_width'	=> 'width',
-			'ev_start'	=> 'start',
-			'ev_end'	=> 'end',
+			'ev_start' => 'start',
+			'ev_end' => 'end',
+			'gif' => 'gif',
 			'cover' => 'cover',
+			'autoplay' => 'autoplay',
+			'loop' => 'loop',
+			'nocontrols' => 'nocontrols',
+			'muted'	=> 'muted',
 		];
 	}
 
@@ -45,7 +61,6 @@ class AudioHandler extends MediaHandler {
 	 * Return true to accept the parameter, and false to reject it.
 	 * If you return false, the parser will do something quiet and forgiving.
 	 *
-	 * @access public
 	 * @param string $name
 	 * @param mixed $value
 	 * @return bool
@@ -59,6 +74,10 @@ class AudioHandler extends MediaHandler {
 			return $this->parseTimeString( $value ) !== false;
 		}
 
+		if ( $name === 'autoplay' || $name === 'loop' || $name === 'nocontrols' ) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -66,8 +85,7 @@ class AudioHandler extends MediaHandler {
 	 * Parse a time string into seconds.
 	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds OR one hour and thirty minutes.
 	 *
-	 * @access public
-	 * @param  string	Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
+	 * @param string Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
 	 * @return false|float|int Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString( $time ) {
@@ -88,8 +106,7 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Merge a parameter array into a string appropriate for inclusion in filenames
 	 *
-	 * @access public
-	 * @param  array	Array of parameters that have been through normaliseParams.
+	 * @param array Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
 	public function makeParamString( $parameters ): string {
@@ -99,8 +116,7 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Parse a param string made with makeParamString back into an array
 	 *
-	 * @access public
-	 * @param  string	The parameter string without file name (e.g. 122px)
+	 * @param string The parameter string without file name (e.g. 122px)
 	 * @return mixed Array of parameters or false on failure.
 	 */
 	public function parseParamString( $string ): array {
@@ -112,9 +128,8 @@ class AudioHandler extends MediaHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @access public
-	 * @param  object	File
-	 * @param  array	Parameters
+	 * @param object $file
+	 * @param array &$parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
@@ -156,10 +171,9 @@ class AudioHandler extends MediaHandler {
 	 * @note If this is a multipage file, return the width and height of the
 	 *  first page.
 	 *
-	 * @access public
 	 * @param File $file The file object, or false if there isn't one
 	 * @param string $path The filename
-	 * @return mixed An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @return array|false An array following the format of PHP getimagesize() internal function or false if not supported.
 	 */
 	public function getImageSize( $file, $path ) {
 		return false;
@@ -187,22 +201,21 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Shown in file history box on image description page.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string Dimensions
 	 */
 	public function getDimensionsString( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
 		}
 
 		return wfMessage(
-			'ev_audio_short_desc',
+			'embedvideo-audio-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() )
 		)->text();
 	}
@@ -210,22 +223,21 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Short description. Shown on Special:Search results.
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
 	public function getShortDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
 		}
 
 		return wfMessage(
-			'ev_audio_short_desc',
+			'embedvideo-audio-short-desc',
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$this->contentLanguage->formatSize( $file->getSize() )
 		)->text();
@@ -234,28 +246,103 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Long description. Shown under image on image description page surounded by ().
 	 *
-	 * @access public
 	 * @param File $file
 	 * @return string
 	 */
 	public function getLongDesc( $file ): string {
-		$probe = new FFProbe( $file );
-
-		$format = $probe->getFormat();
-		$stream = $probe->getStream( "a:0" );
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo( $file->getLocalRefPath(), PATHINFO_EXTENSION );
+		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
 
 		return wfMessage(
-			'ev_audio_long_desc',
+			'embedvideo-audio-long-desc',
 			strtoupper( $extension ),
 			$stream->getCodecName(),
 			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
 			$this->contentLanguage->formatBitrate( $format->getBitRate() )
 		)->text();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getMetadata( $image, $path ): string {
+		[
+			'stream' => $stream,
+			'format' => $format,
+		] = $this->getMakeProbeFromPool( $image );
+
+		$streamData = [];
+		$formatData = [];
+
+		if ( $stream !== false ) {
+			$streamData = [
+				'duration' => $stream->getDuration(),
+				'codec' => $stream->getCodecName(),
+				'bitdepth' => $stream->getBitDepth(),
+			];
+		}
+
+		if ( $format !== false ) {
+			$formatData = [
+				'bitrate' => $format->getBitRate(),
+			];
+		}
+
+		return serialize( array_merge( $streamData, $formatData ) );
+	}
+
+	/**
+	 * Runs FFProbe through the pool counter
+	 *
+	 * @param FSFile|File $file The file to work on
+	 * @param string $select Video / Audio track to select
+	 * @return bool|array
+	 */
+	protected function getMakeProbeFromPool( $file, string $select = 'v:0' ) {
+		if ( $file instanceof FSFile ) {
+			$poolKey = $file->getSha1Base36();
+		} else {
+			$poolKey = $file->getSha1();
+		}
+
+		/**
+		 * TODO: Cache results "correct" somewhere?
+		 */
+		if ( isset( self::$workResultMap[$poolKey] ) ) {
+			return self::$workResultMap[$poolKey];
+		}
+
+		try {
+			$work = new PoolCounterWorkViaCallback( 'EmbedVideoFFProbeCall',
+				'_ev:ffprobe:' . $poolKey,
+				[ 'doWork' => static function () use ( $file, $select ) {
+					$probe = new FFProbe( $file );
+
+					return [
+						'stream' => $probe->getStream( $select ),
+						'format' => $probe->getFormat()
+					];
+				} ] );
+
+		} catch ( MWException $e ) {
+			wfLogWarning( $e->getMessage() );
+
+			return [
+				'stream' => false,
+				'format' => false,
+			];
+		}
+
+		self::$workResultMap[$poolKey] = $work->execute();
+
+		return self::$workResultMap[$poolKey];
 	}
 }

@@ -15,13 +15,8 @@ namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
 use File;
 use Html;
-use MediaTransformOutput;
 
-class VideoTransformOutput extends MediaTransformOutput {
-	/**
-	 * @var array
-	 */
-	private $parameters;
+class VideoTransformOutput extends AudioTransformOutput {
 
 	/**
 	 * Main Constructor
@@ -32,14 +27,14 @@ class VideoTransformOutput extends MediaTransformOutput {
 	 * @return void
 	 */
 	public function __construct( $file, $parameters ) {
-		$this->file = $file;
-		$this->parameters = $parameters;
-		$this->width = $parameters['width'] ?? null;
-		$this->height = $parameters['height'] ?? null;
-		$this->path = null;
-		$this->lang = false;
-		$this->page = $parameters['page'];
-		$this->url = $file->getFullUrl();
+		parent::__construct( $file, $parameters );
+
+		if ( isset( $parameters['gif'] ) ) {
+			$this->parameters['autoplay'] = true;
+			$this->parameters['loop'] = true;
+			$this->parameters['nocontrols'] = true;
+			$this->parameters['muted'] = true;
+		}
 	}
 
 	/**
@@ -60,14 +55,29 @@ class VideoTransformOutput extends MediaTransformOutput {
 	 * @return string HTML
 	 */
 	public function toHtml( $options = [] ): string {
-		$parameters = $this->parameters;
+		return Html::rawElement( 'video', [
+			'src' => $this->getSrc(),
+			'width' => $this->getWidth(),
+			'height' => $this->getHeight(),
+			'class' => $options['img-class'] ?? false,
+			'style' => $this->getStyle( $options ),
+			'poster' => $this->parametersparameters['cover'] ?? false,
+			'controls' => !isset( $this->parameters['nocontrols'] ),
+			'autoplay' => isset( $this->parameters['autoplay'] ),
+			'loop' => isset( $this->parameters['loop'] ),
+			'muted' => isset( $this->parameters['muted'] ),
+		], $this->getDescription() );
+	}
 
+	/**
+	 * @inheritDoc
+	 */
+	protected function getStyle( array $options ): string {
 		$style = [];
-		$style[] = "max-width: 100%;";
-		$style[] = "max-height: 100%;";
+		$style[] = 'max-width: 100%;';
+		$style[] = 'max-height: 100%;';
+
 		if ( empty( $options['no-dimensions'] ) ) {
-			$parameters['width'] = $this->getWidth();
-			$parameters['height'] = $this->getHeight();
 			$style[] = "width: {$this->getWidth()}px;";
 			$style[] = "height: {$this->getHeight()}px;";
 		}
@@ -76,42 +86,6 @@ class VideoTransformOutput extends MediaTransformOutput {
 			$style[] = "vertical-align: {$options['valign']};";
 		}
 
-		if ( !empty( $options['img-class'] ) ) {
-			$class = $options['img-class'];
-		}
-
-		if ( !isset( $parameters['start'] ) ) {
-			$parameters['start'] = null;
-		}
-		if ( !isset( $parameters['end'] ) ) {
-			$parameters['end'] = null;
-		}
-
-		$inOut = false;
-		if ( $parameters['start'] !== $parameters['end'] ) {
-			if ( $parameters['start'] !== false ) {
-				$inOut[] = $parameters['start'];
-			}
-
-			if ( $parameters['end'] !== false ) {
-				$inOut[] = $parameters['end'];
-			}
-		}
-
-		if ( isset( $parameters['descriptionUrl'] ) ) {
-			$descLink = Html::element( 'a', [ 'href' => $parameters['descriptionUrl'] ], $parameters['descriptionUrl'] );
-		} else {
-			$descLink = '';
-		}
-
-		return Html::rawElement( 'video', [
-			'src' => $this->url . ( $inOut !== false ? '#t=' . implode( ',', $inOut ) : '' ),
-			'width' => $this->getWidth(),
-			'height' => $this->getHeight(),
-			'class' => $class ?? false,
-			'style' => $style ? implode( ' ', $style ) : false,
-			'controls' => true,
-			'poster' => $parameters['cover'] ?? null,
-		], $descLink );
+		return implode( ' ', $style );
 	}
 }
