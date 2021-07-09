@@ -19,6 +19,27 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeVideoList;
 final class EmbedServiceFactory {
 
 	/**
+	 * List of all available services
+	 *
+	 * @var AbstractEmbedService[]
+	 */
+	private static $availableServices = [
+		ArchiveOrg::class,
+		SoundCloud::class,
+		SpotifyAlbum::class,
+		SpotifyArtist::class,
+		SpotifyTrack::class,
+		Twitch::class,
+		TwitchClip::class,
+		TwitchVod::class,
+		Vimeo::class,
+		YouTubeOEmbed::class,
+		YouTube::class,
+		YouTubePlaylist::class,
+		YouTubeVideoList::class,
+	];
+
+	/**
 	 * @param string $serviceName
 	 * @param string $id
 	 * @return AbstractEmbedService
@@ -68,5 +89,12 @@ final class EmbedServiceFactory {
 			default:
 				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
 		}
+	}
+
+	/**
+	 * @return AbstractEmbedService[]
+	 */
+	public static function getAvailableServices(): array {
+		return self::$availableServices;
 	}
 }

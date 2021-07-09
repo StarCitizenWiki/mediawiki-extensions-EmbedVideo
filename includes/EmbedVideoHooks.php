@@ -4,9 +4,11 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
+use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\ParserFirstCallInitHook;
+use MWException;
 use Parser;
 
 /**
@@ -75,10 +77,26 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 	 * @param Parser $parser Parser object passed as a reference.
 	 */
 	public function onParserFirstCallInit( $parser ): void {
-		$parser->setFunctionHook(
-			'ev',
-			[ EmbedVideo::class, 'parseEV' ],
-			Parser::SFH_OBJECT_ARGS
-		);
+		try {
+			$parser->setFunctionHook(
+				'ev',
+				[ EmbedVideo::class, 'parseEV' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+
+			$parser->setHook( 'embedvideo', [ EmbedVideo::class, 'parseEVTag' ] );
+		} catch ( MWException $e ) {
+			wfLogWarning( $e->getMessage() );
+		}
+
+		foreach ( EmbedServiceFactory::getAvailableServices() as $service ) {
+			try {
+				$name = $service::getServiceName();
+
+				$parser->setHook( $name, [ EmbedVideo::class, "parseTag{$name}" ] );
+			} catch ( MWException $e ) {
+				wfLogWarning( $e->getMessage() );
+			}
+		}
 	}
 }

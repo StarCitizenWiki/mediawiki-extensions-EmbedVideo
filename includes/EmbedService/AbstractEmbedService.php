@@ -125,6 +125,15 @@ abstract class AbstractEmbedService {
 	abstract public function getAspectRatio(): ?float;
 
 	/**
+	 * Returns the service name
+	 *
+	 * @return string
+	 */
+	final public static function getServiceName(): string {
+		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
+	}
+
+	/**
 	 * The default iframe width if no width is set specified
 	 *
 	 * @return int

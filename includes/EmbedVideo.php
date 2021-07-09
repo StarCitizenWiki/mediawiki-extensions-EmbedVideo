@@ -95,6 +95,46 @@ class EmbedVideo {
 	}
 
 	/**
+	 * Parse a service tag like <youtube>
+	 *
+	 * @param string $input The content of the tag i.e. the video id
+	 * @param array $args
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @return array
+	 */
+	public static function parseEVTag( $input, array $args, Parser $parser, PPFrame $frame ): array {
+		if ( !isset( $args['id'] ) ) {
+			$args['id'] = $input;
+		}
+
+		return self::parseEV( $parser, $frame, $args );
+	}
+
+	/**
+	 * Wrapper for service specific tag calls
+	 *
+	 * @param string $name Method name
+	 * @param array $arguments Method arguments
+	 */
+	public static function __callStatic( $name, $arguments ) {
+		if ( strpos( $name, 'parseTag' ) !== 0 ) {
+			return;
+		}
+
+		[
+			0 => $input,
+			1 => $args,
+			2 => $parser,
+			3 => $frame,
+		] = $arguments;
+
+		$args['service'] = strtolower( substr( $name, 8 ) );
+
+		return self::parseEVTag( $input, $args, $parser, $frame );
+	}
+
+	/**
 	 * Outputs the iframe or error message
 	 *
 	 * @return array
@@ -161,7 +201,9 @@ class EmbedVideo {
 
 		$keys = array_keys( $results );
 
-		$serviceName = array_shift( $args );
+		if ( isset( $args[0] ) ) {
+			$serviceName = array_shift( $args );
+		}
 
 		$counter = 0;
 
@@ -189,7 +231,9 @@ class EmbedVideo {
 			++$counter;
 		}
 
-		$results['service'] = $serviceName;
+		if ( isset( $args[0] ) ) {
+			$results['service'] = $serviceName;
+		}
 
 		return $results;
 	}
