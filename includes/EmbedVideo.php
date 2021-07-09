@@ -67,9 +67,9 @@ class EmbedVideo {
 	 */
 	private $container = false;
 
-	public function __construct( ?Parser $parser, array $args ) {
+	public function __construct( ?Parser $parser, array $args, bool $fromTag = false ) {
 		$this->parser = $parser;
-		$this->args = $this->parseArgs( $args );
+		$this->args = $this->parseArgs( $args, $fromTag );
 		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
 	}
 
@@ -82,14 +82,19 @@ class EmbedVideo {
 	 *
 	 * @return array Parser options and the HTML comments of cached attributes
 	 */
-	public static function parseEV( $parser, PPFrame $frame, array $args ): array {
+	public static function parseEV( $parser, PPFrame $frame, array $args, bool $fromTag = false ): array {
 		$expandedArgs = [];
 
-		foreach ( $args as $arg ) {
-			$expandedArgs[] = trim( $frame->expand( $arg ) );
+		foreach ( $args as $key => $arg ) {
+			$value = trim( $frame->expand( $arg ) );
+			if ( $fromTag === true ) {
+				$expandedArgs[$key] = $value;
+			} else {
+				$expandedArgs[] = $value;
+			}
 		}
 
-		$embedVideo = new EmbedVideo( $parser, $expandedArgs );
+		$embedVideo = new EmbedVideo( $parser, $expandedArgs, $fromTag );
 
 		return $embedVideo->output();
 	}
@@ -108,7 +113,7 @@ class EmbedVideo {
 			$args['id'] = $input;
 		}
 
-		return self::parseEV( $parser, $frame, $args );
+		return self::parseEV( $parser, $frame, $args, true );
 	}
 
 	/**
@@ -186,7 +191,7 @@ class EmbedVideo {
 	 * @param array $args
 	 * @return array
 	 */
-	private function parseArgs( array $args ): array {
+	private function parseArgs( array $args, bool $fromTag ): array {
 		$results = [
 			'id' => '',
 			'alignment' => '',
@@ -199,9 +204,15 @@ class EmbedVideo {
 			'vAlignment' => '',
 		];
 
+		if ( $fromTag === true ) {
+			return array_merge( $results, $args );
+		}
+
 		$keys = array_keys( $results );
 
-		if ( isset( $args[0] ) ) {
+		if ( $fromTag ) {
+			$serviceName = $args['service'] ?? null;
+		} else {
 			$serviceName = array_shift( $args );
 		}
 
@@ -231,9 +242,7 @@ class EmbedVideo {
 			++$counter;
 		}
 
-		if ( isset( $args[0] ) ) {
-			$results['service'] = $serviceName;
-		}
+		$results['service'] = $serviceName;
 
 		return $results;
 	}
