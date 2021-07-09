@@ -2,7 +2,7 @@
 
 ![](docs/example.png)
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` for embedding video clips from various video sharing services.  
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` and various parser tags like `<youtube>` for embedding video clips from various video sharing services.  
 It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
 This privacy enhanced fork adds a toggleable setting that only loads external content _after_ the user gave explicit consent by clicking the video.  
@@ -141,6 +141,11 @@ For YouTube to have the video start at a specific time code utilize the urlargs(
 Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the 'youtubevideolist` service selector:
 
     {{#ev:youtubevideolist|-D--GWwca0g|||||playlist=afpRzcAAZVM,gMEHZPZTAVc,lom_plwy9iA,BSWYMQEQhEo,EREaWhXj4_Q}}
+
+### Example #4
+Using the service name as a parser tag
+
+    <youtube>https://www.youtube.com/watch?v=eAORm-8b1Eg</youtube>
 
 ## Supported Services
 
