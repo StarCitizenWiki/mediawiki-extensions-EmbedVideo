@@ -22,6 +22,19 @@ use Title;
 
 class VideoHandler extends AudioHandler {
 	/**
+	 * @inheritDoc
+	 *
+	 * @return array
+	 */
+	public function getParamMap(): array
+	{
+		return array_merge(parent::getParamMap(), [
+			'gif' => 'gif',
+			'cover' => 'cover',
+		]);
+	}
+
+	/**
 	 * Validate a thumbnail parameter at parse time.
 	 * Return true to accept the parameter, and false to reject it.
 	 * If you return false, the parser will do something quiet and forgiving.
@@ -199,7 +212,7 @@ class VideoHandler extends AudioHandler {
 	}
 
 	/**
-	 * Long description. Shown under image on image description page surounded by ().
+	 * Long description. Shown under image on image description page surrounded by ().
 	 *
 	 * @param File $file
 	 * @return string
