@@ -1,6 +1,6 @@
 {
 	"name": "starcitizenwiki/embedvideo",
-	"version": "3.0.4",
+	"version": "3.0.5",
 	"type": "mediawiki-extension",
 	"description": "Adds a parser function embedding video from popular sources.",
 	"license": "MIT",
