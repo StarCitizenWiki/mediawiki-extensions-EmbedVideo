@@ -198,9 +198,10 @@ class EmbedVideo {
 			'dimensions' => '',
 			'alignment' => '',
 			'description' => '',
+			'container' => '',
+			'urlArgs' => '',
 			'autoResize' => true,
 			'vAlignment' => '',
-			'urlArgs' => '',
 			'width' => null,
 			'height' => null,
 		];

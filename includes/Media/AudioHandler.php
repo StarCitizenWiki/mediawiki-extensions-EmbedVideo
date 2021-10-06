@@ -47,8 +47,6 @@ class AudioHandler extends MediaHandler {
 			'img_width'	=> 'width',
 			'ev_start' => 'start',
 			'ev_end' => 'end',
-			'gif' => 'gif',
-			'cover' => 'cover',
 			'autoplay' => 'autoplay',
 			'loop' => 'loop',
 			'nocontrols' => 'nocontrols',

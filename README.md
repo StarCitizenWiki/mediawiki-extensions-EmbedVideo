@@ -1,4 +1,16 @@
-# About
+<p align="center">
+    <a href="https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/releases/latest" alt="Latest Release">
+        <img src="https://img.shields.io/github/v/release/starcitizenwiki/mediawiki-extensions-EmbedVideo" />
+    </a>
+    <a href="https://packagist.org/packages/starcitizenwiki/embedvideo" alt="Packagist">
+        <img src="https://img.shields.io/badge/packagist-starcitizenwiki%2Fembedvideo-green" />
+    </a>
+    <a href="https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/new?assignees=&labels=enhancement&template=embed-service-request.md&title=Embed+Service+Request%3A+Service+Name" alt="Request new service">
+        <img src="https://img.shields.io/badge/request-new%20service-informational" />
+    </a>
+</p>
+
+# Extension Embed Video
 
 ![](docs/example.png)
 
