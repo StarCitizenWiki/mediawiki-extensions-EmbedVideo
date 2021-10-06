@@ -26,12 +26,11 @@ class VideoHandler extends AudioHandler {
 	 *
 	 * @return array
 	 */
-	public function getParamMap(): array
-	{
-		return array_merge(parent::getParamMap(), [
+	public function getParamMap(): array {
+		return array_merge( parent::getParamMap(), [
 			'gif' => 'gif',
 			'cover' => 'cover',
-		]);
+		] );
 	}
 
 	/**
