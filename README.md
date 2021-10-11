@@ -78,7 +78,7 @@ To specify the start and end timestamps in the media use the start and end param
 
 	[[File:Example.mp4|start=2|end=6]]
 
-Additionally a cover image can be set for video files by specifying a `cover=` key.
+Additionally, a cover image can be set for video files by specifying a `cover=` key.
 
 	[[File:Example.mp4|start=2|end=6|cover=File:LocalFile.png]]
 
@@ -158,6 +158,16 @@ Creating a video list for Youtube. This allows you to queue a set of video in a 
 Using the service name as a parser tag
 
     <youtube>https://www.youtube.com/watch?v=eAORm-8b1Eg</youtube>
+
+### Example #5
+Using a local file as an embed thumbnail
+
+    {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg}}
+
+### Example #6
+Using a local file as an embed thumbnail and specifying a title
+
+    {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg|title=Title of the Embed}}
 
 ## Supported Services
 

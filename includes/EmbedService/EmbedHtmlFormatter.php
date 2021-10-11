@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use ConfigException;
+use Exception;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\MediaWikiServices;
 use UnexpectedValueException;
@@ -47,5 +48,43 @@ final class EmbedHtmlFormatter {
 		}, array_keys( $attributes ), $attributes );
 
 		return sprintf( '<iframe %s></iframe>', implode( ' ', $out ) );
+	}
+
+	/**
+	 * Generates the html used for embed thumbnails
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string The final html (can be empty on error or missing data)
+	 */
+	public static function makeThumbHtml( AbstractEmbedService $service ): string {
+		if ( $service->getLocalThumb() === null ) {
+			return "";
+		}
+
+		try {
+			$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
+
+			return <<<HTML
+<picture class="embedvideo-consent__thumbnail"><!--
+	--><img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/><!--
+--></picture>
+HTML;
+		} catch ( Exception $e ) {
+			return "";
+		}
+	}
+
+	/**
+	 * Generates the html used for embed titles
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string The final html (can be empty on error or missing data)
+	 */
+	public static function makeTitleHtml( AbstractEmbedService $service ): string {
+		if ( $service->getTitle() === null ) {
+			return "";
+		}
+
+		return sprintf( '<div class="embedvideo-consent__title">%s</div>', $service->getTitle() );
 	}
 }
