@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"embedvideo-description": "此分叉版本添加可用於內嵌來自熱門來源的影片之解析功能。",
+	"embedvideo-consent-text": "點擊載入內容",
+	"embedvideo-error-missingparams": "EmbedVideo 缺少一個必要的參數。",
+	"embedvideo-error-service": "EmbedVideo 無法識別影片服務「$1」。",
+	"embedvideo-error-id": "EmbedVideo 接收到用於服務「$1」的錯誤 ID「$2」。",
+	"embedvideo-error-width": "EmbedVideo 接收到錯誤的寬度參數「$1」。",
+	"embedvideo-error-height": "EmbedVideo 接收到錯誤的高度參數「$1」。",
+	"embedvideo-error-alignment": "給予了 EmbedVideo 調準參數「$1」一個無效的值。有效值為「left」、「center」、「right」、或是「inline」。",
+	"embedvideo-error-valignment": "給予了 EmbedVideo 直向調準參數「$1」一個無效的值。有效值為「top」、「middle」、「bottom」、或是「baseline」。",
+	"embedvideo-error-urlargs": "EmbedVideo 接收到包含異常資料或是引數為空白的 URL 引數清單。",
+	"embedvideo-error-unknown": "EmbedVideo 在嘗試產生影片內嵌區塊時發生未知錯誤。（$1）",
+	"embedvideo-error-evp_deprecated": "#evp 解析函式在 EmbedVideo 2.0 已棄用。請將您的解析函式標籤轉換成 #ev。",
+	"embedvideo-error-container": "提供給「container」的參數無效。",
+	"embedvideo-video-long-desc": "$1，編解碼器 $2，長度 $3，$4 x $5 像素，總體 $6",
+	"embedvideo-audio-long-desc": "$1，編解碼器 $2，長度 $3，總體 $4",
+	"embedvideo-error-cantdecode_evu": "無法解析來自 $1 的影片",
+	"apihelp-embedvideo-summary": "取得給予指定參數所產生的影片內嵌代碼。",
+	"apihelp-embedvideo-param-service": "服務名稱（youtube、twitch、等等）",
+	"apihelp-embedvideo-param-id": "用於該服務的影片 ID",
+	"apihelp-embedvideo-param-dimensions": "數字寬度（100）或是寬 x 高（100 x 100）",
+	"apihelp-embedvideo-param-alignment": "影片調準",
+	"apihelp-embedvideo-param-description": "影片描述",
+	"apihelp-embedvideo-param-container": "接受影格，或留下空白",
+	"apihelp-embedvideo-param-urlargs": "在影片 URL 裡的額外引數（用於部分服務）",
+	"apihelp-embedvideo-param-autoresize": "自動調整影片大小？（true 或 false）"
+}
