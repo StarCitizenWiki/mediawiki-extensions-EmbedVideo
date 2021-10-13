@@ -42,7 +42,7 @@
 				return result.json();
 			})
 			.then(json => {
-				if (typeof json.thumbnail_url === 'undefined') {
+				if (typeof json.thumbnail_url === 'undefined' || parent.querySelectorAll('.embedvideo-consent__thumbnail').length > 0) {
 					return;
 				}
 

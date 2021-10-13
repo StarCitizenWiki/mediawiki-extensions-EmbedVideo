@@ -15,6 +15,7 @@ use MediaWiki\MediaWikiServices;
 use Message;
 use Parser;
 use PPFrame;
+use RuntimeException;
 
 class EmbedVideo {
 	/**
@@ -204,6 +205,8 @@ class EmbedVideo {
 			'vAlignment' => '',
 			'width' => null,
 			'height' => null,
+			'cover' => null,
+			'title' => null,
 		];
 
 		if ( $fromTag === true ) {
@@ -285,6 +288,8 @@ class EmbedVideo {
 			'description' => $description,
 			'urlArgs' => $urlArgs,
 			'vAlignment' => $vAlignment,
+			'cover' => $cover,
+			'title' => $title,
 		] = $this->args;
 
 		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
@@ -327,6 +332,16 @@ class EmbedVideo {
 		if ( !$this->setVerticalAlignment( $vAlignment ) ) {
 			throw new InvalidArgumentException( $this->error( 'valignment', $vAlignment )[0] );
 		}
+
+		if ( !empty( $cover ?? '' ) ) {
+			try {
+			$this->service->setLocalThumb( $cover );
+			} catch ( InvalidArgumentException | RuntimeException $e ) {
+				wfLogWarning( $e->getMessage() );
+			}
+		}
+
+		$this->service->setTitle( $title );
 	}
 
 	/**
@@ -407,6 +422,8 @@ class EmbedVideo {
 	 * Generate the HTML necessary to embed the video with the given alignment
 	 * and text description
 	 *
+	 * TODO: Move into HtmlFormatter
+	 *
 	 * @private
 	 * @param string    [Optional] Horizontal Alignment
 	 * @param string    [Optional] Description
@@ -444,9 +461,13 @@ class EmbedVideo {
 
 		$consentClickContainer = '';
 		if ( !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ) ) {
+			$titleHtml = EmbedHtmlFormatter::makeTitleHtml( $this->service );
 			$consentClickContainer = sprintf(
-				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay"><div class="embedvideo-consent__message">%s</div></div></div>',
-				( new Message( 'embedvideo-consent-text' ) )->text()
+				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay%s">%s<div class="embedvideo-consent__message">%s</div></div>%s</div>',
+				$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
+				$titleHtml,
+				( new Message( 'embedvideo-consent-text' ) )->text(),
+				EmbedHtmlFormatter::makeThumbHtml( $this->service )
 			);
 		}
 

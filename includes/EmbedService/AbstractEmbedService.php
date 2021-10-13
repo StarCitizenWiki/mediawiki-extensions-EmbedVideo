@@ -6,7 +6,11 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use Config;
 use InvalidArgumentException;
+use MediaTransformOutput;
 use MediaWiki\MediaWikiServices;
+use RuntimeException;
+use ThumbnailImage;
+use Title;
 
 abstract class AbstractEmbedService {
 	/**
@@ -61,6 +65,18 @@ abstract class AbstractEmbedService {
 	 * @var
 	 */
 	protected $urlArgs = [];
+
+	/**
+	 * @var ThumbnailImage|MediaTransformOutput|null
+	 */
+	protected $localThumb;
+
+	/**
+	 * Local title for this embed
+	 *
+	 * @var string|null
+	 */
+	protected $title;
 
 	/**
 	 * Config object
@@ -330,5 +346,54 @@ abstract class AbstractEmbedService {
 	 */
 	public function getIframeAttributes(): array {
 		return array_merge( $this->iframeAttributes, $this->additionalIframeAttributes );
+	}
+
+	/**
+	 * Set a local filename to be used as the thumbnail for this embed
+	 *
+	 * @param string $localFileName
+	 * @throws InvalidArgumentException When the local file was not found
+	 * @throws RuntimeException When the local file could not be transformed
+	 */
+	public function setLocalThumb( string $localFileName ): void {
+		$title = Title::newFromText( $localFileName, NS_FILE );
+
+		if ( $title !== null && $title->exists() ) {
+			$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
+			$transform = $coverFile->transform( [ 'width' => $this->getWidth() ] );
+
+			if ( $transform === false ) {
+				throw new RuntimeException( sprintf( 'Could not transform file "%s".', $coverFile->getHashPath() ) );
+			}
+
+			$this->localThumb = $transform;
+		} else {
+			throw new InvalidArgumentException( sprintf( 'Local file "%s" not found.', $localFileName ) );
+		}
+	}
+
+	/**
+	 * @return ThumbnailImage|MediaTransformOutput|null
+	 */
+	public function getLocalThumb() {
+		return $this->localThumb;
+	}
+
+	/**
+	 * This title takes precedence over any external fetching
+	 *
+	 * @param string|null $title
+	 */
+	public function setTitle( ?string $title ): void {
+		if ( ( $title ?? '' ) !== '' ) {
+			$this->title = $title;
+		}
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getTitle(): ?string {
+		return $this->title;
 	}
 }

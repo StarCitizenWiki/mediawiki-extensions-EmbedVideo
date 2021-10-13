@@ -78,7 +78,7 @@ To specify the start and end timestamps in the media use the start and end param
 
 	[[File:Example.mp4|start=2|end=6]]
 
-Additionally a cover image can be set for video files by specifying a `cover=` key.
+Additionally, a cover image can be set for video files by specifying a `cover=` key.
 
 	[[File:Example.mp4|start=2|end=6|cover=File:LocalFile.png]]
 
@@ -124,6 +124,23 @@ However, if needed optional arguments may be left blank by not putting anything 
 
 * `{{#ev:service|id|||description}}`
 
+Alternatively each parameter can be used in any order as a named parameter. The following parameter are available:
+* `id`
+* `dimensions`
+* `alignment`
+* `description`
+* `container`
+* `urlArgs`
+* `autoResize`
+* `vAlignment`
+* `width`
+* `height`
+* `cover`
+* `title`
+
+**Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.  
+E.g. using named id and unnamed description `{{#ev:service||||This is the Description|id=abc}}`/ `{{#ev:service|id=abc|||This is the Description}}`
+
 ## Examples
 
 ### Example #1
@@ -159,6 +176,21 @@ Using the service name as a parser tag
 
     <youtube>https://www.youtube.com/watch?v=eAORm-8b1Eg</youtube>
 
+### Example #5
+Using a local file as an embed thumbnail
+
+    {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg}}
+
+### Example #6
+Using a local file as an embed thumbnail and specifying a title
+
+    {{#ev:youtube|pSsYTj9kCHE|cover=File:LocalFile.jpg|title=Title of the Embed}}
+
+### Example #7
+Using named parameters
+
+    {{#ev:youtube|id=pSsYTj9kCHE|dimensions=320x320}}
+
 ## Supported Services
 
 As of version 3.x, EmbedVideo supports embedding video content from the following services:
@@ -175,6 +207,9 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 | [YouTube](http://www.youtube.com/)                       | `youtube` - Single Videos                                                             | pSsYTj9kCHE                                                                           | https://www.youtube.com/watch?v=pSsYTj9kCHE                                                                    |
 | [YouTube](http://www.youtube.com/)                       | `youtubeplaylist` - Playlists                                                         | PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                                                    | https://www.youtube.com/embed/?listType=playlist&list=PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                       |
 | [YouTube](http://www.youtube.com/)                       | `youtubevideolist` - Video List                                                       | pSsYTj9kCHE - urlargs=playlist=pSsYTj9kCHE,pSsYTj9kCHE                                | https://www.youtube.com/embed/pSsYTj9kCHE?playlist=pSsYTj9kCHE,pSsYTj9kCHE                                     |
+
+### New Services
+New services can be requested by using the following [link](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/new?assignees=&labels=enhancement&template=embed-service-request.md&title=Embed+Service+Request%3A+Service+Name) or clicking `New Issue`.
 
 # Configuration Settings
 
