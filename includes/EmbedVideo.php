@@ -205,7 +205,7 @@ class EmbedVideo {
 			'vAlignment' => '',
 			'width' => null,
 			'height' => null,
-			'thumbnail' => null,
+			'cover' => null,
 			'title' => null,
 		];
 
@@ -288,7 +288,7 @@ class EmbedVideo {
 			'description' => $description,
 			'urlArgs' => $urlArgs,
 			'vAlignment' => $vAlignment,
-			'thumbnail' => $thumbnail,
+			'cover' => $cover,
 			'title' => $title,
 		] = $this->args;
 
@@ -333,9 +333,9 @@ class EmbedVideo {
 			throw new InvalidArgumentException( $this->error( 'valignment', $vAlignment )[0] );
 		}
 
-		if ( !empty( $thumbnail ?? '' ) ) {
+		if ( !empty( $cover ?? '' ) ) {
 			try {
-			$this->service->setLocalThumb( $thumbnail );
+			$this->service->setLocalThumb( $cover );
 			} catch ( InvalidArgumentException | RuntimeException $e ) {
 				wfLogWarning( $e->getMessage() );
 			}

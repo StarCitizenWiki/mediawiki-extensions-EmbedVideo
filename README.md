@@ -167,7 +167,7 @@ Using a local file as an embed thumbnail
 ### Example #6
 Using a local file as an embed thumbnail and specifying a title
 
-    {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg|title=Title of the Embed}}
+    {{#ev:youtube|pSsYTj9kCHE|cover=File:LocalFile.jpg|title=Title of the Embed}}
 
 ## Supported Services
 
