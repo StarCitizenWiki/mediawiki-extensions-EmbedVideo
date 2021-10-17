@@ -123,7 +123,7 @@ class FFProbe {
 	 * @return bool|string
 	 */
 	private function getFilePath() {
-		return $this->file->getPath();
+		return $this->file->getLocalRefPath();
 	}
 
 	/**
