@@ -221,30 +221,28 @@ class EmbedVideo {
 			$serviceName = array_shift( $args );
 		}
 
-		$counter = 0;
-
-		foreach ( $args as $arg ) {
+		foreach ( $args as $idx => $arg ) {
 			$pair = [ $arg ];
-			// Only split arg if it is not an url
-			if ( preg_match( '/https?:/', $arg ) !== 1 ) {
+			// Only split arg if it is not an url and not urlArgs
+			if ( ( $keys[$idx] !== 'urlArgs' || strpos( $arg, 'urlArgs' ) !== false ) && preg_match( '/https?:/', $arg ) !== 1 ) {
 				$pair = explode( '=', $arg, 2 );
 			}
 			$pair = array_map( 'trim', $pair );
 
 			if ( count( $pair ) === 2 ) {
 				[ $name, $value ] = $pair;
-				$results[$name] = $value;
+				if ( isset( $results[$name] ) ) {
+					$results[$name] = $value;
+				}
 			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
 				$pair = $pair[0];
 
-				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
+				if ( $keys[$idx] === 'autoresize' && strtolower( $pair ) === 'false' ) {
 					$pair = false;
 				}
 
-				$results[$keys[$counter]] = $pair;
+				$results[$keys[$idx]] = $pair;
 			}
-
-			++$counter;
 		}
 
 		$results['service'] = $serviceName;
@@ -280,13 +278,13 @@ class EmbedVideo {
 	private function init(): void {
 		[
 			'service' => $service,
-			'dimensions' => $dimensions,
 			'id' => $id,
-			'width' => $width,
-			'height' => $height,
+			'dimensions' => $dimensions,
 			'alignment' => $alignment,
 			'description' => $description,
 			'urlArgs' => $urlArgs,
+			'width' => $width,
+			'height' => $height,
 			'vAlignment' => $vAlignment,
 			'cover' => $cover,
 			'title' => $title,
