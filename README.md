@@ -230,4 +230,4 @@ New services can be requested by using the following [link](https://github.com/S
 
 The original version of EmbedVideo was written by Jim R. Wilson.  Additional major upgrades made by Andrew Whitworth, Alexia E. Smith, and other contributors.
 
-See CREDITS for details
+See [CREDITS](CREDITS.md) for details
