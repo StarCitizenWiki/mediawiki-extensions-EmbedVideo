@@ -37,6 +37,7 @@ final class EmbedServiceFactory {
 		YouTube::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
+		Indiana::class,
 	];
 
 	/**
