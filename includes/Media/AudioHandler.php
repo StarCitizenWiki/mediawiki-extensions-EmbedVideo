@@ -22,6 +22,7 @@ use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
 use MWException;
 use PoolCounterWorkViaCallback;
+use stdClass;
 
 class AudioHandler extends MediaHandler {
 	/**
@@ -41,6 +42,8 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
+	 *
+	 * @return array
 	 */
 	public function getParamMap(): array {
 		return [
@@ -81,9 +84,10 @@ class AudioHandler extends MediaHandler {
 
 	/**
 	 * Parse a time string into seconds.
-	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds OR one hour and thirty minutes.
+	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds
+	 * OR one hour and thirty minutes.
 	 *
-	 * @param string Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
+	 * @param string $time Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
 	 * @return false|float|int Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString( $time ) {
@@ -104,21 +108,23 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Merge a parameter array into a string appropriate for inclusion in filenames
 	 *
-	 * @param array Array of parameters that have been through normaliseParams.
+	 * @param array $parameters Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
 	public function makeParamString( $parameters ): string {
-		return ''; // Width does not matter to video or audio.
+		// Width does not matter to video or audio.
+		return '';
 	}
 
 	/**
 	 * Parse a param string made with makeParamString back into an array
 	 *
-	 * @param string The parameter string without file name (e.g. 122px)
+	 * @param string $string The parameter string without file name (e.g. 122px)
 	 * @return mixed Array of parameters or false on failure.
 	 */
 	public function parseParamString( $string ): array {
-		return []; // Nothing to parse.  See makeParamString above.
+		// Nothing to parse.  See makeParamString above.
+		return [];
 	}
 
 	/**
@@ -126,7 +132,7 @@ class AudioHandler extends MediaHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param object $file
+	 * @param stdClass|File $file
 	 * @param array &$parameters
 	 * @return bool Success
 	 */
@@ -171,7 +177,7 @@ class AudioHandler extends MediaHandler {
 	 *
 	 * @param File $file The file object, or false if there isn't one
 	 * @param string $path The filename
-	 * @return array|false An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @return array|false An array following the format of PHP getimagesize() function or false if not supported.
 	 */
 	public function getImageSize( $file, $path ) {
 		return false;

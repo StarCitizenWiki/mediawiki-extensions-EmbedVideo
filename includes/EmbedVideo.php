@@ -68,6 +68,13 @@ class EmbedVideo {
 	 */
 	private $container = false;
 
+	/**
+	 * Creates a new EmbedVideo instance
+	 *
+	 * @param Parser|null $parser
+	 * @param array $args
+	 * @param bool $fromTag
+	 */
 	public function __construct( ?Parser $parser, array $args, bool $fromTag = false ) {
 		$this->parser = $parser;
 		$this->args = $this->parseArgs( $args, $fromTag );
@@ -80,10 +87,11 @@ class EmbedVideo {
 	 * @param Parser $parser The active Parser instance
 	 * @param PPFrame $frame Frame
 	 * @param array $args Arguments
+	 * @param bool $fromTag Toggle whether this was called from a tag like <youtube> or the parser fn {{#ev
 	 *
 	 * @return array Parser options and the HTML comments of cached attributes
 	 */
-	public static function parseEV( $parser, PPFrame $frame, array $args, bool $fromTag = false ): array {
+	public static function parseEV( Parser $parser, PPFrame $frame, array $args, bool $fromTag = false ): array {
 		$expandedArgs = [];
 
 		foreach ( $args as $key => $arg ) {
@@ -226,6 +234,7 @@ class EmbedVideo {
 		foreach ( $args as $arg ) {
 			$pair = [ $arg ];
 			// Only split arg if it is not an url and not urlArgs
+			// phpcs:ignore Generic.Files.LineLength.TooLong
 			if ( ( $keys[$counter] !== 'urlArgs' || strpos( $arg, 'urlArgs' ) !== false ) && preg_match( '/https?:/', $arg ) !== 1 ) {
 				$pair = explode( '=', $arg, 2 );
 			}
@@ -257,9 +266,7 @@ class EmbedVideo {
 	/**
 	 * Error Handler
 	 *
-	 * @private
-	 * @param string    [Optional] Error Type
-	 * @param mixed    [...] Multiple arguments to be retrieved with func_get_args().
+	 * @param string $type [Optional] Error Type; Multiple arguments to be retrieved with func_get_args().
 	 * @return array Printable Error Message
 	 */
 	private function error( $type = 'unknown' ): array {
@@ -361,7 +368,7 @@ class EmbedVideo {
 	/**
 	 * Set the description without using the parser
 	 *
-	 * @param string    Description
+	 * @param string $description Description
 	 */
 	private function setDescriptionNoParse( $description ): void {
 		$this->description = ( !$description ? false : $description );
@@ -371,7 +378,7 @@ class EmbedVideo {
 	 * Set the container type.
 	 *
 	 * @private
-	 * @param string    Container
+	 * @param string $container Container
 	 * @return bool Success
 	 */
 	private function setContainer( $container ): bool {
@@ -387,11 +394,11 @@ class EmbedVideo {
 	 * Set the align parameter.
 	 *
 	 * @private
-	 * @param string    Alignment Parameter
+	 * @param string $alignment Alignment Parameter
 	 * @return bool Valid
 	 */
 	private function setAlignment( $alignment ): bool {
-		if ( !empty( $alignment ) && ( $alignment === 'left' || $alignment === 'right' || $alignment === 'center' || $alignment === 'inline' ) ) {
+		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'inline' ], true ) ) {
 			$this->alignment = $alignment;
 		} elseif ( !empty( $alignment ) ) {
 			return false;
@@ -404,11 +411,11 @@ class EmbedVideo {
 	 * Set the align parameter.
 	 *
 	 * @private
-	 * @param string    Alignment Parameter
+	 * @param string $vAlignment Alignment Parameter
 	 * @return bool Valid
 	 */
 	private function setVerticalAlignment( $vAlignment ): bool {
-		if ( !empty( $vAlignment ) && ( $vAlignment === 'top' || $vAlignment === 'middle' || $vAlignment === 'bottom' || $vAlignment === 'baseline' ) ) {
+		if ( !empty( $vAlignment ) && in_array( $vAlignment, [ 'top', 'middle', 'bottom', 'baseline' ], true ) ) {
 			if ( $vAlignment !== 'baseline' ) {
 				$this->alignment = 'inline';
 			}
@@ -427,9 +434,9 @@ class EmbedVideo {
 	 * TODO: Move into HtmlFormatter
 	 *
 	 * @private
-	 * @param string    [Optional] Horizontal Alignment
-	 * @param string    [Optional] Description
-	 * @param string  [Optional] Additional Classes to add to the wrapper
+	 * @param string $html [Optional] Horizontal Alignment
+	 * @param string|null $addClass [Optional] Description
+	 * @param string $service [Optional] Additional Classes to add to the wrapper
 	 * @return string
 	 */
 	private function generateWrapperHTML( $html, $addClass = null, string $service = '' ): string {
@@ -462,9 +469,11 @@ class EmbedVideo {
 		}
 
 		$consentClickContainer = '';
+		// phpcs:ignore Generic.Files.LineLength.TooLong
 		if ( !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ) ) {
 			$titleHtml = EmbedHtmlFormatter::makeTitleHtml( $this->service );
 			$consentClickContainer = sprintf(
+				// phpcs:ignore Generic.Files.LineLength.TooLong
 				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay%s">%s<div class="embedvideo-consent__message">%s</div></div>%s</div>',
 				$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 				$titleHtml,
@@ -475,7 +484,9 @@ class EmbedVideo {
 
 		$width = $this->service->getWidth();
 		$widthPad = $width + 8;
-		$caption = $this->description !== false ? sprintf( '<div class="thumbcaption">%s</div>', $this->description ) : '';
+		$caption = $this->description !== false
+			? sprintf( '<div class="thumbcaption">%s</div>', $this->description )
+			: '';
 
 		return <<<HTML
 <div class="thumb {$outerClassString}" style="width: {$widthPad}px;">

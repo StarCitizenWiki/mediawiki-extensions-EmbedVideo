@@ -6,6 +6,9 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService\YouTube;
 
 final class YouTubePlaylist extends YouTube {
 
+	/**
+	 * @inheritDoc
+	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#list=([\d\w-]+)(?:&\S+?)?#is'

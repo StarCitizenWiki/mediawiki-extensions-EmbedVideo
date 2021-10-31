@@ -21,7 +21,6 @@ class VideoTransformOutput extends AudioTransformOutput {
 	/**
 	 * Main Constructor
 	 *
-	 * @access public
 	 * @param File $file
 	 * @param array $parameters Parameters for constructing HTML.
 	 * @return void
@@ -40,7 +39,6 @@ class VideoTransformOutput extends AudioTransformOutput {
 	/**
 	 * Fetch HTML for this transform output
 	 *
-	 * @access public
 	 * @param array $options Associative array of options. Boolean options
 	 *                        should be indicated with a value of true for true, and false or
 	 *                        absent for false.

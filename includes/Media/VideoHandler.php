@@ -59,8 +59,8 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param File File
-	 * @param array Parameters
+	 * @param File $file File
+	 * @param array &$parameters Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
@@ -75,8 +75,12 @@ class VideoHandler extends AudioHandler {
 			$height = 360;
 		}
 
-		if ( isset( $parameters['width'], $parameters['height'] ) && $parameters['width'] > 0 && $parameters['height'] === $parameters['width'] ) {
-			// special allowance for square video embeds needed by some wikis, otherwise forced 16:9 ratios are followed.
+		if ( isset( $parameters['width'] ) &&
+			isset( $parameters['height'] ) &&
+			$parameters['width'] > 0 &&
+			$parameters['height'] === $parameters['width'] ) {
+			// special allowance for square video embeds needed by some wikis,
+			// otherwise forced 16:9 ratios are followed.
 			return true;
 		}
 
@@ -97,7 +101,8 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = $height;
 		}
 
-		if ( $width > 0 && $parameters['width'] > 0 && ( $height / $width ) !== ( $parameters['height'] / $parameters['width'] ) ) {
+		if ( $width > 0 && $parameters['width'] > 0 &&
+			( $height / $width ) !== ( $parameters['height'] / $parameters['width'] ) ) {
 			$parameters['height'] = round( $height / $width * $parameters['width'] );
 		}
 

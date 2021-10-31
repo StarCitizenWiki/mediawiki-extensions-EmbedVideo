@@ -33,7 +33,10 @@ final class EmbedHtmlFormatter {
 
 		$srcType = 'src';
 		try {
-			$consent = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' )->get( 'EmbedVideoRequireConsent' );
+			$consent = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
 				$srcType = 'data-src';
 			}
@@ -64,11 +67,13 @@ final class EmbedHtmlFormatter {
 		try {
 			$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
 
+			// phpcs:disable
 			return <<<HTML
 <picture class="embedvideo-consent__thumbnail"><!--
 	--><img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/><!--
 --></picture>
 HTML;
+			// phpcs:enable
 		} catch ( Exception $e ) {
 			return "";
 		}

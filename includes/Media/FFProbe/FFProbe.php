@@ -32,8 +32,7 @@ class FFProbe {
 	/**
 	 * Main Constructor
 	 *
-	 * @access public
-	 * @param  FSFile MediaWiki File
+	 * @param FSFile $file MediaWiki File
 	 * @return void
 	 */
 	public function __construct( $file ) {
@@ -43,7 +42,6 @@ class FFProbe {
 	/**
 	 * Return the entire cache of meta data.
 	 *
-	 * @access public
 	 * @return array Meta Data
 	 */
 	public function getMetaData(): array {
@@ -57,8 +55,7 @@ class FFProbe {
 	/**
 	 * Get a selected stream.  Follows ffmpeg's stream selection style.
 	 *
-	 * @access public
-	 * @param  string	Stream identifier
+	 * @param string $select Stream identifier
 	 * Examples:
 	 *		"v:0" - Select the first video stream
 	 * 		"a:1" - Second audio stream
@@ -106,7 +103,6 @@ class FFProbe {
 	/**
 	 * Get the FormatInfo object.
 	 *
-	 * @access public
 	 * @return false|FormatInfo FormatInfo object or false if does not exist.
 	 */
 	public function getFormat() {
@@ -129,7 +125,6 @@ class FFProbe {
 	/**
 	 * Invoke ffprobe on the command line.
 	 *
-	 * @private
 	 * @return bool Success
 	 */
 	private function invokeFFProbe(): bool {

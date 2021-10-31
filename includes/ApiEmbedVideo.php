@@ -17,6 +17,8 @@ use ApiBase;
 class ApiEmbedVideo extends ApiBase {
 	/**
 	 * Execute the API call.
+	 *
+	 * @return bool
 	 */
 	public function execute(): bool {
 		$ev = new EmbedVideo( null, [
