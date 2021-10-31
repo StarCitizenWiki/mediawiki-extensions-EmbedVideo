@@ -221,28 +221,32 @@ class EmbedVideo {
 			$serviceName = array_shift( $args );
 		}
 
-		foreach ( $args as $idx => $arg ) {
+		$counter = 0;
+
+		foreach ( $args as $arg ) {
 			$pair = [ $arg ];
 			// Only split arg if it is not an url and not urlArgs
-			if ( ( $keys[$idx] !== 'urlArgs' || strpos( $arg, 'urlArgs' ) !== false ) && preg_match( '/https?:/', $arg ) !== 1 ) {
+			if ( ( $keys[$counter] !== 'urlArgs' || strpos( $arg, 'urlArgs' ) !== false ) && preg_match( '/https?:/', $arg ) !== 1 ) {
 				$pair = explode( '=', $arg, 2 );
 			}
 			$pair = array_map( 'trim', $pair );
 
 			if ( count( $pair ) === 2 ) {
 				[ $name, $value ] = $pair;
-				if ( isset( $results[$name] ) ) {
+				if ( array_key_exists( $name, $results ) ) {
 					$results[$name] = $value;
 				}
 			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
 				$pair = $pair[0];
 
-				if ( $keys[$idx] === 'autoresize' && strtolower( $pair ) === 'false' ) {
+				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
 					$pair = false;
 				}
 
-				$results[$keys[$idx]] = $pair;
+				$results[$keys[$counter]] = $pair;
 			}
+
+			++$counter;
 		}
 
 		$results['service'] = $serviceName;
