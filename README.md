@@ -163,7 +163,7 @@ To display the same video as a right aligned large thumbnail with a description:
 
 #### YouTube Example #3
 
-Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the 'youtubevideolist` service selector:
+Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the `youtubevideolist` service selector:
 
     {{#ev:youtubevideolist|-D--GWwca0g|||||playlist=afpRzcAAZVM,gMEHZPZTAVc,lom_plwy9iA,BSWYMQEQhEo,EREaWhXj4_Q}}
 
