@@ -143,7 +143,9 @@ E.g. using named id and unnamed description `{{#ev:service||||This is the Descri
 
 ## Examples
 
-### Example #1
+### YouTube Examples
+
+#### YouTube Example #1
 
 For example, a video from YouTube use the 'youtube' service selector enter the raw ID:
 
@@ -153,43 +155,59 @@ Or the full URL:
 
     {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE}}
 
-### Example #2
+#### YouTube Example #2
 
 To display the same video as a right aligned large thumbnail with a description:
 
-    {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|1000|right|Let eet GO|frame}}
+    {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|1000|right|Example description|frame}}
 
-For YouTube to have the video start at a specific time code utilize the urlargs(URL arguments) parameter. Take the rest of the URL arguments from the custom URL and place them into the urlargs. Please note that not all video services support extra URL arguments or may have different keys for their URL arguments.
-
-    https://www.youtube.com/watch?v=pSsYTj9kCHE&start=76
-
-    {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|||||start=76}}
-
-### Example #3
+#### YouTube Example #3
 
 Creating a video list for Youtube. This allows you to queue a set of video in a temporary playlist. Use the 'youtubevideolist` service selector:
 
     {{#ev:youtubevideolist|-D--GWwca0g|||||playlist=afpRzcAAZVM,gMEHZPZTAVc,lom_plwy9iA,BSWYMQEQhEo,EREaWhXj4_Q}}
 
-### Example #4
+#### YouTube Example #4
 Using the service name as a parser tag
 
     <youtube>https://www.youtube.com/watch?v=eAORm-8b1Eg</youtube>
 
-### Example #5
+#### YouTube Example #5
 Using a local file as an embed thumbnail
 
     {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg}}
 
-### Example #6
+#### YouTube Example #6
 Using a local file as an embed thumbnail and specifying a title
 
     {{#ev:youtube|pSsYTj9kCHE|cover=File:LocalFile.jpg|title=Title of the Embed}}
 
-### Example #7
+#### YouTube Example #7
 Using named parameters
 
     {{#ev:youtube|id=pSsYTj9kCHE|dimensions=320x320}}
+
+#### YouTube Example #8
+
+For YouTube to have the video start at a specific time code utilize the urlargs(URL arguments) parameter. Take the rest of the URL arguments from the custom URL and place them into the urlargs. 
+
+Please note that not all video services support extra URL arguments or may have different keys for their URL arguments.
+
+    https://www.youtube.com/watch?v=pSsYTj9kCHE&start=76
+
+    {{#ev:youtube|https://www.youtube.com/watch?v=pSsYTj9kCHE|||||start=76}}
+
+or
+
+    {{#ev:youtube|pSsYTj9kCHE|||||start=32}}
+
+or
+
+    {{#ev:youtube|id=pSsYTj9kCHE|urlArgs=start=32}}
+
+or
+
+    {{#ev:youtube|id=pSsYTj9kCHE|urlArgs=start=32&end=42}}
 
 ## Supported Services
 
@@ -230,4 +248,4 @@ New services can be requested by using the following [link](https://github.com/S
 
 The original version of EmbedVideo was written by Jim R. Wilson.  Additional major upgrades made by Andrew Whitworth, Alexia E. Smith, and other contributors.
 
-See CREDITS for details
+See [CREDITS](CREDITS.md) for details
