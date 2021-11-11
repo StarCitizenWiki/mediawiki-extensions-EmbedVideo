@@ -12,7 +12,6 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\OEmbedServiceInterface;
 use MediaWiki\MediaWikiServices;
-use Message;
 use Parser;
 use PPFrame;
 use RuntimeException;
@@ -45,7 +44,7 @@ class EmbedVideo {
 	 *
 	 * @var string
 	 */
-	private $description = false;
+	private $description;
 
 	/**
 	 * Alignment Parameter
@@ -178,17 +177,14 @@ class EmbedVideo {
 			];
 		}
 
-		$html = EmbedHtmlFormatter::toHtml( $this->service );
-		if ( !$html ) {
-			return $this->error( 'unknown', $service );
-		}
-
-		$html = $this->generateWrapperHTML( $html, $autoResize ? 'autoResize' : null, $service );
-
 		$this->addModules();
 
 		return [
-			$html,
+			// This does the whole HTML generation
+			EmbedHtmlFormatter::toHtml(
+				$this->service,
+				$this->makeHtmlFormatConfig( $this->service, $autoResize ? 'autoResize' : null )
+			),
 			'noparse' => true,
 			'isHTML' => true
 		];
@@ -232,6 +228,10 @@ class EmbedVideo {
 
 		$counter = 0;
 
+		/**
+		 * This takes each 'raw' argument and tries to parse it into named and unnamed arguments
+		 * If no 'name' is detected, the value is set in order of $results (see above)
+		 */
 		foreach ( $args as $arg ) {
 			$pair = [ $arg ];
 			// Only split arg if it is not an url and not urlArgs
@@ -430,23 +430,20 @@ class EmbedVideo {
 	}
 
 	/**
-	 * Generate the HTML necessary to embed the video with the given alignment
-	 * and text description
+	 * Makes the config used by the HTML Formatter
 	 *
-	 * TODO: Move into HtmlFormatter
+	 * @see EmbedHtmlFormatter::toHtml()
 	 *
-	 * @private
-	 * @param string $html [Optional] Horizontal Alignment
-	 * @param string|null $addClass [Optional] Description
-	 * @param string $service [Optional] Additional Classes to add to the wrapper
-	 * @return string
+	 * @param AbstractEmbedService $embedService The service in question
+	 * @param string|null $addClass [Optional] Additional Classes to add to the wrapper
+	 * @return array
 	 */
-	private function generateWrapperHTML( $html, $addClass = null, string $service = '' ): string {
+	private function makeHtmlFormatConfig( $embedService, $addClass = null ): array {
 		$classString = 'embedvideo';
 		$styleString = '';
 		$innerClassString = implode( ' ', array_filter( [
 			'embedvideowrap',
-			$service,
+			$embedService::getServiceName(),
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );
@@ -470,34 +467,14 @@ class EmbedVideo {
 			$outerClassString .= $addClass;
 		}
 
-		$consentClickContainer = '';
-		// phpcs:ignore Generic.Files.LineLength.TooLong
-		if ( !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ) ) {
-			$titleHtml = EmbedHtmlFormatter::makeTitleHtml( $this->service );
-			$consentClickContainer = sprintf(
-				// phpcs:ignore Generic.Files.LineLength.TooLong
-				'<div class="embedvideo-consent"><div class="embedvideo-consent__overlay%s">%s<div class="embedvideo-consent__message">%s</div></div>%s</div>',
-				$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
-				$titleHtml,
-				( new Message( 'embedvideo-consent-text' ) )->text(),
-				EmbedHtmlFormatter::makeThumbHtml( $this->service )
-			);
-		}
-
-		$width = $this->service->getWidth();
-		$widthPad = $width + 8;
-		$caption = $this->description !== false
-			? sprintf( '<div class="thumbcaption">%s</div>', $this->description )
-			: '';
-
-		return <<<HTML
-<div class="thumb {$outerClassString}" style="width: {$widthPad}px;">
-	<div class="$classString" style="$styleString">
-		<div class="$innerClassString" style="width: $width">{$consentClickContainer}{$html}</div>
-		$caption
-	</div>
-</div>
-HTML;
+		return [
+			'outerClass' => $outerClassString,
+			'class' => $classString,
+			'style' => $styleString,
+			'innerClass' => $innerClassString,
+			'withConsent' => !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ),
+			'description' => $this->description,
+		];
 	}
 
 	/**
@@ -512,7 +489,7 @@ HTML;
 
 		// Add CSP if needed
 		$defaultSrcArr = $this->service->getCSPUrls();
-		if ( $defaultSrcArr ) {
+		if ( !empty( $defaultSrcArr ) ) {
 			foreach ( $defaultSrcArr as $defaultSrc ) {
 				$out->addExtraCSPDefaultSrc( $defaultSrc );
 			}

@@ -403,4 +403,13 @@ abstract class AbstractEmbedService {
 	public function getTitle(): ?string {
 		return $this->title;
 	}
+
+	/**
+	 * A convenience method generating the final HTML from a service
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return EmbedHtmlFormatter::makeIframe( $this );
+	}
 }
