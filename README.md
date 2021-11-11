@@ -80,7 +80,7 @@ To specify the start and end timestamps in the media use the start and end param
 
 Additionally, a cover image can be set for video files by specifying a `cover=` key.
 
-	[[File:Example.mp4|start=2|end=6|cover=File:LocalFile.png]]
+	[[File:Example.mp4|start=2|end=6|poster=File:LocalFile.png]]
 
 ### Example
 ![](docs/local_file_with_cover.png)  
@@ -88,7 +88,7 @@ Example of a local file with a custom cover image.
 
 ### Available options
 The following options are available when using the media handler for local files.  
-Options are added to the wikitext like `|cover=File:...` or `|start=2`.
+Options are added to the wikitext like `|poster=File:...` or `|start=2`.
 
 * loop
   * Loops the audio / video
@@ -98,7 +98,7 @@ Options are added to the wikitext like `|cover=File:...` or `|start=2`.
   * Disables the control elements
 
 Options only available for video files:
-* cover
+* poster / cover
   * Sets a local image file as the cover of the video
 * muted
   * Mutes the audio track of the video (required for autoplay)
@@ -135,7 +135,7 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `vAlignment`
 * `width`
 * `height`
-* `cover`
+* `poster` / `cover`
 * `title`
 
 **Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.  
@@ -175,12 +175,12 @@ Using the service name as a parser tag
 #### YouTube Example #5
 Using a local file as an embed thumbnail
 
-    {{#ev:youtube|pSsYTj9kCHE|thumbnail=File:LocalFile.jpg}}
+    {{#ev:youtube|pSsYTj9kCHE|poster=File:LocalFile.jpg}}
 
 #### YouTube Example #6
 Using a local file as an embed thumbnail and specifying a title
 
-    {{#ev:youtube|pSsYTj9kCHE|cover=File:LocalFile.jpg|title=Title of the Embed}}
+    {{#ev:youtube|pSsYTj9kCHE|poster=File:LocalFile.jpg|title=Title of the Embed}}
 
 #### YouTube Example #7
 Using named parameters
@@ -236,11 +236,12 @@ New services can be requested by using the following [link](https://github.com/S
 | $wgEmbedVideoAddFileExtensions       | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                           |
 | $wgEmbedVideoEnableVideoHandler      | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                         |
 | $wgEmbedVideoEnableAudioHandler      | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                         |
+| $wgEmbedVideoLazyLoadLocalVideos     | false            | Boolean - Sets 'preload="none"' on every <video> element, if the local video handler is enabled.                                                        |
 | $wgEmbedVideoDefaultWidth            | 320              | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
 | $wgEmbedVideoMinWidth                | null             | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
 | $wgEmbedVideoMaxWidth                | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgFFprobeLocation                   | /usr/bin/ffprobe | String - Set the location of the ffprobe binary.                                                                                                        |
-| $wgEmbedVideoEnabledServices         | null             | Array - Array of service names that are allowed, if empty all services are available.                                                                   |
+| $wgFFprobeLocation                   | /usr/bin/ffprobe | String  - Set the location of the ffprobe binary.                                                                                                       |
+| $wgEmbedVideoEnabledServices         | null             | Array   - Array of service names that are allowed, if empty all services are available.                                                                 |
 | $wgEmbedVideoRequireConsent          | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                  |
 | $wgEmbedVideoFetchExternalThumbnails | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.               |
 

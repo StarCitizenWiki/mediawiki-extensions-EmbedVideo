@@ -214,6 +214,7 @@ class EmbedVideo {
 			'width' => null,
 			'height' => null,
 			'cover' => null,
+			'poster' => null,
 			'title' => null,
 		];
 
@@ -298,6 +299,7 @@ class EmbedVideo {
 			'height' => $height,
 			'vAlignment' => $vAlignment,
 			'cover' => $cover,
+			'poster' => $poster,
 			'title' => $title,
 		] = $this->args;
 
@@ -342,9 +344,9 @@ class EmbedVideo {
 			throw new InvalidArgumentException( $this->error( 'valignment', $vAlignment )[0] );
 		}
 
-		if ( !empty( $cover ?? '' ) ) {
+		if ( !empty( $cover ?? $poster ?? '' ) ) {
 			try {
-			$this->service->setLocalThumb( $cover );
+				$this->service->setLocalThumb( $cover ?? $poster );
 			} catch ( InvalidArgumentException | RuntimeException $e ) {
 				wfLogWarning( $e->getMessage() );
 			}

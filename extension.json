@@ -81,6 +81,10 @@
 			"description": "Enables the video handler which displays local videos using the html5 <video> tag.",
 			"value": true
 		},
+		"EmbedVideoLazyLoadLocalVideos": {
+			"description": "Sets 'preload=none' on every <video> tag.",
+			"value": false
+		},
 		"EmbedVideoEnableAudioHandler": {
 			"description": "Enables the audio handler which displays local videos using the html5 <audio> tag.",
 			"value": true

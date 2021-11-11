@@ -53,18 +53,29 @@ class VideoTransformOutput extends AudioTransformOutput {
 	 * @return string HTML
 	 */
 	public function toHtml( $options = [] ): string {
-		return Html::rawElement( 'video', [
+		$attrs = [
 			'src' => $this->getSrc(),
 			'width' => $this->getWidth(),
 			'height' => $this->getHeight(),
 			'class' => $options['img-class'] ?? false,
 			'style' => $this->getStyle( $options ),
-			'poster' => $this->parametersparameters['cover'] ?? false,
+			'poster' => $this->parametersparameters['poster'] ?? false,
 			'controls' => !isset( $this->parameters['nocontrols'] ),
 			'autoplay' => isset( $this->parameters['autoplay'] ),
 			'loop' => isset( $this->parameters['loop'] ),
 			'muted' => isset( $this->parameters['muted'] ),
-		], $this->getDescription() );
+		];
+
+		if ( $this->parameters['lazy'] === true && !isset( $this->parameters['gif'] ) ) {
+			$attrs['preload'] = 'none';
+		}
+
+		// See https://web.dev/lazy-loading-video/#video-gif-replacement
+		if ( isset( $this->parameters['gif'] ) ) {
+			$attrs['playsinline'] = true;
+		}
+
+		return Html::rawElement( 'video', $attrs, $this->getDescription() );
 	}
 
 	/**

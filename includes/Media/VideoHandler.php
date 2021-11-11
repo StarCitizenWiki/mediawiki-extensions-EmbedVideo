@@ -30,6 +30,8 @@ class VideoHandler extends AudioHandler {
 		return array_merge( parent::getParamMap(), [
 			'gif' => 'gif',
 			'cover' => 'cover',
+			'poster' => 'poster',
+			'lazy' => 'lazy',
 		] );
 	}
 
@@ -106,21 +108,30 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = round( $height / $width * $parameters['width'] );
 		}
 
-		if ( isset( $parameters['cover'] ) ) {
-			$title = Title::newFromText( $parameters['cover'], NS_FILE );
+		if ( isset( $parameters['cover'] ) || isset( $parameters['poster'] ) ) {
+			$title = Title::newFromText( $parameters['cover'] ?? $parameters['poster'], NS_FILE );
 
 			if ( $title !== null && $title->exists() ) {
 				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
 				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
 
 				try {
-					$parameters['cover'] = wfExpandUrl( $transform->getUrl() );
+					$parameters['poster'] = wfExpandUrl( $transform->getUrl() );
 				} catch ( Exception $e ) {
-					unset( $parameters['cover'] );
+					unset( $parameters['poster'], $parameters['cover'] );
 				}
 			} else {
-				unset( $parameters['cover'] );
+				unset( $parameters['poster'], $parameters['cover'] );
 			}
+		}
+
+		if ( isset( $parameters['lazy'] ) ) {
+			$parameters['lazy'] = true;
+		} else {
+			$parameters['lazy'] = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoLazyLoadLocalVideos' );
 		}
 
 		return true;
