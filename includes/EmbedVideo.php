@@ -472,6 +472,7 @@ class EmbedVideo {
 			'class' => $classString,
 			'style' => $styleString,
 			'innerClass' => $innerClassString,
+			// phpcs:ignore Generic.Files.LineLength.TooLong
 			'withConsent' => !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ),
 			'description' => $this->description,
 		];
