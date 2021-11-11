@@ -119,7 +119,7 @@ class FFProbe {
 	 * @return bool|string
 	 */
 	private function getFilePath() {
-		if ($this->file instanceof FSFile) {
+		if ( $this->file instanceof FSFile ) {
 			return $this->file->getPath();
 		}
 
