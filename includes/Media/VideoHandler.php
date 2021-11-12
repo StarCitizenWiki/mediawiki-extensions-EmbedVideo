@@ -19,6 +19,7 @@ use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
+use RequestContext;
 use Title;
 
 class VideoHandler extends AudioHandler {
@@ -182,8 +183,19 @@ class VideoHandler extends AudioHandler {
 			->makeConfig( 'EmbedVideo' )
 			->get( 'EmbedVideoUseEmbedStyleForLocalVideos' );
 
+		$request = RequestContext::getMain();
+		$useEmbedTransform = false;
+		if ( $request !== null && $request->getTitle() !== null ) {
+			$useEmbedTransform = $request->getTitle()->isContentPage();
+
+			// Always preload page is file
+			if ( $request->getTitle()->getNamespace() === NS_FILE ) {
+				$params['lazy'] = false;
+			}
+		}
+
 		// If local files are globally styled AND no gif or autoplay parameter is set
-		if ( $styledLocalFiles === true &&
+		if ( $useEmbedTransform && $styledLocalFiles === true &&
 			!( isset( $params['gif'] ) || isset( $params['autoplay'] ) ) ) {
 			return new VideoEmbedTransformOutput( $file, $params );
 		}
