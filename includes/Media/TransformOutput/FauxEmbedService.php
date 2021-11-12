@@ -39,7 +39,10 @@ class FauxEmbedService extends AbstractEmbedService {
 		$this->properties = $properties;
 
 		$this->setTitle( $properties['title'] ?? null );
-		$this->setLocalThumb( $properties['poster'] ?? $properties['cover'] ?? '' );
+		$poster = $properties['poster'] ?? $properties['cover'] ?? null;
+		if ( $poster !== null ) {
+			$this->setLocalThumb( $poster );
+		}
 	}
 
 	/**
