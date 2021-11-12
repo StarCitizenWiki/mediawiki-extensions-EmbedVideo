@@ -1,6 +1,6 @@
 (function () {
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.embedvideowrap').forEach(function (div) {
+		document.querySelectorAll('.local-embed .embedvideowrap').forEach(function (div) {
 			const clickListener = function () {
 				consentDiv.classList.add('hidden');
 				video.controls = true;
