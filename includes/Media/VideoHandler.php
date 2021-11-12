@@ -16,6 +16,7 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use Exception;
 use File;
 use MediaTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
 use Title;
@@ -29,9 +30,11 @@ class VideoHandler extends AudioHandler {
 	public function getParamMap(): array {
 		return array_merge( parent::getParamMap(), [
 			'gif' => 'gif',
-			'cover' => 'cover',
+			'cover' => 'poster',
 			'poster' => 'poster',
 			'lazy' => 'lazy',
+			'title' => 'title',
+			'description' => 'description',
 		] );
 	}
 
@@ -44,12 +47,12 @@ class VideoHandler extends AudioHandler {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public function validateParam( $name, $value ) :bool {
+	public function validateParam( $name, $value ): bool {
 		if ( $name === 'width' || $name === 'height' ) {
 			return $value > 0;
 		}
 
-		if ( $name === 'cover' || $name === 'gif' || $name === 'muted' ) {
+		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy' ] ) ) {
 			return true;
 		}
 
@@ -67,6 +70,32 @@ class VideoHandler extends AudioHandler {
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
 		parent::normaliseParams( $file, $parameters );
+
+		if ( isset( $parameters['poster'] ) ) {
+			$title = Title::newFromText( $parameters['poster'], NS_FILE );
+
+			if ( $title !== null && $title->exists() ) {
+				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
+				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
+
+				try {
+					$parameters['posterUrl'] = wfExpandUrl( $transform->getUrl() );
+				} catch ( Exception $e ) {
+					unset( $parameters['poster'], $parameters['posterUrl'] );
+				}
+			} else {
+				unset( $parameters['poster'] );
+			}
+		}
+
+		if ( isset( $parameters['lazy'] ) ) {
+			$parameters['lazy'] = true;
+		} else {
+			$parameters['lazy'] = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoLazyLoadLocalVideos' );
+		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
 		[ $width, $height ] = $this->getImageSize( $file, '' );
@@ -108,32 +137,6 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = round( $height / $width * $parameters['width'] );
 		}
 
-		if ( isset( $parameters['cover'] ) || isset( $parameters['poster'] ) ) {
-			$title = Title::newFromText( $parameters['cover'] ?? $parameters['poster'], NS_FILE );
-
-			if ( $title !== null && $title->exists() ) {
-				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
-				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
-
-				try {
-					$parameters['poster'] = wfExpandUrl( $transform->getUrl() );
-				} catch ( Exception $e ) {
-					unset( $parameters['poster'], $parameters['cover'] );
-				}
-			} else {
-				unset( $parameters['poster'], $parameters['cover'] );
-			}
-		}
-
-		if ( isset( $parameters['lazy'] ) ) {
-			$parameters['lazy'] = true;
-		} else {
-			$parameters['lazy'] = MediaWikiServices::getInstance()
-				->getConfigFactory()
-				->makeConfig( 'EmbedVideo' )
-				->get( 'EmbedVideoLazyLoadLocalVideos' );
-		}
-
 		return true;
 	}
 
@@ -173,6 +176,17 @@ class VideoHandler extends AudioHandler {
 	 */
 	public function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		$this->normaliseParams( $file, $params );
+
+		$styledLocalFiles = MediaWikiServices::getInstance()
+			->getConfigFactory()
+			->makeConfig( 'EmbedVideo' )
+			->get( 'EmbedVideoUseEmbedStyleForLocalVideos' );
+
+		// If local files are globally styled AND no gif or autoplay parameter is set
+		if ( $styledLocalFiles === true &&
+			!( isset( $params['gif'] ) || isset( $params['autoplay'] ) ) ) {
+			return new VideoEmbedTransformOutput( $file, $params );
+		}
 
 		return new VideoTransformOutput( $file, $params );
 	}

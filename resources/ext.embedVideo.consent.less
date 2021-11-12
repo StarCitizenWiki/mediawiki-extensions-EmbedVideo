@@ -7,6 +7,10 @@
 	overflow: hidden;
 	background-color: #eaecf0;
 
+	&.hidden {
+		display: none;
+	}
+
 	&__overlay {
 		cursor: pointer;
 		z-index: 1;
@@ -84,4 +88,8 @@
 			}
 		}
 	}
+}
+
+.local-embed .embedvideo-consent {
+	background-color: transparent;
 }

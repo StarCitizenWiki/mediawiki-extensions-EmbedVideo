@@ -104,7 +104,13 @@ Options only available for video files:
   * Mutes the audio track of the video (required for autoplay)
 * gif
   * Special option that sets autoplay, muted, loop and nocontrols
-	e.g. makes the video behave like a gif
+    e.g. makes the video behave like a gif
+
+When `$wgEmbedVideoUseEmbedStyleForLocalVideos` is enabled two additional options are available
+* title
+  * Title of the video 
+* description
+  * Description shown below the video 
 
 ## Tags
 
@@ -136,7 +142,9 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `width`
 * `height`
 * `poster` / `cover`
+  * This only has an effect if `$wgEmbedVideoRequireConsent` is set to true
 * `title`
+  * This only has an effect if `$wgEmbedVideoRequireConsent` is set to true
 
 **Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.  
 E.g. using named id and unnamed description `{{#ev:service||||This is the Description|id=abc}}`/ `{{#ev:service|id=abc|||This is the Description}}`
@@ -231,19 +239,20 @@ New services can be requested by using the following [link](https://github.com/S
 
 # Configuration Settings
 
-| Variable                             | Default Value    | Description                                                                                                                                             |
-|--------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $wgEmbedVideoAddFileExtensions       | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                           |
-| $wgEmbedVideoEnableVideoHandler      | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                         |
-| $wgEmbedVideoEnableAudioHandler      | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                         |
-| $wgEmbedVideoLazyLoadLocalVideos     | false            | Boolean - Sets 'preload="none"' on every <video> element, if the local video handler is enabled.                                                        |
-| $wgEmbedVideoDefaultWidth            | 320              | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels. |
-| $wgEmbedVideoMinWidth                | null             | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                        |
-| $wgEmbedVideoMaxWidth                | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                        |
-| $wgFFprobeLocation                   | /usr/bin/ffprobe | String  - Set the location of the ffprobe binary.                                                                                                       |
-| $wgEmbedVideoEnabledServices         | null             | Array   - Array of service names that are allowed, if empty all services are available.                                                                 |
-| $wgEmbedVideoRequireConsent          | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                  |
-| $wgEmbedVideoFetchExternalThumbnails | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.               |
+| Variable                                 | Default Value    | Description                                                                                                                                                       |
+|------------------------------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $wgEmbedVideoAddFileExtensions           | true             | Boolean - Enable or disable adding video/audio file extensions to the list of allowable files to be uploaded.                                                     |
+| $wgEmbedVideoEnableVideoHandler          | true             | Boolean - Enable or disable the video media handlers for displaying embedded video in articles.                                                                   |
+| $wgEmbedVideoEnableAudioHandler          | true             | Boolean - Enable or disable the audio media handlers for displaying embedded audio in articles.                                                                   |
+| $wgEmbedVideoLazyLoadLocalVideos         | false            | Boolean - Sets 'preload="none"' on every <video> element, if the local video handler is enabled.                                                                  |
+| $wgEmbedVideoUseEmbedStyleForLocalVideos | false            | Boolean - Styles local videos like they are embedded content. DO NOTE: When changing this, every page with a local video needs to be updated in the parser cache! |
+| $wgEmbedVideoDefaultWidth                | 320              | Integer - Globally override the default width of video players. When not set this uses the video service's default width which is typically 640 pixels.           |
+| $wgEmbedVideoMinWidth                    | null             | Integer - Minimum width of video players. Widths specified below this value will be automatically bounded to it.                                                  |
+| $wgEmbedVideoMaxWidth                    | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                                  |
+| $wgFFprobeLocation                       | /usr/bin/ffprobe | String  - Set the location of the ffprobe binary.                                                                                                                 |
+| $wgEmbedVideoEnabledServices             | null             | Array   - Array of service names that are allowed, if empty all services are available.                                                                           |
+| $wgEmbedVideoRequireConsent              | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                            |
+| $wgEmbedVideoFetchExternalThumbnails     | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.                         |
 
 # Credits
 

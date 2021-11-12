@@ -4,6 +4,7 @@
 	},
 	"embedvideo-description": "This forked version adds a parser function for embedding videos from popular sources.",
 	"embedvideo-consent-text": "Click to load content",
+	"embedvideo-play": "Play Video",
 	"embedvideo-error-missingparams": "EmbedVideo is missing a required parameter.",
 	"embedvideo-error-service": "EmbedVideo does not recognize the video service \"$1\".",
 	"embedvideo-error-id": "EmbedVideo received the bad id \"$2\" for the service \"$1\".",

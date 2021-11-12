@@ -35,10 +35,10 @@ final class EmbedHtmlFormatter {
 
 		$config = array_merge(
 			[
-				'outerClass' => '',
-				'class' => '',
+				'outerClass' => 'embedvideo',
+				'class' => 'embedvideo thumbinner',
 				'style' => '',
-				'innerClass' => '',
+				'innerClass' => 'embedvideowrap',
 				'withConsent' => false,
 				'description' => '',
 			],
@@ -121,7 +121,7 @@ HTML;
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
 		if ( $service->getLocalThumb() === null ) {
-			return "";
+			return '';
 		}
 
 		try {
@@ -135,7 +135,7 @@ HTML;
 HTML;
 			// phpcs:enable
 		} catch ( Exception $e ) {
-			return "";
+			return '';
 		}
 	}
 
@@ -147,7 +147,7 @@ HTML;
 	 */
 	public static function makeTitleHtml( AbstractEmbedService $service ): string {
 		if ( $service->getTitle() === null ) {
-			return "";
+			return '';
 		}
 
 		return sprintf( '<div class="embedvideo-consent__title">%s</div>', $service->getTitle() );

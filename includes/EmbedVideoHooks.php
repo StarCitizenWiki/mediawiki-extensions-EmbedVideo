@@ -7,9 +7,13 @@ namespace MediaWiki\Extension\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
+use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\MediaWikiServices;
 use MWException;
+use OutputPage;
 use Parser;
+use Skin;
 
 /**
  * EmbedVideo
@@ -20,7 +24,7 @@ use Parser;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks implements ParserFirstCallInitHook {
+class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook {
 	/**
 	 * Adds the appropriate audio and video handlers
 	 *
@@ -99,6 +103,22 @@ class EmbedVideoHooks implements ParserFirstCallInitHook {
 			} catch ( MWException $e ) {
 				wfLogWarning( $e->getMessage() );
 			}
+		}
+	}
+
+	/**
+	 * Adds required modules if $wgEmbedVideoUseEmbedStyleForLocalVideos is true
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 */
+	public function onBeforePageDisplay( $out, $skin ): void {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
+
+		if ( $config->get( 'EmbedVideoUseEmbedStyleForLocalVideos' ) === true ) {
+			$out->addModules( 'ext.embedVideo' );
+			$out->addModuleStyles( 'ext.embedVideo.styles' );
+			$out->addModules( 'ext.embedVideo.overlay' );
 		}
 	}
 }

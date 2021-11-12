@@ -133,6 +133,6 @@ class AudioTransformOutput extends MediaTransformOutput {
 			);
 		}
 
-		return '';
+		return $this->parameters['description'] ?? '';
 	}
 }

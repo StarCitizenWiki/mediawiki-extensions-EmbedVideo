@@ -58,6 +58,22 @@
 				"mobile"
 			]
 		},
+		"ext.embedVideo.overlay": {
+			"scripts": [
+				"resources/ext.embedVideo.overlay.js"
+			],
+			"styles": [
+				"resources/ext.embedVideo.consent.less"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"messages": [
+				"embedvideo-play"
+			]
+		},
 		"ext.embedVideo.styles": {
 			"styles": [
 				"resources/ext.embedVideo.styles.less"
@@ -83,6 +99,10 @@
 		},
 		"EmbedVideoLazyLoadLocalVideos": {
 			"description": "Sets 'preload=none' on every <video> tag.",
+			"value": false
+		},
+		"EmbedVideoUseEmbedStyleForLocalVideos": {
+			"description": "Styles local videos like they are embedded",
 			"value": false
 		},
 		"EmbedVideoEnableAudioHandler": {
@@ -130,7 +150,8 @@
 		}
 	},
 	"Hooks": {
-		"ParserFirstCallInit": "EmbedVideoHooks"
+		"ParserFirstCallInit": "EmbedVideoHooks",
+		"BeforePageDisplay": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
 }
