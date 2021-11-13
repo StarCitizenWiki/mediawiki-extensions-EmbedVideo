@@ -38,6 +38,7 @@ final class EmbedServiceFactory {
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
 		Indiana::class,
+		Itest::class,
 	];
 
 	/**
@@ -89,6 +90,9 @@ final class EmbedServiceFactory {
 
 			case 'indiana':
 				return new Indiana( $id );
+
+			case 'itest':
+				return new Itest( $id );
 				
 			default:
 				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
