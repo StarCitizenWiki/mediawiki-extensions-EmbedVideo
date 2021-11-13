@@ -201,7 +201,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getFFProbeResult($file, 'a:0');
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -223,7 +223,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getFFProbeResult($file, 'a:0');
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -246,7 +246,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getFFProbeResult($file, 'a:0');
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
@@ -270,7 +270,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getFFProbeResult($image);
+		] = $this->getFFProbeResult( $image );
 
 		$streamData = [];
 		$formatData = [];
@@ -299,22 +299,21 @@ class AudioHandler extends MediaHandler {
 	 * @param string $select Video / Audio track to select
 	 * @return array
 	 */
-	protected function getFFProbeResult($file, string $select = 'v:0'): array
-	{
-		if ($file instanceof FSFile) {
+	protected function getFFProbeResult( $file, string $select = 'v:0' ): array {
+		if ( $file instanceof FSFile ) {
 			$cacheKey = $file->getSha1Base36();
 		} else {
 			$cacheKey = $file->getSha1();
 		}
 
-		if (isset(self::$ffprobeCache[$cacheKey])) {
+		if ( isset( self::$ffprobeCache[$cacheKey] ) ) {
 			return self::$ffprobeCache[$cacheKey];
 		}
 
-		$probe = new FFProbe($file);
+		$probe = new FFProbe( $file );
 
 		$result = [
-			'stream' => $probe->getStream($select),
+			'stream' => $probe->getStream( $select ),
 			'format' => $probe->getFormat()
 		];
 

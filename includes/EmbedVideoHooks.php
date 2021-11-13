@@ -130,9 +130,8 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 	 * @param WikiPage $wikiPage
 	 * @return void
 	 */
-	public function onArticlePurge($wikiPage): void
-	{
-		if ($wikiPage->getTitle() === null || $wikiPage->getTitle()->getNamespace() !== NS_FILE) {
+	public function onArticlePurge( $wikiPage ): void {
+		if ( $wikiPage->getTitle() === null || $wikiPage->getTitle()->getNamespace() !== NS_FILE ) {
 			return;
 		}
 
@@ -140,11 +139,11 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 
 		// The last part is only ever a:0 or v:0
-		$audioKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0');
-		$videoKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0');
+		$audioKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0' );
+		$videoKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0' );
 
-		$cache->delete($audioKey);
-		$cache->delete($videoKey);
+		$cache->delete( $audioKey );
+		$cache->delete( $videoKey );
 
 		wfDebugLog(
 			'EmbedVideo',

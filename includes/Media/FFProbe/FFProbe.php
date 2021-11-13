@@ -43,6 +43,7 @@ class FFProbe {
 	/**
 	 * Return the entire cache of metadata.
 	 *
+	 * @param string $select The selected audio/video stream
 	 * @return array Meta Data
 	 */
 	public function getMetaData( string $select = 'v:0' ): array {
@@ -53,13 +54,13 @@ class FFProbe {
 		}
 
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$cacheKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $cacheKey, $select);
+		$cacheKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $cacheKey, $select );
 
 		$result = $cache->getWithSetCallback(
 			$cacheKey,
 			// FSFiles are usually only present for uploads(?), only "real" files are relevant
 			$this->file instanceof File ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE,
-			function ($old, &$ttl) {
+			function ( $old, &$ttl ) {
 				wfDebugLog(
 					'EmbedVideo',
 					sprintf(
@@ -70,7 +71,7 @@ class FFProbe {
 
 				$result = $this->invokeFFProbe();
 
-				if ($result === false ){
+				if ( $result === false ) {
 					$ttl = ExpirationAwareness::TTL_UNCACHEABLE;
 					return $old;
 				}
@@ -100,7 +101,7 @@ class FFProbe {
 	 * @return false|StreamInfo StreamInfo object or false if does not exist.
 	 */
 	public function getStream( string $select ) {
-		$this->getMetaData($select);
+		$this->getMetaData( $select );
 
 		$types = [
 			'v'	=> 'video',
