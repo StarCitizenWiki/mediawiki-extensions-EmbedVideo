@@ -151,7 +151,8 @@
 	},
 	"Hooks": {
 		"ParserFirstCallInit": "EmbedVideoHooks",
-		"BeforePageDisplay": "EmbedVideoHooks"
+		"BeforePageDisplay": "EmbedVideoHooks",
+		"ArticlePurge": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
 }

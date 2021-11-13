@@ -13,6 +13,7 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\ProcOpenError;
 use MediaWiki\Shell\Shell;
 use MediaWiki\ShellDisabledError;
+use Wikimedia\LightweightObjectStore\ExpirationAwareness;
 
 class FFProbe {
 	/**
@@ -32,7 +33,7 @@ class FFProbe {
 	/**
 	 * Main Constructor
 	 *
-	 * @param FSFile $file MediaWiki File
+	 * @param File|FSFile $file MediaWiki File
 	 * @return void
 	 */
 	public function __construct( $file ) {
@@ -40,16 +41,49 @@ class FFProbe {
 	}
 
 	/**
-	 * Return the entire cache of meta data.
+	 * Return the entire cache of metadata.
 	 *
 	 * @return array Meta Data
 	 */
-	public function getMetaData(): array {
-		if ( !is_array( $this->metadata ) ) {
-			$this->invokeFFProbe();
+	public function getMetaData( string $select = 'v:0' ): array {
+		if ( $this->file instanceof FSFile ) {
+			$cacheKey = $this->file->getSha1Base36();
+		} else {
+			$cacheKey = $this->file->getSha1();
 		}
 
-		return $this->metadata;
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$cacheKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $cacheKey, $select);
+
+		$result = $cache->getWithSetCallback(
+			$cacheKey,
+			// FSFiles are usually only present for uploads(?), only "real" files are relevant
+			$this->file instanceof File ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE,
+			function ($old, &$ttl) {
+				wfDebugLog(
+					'EmbedVideo',
+					sprintf(
+						'Writing FFProbe Cache for %s',
+						$this->file->getTitle()->getBaseText(),
+					)
+				);
+
+				$result = $this->invokeFFProbe();
+
+				if ($result === false ){
+					$ttl = ExpirationAwareness::TTL_UNCACHEABLE;
+					return $old;
+				}
+
+				return $this->metadata;
+			}
+		);
+
+		if ( is_array( $result ) ) {
+			return $result;
+		}
+
+		return [];
 	}
 
 	/**
@@ -65,8 +99,8 @@ class FFProbe {
 	 * 		"t:1" - Second attachment
 	 * @return false|StreamInfo StreamInfo object or false if does not exist.
 	 */
-	public function getStream( $select ) {
-		$this->getMetaData();
+	public function getStream( string $select ) {
+		$this->getMetaData($select);
 
 		$types = [
 			'v'	=> 'video',

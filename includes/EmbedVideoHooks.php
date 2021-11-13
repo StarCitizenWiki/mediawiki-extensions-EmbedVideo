@@ -10,10 +10,12 @@ use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\Hook\ArticlePurgeHook;
 use MWException;
 use OutputPage;
 use Parser;
 use Skin;
+use WikiPage;
 
 /**
  * EmbedVideo
@@ -24,7 +26,7 @@ use Skin;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook {
+class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook, ArticlePurgeHook {
 	/**
 	 * Adds the appropriate audio and video handlers
 	 *
@@ -120,5 +122,36 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook 
 			$out->addModuleStyles( 'ext.embedVideo.styles' );
 			$out->addModules( 'ext.embedVideo.overlay' );
 		}
+	}
+
+	/**
+	 * Purges possible FFProbe results from the main cache
+	 *
+	 * @param WikiPage $wikiPage
+	 * @return void
+	 */
+	public function onArticlePurge($wikiPage): void
+	{
+		if ($wikiPage->getTitle() === null || $wikiPage->getTitle()->getNamespace() !== NS_FILE) {
+			return;
+		}
+
+		$file = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $wikiPage->getTitle() );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+
+		// The last part is only ever a:0 or v:0
+		$audioKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0');
+		$videoKey = $cache->makeGlobalKey('EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0');
+
+		$cache->delete($audioKey);
+		$cache->delete($videoKey);
+
+		wfDebugLog(
+			'EmbedVideo',
+			sprintf(
+				'Purging FFProbe Cache for %s',
+				$wikiPage->getTitle()->getBaseText()
+			)
+		);
 	}
 }

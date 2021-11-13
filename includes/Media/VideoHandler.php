@@ -1,13 +1,4 @@
 <?php
-/**
- * EmbedVideo
- * VideoHandler Class
- *
- * @author  Alexia E. Smith
- * @license MIT
- * @package EmbedVideo
- * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
- */
 
 declare( strict_types=1 );
 
@@ -147,7 +138,7 @@ class VideoHandler extends AudioHandler {
 	public function getImageSize( $file, $path ): array {
 		[
 			'stream' => $stream,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $stream !== false ) {
 			return [
@@ -213,7 +204,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -237,7 +228,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -262,7 +253,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
