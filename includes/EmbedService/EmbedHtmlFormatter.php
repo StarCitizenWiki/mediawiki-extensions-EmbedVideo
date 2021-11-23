@@ -30,6 +30,10 @@ final class EmbedHtmlFormatter {
 	 * @return string
 	 */
 	public static function toHtml( AbstractEmbedService $service, array $config = [] ): string {
+		if ( $service instanceof OEmbedServiceInterface ) {
+			return self::makeIframe( $service );
+		}
+
 		$width = $service->getWidth();
 		$widthPad = $width + 8;
 
