@@ -1,17 +1,18 @@
 {
 	"@metadata": {
 		"authors": [
+			"DDPAT",
 			"Jackiezelaya"
 		]
 	},
 	"embedvideo-description": "Esta versión bifurcada agrega una función de analizador para incrustar videos de fuentes populares.",
 	"embedvideo-consent-text": "Haga clic para cargar contenido",
 	"embedvideo-error-missingparams": "EmbedVideo falta un parámetro obligatorio.",
-	"embedvideo-error-service": "EmbedVideo No reconoce el servicio de vídeo \"$<span translate=\"no\" class=\"notranslate\">1</span>\".",
+	"embedvideo-error-service": "EmbedVideo No reconoce el servicio de vídeo \"$1\".",
 	"embedvideo-error-id": "EmbedVideo recibió el identificador incorrecto \"$2\" para el servicio \"$1\".",
 	"embedvideo-error-width": "EmbedVideo recibió el parámetro de ancho incorrecto \"$1\".",
 	"embedvideo-error-height": "EmbedVideo recibió el parámetro de altura incorrecta \"$1\".",
-	"embedvideo-error-alignment": "EmbedVideo Estuvo dado un valor ilegal para el parámetro de alineación \"$<span translate=\"no\" class=\"notranslate\">1</span>\".  Los valores válidos están \"dejados\", \"centro\", \"bien\", o \"inline\".",
+	"embedvideo-error-alignment": "EmbedVideo Estuvo dado un valor ilegal para el parámetro de alineación \"$1\".  Los valores válidos están \"dejados\", \"centro\", \"bien\", o \"inline\".",
 	"embedvideo-error-valignment": "EmbedVideo recibió un valor ilegal para el parámetro valignment \"$1\".  Los valores válidos son \"top\", \"middle\", \"bottom\" o \"baseline\".",
 	"embedvideo-error-urlargs": "EmbedVideo recibió una lista de argumentos de URL que contenían datos con formato incorrecto o argumentos en blanco.",
 	"embedvideo-error-unknown": "EmbedVideo encontró un error desconocido al intentar generar este bloque de inserción de vídeo.  ($1)",
