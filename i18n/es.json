@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"DDPAT",
-			"Jackiezelaya"
+			"Jackiezelaya",
+			"SaldırganSincap"
 		]
 	},
 	"embedvideo-description": "Esta versión bifurcada agrega una función de analizador para incrustar videos de fuentes populares.",
@@ -22,7 +23,7 @@
 	"embedvideo-audio-long-desc": "$1, códec $2 , $3de longitud $4 en general",
 	"embedvideo-error-cantdecode_evu": "No se pudo analizar el vídeo de $1",
 	"apihelp-embedvideo-summary": "Consigue generado vídeo embed código para parámetros dados.",
-	"apihelp-embedvideo-param-service": "Nombre del servicio (youtube, twitch, ect)",
+	"apihelp-embedvideo-param-service": "Nombre del servicio (youtube, twitch, etc)",
 	"apihelp-embedvideo-param-id": "El identificador del vídeo de ese servicio",
 	"apihelp-embedvideo-param-dimensions": "Un ancho numérico (100) o un ancho por alto (100x100)",
 	"apihelp-embedvideo-param-alignment": "Alineación de vídeo",

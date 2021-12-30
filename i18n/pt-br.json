@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardoaddad"
+			"Eduardoaddad",
+			"SaldırganSincap"
 		]
 	},
 	"embedvideo-description": "Esta versão bifurcada adiciona uma função de parser para incorporar vídeos de fontes populares.",
@@ -13,7 +14,7 @@
 	"embedvideo-error-container": "O parâmetro fornecido para 'container' é inválido.",
 	"embedvideo-error-cantdecode_evu": "Não foi possível analisar vídeos de $1",
 	"apihelp-embedvideo-summary": "Get gerado código de vídeo incorporado para determinados parâmetros.",
-	"apihelp-embedvideo-param-service": "Nome do Serviço (YouTube, Twitch, ect)",
+	"apihelp-embedvideo-param-service": "Nome do Serviço (YouTube, Twitch, etc)",
 	"apihelp-embedvideo-param-id": "O ID do vídeo para esse serviço",
 	"apihelp-embedvideo-param-dimensions": "Uma largura numérica (100) ou largura por altura (100x100)",
 	"apihelp-embedvideo-param-alignment": "Alinhamento de vídeo",
