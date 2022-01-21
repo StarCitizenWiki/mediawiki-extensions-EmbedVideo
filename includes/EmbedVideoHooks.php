@@ -97,9 +97,18 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			wfLogWarning( $e->getMessage() );
 		}
 
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
+		$enabledServices = $config->get( 'EmbedVideoEnabledServices' );
+		$checkEnabledServices = !empty( $enabledServices );
+
 		foreach ( EmbedServiceFactory::getAvailableServices() as $service ) {
 			try {
 				$name = $service::getServiceName();
+
+				// Skip disabled services
+				if ( $checkEnabledServices && !in_array( $name, $enabledServices, true ) ) {
+					continue;
+				}
 
 				$parser->setHook( $name, [ EmbedVideo::class, "parseTag{$name}" ] );
 			} catch ( MWException $e ) {
