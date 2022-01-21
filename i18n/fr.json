@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"DreZhsh",
 			"Gomoko"
 		]
 	},
 	"embedvideo-description": "Ajout d'une fonction d'analyse syntaxique permettant d'intégrer des vidéos provenant de sources populaires.",
 	"embedvideo-consent-text": "Cliquez pour charger le contenu",
+	"embedvideo-play": "Voir la vidéo",
 	"embedvideo-error-missingparams": "Il manque un paramètre obligatoire à EmbedVideo.",
 	"embedvideo-error-service": "EmbedVideo ne reconnaît pas le service vidéo \"$1\".",
 	"embedvideo-error-id": "EmbedVideo a reçu le bad id \"$2\" pour le service \"$1\".",
@@ -23,7 +25,7 @@
 	"embedvideo-audio-long-desc": "$1, $2 codec, longueur $3, $4 au total",
 	"embedvideo-error-cantdecode_evu": "Impossible d'analyser la vidéo de $1",
 	"apihelp-embedvideo-summary": "Obtenez le code d'intégration de la vidéo généré pour les paramètres donnés.",
-	"apihelp-embedvideo-param-service": "Nom du service (youtube, twitch, ect)",
+	"apihelp-embedvideo-param-service": "Nom du service (youtube, twitch, etc)",
 	"apihelp-embedvideo-param-id": "L'ID de la vidéo pour ce service",
 	"apihelp-embedvideo-param-dimensions": "Soit une largeur numérique (100), soit la largeur par la hauteur (100x100).",
 	"apihelp-embedvideo-param-alignment": "Alignement de la vidéo",

@@ -1,13 +1,4 @@
 <?php
-/**
- * EmbedVideo
- * VideoHandler Class
- *
- * @author  Alexia E. Smith
- * @license MIT
- * @package EmbedVideo
- * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
- */
 
 declare( strict_types=1 );
 
@@ -16,8 +7,10 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 use Exception;
 use File;
 use MediaTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
+use RequestContext;
 use Title;
 
 class VideoHandler extends AudioHandler {
@@ -29,7 +22,11 @@ class VideoHandler extends AudioHandler {
 	public function getParamMap(): array {
 		return array_merge( parent::getParamMap(), [
 			'gif' => 'gif',
-			'cover' => 'cover',
+			'cover' => 'poster',
+			'poster' => 'poster',
+			'lazy' => 'lazy',
+			'title' => 'title',
+			'description' => 'description',
 		] );
 	}
 
@@ -42,12 +39,12 @@ class VideoHandler extends AudioHandler {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public function validateParam( $name, $value ) :bool {
+	public function validateParam( $name, $value ): bool {
 		if ( $name === 'width' || $name === 'height' ) {
 			return $value > 0;
 		}
 
-		if ( $name === 'cover' || $name === 'gif' || $name === 'muted' ) {
+		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy' ] ) ) {
 			return true;
 		}
 
@@ -59,12 +56,38 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param File File
-	 * @param array Parameters
+	 * @param File $file File
+	 * @param array &$parameters Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
 		parent::normaliseParams( $file, $parameters );
+
+		if ( isset( $parameters['poster'] ) ) {
+			$title = Title::newFromText( $parameters['poster'], NS_FILE );
+
+			if ( $title !== null && $title->exists() ) {
+				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
+				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
+
+				try {
+					$parameters['posterUrl'] = wfExpandUrl( $transform->getUrl() );
+				} catch ( Exception $e ) {
+					unset( $parameters['poster'], $parameters['posterUrl'] );
+				}
+			} else {
+				unset( $parameters['poster'] );
+			}
+		}
+
+		if ( isset( $parameters['lazy'] ) ) {
+			$parameters['lazy'] = true;
+		} else {
+			$parameters['lazy'] = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoLazyLoadLocalVideos' );
+		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
 		[ $width, $height ] = $this->getImageSize( $file, '' );
@@ -75,8 +98,12 @@ class VideoHandler extends AudioHandler {
 			$height = 360;
 		}
 
-		if ( isset( $parameters['width'], $parameters['height'] ) && $parameters['width'] > 0 && $parameters['height'] === $parameters['width'] ) {
-			// special allowance for square video embeds needed by some wikis, otherwise forced 16:9 ratios are followed.
+		if ( isset( $parameters['width'] ) &&
+			isset( $parameters['height'] ) &&
+			$parameters['width'] > 0 &&
+			$parameters['height'] === $parameters['width'] ) {
+			// special allowance for square video embeds needed by some wikis,
+			// otherwise forced 16:9 ratios are followed.
 			return true;
 		}
 
@@ -97,25 +124,9 @@ class VideoHandler extends AudioHandler {
 			$parameters['height'] = $height;
 		}
 
-		if ( $width > 0 && $parameters['width'] > 0 && ( $height / $width ) !== ( $parameters['height'] / $parameters['width'] ) ) {
+		if ( $width > 0 && $parameters['width'] > 0 &&
+			( $height / $width ) !== ( $parameters['height'] / $parameters['width'] ) ) {
 			$parameters['height'] = round( $height / $width * $parameters['width'] );
-		}
-
-		if ( isset( $parameters['cover'] ) ) {
-			$title = Title::newFromText( $parameters['cover'], NS_FILE );
-
-			if ( $title !== null && $title->exists() ) {
-				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
-				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
-
-				try {
-					$parameters['cover'] = wfExpandUrl( $transform->getUrl() );
-				} catch ( Exception $e ) {
-					unset( $parameters['cover'] );
-				}
-			} else {
-				unset( $parameters['cover'] );
-			}
 		}
 
 		return true;
@@ -127,7 +138,7 @@ class VideoHandler extends AudioHandler {
 	public function getImageSize( $file, $path ): array {
 		[
 			'stream' => $stream,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $stream !== false ) {
 			return [
@@ -158,6 +169,28 @@ class VideoHandler extends AudioHandler {
 	public function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		$this->normaliseParams( $file, $params );
 
+		$styledLocalFiles = MediaWikiServices::getInstance()
+			->getConfigFactory()
+			->makeConfig( 'EmbedVideo' )
+			->get( 'EmbedVideoUseEmbedStyleForLocalVideos' );
+
+		$request = RequestContext::getMain();
+		$useEmbedTransform = false;
+		if ( $request !== null && $request->getTitle() !== null ) {
+			$useEmbedTransform = $request->getTitle()->isContentPage();
+
+			// Always preload page is file
+			if ( $request->getTitle()->getNamespace() === NS_FILE ) {
+				$params['lazy'] = false;
+			}
+		}
+
+		// If local files are globally styled AND no gif or autoplay parameter is set
+		if ( $useEmbedTransform && $styledLocalFiles === true &&
+			!( isset( $params['gif'] ) || isset( $params['autoplay'] ) ) ) {
+			return new VideoEmbedTransformOutput( $file, $params );
+		}
+
 		return new VideoTransformOutput( $file, $params );
 	}
 
@@ -171,7 +204,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -195,7 +228,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -220,7 +253,7 @@ class VideoHandler extends AudioHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file );
+		] = $this->getFFProbeResult( $file );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );

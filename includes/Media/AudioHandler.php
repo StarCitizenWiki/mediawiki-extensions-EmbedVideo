@@ -1,13 +1,4 @@
 <?php
-/**
- * EmbedVideo
- * AudioHandler Class
- *
- * @author  Alexia E. Smith
- * @license MIT
- * @package EmbedVideo
- * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
- */
 
 declare( strict_types=1 );
 
@@ -20,17 +11,16 @@ use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
-use MWException;
-use PoolCounterWorkViaCallback;
+use stdClass;
 
 class AudioHandler extends MediaHandler {
 	/**
 	 * Temporary map
-	 * Saving work results to file key
+	 * Saving cache results
 	 *
 	 * @var array
 	 */
-	protected static $workResultMap = [];
+	protected static $ffprobeCache = [];
 
 	protected $contentLanguage;
 
@@ -41,6 +31,8 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
+	 *
+	 * @return array
 	 */
 	public function getParamMap(): array {
 		return [
@@ -81,9 +73,10 @@ class AudioHandler extends MediaHandler {
 
 	/**
 	 * Parse a time string into seconds.
-	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds OR one hour and thirty minutes.
+	 * strtotime() will not handle this nicely since 1:30 could be one minute and thirty seconds
+	 * OR one hour and thirty minutes.
 	 *
-	 * @param string Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
+	 * @param string $time Time formatted as one of: ss, :ss, mm:ss, hh:mm:ss, or dd:hh:mm:ss
 	 * @return false|float|int Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString( $time ) {
@@ -104,21 +97,23 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Merge a parameter array into a string appropriate for inclusion in filenames
 	 *
-	 * @param array Array of parameters that have been through normaliseParams.
+	 * @param array $parameters Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
 	public function makeParamString( $parameters ): string {
-		return ''; // Width does not matter to video or audio.
+		// Width does not matter to video or audio.
+		return '';
 	}
 
 	/**
 	 * Parse a param string made with makeParamString back into an array
 	 *
-	 * @param string The parameter string without file name (e.g. 122px)
+	 * @param string $string The parameter string without file name (e.g. 122px)
 	 * @return mixed Array of parameters or false on failure.
 	 */
 	public function parseParamString( $string ): array {
-		return []; // Nothing to parse.  See makeParamString above.
+		// Nothing to parse.  See makeParamString above.
+		return [];
 	}
 
 	/**
@@ -126,7 +121,7 @@ class AudioHandler extends MediaHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param object $file
+	 * @param stdClass|File $file
 	 * @param array &$parameters
 	 * @return bool Success
 	 */
@@ -171,7 +166,7 @@ class AudioHandler extends MediaHandler {
 	 *
 	 * @param File $file The file object, or false if there isn't one
 	 * @param string $path The filename
-	 * @return array|false An array following the format of PHP getimagesize() internal function or false if not supported.
+	 * @return array|false An array following the format of PHP getimagesize() function or false if not supported.
 	 */
 	public function getImageSize( $file, $path ) {
 		return false;
@@ -206,7 +201,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file, 'a:0' );
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return parent::getDimensionsString( $file );
@@ -228,7 +223,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file, 'a:0' );
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralShortDesc( $file );
@@ -251,7 +246,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $file, 'a:0' );
+		] = $this->getFFProbeResult( $file, 'a:0' );
 
 		if ( $format === false || $stream === false ) {
 			return self::getGeneralLongDesc( $file );
@@ -275,7 +270,7 @@ class AudioHandler extends MediaHandler {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getMakeProbeFromPool( $image );
+		] = $this->getFFProbeResult( $image );
 
 		$streamData = [];
 		$formatData = [];
@@ -298,49 +293,32 @@ class AudioHandler extends MediaHandler {
 	}
 
 	/**
-	 * Runs FFProbe through the pool counter
+	 * Runs FFProbe and caches results in the Main WAN Object cache
 	 *
 	 * @param FSFile|File $file The file to work on
 	 * @param string $select Video / Audio track to select
-	 * @return bool|array
+	 * @return array
 	 */
-	protected function getMakeProbeFromPool( $file, string $select = 'v:0' ) {
+	protected function getFFProbeResult( $file, string $select = 'v:0' ): array {
 		if ( $file instanceof FSFile ) {
-			$poolKey = $file->getSha1Base36();
+			$cacheKey = $file->getSha1Base36();
 		} else {
-			$poolKey = $file->getSha1();
+			$cacheKey = $file->getSha1();
 		}
 
-		/**
-		 * TODO: Cache results "correct" somewhere?
-		 */
-		if ( isset( self::$workResultMap[$poolKey] ) ) {
-			return self::$workResultMap[$poolKey];
+		if ( isset( self::$ffprobeCache[$cacheKey] ) ) {
+			return self::$ffprobeCache[$cacheKey];
 		}
 
-		try {
-			$work = new PoolCounterWorkViaCallback( 'EmbedVideoFFProbeCall',
-				'_ev:ffprobe:' . $poolKey,
-				[ 'doWork' => static function () use ( $file, $select ) {
-					$probe = new FFProbe( $file );
+		$probe = new FFProbe( $file );
 
-					return [
-						'stream' => $probe->getStream( $select ),
-						'format' => $probe->getFormat()
-					];
-				} ] );
+		$result = [
+			'stream' => $probe->getStream( $select ),
+			'format' => $probe->getFormat()
+		];
 
-		} catch ( MWException $e ) {
-			wfLogWarning( $e->getMessage() );
+		self::$ffprobeCache[$cacheKey] = $result;
 
-			return [
-				'stream' => false,
-				'format' => false,
-			];
-		}
-
-		self::$workResultMap[$poolKey] = $work->execute();
-
-		return self::$workResultMap[$poolKey];
+		return $result;
 	}
 }

@@ -6,18 +6,82 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use ConfigException;
 use Exception;
+use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\MediaWikiServices;
+use Message;
 use UnexpectedValueException;
 
 final class EmbedHtmlFormatter {
+	/**
+	 * Builds the complete HTML output for a service in question
+	 *
+	 * This is called by:
+	 * @see EmbedVideo::output()
+	 *
+	 * @param AbstractEmbedService $service
+	 * @param array $config Array containing the following keys:
+	 * outerClass: String - Class added to the thumb div,
+	 * class: String - Class added to the div following .thumb,
+	 * style: String - CSS Style added to the div,
+	 * innerClass: String - Class added to the inner div,
+	 * withConsent: Boolean - Whether to add the consent HTML,
+	 * description: String - Optional Description
+	 * @return string
+	 */
+	public static function toHtml( AbstractEmbedService $service, array $config = [] ): string {
+		if ( $service instanceof OEmbedServiceInterface ) {
+			return self::makeIframe( $service );
+		}
+
+		$width = $service->getWidth();
+		$widthPad = $width + 8;
+
+		$config = array_merge(
+			[
+				'outerClass' => 'embedvideo',
+				'class' => 'embedvideo thumbinner',
+				'style' => '',
+				'innerClass' => 'embedvideowrap',
+				'withConsent' => false,
+				'description' => '',
+			],
+			$config
+		);
+
+		$caption = !empty( $config['description'] ?? '' )
+			? sprintf( '<div class="thumbcaption">%s</div>', $config['description'] )
+			: '';
+
+		$template = <<<HTML
+<div class="thumb %s" style="width: %dpx;"><!--
+--><div class="%s" style="%s"><!--
+	--><div class="%s" style="width: %dpx">%s%s</div>%s<!--
+--></div><!--
+--></div>
+HTML;
+
+		return sprintf(
+			$template,
+			$config['outerClass'] ?? '',
+			$widthPad,
+			$config['class'] ?? '',
+			$config['style'] ?? '',
+			$config['innerClass'] ?? '',
+			$width,
+			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
+			$service,
+			$caption
+		);
+	}
+
 	/**
 	 * Generates the iframe html
 	 *
 	 * @param AbstractEmbedService $service
 	 * @return string
 	 */
-	public static function toHtml( AbstractEmbedService $service ): string {
+	public static function makeIframe( AbstractEmbedService $service ): string {
 		if ( $service instanceof OEmbedServiceInterface ) {
 			try {
 				$data = OEmbed::newFromRequest( $service->getUrl() );
@@ -33,7 +97,10 @@ final class EmbedHtmlFormatter {
 
 		$srcType = 'src';
 		try {
-			$consent = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' )->get( 'EmbedVideoRequireConsent' );
+			$consent = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
 				$srcType = 'data-src';
 			}
@@ -58,19 +125,21 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
 		if ( $service->getLocalThumb() === null ) {
-			return "";
+			return '';
 		}
 
 		try {
 			$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
 
+			// phpcs:disable
 			return <<<HTML
 <picture class="embedvideo-consent__thumbnail"><!--
 	--><img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/><!--
 --></picture>
 HTML;
+			// phpcs:enable
 		} catch ( Exception $e ) {
-			return "";
+			return '';
 		}
 	}
 
@@ -82,9 +151,35 @@ HTML;
 	 */
 	public static function makeTitleHtml( AbstractEmbedService $service ): string {
 		if ( $service->getTitle() === null ) {
-			return "";
+			return '';
 		}
 
 		return sprintf( '<div class="embedvideo-consent__title">%s</div>', $service->getTitle() );
+	}
+
+	/**
+	 * Generates the HTML consent container used when explicit consent is activated in the settings
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string
+	 */
+	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
+		$template = <<<HTML
+<div class="embedvideo-consent"><!--
+--><div class="embedvideo-consent__overlay%s">%s<!--
+	--><div class="embedvideo-consent__message">%s</div><!--
+--></div>%s<!--
+--></div>
+HTML;
+
+		$titleHtml = self::makeTitleHtml( $service );
+
+		return sprintf(
+			$template,
+			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
+			$titleHtml,
+			( new Message( 'embedvideo-consent-text' ) )->text(),
+			self::makeThumbHtml( $service )
+		);
 	}
 }

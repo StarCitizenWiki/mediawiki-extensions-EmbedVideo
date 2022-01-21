@@ -28,7 +28,7 @@ class OEmbed {
 	/**
 	 * Main Constructor
 	 *
-	 * @param array Data return from oEmbed service.
+	 * @param array $data Data return from oEmbed service.
 	 */
 	private function __construct( $data ) {
 		$this->data = $data;
@@ -37,7 +37,7 @@ class OEmbed {
 	/**
 	 * Create a new object from an oEmbed URL.
 	 *
-	 * @param string Full oEmbed URL to process.
+	 * @param string $url Full oEmbed URL to process.
 	 * @return OEmbed New OEmbed object or false on initialization failure.
 	 * @throws UnexpectedValueException
 	 */
@@ -183,7 +183,7 @@ class OEmbed {
 	/**
 	 * Perform a Curl GET request.
 	 *
-	 * @param string URL
+	 * @param string $location URL
 	 * @return bool|string
 	 */
 	private static function get( $location ) {
@@ -192,7 +192,10 @@ class OEmbed {
 		$req = MediaWikiServices::getInstance()->getHttpRequestFactory()->create( $location, [
 			'timeout' => $timeout,
 			'connectTimeout' => $timeout,
-			'userAgent' => sprintf( 'EmbedVideo/3.0/%s', MediaWikiServices::getInstance()->getMainConfig()->get( 'Server' ) ),
+			'userAgent' => sprintf(
+				'EmbedVideo/3.0/%s',
+				MediaWikiServices::getInstance()->getMainConfig()->get( 'Server' )
+			),
 			'followRedirects' => true,
 			'maxRedirects' => 10,
 		] );

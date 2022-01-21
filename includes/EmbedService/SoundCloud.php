@@ -16,6 +16,7 @@ final class SoundCloud extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
+		// phpcs:ignore Generic.Files.LineLength.TooLong
 		return 'https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
 	}
 

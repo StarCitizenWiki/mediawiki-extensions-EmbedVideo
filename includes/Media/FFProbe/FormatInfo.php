@@ -15,8 +15,7 @@ class FormatInfo {
 	/**
 	 * Main Constructor
 	 *
-	 * @access public
-	 * @param  array	Format Info from FFProbe
+	 * @param array $info Format Info from FFProbe
 	 * @return void
 	 */
 	public function __construct( $info ) {
@@ -26,8 +25,7 @@ class FormatInfo {
 	/**
 	 * Simple helper instead of repeating an if statement everything.
 	 *
-	 * @private
-	 * @param  string	Field Name
+	 * @param string $field Field Name
 	 * @return mixed
 	 */
 	private function getField( $field ) {
@@ -37,7 +35,6 @@ class FormatInfo {
 	/**
 	 * Get the file path.
 	 *
-	 * @access public
 	 * @return mixed File path or false if unavailable.
 	 */
 	public function getFilePath() {
@@ -47,7 +44,6 @@ class FormatInfo {
 	/**
 	 * Get the duration in seconds.
 	 *
-	 * @access public
 	 * @return mixed Duration in seconds or false if unavailable.
 	 */
 	public function getDuration() {
@@ -57,7 +53,6 @@ class FormatInfo {
 	/**
 	 * Bit rate in bPS.
 	 *
-	 * @access public
 	 * @return mixed Bite rate in bPS or false if unavailable.
 	 */
 	public function getBitRate() {

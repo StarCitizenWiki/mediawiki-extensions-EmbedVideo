@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.0.6",
+	"version": "3.0.7",
 	"author": [
 		"Jim R. Wilson",
 		"Andrew Whitworth",
@@ -58,6 +58,22 @@
 				"mobile"
 			]
 		},
+		"ext.embedVideo.overlay": {
+			"scripts": [
+				"resources/ext.embedVideo.overlay.js"
+			],
+			"styles": [
+				"resources/ext.embedVideo.consent.less"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"messages": [
+				"embedvideo-play"
+			]
+		},
 		"ext.embedVideo.styles": {
 			"styles": [
 				"resources/ext.embedVideo.styles.less"
@@ -80,6 +96,14 @@
 		"EmbedVideoEnableVideoHandler": {
 			"description": "Enables the video handler which displays local videos using the html5 <video> tag.",
 			"value": true
+		},
+		"EmbedVideoLazyLoadLocalVideos": {
+			"description": "Sets 'preload=none' on every <video> tag.",
+			"value": false
+		},
+		"EmbedVideoUseEmbedStyleForLocalVideos": {
+			"description": "Styles local videos like they are embedded",
+			"value": false
 		},
 		"EmbedVideoEnableAudioHandler": {
 			"description": "Enables the audio handler which displays local videos using the html5 <audio> tag.",
@@ -126,7 +150,9 @@
 		}
 	},
 	"Hooks": {
-		"ParserFirstCallInit": "EmbedVideoHooks"
+		"ParserFirstCallInit": "EmbedVideoHooks",
+		"BeforePageDisplay": "EmbedVideoHooks",
+		"ArticlePurge": "EmbedVideoHooks"
 	},
 	"manifest_version": 2
 }

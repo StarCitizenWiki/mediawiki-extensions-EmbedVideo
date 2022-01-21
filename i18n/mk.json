@@ -6,6 +6,7 @@
 	},
 	"embedvideo-description": "Оваа наменска верзија дава раслченувачка функција за вметнување на видеа од популарни извори.",
 	"embedvideo-consent-text": "Стиснете за да вчитате содржина",
+	"embedvideo-play": "Пушти видео",
 	"embedvideo-error-missingparams": "На EmbedVideo му недостасува потребен параметар.",
 	"embedvideo-error-service": "EmbedVideo не ја препознава видеослужбата „$1“.",
 	"embedvideo-error-id": "EmbedVideo доби неисправна назнака „$2“ за службата „$1“.",

@@ -55,14 +55,17 @@ abstract class AbstractEmbedService {
 	protected $height;
 
 	/**
-	 *
-	 *
 	 * @var array
 	 */
 	protected $extraIds = [];
 
 	/**
-	 * @var
+	 * String array of key value pairs
+	 * Array is run through http_build_query
+	 *
+	 * @see http_build_query()
+	 *
+	 * @var string[]
 	 */
 	protected $urlArgs = [];
 
@@ -194,10 +197,10 @@ abstract class AbstractEmbedService {
 	abstract public function getCSPUrls(): array;
 
 	/**
-	 * Set the width of the player.  This also will set the height automatically.
+	 * Set the width of the player. This also will set the height automatically.
 	 * Width will be automatically constrained to the minimum and maximum widths.
 	 *
-	 * @param int|null Width
+	 * @param int|null $width Width of the embed
 	 * @return void
 	 */
 	public function setWidth( $width = null ): void {
@@ -233,7 +236,7 @@ abstract class AbstractEmbedService {
 	/**
 	 * Set the height automatically by a ratio of the width or use the provided value.
 	 *
-	 * @param int|null [Optional] Height Value
+	 * @param int|null $height [Optional] Height Value
 	 * @return void
 	 */
 	public function setHeight( $height = null ): void {
@@ -250,13 +253,14 @@ abstract class AbstractEmbedService {
 	/**
 	 * Parse the video ID/URL provided.
 	 *
-	 * @param  string Video ID/URL
+	 * @param string $id Video ID/URL
 	 * @return string Parsed Video ID or false on failure.
 	 * @throws InvalidArgumentException
 	 */
 	public function parseVideoID( $id ): string {
 		$id = trim( $id );
-		// URL regexes are put into the array first to prevent cases where the ID regexes might accidentally match an incorrect portion of the URL.
+		// URL regexes are put into the array first to prevent cases where the ID regexes might
+		// accidentally match an incorrect portion of the URL.
 		$regexes = array_merge( $this->getUrlRegex(), $this->getIdRegex() );
 
 		if ( !empty( $regexes ) ) {
@@ -299,11 +303,11 @@ abstract class AbstractEmbedService {
 	/**
 	 * Set URL Arguments to optionally add to the embed URL.
 	 *
-	 * @param string Raw Arguments
+	 * @param string $urlArgs Raw Arguments
 	 * @return bool Success
 	 */
 	public function setUrlArgs( string $urlArgs ): bool {
-		if ( $urlArgs === null || empty( $urlArgs ) ) {
+		if ( empty( $urlArgs ) ) {
 			return true;
 		}
 
@@ -363,7 +367,10 @@ abstract class AbstractEmbedService {
 			$transform = $coverFile->transform( [ 'width' => $this->getWidth() ] );
 
 			if ( $transform === false ) {
-				throw new RuntimeException( sprintf( 'Could not transform file "%s".', $coverFile->getHashPath() ) );
+				throw new RuntimeException( sprintf(
+					'Could not transform file "%s".',
+					$coverFile->getHashPath() )
+				);
 			}
 
 			$this->localThumb = $transform;
@@ -395,5 +402,14 @@ abstract class AbstractEmbedService {
 	 */
 	public function getTitle(): ?string {
 		return $this->title;
+	}
+
+	/**
+	 * A convenience method generating the final HTML from a service
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return EmbedHtmlFormatter::makeIframe( $this );
 	}
 }
