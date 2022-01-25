@@ -29,5 +29,10 @@
 	},
 	"extra": {
 		"installer-name": "EmbedVideo"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
