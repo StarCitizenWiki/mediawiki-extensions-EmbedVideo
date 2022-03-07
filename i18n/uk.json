@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"DDPAT"
+			"DDPAT",
+			"Ice bulldog"
 		]
 	},
 	"embedvideo-description": "Ця роздвоєна версія додає функцію парсеру для вбудовування відео з популярних джерел.",
