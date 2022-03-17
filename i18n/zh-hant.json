@@ -6,6 +6,7 @@
 	},
 	"embedvideo-description": "此分叉版本添加可用於內嵌來自熱門來源的影片之解析功能。",
 	"embedvideo-consent-text": "點擊載入內容",
+	"embedvideo-play": "播放影片",
 	"embedvideo-error-missingparams": "EmbedVideo 缺少一個必要的參數。",
 	"embedvideo-error-service": "EmbedVideo 無法識別影片服務「$1」。",
 	"embedvideo-error-id": "EmbedVideo 接收到用於服務「$1」的錯誤 ID「$2」。",
