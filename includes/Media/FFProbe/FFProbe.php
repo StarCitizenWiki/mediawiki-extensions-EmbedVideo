@@ -61,12 +61,16 @@ class FFProbe {
 			// FSFiles are usually only present for uploads(?), only "real" files are relevant
 			$this->file instanceof File ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE,
 			function ( $old, &$ttl ) {
+				if ( $this->file instanceof FSFile ) {
+					$title = 'Newly uploaded file';
+				} else {
+					$title = $this->file->getTitle();
+					$title = $title !== null ? $title->getBaseText() : 'Untitled file';
+				}
+
 				wfDebugLog(
 					'EmbedVideo',
-					sprintf(
-						'Writing FFProbe Cache for %s',
-						$this->file->getTitle()->getBaseText(),
-					)
+					sprintf( 'Writing FFProbe Cache for %s', $title )
 				);
 
 				$result = $this->invokeFFProbe();

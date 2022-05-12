@@ -5,7 +5,8 @@
 	"description": "Adds a parser function embedding video from popular sources.",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.0.0"
+		"php": ">=7.0.0",
+		"composer/installers": ">=1.0.1"
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "36.0.0",
@@ -25,5 +26,13 @@
 			"phpcbf"
 		],
 		"phan": "phan -d . --long-progress-bar"
+	},
+	"extra": {
+		"installer-name": "EmbedVideo"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
