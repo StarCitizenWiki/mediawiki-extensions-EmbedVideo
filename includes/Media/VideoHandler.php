@@ -57,7 +57,7 @@ class VideoHandler extends AudioHandler {
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
 	 * @param File $file File
-	 * @param array &$parameters Parameters
+	 * @param array $parameters Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $file, &$parameters ): bool {
