@@ -21,4 +21,12 @@ final class TwitchClip extends Twitch {
 			'#twitch\.tv/(?:[\d\w-]+)/(?:clip/)([\d\w-]+)?#is'
 		];
 	}
+
+	public function getCSPUrls(): array
+	{
+		return [
+			'https://player.twitch.tv',
+			'https://clips.twitch.tv',
+		];
+	}
 }
