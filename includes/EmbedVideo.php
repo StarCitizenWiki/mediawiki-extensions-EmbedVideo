@@ -102,9 +102,7 @@ class EmbedVideo {
 			}
 		}
 
-		$embedVideo = new EmbedVideo( $parser, $expandedArgs, $fromTag );
-
-		return $embedVideo->output();
+		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag ) )->output();
 	}
 
 	/**
@@ -496,11 +494,11 @@ class EmbedVideo {
 			}
 		}
 
-		$out->addModules( 'ext.embedVideo' );
-		$out->addModuleStyles( 'ext.embedVideo.styles' );
+		$out->addModules( [ 'ext.embedVideo' ] );
+		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
-			$out->addModules( 'ext.embedVideo.consent' );
+			$out->addModules( [ 'ext.embedVideo.consent' ] );
 		}
 	}
 }
