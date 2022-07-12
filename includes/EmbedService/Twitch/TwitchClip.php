@@ -22,6 +22,9 @@ final class TwitchClip extends Twitch {
 		];
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://player.twitch.tv',

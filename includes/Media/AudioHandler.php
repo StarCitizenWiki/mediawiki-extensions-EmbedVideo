@@ -97,10 +97,10 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * Merge a parameter array into a string appropriate for inclusion in filenames
 	 *
-	 * @param array $parameters Array of parameters that have been through normaliseParams.
+	 * @param array $params Array of parameters that have been through normaliseParams.
 	 * @return string
 	 */
-	public function makeParamString( $parameters ): string {
+	public function makeParamString( $params ): string {
 		// Width does not matter to video or audio.
 		return '';
 	}
@@ -121,34 +121,34 @@ class AudioHandler extends MediaHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param stdClass|File $file
-	 * @param array $parameters
+	 * @param stdClass|File $image
+	 * @param array &$params
 	 * @return bool Success
 	 */
-	public function normaliseParams( $file, &$parameters ): bool {
+	public function normaliseParams( $image, &$params ): bool {
 		global $wgEmbedVideoDefaultWidth;
 
-		if ( isset( $parameters['width'] ) && $parameters['width'] > 0 ) {
-			$parameters['width'] = (int)$parameters['width'];
+		if ( isset( $params['width'] ) && $params['width'] > 0 ) {
+			$params['width'] = (int)$params['width'];
 		} else {
-			$parameters['width'] = $wgEmbedVideoDefaultWidth;
+			$params['width'] = $wgEmbedVideoDefaultWidth;
 		}
 
-		if ( isset( $parameters['start'] ) ) {
-			$parameters['start'] = $this->parseTimeString( $parameters['start'] );
-			if ( $parameters['start'] === false ) {
-				unset( $parameters['start'] );
+		if ( isset( $params['start'] ) ) {
+			$params['start'] = $this->parseTimeString( $params['start'] );
+			if ( $params['start'] === false ) {
+				unset( $params['start'] );
 			}
 		}
 
-		if ( isset( $parameters['end'] ) ) {
-			$parameters['end'] = $this->parseTimeString( $parameters['end'] );
-			if ( $parameters['end'] === false ) {
-				unset( $parameters['end'] );
+		if ( isset( $params['end'] ) ) {
+			$params['end'] = $this->parseTimeString( $params['end'] );
+			if ( $params['end'] === false ) {
+				unset( $params['end'] );
 			}
 		}
 
-		$parameters['page'] = 1;
+		$params['page'] = 1;
 
 		return true;
 	}
