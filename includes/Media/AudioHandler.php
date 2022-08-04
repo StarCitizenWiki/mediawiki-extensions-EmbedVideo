@@ -122,7 +122,7 @@ class AudioHandler extends MediaHandler {
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
 	 * @param stdClass|File $image
-	 * @param array &$params
+	 * @param array $params
 	 * @return bool Success
 	 */
 	public function normaliseParams( $image, &$params ): bool {

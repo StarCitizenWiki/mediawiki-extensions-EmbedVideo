@@ -25,6 +25,7 @@ final class EmbedServiceFactory {
 	 */
 	private static $availableServices = [
 		ArchiveOrg::class,
+		Niconico::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
@@ -48,6 +49,10 @@ final class EmbedServiceFactory {
 		switch ( strtolower( $serviceName ) ) {
 			case 'archiveorg':
 				return new ArchiveOrg( $id );
+
+			case 'nicovideo':
+			case 'niconico':
+				return new Niconico( $id );
 
 			case 'soundcloud':
 				return new SoundCloud( $id );
