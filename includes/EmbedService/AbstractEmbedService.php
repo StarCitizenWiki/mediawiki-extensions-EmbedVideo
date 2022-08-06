@@ -247,7 +247,7 @@ abstract class AbstractEmbedService {
 
 		$ratio = $this->getAspectRatio() ?? ( 16 / 9 );
 
-		$this->height = round( $this->getWidth() / $ratio );
+		$this->height = round( (int)$this->getWidth() / $ratio );
 	}
 
 	/**
