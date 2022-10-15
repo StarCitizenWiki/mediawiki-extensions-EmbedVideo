@@ -1,13 +1,13 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.0.8",
+	"version": "3.0.9",
 	"author": [
+		"Octfx",
+		"Alistair3149",
 		"Jim R. Wilson",
 		"Andrew Whitworth",
 		"Alexia E. Smith",
-		"Cameron M. Chunn",
-		"Octfx",
-		"Alistair3149"
+		"Cameron M. Chunn"
 	],
 	"url": "https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo",
 	"descriptionmsg": "embedvideo-description",
