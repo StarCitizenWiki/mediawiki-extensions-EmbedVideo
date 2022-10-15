@@ -4,6 +4,7 @@
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPrivate" />
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPublic" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.ParamPassByReference" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>

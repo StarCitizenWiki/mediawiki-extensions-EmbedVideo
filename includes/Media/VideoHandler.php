@@ -56,41 +56,41 @@ class VideoHandler extends AudioHandler {
 	 * Should be idempotent.
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
-	 * @param File $file File
-	 * @param array &$parameters Parameters
+	 * @param File $image File
+	 * @param array $params Parameters
 	 * @return bool Success
 	 */
-	public function normaliseParams( $file, &$parameters ): bool {
-		parent::normaliseParams( $file, $parameters );
+	public function normaliseParams( $image, &$params ): bool {
+		parent::normaliseParams( $image, $params );
 
-		if ( isset( $parameters['poster'] ) ) {
-			$title = Title::newFromText( $parameters['poster'], NS_FILE );
+		if ( isset( $params['poster'] ) ) {
+			$title = Title::newFromText( $params['poster'], NS_FILE );
 
 			if ( $title !== null && $title->exists() ) {
 				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
-				$transform = $coverFile->transform( [ 'width' => $parameters['width'] ] );
+				$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
 				try {
-					$parameters['posterUrl'] = wfExpandUrl( $transform->getUrl() );
+					$params['posterUrl'] = wfExpandUrl( $transform->getUrl() );
 				} catch ( Exception $e ) {
-					unset( $parameters['poster'], $parameters['posterUrl'] );
+					unset( $params['poster'], $params['posterUrl'] );
 				}
 			} else {
-				unset( $parameters['poster'] );
+				unset( $params['poster'] );
 			}
 		}
 
-		if ( isset( $parameters['lazy'] ) ) {
-			$parameters['lazy'] = true;
+		if ( isset( $params['lazy'] ) ) {
+			$params['lazy'] = true;
 		} else {
-			$parameters['lazy'] = MediaWikiServices::getInstance()
+			$params['lazy'] = MediaWikiServices::getInstance()
 				->getConfigFactory()
 				->makeConfig( 'EmbedVideo' )
 				->get( 'EmbedVideoLazyLoadLocalVideos' );
 		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
-		[ $width, $height ] = $this->getImageSize( $file, '' );
+		[ $width, $height ] = $this->getImageSize( $image, '' );
 
 		if ( $width === 0 && $height === 0 ) {
 			// Force a reset.
@@ -98,35 +98,35 @@ class VideoHandler extends AudioHandler {
 			$height = 360;
 		}
 
-		if ( isset( $parameters['width'] ) &&
-			isset( $parameters['height'] ) &&
-			$parameters['width'] > 0 &&
-			$parameters['height'] === $parameters['width'] ) {
+		if ( isset( $params['width'] ) &&
+			isset( $params['height'] ) &&
+			$params['width'] > 0 &&
+			$params['height'] === $params['width'] ) {
 			// special allowance for square video embeds needed by some wikis,
 			// otherwise forced 16:9 ratios are followed.
 			return true;
 		}
 
-		if ( isset( $parameters['width'] ) && $parameters['width'] > 0 && $parameters['width'] < $width ) {
-			$parameters['width'] = (int)$parameters['width'];
+		if ( isset( $params['width'] ) && $params['width'] > 0 && $params['width'] < $width ) {
+			$params['width'] = (int)$params['width'];
 
-			if ( !isset( $parameters['height'] ) ) {
+			if ( !isset( $params['height'] ) ) {
 				// Page embeds do not specify thumbnail height so correct it here based on aspect ratio.
-				$parameters['height'] = round( $height / $width * $parameters['width'] );
+				$params['height'] = round( $height / $width * $params['width'] );
 			}
 		} else {
-			$parameters['width'] = $width;
+			$params['width'] = $width;
 		}
 
-		if ( isset( $parameters['height'] ) && $parameters['height'] > 0 && $parameters['height'] < $height ) {
-			$parameters['height'] = (int)$parameters['height'];
+		if ( isset( $params['height'] ) && $params['height'] > 0 && $params['height'] < $height ) {
+			$params['height'] = (int)$params['height'];
 		} else {
-			$parameters['height'] = $height;
+			$params['height'] = $height;
 		}
 
-		if ( $width > 0 && $parameters['width'] > 0 &&
-			( $height / $width ) !== ( $parameters['height'] / $parameters['width'] ) ) {
-			$parameters['height'] = round( $height / $width * $parameters['width'] );
+		if ( $width > 0 && $params['width'] > 0 &&
+			( $height / $width ) !== ( $params['height'] / $params['width'] ) ) {
+			$params['height'] = round( $height / $width * $params['width'] );
 		}
 
 		return true;

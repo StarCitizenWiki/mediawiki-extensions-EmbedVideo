@@ -34,7 +34,7 @@ final class EmbedHtmlFormatter {
 			return self::makeIframe( $service );
 		}
 
-		$width = $service->getWidth();
+		$width = (int)$service->getWidth();
 		$widthPad = $width + 8;
 
 		$config = array_merge(
