@@ -4,12 +4,12 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-final class Niconico extends AbstractEmbedService {
+final class Bilibili extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return '//embed.nicovideo.jp/watch/%1$s';
+		return '//player.bilibili.com/player.html?bvid=%1$s';
 	}
 
 	/**
@@ -38,7 +38,7 @@ final class Niconico extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#nicovideo\.jp/watch/((?:[a-zA-Z]{2})?[\d]+)#is',
+			'#bilibili\.com/(?:BV|AV)([\d\w]+)#is',
 		];
 	}
 
@@ -47,7 +47,7 @@ final class Niconico extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
+			'#^(?:BV|AV)([\d\w]+)$#is',
 		];
 	}
 
@@ -56,8 +56,22 @@ final class Niconico extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://www.nicovideo.jp',
-			'https://embed.nicovido.jp',
+			'https://bilibili.com',
+			'https://player.bilibili.com',
 		];
+	}
+
+	/**
+	 * Add '&page=1' if not set through parser
+	 *
+	 * @return string
+	 */
+	public function getUrl(): string {
+		$page = 'page=1';
+		if ( $this->getUrlArgs() !== false ) {
+			$page = $this->getUrlArgs();
+		}
+
+		return sprintf( '%s&%s', parent::getUrl(), $page );
 	}
 }
