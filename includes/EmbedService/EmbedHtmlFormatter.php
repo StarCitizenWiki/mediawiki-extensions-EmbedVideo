@@ -165,10 +165,10 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
-			<div class="embedvideo-consent">
+			<div class="embedvideo-consent">%s
 				<div class="embedvideo-consent__overlay%s">%s
 					<div class="embedvideo-consent__message">%s</div>
-				</div>%s
+				</div>
 			</div>
 			HTML;
 
@@ -176,10 +176,10 @@ final class EmbedHtmlFormatter {
 
 		return sprintf(
 			$template,
+			self::makeThumbHtml( $service ),
 			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 			$titleHtml,
 			( new Message( 'embedvideo-consent-text' ) )->text(),
-			self::makeThumbHtml( $service )
 		);
 	}
 }

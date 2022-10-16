@@ -46,19 +46,20 @@
 					return;
 				}
 
-				const picture = document.createElement('picture'),
+				const 
+					overlay = parent.querySelector('.embedvideo-consent__overlay'),
+					picture = document.createElement('picture'),
 					image = document.createElement('img');
 
 				picture.classList.add('embedvideo-consent__thumbnail');
 				image.src = json.thumbnail_url;
 				image.setAttribute('loading', 'lazy');
 				image.classList.add('embedvideo-consent__thumbnail__image');
-				picture.appendChild(image);
-				parent.appendChild(picture);
+				picture.append(image);
+				parent.prepend(picture);
 
 				if (typeof json.title !== 'undefined' && json.title.length > 0) {
-					const title = document.createElement('div'),
-						overlay = parent.querySelector('.embedvideo-consent__overlay');
+					const title = document.createElement('div');
 					title.classList.add('embedvideo-consent__title');
 					title.innerText = json.title;
 					overlay.classList.add('embedvideo-consent__overlay--hastitle');
