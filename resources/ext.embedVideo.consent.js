@@ -88,7 +88,7 @@
 				return;
 			}
 
-			consentDiv.addEventListener('click', clickListener);
+			consentDiv.querySelector('.embedvideo-consent__overlay').addEventListener('click', clickListener);
 
 			if (!div.classList.contains('no-fetch')) {
 				fetchThumb(iframe.dataset.src, consentDiv, div);

@@ -76,6 +76,13 @@ class YouTube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://www.youtube.com/howyoutubeworks/user-settings/privacy/';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://www.youtube-nocookie.com',

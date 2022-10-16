@@ -167,8 +167,9 @@ HTML;
 		$template = <<<HTML
 <div class="embedvideo-consent"><!--
 --><div class="embedvideo-consent__overlay%s">%s<!--
+	--><div class="embedvideo-consent__service embedvideo-consent__service-%s">%s</div><!--
 	--><div class="embedvideo-consent__message">%s</div><!--
---></div>%s<!--
+--></div>%s%s<!--
 --></div>
 HTML;
 
@@ -178,8 +179,36 @@ HTML;
 			$template,
 			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 			$titleHtml,
+			$service::getServiceName(),
+			$service::getServiceNiceName(),
 			( new Message( 'embedvideo-consent-text' ) )->text(),
+			self::makePrivacyContainerHTML( $service ),
 			self::makeThumbHtml( $service )
+		);
+	}
+
+	public static function makePrivacyContainerHTML( AbstractEmbedService $service ): string {
+		$containerHTML = <<<HTML
+<div class="embedvideo-consent__privacy_container">%s%s</div>
+HTML;
+
+		if ( $service->getPrivacyPolicyUrl() === null && $service->getPrivacyPolicyShortText() === null ) {
+			return '';
+		}
+
+		$privacyUrl = $service->getPrivacyPolicyUrl();
+		if ( $privacyUrl !== null ) {
+			$privacyUrl = sprintf(
+				"<a href='%s' rel='nofollow,noopener' target='_blank' class='embedvideo-consent__privacy_link'>%s</a>",
+				$privacyUrl,
+				( new Message( 'embedvideo-consent-link-text' ) )->text()
+			);
+		}
+
+		return sprintf(
+			$containerHTML,
+			$privacyUrl,
+			$service->getPrivacyPolicyShortText() ?? ''
 		);
 	}
 }
