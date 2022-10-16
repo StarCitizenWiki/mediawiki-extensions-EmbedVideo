@@ -3,6 +3,15 @@
 		let callUrl;
 
 		switch( outerDiv.getAttribute('data-service') ) {
+			case 'spotifyalbum':
+				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/album/';
+				break;
+			case 'spotifyartist':
+				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/artist/';
+				break;
+			case 'spotifytrack':
+				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/track/';
+				break;
 			case 'vimeo':
 				callUrl = 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/';
 				break;
