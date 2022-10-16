@@ -136,6 +136,10 @@
 		"EmbedVideoFetchExternalThumbnails": {
 			"description": "Don't try to fetch thumbnails when consent is required.",
 			"value": true
+		},
+		"EmbedVideoShowPrivacyNotice": {
+			"description": "Require the user to acknowledge that the external service may collect user data, after giving consent",
+			"value": true
 		}
 	},
 	"ConfigRegistry": {

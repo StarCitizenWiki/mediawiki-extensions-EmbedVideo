@@ -7,6 +7,7 @@
 	overflow: hidden;
 	background-color: #eaecf0;
 
+	.hidden,
 	&.hidden {
 		display: none;
 	}
@@ -62,7 +63,7 @@
 
 	&__service {
 		position: absolute;
-		top: 0.25rem;
+		bottom: 0.25rem;
 		right: 0.5rem;
 
 		&-youtube {
@@ -70,16 +71,26 @@
 		}
 	}
 
-	&__privacy_container {
-		position: absolute;
-		bottom: 0.5rem;
-		text-align: center;
-		width: 100%;
-		z-index: 2;
-		font-size: 0.875rem;
+	&__privacy-notice {
+		padding: 1rem;
+	}
 
-		p {
-			margin: 0;
+	&__button-container {
+		margin-top: 1rem;
+	}
+
+	&__continue {
+		border: 1px solid currentColor;
+		padding: 0.5rem 1rem;
+		margin-right: 1rem;
+		border-radius: 100px;
+		transition: background-color 250ms ease, border-color 250ms ease;
+		cursor: pointer;
+	}
+
+	&__dismiss {
+		&:hover {
+			color: #000000;
 		}
 	}
 
@@ -104,6 +115,7 @@
 				opacity: 0;
 			}
 
+			&__continue,
 			&__message {
 				background-color: #36c;
 				border-color: #36c;
