@@ -54,12 +54,12 @@ final class EmbedHtmlFormatter {
 			: '';
 
 		$template = <<<HTML
-<div class="thumb %s" style="width: %dpx;"><!--
---><div class="%s" style="%s"><!--
-	--><div class="%s" style="width: %dpx">%s%s</div>%s<!--
---></div><!--
---></div>
-HTML;
+			<div class="thumb %s" style="width: %dpx;">
+				<div class="%s" style="%s">
+					<div class="%s" style="width: %dpx">%s%s</div>%s
+				</div>
+			</div>
+			HTML;
 
 		return sprintf(
 			$template,
@@ -133,10 +133,10 @@ HTML;
 
 			// phpcs:disable
 			return <<<HTML
-<picture class="embedvideo-consent__thumbnail"><!--
-	--><img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/><!--
---></picture>
-HTML;
+				<picture class="embedvideo-consent__thumbnail">
+					<img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				</picture>
+				HTML;
 			// phpcs:enable
 		} catch ( Exception $e ) {
 			return '';
@@ -165,12 +165,12 @@ HTML;
 	 */
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
-<div class="embedvideo-consent"><!--
---><div class="embedvideo-consent__overlay%s">%s<!--
-	--><div class="embedvideo-consent__message">%s</div><!--
---></div>%s<!--
---></div>
-HTML;
+			<div class="embedvideo-consent">
+				<div class="embedvideo-consent__overlay%s">%s
+					<div class="embedvideo-consent__message">%s</div>
+				</div>%s
+			</div>
+			HTML;
 
 		$titleHtml = self::makeTitleHtml( $service );
 
