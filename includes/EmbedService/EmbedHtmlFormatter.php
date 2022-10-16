@@ -43,6 +43,7 @@ final class EmbedHtmlFormatter {
 				'class' => 'embedvideo thumbinner',
 				'style' => '',
 				'innerClass' => 'embedvideowrap',
+				'service' => '',
 				'withConsent' => false,
 				'description' => '',
 			],
@@ -56,7 +57,7 @@ final class EmbedHtmlFormatter {
 		$template = <<<HTML
 			<div class="thumb %s" style="width: %dpx;">
 				<div class="%s" style="%s">
-					<div class="%s" style="width: %dpx">%s%s</div>%s
+					<div class="%s" data-service="%s" style="width: %dpx">%s%s</div>%s
 				</div>
 			</div>
 			HTML;
@@ -68,6 +69,7 @@ final class EmbedHtmlFormatter {
 			$config['class'] ?? '',
 			$config['style'] ?? '',
 			$config['innerClass'] ?? '',
+			$config['service'] ?? '',
 			$width,
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,

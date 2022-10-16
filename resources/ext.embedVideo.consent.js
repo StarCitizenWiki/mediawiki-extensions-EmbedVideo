@@ -1,15 +1,16 @@
 (function () {
 	const fetchThumb = async (url, parent, outerDiv) => {
 		let callUrl;
-		if (outerDiv.classList.contains('youtube') || outerDiv.classList.contains('youtubevideolist') || outerDiv.classList.contains('youtubeplaylist')) {
-			callUrl = 'https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=';
-		} else if(outerDiv.classList.contains('vimeo')) {
-			callUrl = 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/'
-		} else if(outerDiv.classList.contains('spotifytrack')) {
-			// does not work callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/track/'
-			return;
-		} else {
-			return;
+
+		switch( outerDiv.getAttribute('data-service') ) {
+			case 'vimeo':
+				callUrl = 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/';
+				break;
+			case 'youtube':
+			case 'youtubevideolist':
+			case 'youtubeplaylist':
+				callUrl = 'https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=';
+				break;
 		}
 
 		// Some url manipulation foo which tries to get the id of the requested video
