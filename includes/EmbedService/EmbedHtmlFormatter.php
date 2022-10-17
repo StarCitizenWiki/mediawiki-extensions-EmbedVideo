@@ -200,8 +200,8 @@ HTML;
 			$template,
 			// data-show-privacy-notice
 			$showPrivacyNotice,
-      // thumbnail
-      self::makeThumbHtml( $service ),
+			// thumbnail
+			self::makeThumbHtml( $service ),
 			// __overlay class
 			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 			// __title
