@@ -127,6 +127,26 @@ abstract class AbstractEmbedService {
 	}
 
 	/**
+	 * An optional link to the services' privacy policy
+	 * Shown when explicit consent is activated
+	 *
+	 * @return string|null
+	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return null;
+	}
+
+	/**
+	 * An optional short privacy policy text
+	 * Shown when explicit consent is activated
+	 *
+	 * @return string|null
+	 */
+	public function getPrivacyPolicyShortText(): ?string {
+		return null;
+	}
+
+	/**
 	 * Returns the base url for this service.
 	 * Specify the location of the id with '%1$s'
 	 * E.g.: //www.youtube-nocookie.com/embed/%1$s
@@ -149,7 +169,17 @@ abstract class AbstractEmbedService {
 	 * @return string
 	 */
 	final public static function getServiceName(): string {
-		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
+		return strtolower( self::getServiceNiceName() );
+	}
+
+	/**
+	 * Returns the 'nice' name of a service, used in the modal when explicit consent is activated
+	 * Defaults to the class name
+	 *
+	 * @return string
+	 */
+	public static function getServiceNiceName(): string {
+		return substr( static::class, strrpos( static::class, '\\' ) + 1 );
 	}
 
 	/**

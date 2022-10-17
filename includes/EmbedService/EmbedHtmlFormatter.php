@@ -167,21 +167,78 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
-			<div class="embedvideo-consent">%s
-				<div class="embedvideo-consent__overlay%s">%s
-					<div class="embedvideo-consent__message">%s</div>
-				</div>
-			</div>
-			HTML;
+<div class="embedvideo-consent" data-show-privacy-notice="%s">%s<!--
+--><div class="embedvideo-consent__overlay%s">%s<!--
+	--><div class="embedvideo-consent__message"><!--
+		-->%s<!--
+		--><span class="embedvideo-consent__service embedvideo-consent__service-%s">%s</span><!--
+	--></div><!--
+	--><div class="embedvideo-consent__privacy-notice hidden"><!--
+		-->%s%s<!--
+		--><div class="embedvideo-consent__button-container"><!--
+			--><button class="embedvideo-consent__continue">%s</button><!--
+			--><span class="embedvideo-consent__dismiss">%s</span><!--
+		--></div><!--
+	--></div><!--
+--></div><!--
+--></div>
+HTML;
 
 		$titleHtml = self::makeTitleHtml( $service );
 
+		$showPrivacyNotice = false;
+		try {
+			$showPrivacyNotice = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoShowPrivacyNotice' );
+		} catch ( ConfigException $e ) {
+			//
+		}
+
 		return sprintf(
 			$template,
-			self::makeThumbHtml( $service ),
+			// data-show-privacy-notice
+			$showPrivacyNotice,
+      // thumbnail
+      self::makeThumbHtml( $service ),
+			// __overlay class
 			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
+			// __title
 			$titleHtml,
+			// __message content
 			( new Message( 'embedvideo-consent-text' ) )->text(),
+			// __service class
+			$service::getServiceName(),
+			// __service content
+			$service::getServiceNiceName(),
+			// __privacy-notice text
+			( new Message( 'embedvideo-consent-privacy-notice-text', [ $service::getServiceNiceName() ] ) )->text(),
+			// __privacy-notice link to Privacy Policy (may be empty)
+			self::makePrivacyPolicyLink( $service ),
+			// Continue
+			( new Message( 'embedvideo-consent-privacy-notice-continue' ) )->text(),
+			// Dismiss
+			( new Message( 'embedvideo-consent-privacy-notice-dismiss' ) )->text()
 		);
+	}
+
+	/**
+	 * Generates the HTML output for the services privacy url and short privacy text
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string
+	 */
+	public static function makePrivacyPolicyLink( AbstractEmbedService $service ): string {
+		$privacyUrl = $service->getPrivacyPolicyUrl();
+		if ( $privacyUrl !== null ) {
+			$privacyUrl = sprintf(
+				' <a href="%s" rel="nofollow,noopener" target="_blank" class="embedvideo-consent__privacy_link">%s</a>',
+				$privacyUrl,
+				( new Message( 'embedvideo-consent-privacy-policy' ) )->text()
+			);
+		}
+
+		return $privacyUrl ?? '';
 	}
 }
