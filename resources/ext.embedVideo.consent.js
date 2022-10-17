@@ -3,6 +3,19 @@
 		let callUrl;
 
 		switch( outerDiv.getAttribute('data-service') ) {
+			case 'bilibili':
+				// Not Oembed
+				//callUrl = 'https://api.bilibili.com/x/web-interface/view?bvid=';
+				break;
+			case 'niconico':
+				// Not Oembed
+				// The official API is in XML sadly
+				//callUrl = 'https://ext.nicovideo.jp/api/getthumbinfo/';
+				break;
+			case 'soundcloud':
+				// Oembed
+				// The soundcloud URL is messed up,  maybe we should look for another way to call API
+				// callUrl = 'https://soundcloud.com/oembed?format=json&url=';
 			case 'spotifyalbum':
 				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/album/';
 				break;
