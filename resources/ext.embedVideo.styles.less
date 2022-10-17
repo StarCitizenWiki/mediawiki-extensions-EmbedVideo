@@ -1,4 +1,20 @@
 .embedvideo {
+	// Act as placeholder styles
+	&-consent {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		overflow: hidden;
+		background-color: #eaecf0;
+
+		&__overlay {
+			// Hide until ready
+			display: none;
+		}
+	}
+
 	&.tcenter,
 	&.ev_center,
 	&.ev_center > .embedvideowrap {

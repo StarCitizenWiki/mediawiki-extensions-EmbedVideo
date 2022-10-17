@@ -441,10 +441,10 @@ class EmbedVideo {
 		$styleString = '';
 		$innerClassString = implode( ' ', array_filter( [
 			'embedvideowrap',
-			$embedService::getServiceName(),
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );
+		$serviceString = $embedService::getServiceName();
 		$outerClassString = 'embedvideo ';
 
 		if ( $this->container === 'frame' ) {
@@ -470,6 +470,7 @@ class EmbedVideo {
 			'class' => $classString,
 			'style' => $styleString,
 			'innerClass' => $innerClassString,
+			'service' => $serviceString,
 			// phpcs:ignore Generic.Files.LineLength.TooLong
 			'withConsent' => !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ),
 			'description' => $this->description,

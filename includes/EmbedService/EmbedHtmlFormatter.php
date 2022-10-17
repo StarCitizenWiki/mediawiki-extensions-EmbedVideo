@@ -43,6 +43,7 @@ final class EmbedHtmlFormatter {
 				'class' => 'embedvideo thumbinner',
 				'style' => '',
 				'innerClass' => 'embedvideowrap',
+				'service' => '',
 				'withConsent' => false,
 				'description' => '',
 			],
@@ -54,12 +55,12 @@ final class EmbedHtmlFormatter {
 			: '';
 
 		$template = <<<HTML
-<div class="thumb %s" style="width: %dpx;"><!--
---><div class="%s" style="%s"><!--
-	--><div class="%s" style="width: %dpx">%s%s</div>%s<!--
---></div><!--
---></div>
-HTML;
+			<div class="thumb %s" style="width: %dpx;">
+				<div class="%s" style="%s">
+					<div class="%s" data-service="%s" style="width: %dpx">%s%s</div>%s
+				</div>
+			</div>
+			HTML;
 
 		return sprintf(
 			$template,
@@ -68,6 +69,7 @@ HTML;
 			$config['class'] ?? '',
 			$config['style'] ?? '',
 			$config['innerClass'] ?? '',
+			$config['service'] ?? '',
 			$width,
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,
@@ -133,10 +135,10 @@ HTML;
 
 			// phpcs:disable
 			return <<<HTML
-<picture class="embedvideo-consent__thumbnail"><!--
-	--><img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/><!--
---></picture>
-HTML;
+				<picture class="embedvideo-consent__thumbnail">
+					<img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				</picture>
+				HTML;
 			// phpcs:enable
 		} catch ( Exception $e ) {
 			return '';
@@ -165,7 +167,7 @@ HTML;
 	 */
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
-<div class="embedvideo-consent" data-show-privacy-notice="%s"><!--
+<div class="embedvideo-consent" data-show-privacy-notice="%s">%s<!--
 --><div class="embedvideo-consent__overlay%s">%s<!--
 	--><div class="embedvideo-consent__message"><!--
 		-->%s<!--
@@ -178,7 +180,7 @@ HTML;
 			--><span class="embedvideo-consent__dismiss">%s</span><!--
 		--></div><!--
 	--></div><!--
---></div>%s<!--
+--></div><!--
 --></div>
 HTML;
 
@@ -198,6 +200,8 @@ HTML;
 			$template,
 			// data-show-privacy-notice
 			$showPrivacyNotice,
+      // thumbnail
+      self::makeThumbHtml( $service ),
 			// __overlay class
 			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 			// __title
@@ -215,8 +219,7 @@ HTML;
 			// Continue
 			( new Message( 'embedvideo-consent-privacy-notice-continue' ) )->text(),
 			// Dismiss
-			( new Message( 'embedvideo-consent-privacy-notice-dismiss' ) )->text(),
-			self::makeThumbHtml( $service )
+			( new Message( 'embedvideo-consent-privacy-notice-dismiss' ) )->text()
 		);
 	}
 
