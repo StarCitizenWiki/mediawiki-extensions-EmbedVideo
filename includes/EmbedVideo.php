@@ -440,7 +440,7 @@ class EmbedVideo {
 		$classString = 'embedvideo';
 		$styleString = '';
 		$innerClassString = implode( ' ', array_filter( [
-			'embedvideowrap',
+			'embedvideo-wrapper',
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );

@@ -36,7 +36,7 @@
                 var parent = $(this).parent();
                 var self = $(this);
                 var iframe = self.find('iframe');
-                var wrap = self.find('.embedvideowrap');
+                var wrap = self.find('.embedvideo-wrapper');
 
                 if(parent.width() <= 0) {
                     return;

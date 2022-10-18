@@ -1,4 +1,8 @@
 .embedvideo {
+	&-wrapper {
+		position: relative;
+	}
+
 	// Act as placeholder styles
 	&-consent {
 		position: absolute;
@@ -17,7 +21,7 @@
 
 	&.tcenter,
 	&.ev_center,
-	&.ev_center > .embedvideowrap {
+	&.ev_center > .embedvideo-wrapper {
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -60,10 +64,6 @@
 		&_baseline {
 			vertical-align: baseline;
 		}
-	}
-
-	&wrap {
-		position: relative;
 	}
 }
 

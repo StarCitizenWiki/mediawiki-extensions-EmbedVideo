@@ -1,6 +1,6 @@
 (function () {
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.local-embed .embedvideowrap').forEach(function (div) {
+		document.querySelectorAll('.local-embed .embedvideo-wrapper').forEach(function (div) {
 			const clickListener = function () {
 				consentDiv.classList.add('hidden');
 				video.controls = true;
@@ -24,7 +24,7 @@
 				}
 
 				// Remove thumb after the user clicked play
-				const thumb = consentDiv.querySelector('.embedvideo-consent__thumbnail');
+				const thumb = consentDiv.querySelector('.embedvideo-thumbnail');
 				if (thumb !== null) {
 					consentDiv.removeChild(thumb);
 				}

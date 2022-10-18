@@ -110,7 +110,7 @@
 	}
 
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.embedvideowrap').forEach(function (div) {
+		document.querySelectorAll('.embedvideo-wrapper').forEach(function (div) {
 			const clickListener = function (event) {
 				if (iframe !== null) {
 					iframe.src = iframe.dataset.src ?? '';

@@ -42,7 +42,7 @@ final class EmbedHtmlFormatter {
 				'outerClass' => 'embedvideo',
 				'class' => 'embedvideo thumbinner',
 				'style' => '',
-				'innerClass' => 'embedvideowrap',
+				'innerClass' => 'embedvideo-wrapper',
 				'service' => '',
 				'withConsent' => false,
 				'description' => '',
