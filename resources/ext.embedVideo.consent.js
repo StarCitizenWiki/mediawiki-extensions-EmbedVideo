@@ -3,12 +3,13 @@
 		let callUrl;
 		/**
 		 * An optional configuration dict for accessing data from the 'info' endpoint for titles and thumbnails
-		 * @type {{dataKey: null, titleKey: string, thumbnailKey: string}}
+		 * @type {{dataKey: null, titleKey: string, thumbnailKey: string, durationKey: string}}
 		 */
 		const dataConfig = {
 			'dataKey': null,
 			'titleKey': 'title',
 			'thumbnailKey': 'thumbnail_url',
+			'durationKey': 'duration'
 		}
 
 		switch( outerDiv.getAttribute('data-service') ) {
@@ -102,6 +103,29 @@
 					title.classList.add('embedvideo-loader__title');
 					title.innerText = json[dataConfig.titleKey];
 					overlay.prepend(title);
+				}
+
+				if (typeof json[dataConfig.durationKey] === 'number' ) {
+					const formatTime = seconds => {
+						const 
+							h = Math.floor(seconds / 3600),
+							m = Math.floor((seconds % 3600) / 60),
+							s = Math.round(seconds % 60);
+	
+						return [
+						  h,
+						  m > 9 ? m : (h ? '0' + m : m || '0'),
+						  s > 9 ? s : '0' + s
+						].filter(Boolean).join(':');
+					};
+
+					const
+						footer = parent.querySelector('.embedvideo-loader__footer'),
+						duration = document.createElement('div');
+
+					duration.classList.add('embedvideo-loader__duration');
+					duration.innerText = formatTime(json[dataConfig.durationKey]);
+					footer.append(duration);
 				}
 			})
 			.catch(error => {
