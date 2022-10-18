@@ -28,7 +28,8 @@
 				//callUrl = 'https://ext.nicovideo.jp/api/getthumbinfo/';
 				break;
 			case 'soundcloud':
-				callUrl = 'https://soundcloud.com/oembed?format=json&url=';
+				callUrl = 'https://soundcloud.com/oembed';
+				dataConfig['queryKeys'] = ['url'];
 				break;
 			case 'spotifyalbum':
 				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/album/';
@@ -60,7 +61,7 @@
 					match = url.match(regex) ? url.match(regex)[1] : null;
 
 				if (match !== null) {
-					id = `?${queryKey}=${match}`;
+					id = `?${queryKey}=${match}&format=json`;
 					return false;
 				}
 				return true;
