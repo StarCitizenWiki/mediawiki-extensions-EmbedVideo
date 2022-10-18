@@ -176,7 +176,7 @@ final class EmbedHtmlFormatter {
 		--></div><!--
 	--></div><!--
 	--><div class="embedvideo-privacyNotice hidden"><!--
-		-->%s%s<!--
+		--><div class="embedvideo-privacyNotice__content">%s%s</div><!--
 		--><div class="embedvideo-privacyNotice__buttons"><!--
 			--><button class="embedvideo-privacyNotice__continue">%s</button><!--
 			--><button class="embedvideo-privacyNotice__dismiss">%s</button><!--
@@ -229,7 +229,7 @@ HTML;
 		$privacyUrl = $service->getPrivacyPolicyUrl();
 		if ( $privacyUrl !== null ) {
 			$privacyUrl = sprintf(
-				' <a href="%s" rel="nofollow,noopener" target="_blank" class="embedvideo-consent__privacy_link">%s</a>',
+				' <a href="%s" rel="nofollow,noopener" target="_blank" class="embedvideo-privacyNotice__link">%s</a>',
 				$privacyUrl,
 				( new Message( 'embedvideo-consent-privacy-policy' ) )->text()
 			);
