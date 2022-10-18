@@ -58,6 +58,19 @@
 				"mobile"
 			]
 		},
+		"ext.embedVideo.consent.modules": {
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"packageFiles": [
+				{ "name": "fetchFactory.js", "file":  "resources/fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file":  "resources/fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file":  "resources/fetchers/bilibili.js" },
+				{ "name": "oembed.js", "file":  "resources/fetchers/oembed.js" }
+			]
+		},
 		"ext.embedVideo.overlay": {
 			"scripts": [
 				"resources/ext.embedVideo.overlay.js"
