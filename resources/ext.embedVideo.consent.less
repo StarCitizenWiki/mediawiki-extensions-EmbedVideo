@@ -28,10 +28,6 @@
 				&__title {
 					background: linear-gradient( to bottom, #000000, 40%, transparent );
 				}
-
-				&__service {
-					background: linear-gradient(to top, #000000, 40%, transparent);
-				}
 			}
 		}
 	}
@@ -62,6 +58,7 @@
 		cursor: pointer;
 
 		&__title {
+			padding: 1rem;
 			text-align: start;
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -78,29 +75,38 @@
 			transition: background-color 250ms ease;
 		}
 
-		&__service {
-			place-self: end end;
-			text-align: end;
+		&__footer {
+			align-self: end;
+			display: flex;
+			padding: 0.5rem;
+			font-size: 0.8125rem;
+			justify-content: space-between;
+
+			> div {
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
+				background-color: rgba( 0, 0, 0, 60% );
+				color: #eaecf0;
+			}
 		}
 
 		&__title,
-		&__service {
+		&__footer {
 			left: 0;
 			right: 0;
-			padding: 1rem;
 			transition: opacity 250ms ease;
 		}
 
 		&__title,
 		&__fakeButton,
-		&__service {
+		&__footer {
 			position: absolute;
 		}
 
 		&:hover {
 			.embedvideo-loader {
 				&__title,
-				&__service {
+				&__footer {
 					opacity: 0;
 				}
 

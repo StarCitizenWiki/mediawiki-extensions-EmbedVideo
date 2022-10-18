@@ -171,7 +171,9 @@ final class EmbedHtmlFormatter {
 --><div class="embedvideo-overlay"><!--
 	--><div class="embedvideo-loader" role="button">%s<!--
 		--><div class="embedvideo-loader__fakeButton">%s</div><!--
-		--><div class="embedvideo-loader__service">%s</div><!--
+		--><div class="embedvideo-loader__footer"><!--
+			--><div class="embedvideo-loader__service">%s</div><!--
+		--></div><!--
 	--></div><!--
 	--><div class="embedvideo-privacyNotice hidden"><!--
 		-->%s%s<!--
