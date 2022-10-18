@@ -54,6 +54,13 @@ final class Niconico extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://en.dwango.co.jp/terms/privacy/';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://www.nicovideo.jp',

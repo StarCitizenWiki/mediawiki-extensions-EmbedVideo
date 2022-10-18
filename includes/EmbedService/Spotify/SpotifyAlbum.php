@@ -60,6 +60,13 @@ class SpotifyAlbum extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://www.spotify.com/us/legal/privacy-policy/';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://open.spotify.com'

@@ -56,6 +56,13 @@ final class Vimeo extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://vimeo.com/privacy';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://vimeo.com',

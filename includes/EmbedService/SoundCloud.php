@@ -60,6 +60,13 @@ final class SoundCloud extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://soundcloud.com/pages/privacy';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getCSPUrls(): array {
 		return [
 			'https://w.soundcloud.com'
