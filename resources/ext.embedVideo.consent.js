@@ -3,9 +3,10 @@
 		let callUrl;
 		/**
 		 * An optional configuration dict for accessing data from the 'info' endpoint for titles and thumbnails
-		 * @type {{dataKey: null, titleKey: string, thumbnailKey: string, durationKey: string}}
+		 * @type {{queryKeys: null, dataKey: null, titleKey: string, thumbnailKey: string, durationKey: string}}
 		 */
 		const dataConfig = {
+			'queryKeys': null,
 			'dataKey': null,
 			'titleKey': 'title',
 			'thumbnailKey': 'thumbnail_url',
@@ -15,7 +16,9 @@
 		switch( outerDiv.getAttribute('data-service') ) {
 			case 'bilibili':
 				// Not Oembed
-				callUrl = 'https://api.bilibili.com/x/web-interface/view?bvid=';
+				// This currently only work for bvid links,
+				callUrl = 'https://api.bilibili.com/x/web-interface/view';
+				dataConfig['queryKeys'] = ['aid', 'bvid'];
 				dataConfig['dataKey'] = 'data';
 				dataConfig['thumbnailKey'] = 'pic';
 				break;
@@ -46,25 +49,42 @@
 				break;
 		}
 
-		// Some url manipulation foo which tries to get the id of the requested video
-		if (url.substring(0, 1) === '/') {
-			url = 'http:' + url;
-		}
-
 		let id;
-		try {
-			url = (new URL(url.split('?').shift())).pathname;
-		} catch (e) {
 
-		}
+		// If queryKeys are defined, look for it directly
+		if (dataConfig.queryKeys !== null && typeof dataConfig.queryKeys === 'object') {
+			console.log( 'start loop' );
+			dataConfig.queryKeys.every(queryKey => {
+				const 
+					regex = new RegExp( `[?&]${queryKey}=(\\S[^?&]+)` ),
+					match = url.match(regex) ? url.match(regex)[1] : null;
 
-		id = url.split('/').pop();
-		if (id === '') {
-			return;
-		}
+				if (match !== null) {
+					id = `?${queryKey}=${match}`;
+					return false;
+				}
+				return true;
+			});
+		} else {
+			// Some url manipulation foo which tries to get the id of the requested video
+			if (url.substring(0, 1) === '/') {
+				url = 'http:' + url;
+			}
 
-		if (id.substring(-1) === '?') {
-			id = id.substring(0, id.length - 1)
+			try {
+				url = (new URL(url.split('?').shift())).pathname;
+			} catch (e) {
+
+			}
+
+			id = url.split('/').pop();
+			if (id === '') {
+				return;
+			}
+
+			if (id.substring(-1) === '?') {
+				id = id.substring(0, id.length - 1)
+			}
 		}
 
 		// Do the actual fetch
