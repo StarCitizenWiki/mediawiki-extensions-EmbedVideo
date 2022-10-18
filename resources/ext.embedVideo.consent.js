@@ -79,7 +79,7 @@
 					json = json[dataConfig.dataKey];
 				}
 
-				if (typeof json[dataConfig.thumbnailKey] === 'undefined' || parent.querySelectorAll('.embedvideo-consent__thumbnail').length > 0) {
+				if (typeof json[dataConfig.thumbnailKey] === 'undefined' || parent.querySelectorAll('.embedvideo-thumbnail').length > 0) {
 					return;
 				}
 
@@ -87,10 +87,10 @@
 					picture = document.createElement('picture'),
 					image = document.createElement('img');
 
-				picture.classList.add('embedvideo-consent__thumbnail');
+				picture.classList.add('embedvideo-thumbnail');
 				image.src = json[dataConfig.thumbnailKey];
 				image.setAttribute('loading', 'lazy');
-				image.classList.add('embedvideo-consent__thumbnail__image');
+				image.classList.add('embedvideo-thumbnail__image');
 				picture.append(image);
 				parent.prepend(picture);
 

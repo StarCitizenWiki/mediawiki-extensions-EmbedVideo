@@ -135,8 +135,8 @@ final class EmbedHtmlFormatter {
 
 			// phpcs:disable
 			return <<<HTML
-				<picture class="embedvideo-consent__thumbnail">
-					<img src="{$url}" loading="lazy" class="embedvideo-consent__thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				<picture class="embedvideo-thumbnail">
+					<img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
 				</picture>
 				HTML;
 			// phpcs:enable
@@ -168,7 +168,7 @@ final class EmbedHtmlFormatter {
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
 <div class="embedvideo-consent" data-show-privacy-notice="%s">%s<!--
---><div class="embedvideo-consent__overlay"><!--
+--><div class="embedvideo-overlay"><!--
 	--><div class="embedvideo-loader" role="button">%s<!--
 		--><div class="embedvideo-loader__fakeButton">%s</div><!--
 		--><div class="embedvideo-loader__service">%s</div><!--
@@ -198,21 +198,21 @@ HTML;
 			$template,
 			// data-show-privacy-notice
 			$showPrivacyNotice,
-			// thumbnail
+			// -thumbnail
 			self::makeThumbHtml( $service ),
-			// __title
+			// -loader__title
 			self::makeTitleHtml( $service ),
-			// __message content
+			// -loader__fakeButton content
 			( new Message( 'embedvideo-consent-text' ) )->text(),
-			// __service content
+			// -loader__service content
 			$service::getServiceNiceName(),
-			// __privacy-notice text
+			// -privacyNotice text
 			( new Message( 'embedvideo-consent-privacy-notice-text', [ $service::getServiceNiceName() ] ) )->text(),
-			// __privacy-notice link to Privacy Policy (may be empty)
+			// -privacyNotice link to Privacy Policy (may be empty)
 			self::makePrivacyPolicyLink( $service ),
-			// Continue
+			// -continue
 			( new Message( 'embedvideo-consent-privacy-notice-continue' ) )->text(),
-			// Dismiss
+			// -dismiss
 			( new Message( 'embedvideo-consent-privacy-notice-dismiss' ) )->text()
 		);
 	}

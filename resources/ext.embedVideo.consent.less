@@ -5,37 +5,23 @@
 			visibility: hidden;
 			pointer-events: none;
 		}
-
-		&__overlay {
-			cursor: pointer;
-			color: #54595d;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			height: 100%;
-			position: relative;
-			font-size: 0.875rem;
-			user-select: none;
-		}
-
-		&__thumbnail {
-			width: 100%;
-			height: 100%;
-			top: 0;
-			left: 0;
-			position: absolute;
-
-			&__image {
-				width: inherit;
-				height: inherit;
-				object-fit: cover;
-			}
-		}
 	}
 
-	&-consent__thumbnail {
-		+ .embedvideo-consent__overlay {
+	&-thumbnail {
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		position: absolute;
+
+		&__image {
+			width: inherit;
+			height: inherit;
+			object-fit: cover;
+		}
+
+		// When thumbnail presents, change overlay styles
+		+ .embedvideo-overlay {
 			.embedvideo-loader {
 				color: #eaecf0;
 
@@ -50,18 +36,30 @@
 		}
 	}
 
-	&-consent__overlay {
+	&-overlay {
+		color: #54595d;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		font-size: 0.875rem;
+		user-select: none;
+
 		> div {
 			position: absolute;
 			top: 0;
 			left: 0;
 			right: 0;
 			bottom: 0;
+			transition: opacity 250ms ease;
 		}
 	}
 
 	&-loader {
 		display: grid;
+		cursor: pointer;
 
 		&__title {
 			text-align: start;
@@ -121,6 +119,7 @@
 		gap: 0.5rem;
 		background-color: rgba( 0, 0, 0, 0.6 );
 		color: #eaecf0;
+		text-align: center;
 
 		&__buttons {
 			> button {
@@ -129,6 +128,7 @@
 				border: 0;
 				border-radius: 1000px;
 				color: #fff;
+				font-size: inherit;
 				cursor: pointer;
 			}
 		}
