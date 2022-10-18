@@ -84,7 +84,6 @@
 				}
 
 				const
-					overlay = parent.querySelector('.embedvideo-consent__overlay'),
 					picture = document.createElement('picture'),
 					image = document.createElement('img');
 
@@ -96,10 +95,12 @@
 				parent.prepend(picture);
 
 				if (typeof json[dataConfig.titleKey] !== 'undefined' && json[dataConfig.titleKey].length > 0) {
-					const title = document.createElement('div');
-					title.classList.add('embedvideo-consent__title');
+					const
+						overlay = parent.querySelector('.embedvideo-loader'),
+						title = document.createElement('div');
+
+					title.classList.add('embedvideo-loader__title');
 					title.innerText = json[dataConfig.titleKey];
-					overlay.classList.add('embedvideo-consent__overlay--hastitle');
 					overlay.prepend(title);
 				}
 			})
@@ -122,7 +123,7 @@
 			const togglePrivacyClickListener = function (event) {
 				event.stopPropagation();
 
-				consentMessage.classList.toggle('hidden');
+				loader.classList.toggle('hidden');
 				privacyNotice.classList.toggle('hidden');
 			};
 
@@ -134,13 +135,13 @@
 				return;
 			}
 
-			const consentMessage = consentDiv.querySelector('.embedvideo-consent__message');
-			const privacyNotice = consentDiv.querySelector('.embedvideo-consent__privacy-notice');
+			const loader = consentDiv.querySelector('.embedvideo-loader');
+			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
 
 			if (consentDiv.dataset.showPrivacyNotice === '1') {
 				consentDiv.addEventListener('click', togglePrivacyClickListener);
-				consentDiv.querySelector('.embedvideo-consent__continue').addEventListener('click', clickListener);
-				consentDiv.querySelector('.embedvideo-consent__dismiss').addEventListener('click', togglePrivacyClickListener);
+				consentDiv.querySelector('.embedvideo-privacyNotice__continue').addEventListener('click', clickListener);
+				consentDiv.querySelector('.embedvideo-privacyNotice__dismiss').addEventListener('click', togglePrivacyClickListener);
 
 			} else {
 				consentDiv.addEventListener('click', clickListener);

@@ -9,8 +9,8 @@
 
 			const consentDiv = div.querySelector('.embedvideo-consent');
 			const video = div.querySelector('video');
-			const message = div.querySelector('.embedvideo-consent__message');
-			message.innerHTML = mw.message('embedvideo-play').escaped();
+			const fakeButton = div.querySelector('.embedvideo-loader__fakeButton');
+			fakeButton.innerHTML = mw.message('embedvideo-play').escaped();
 
 			if (consentDiv === null || video === null) {
 				return;

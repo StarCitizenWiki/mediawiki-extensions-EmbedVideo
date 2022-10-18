@@ -156,7 +156,7 @@ final class EmbedHtmlFormatter {
 			return '';
 		}
 
-		return sprintf( '<div class="embedvideo-consent__title">%s</div>', $service->getTitle() );
+		return sprintf( '<div class="embedvideo-loader__title">%s</div>', $service->getTitle() );
 	}
 
 	/**
@@ -168,23 +168,21 @@ final class EmbedHtmlFormatter {
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
 <div class="embedvideo-consent" data-show-privacy-notice="%s">%s<!--
---><div class="embedvideo-consent__overlay%s">%s<!--
-	--><div class="embedvideo-consent__message"><!--
-		-->%s<!--
-		--><span class="embedvideo-consent__service embedvideo-consent__service-%s">%s</span><!--
+--><div class="embedvideo-consent__overlay"><!--
+	--><div class="embedvideo-loader" role="button">%s<!--
+		--><div class="embedvideo-loader__fakeButton">%s</div><!--
+		--><div class="embedvideo-loader__service">%s</div><!--
 	--></div><!--
-	--><div class="embedvideo-consent__privacy-notice hidden"><!--
+	--><div class="embedvideo-privacyNotice hidden"><!--
 		-->%s%s<!--
-		--><div class="embedvideo-consent__button-container"><!--
-			--><button class="embedvideo-consent__continue">%s</button><!--
-			--><span class="embedvideo-consent__dismiss">%s</span><!--
+		--><div class="embedvideo-privacyNotice__buttons"><!--
+			--><button class="embedvideo-privacyNotice__continue">%s</button><!--
+			--><button class="embedvideo-privacyNotice__dismiss">%s</button><!--
 		--></div><!--
 	--></div><!--
 --></div><!--
 --></div>
 HTML;
-
-		$titleHtml = self::makeTitleHtml( $service );
 
 		$showPrivacyNotice = false;
 		try {
@@ -202,14 +200,10 @@ HTML;
 			$showPrivacyNotice,
 			// thumbnail
 			self::makeThumbHtml( $service ),
-			// __overlay class
-			$titleHtml !== '' ? ' embedvideo-consent__overlay--hastitle' : '',
 			// __title
-			$titleHtml,
+			self::makeTitleHtml( $service ),
 			// __message content
 			( new Message( 'embedvideo-consent-text' ) )->text(),
-			// __service class
-			$service::getServiceName(),
 			// __service content
 			$service::getServiceNiceName(),
 			// __privacy-notice text

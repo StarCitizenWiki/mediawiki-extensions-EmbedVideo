@@ -1,115 +1,159 @@
-.embedvideo-consent {
-	.hidden {
-		display: none;
-	}
+.embedvideo {
+	&-consent {
+		.hidden {
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+		}
 
-	&__overlay {
-		cursor: pointer;
-		color: #54595d;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		position: relative;
-		font-size: 0.875rem;
+		&__overlay {
+			cursor: pointer;
+			color: #54595d;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			position: relative;
+			font-size: 0.875rem;
+			user-select: none;
+		}
 
-		&--hastitle {
-			color: #fff;
+		&__thumbnail {
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			position: absolute;
 
-			// Use pseudo element so it can be animated separately
-			&:before {
-				background: linear-gradient(to bottom, #000000, 40%, transparent);
-				content: "";
-				display: block;
+			&__image {
 				width: inherit;
 				height: inherit;
-				position: absolute;
-				transition: opacity 250ms ease;
+				object-fit: cover;
 			}
 		}
 	}
 
-	&__title {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		padding: 1rem;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		transition: opacity 250ms ease;
-	}
+	&-consent__thumbnail {
+		+ .embedvideo-consent__overlay {
+			.embedvideo-loader {
+				color: #eaecf0;
 
-	&__message {
-		position: absolute;
-		border: 1px solid currentColor;
-		margin: 1rem;
-		padding: 0.5rem 1rem;
-		border-radius: 100px;
-		transition: background-color 250ms ease, border-color 250ms ease;
-	}
+				&__title {
+					background: linear-gradient( to bottom, #000000, 40%, transparent );
+				}
 
-	&__service {
-		position: absolute;
-		bottom: 0.25rem;
-		right: 0.5rem;
-
-		&-youtube {
-			color: #ff0000;
+				&__service {
+					background: linear-gradient(to top, #000000, 40%, transparent);
+				}
+			}
 		}
 	}
 
-	&__privacy-notice {
-		padding: 1rem;
+	&-consent__overlay {
+		> div {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
 	}
 
-	&__button-container {
-		margin-top: 1rem;
-	}
+	&-loader {
+		display: grid;
 
-	&__continue {
-		border: 1px solid currentColor;
-		padding: 0.5rem 1rem;
-		margin-right: 1rem;
-		border-radius: 100px;
-		transition: background-color 250ms ease, border-color 250ms ease;
-		cursor: pointer;
-	}
+		&__title {
+			text-align: start;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
 
-	&__dismiss {
+		&__fakeButton {
+			place-self: center;
+			padding: 0.5rem 1rem;
+			color: #fff;
+			background-color: rgba( 0, 0, 0, 60% );
+			border-radius: 1000px;
+			cursor: pointer;
+			transition: background-color 250ms ease;
+		}
+
+		&__service {
+			place-self: end end;
+			text-align: end;
+		}
+
+		&__title,
+		&__service {
+			left: 0;
+			right: 0;
+			padding: 1rem;
+			transition: opacity 250ms ease;
+		}
+
+		&__title,
+		&__fakeButton,
+		&__service {
+			position: absolute;
+		}
+
 		&:hover {
-			color: #000000;
+			.embedvideo-loader {
+				&__title,
+				&__service {
+					opacity: 0;
+				}
+
+				&__fakeButton {
+					background-color: #36c;
+				}
+			}
 		}
 	}
 
-	&__thumbnail {
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		position: absolute;
+	&-privacyNotice {
+		padding: 1rem;
+		display: flex;
+    	flex-direction: column;
+    	justify-content: center;
+		gap: 0.5rem;
+		background-color: rgba( 0, 0, 0, 0.6 );
+		color: #eaecf0;
 
-		&__image {
-			width: inherit;
-			height: inherit;
-			object-fit: cover;
+		&__buttons {
+			> button {
+				appearance: none;
+				padding: 0.5rem 1rem;
+				border: 0;
+				border-radius: 1000px;
+				color: #fff;
+				cursor: pointer;
+			}
 		}
-	}
 
-	&:hover {
-		.embedvideo-consent {
-			&__overlay:before,
-			&__title {
-				opacity: 0;
+		&__continue {
+			background-color: #36c;
+
+			&:hover {
+				background-color: #447ff5;
 			}
 
-			&__continue,
-			&__message {
-				background-color: #36c;
-				border-color: #36c;
-				color: #fff;
+			&:active {
+				background-color: #2a4b8d;
+			}
+		}
+
+		&__dismiss {
+			background-color: transparent;
+
+			&:hover {
+				color: #d33;
+			}
+
+			&:active {
+				color: #b32424;
 			}
 		}
 	}
@@ -121,8 +165,4 @@
 
 .center .floatnone > .embedvideo {
 	margin: 0 auto;
-
-	.embedvideo-consent__title {
-		text-align: left;
-	}
 }
