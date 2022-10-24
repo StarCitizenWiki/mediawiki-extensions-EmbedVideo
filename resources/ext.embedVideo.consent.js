@@ -150,8 +150,8 @@
 			})
 			.catch(error => {
 				//
-			})
-	}
+			});
+	};
 
 	mw.hook( 'wikipage.content' ).add( () => {
 		document.querySelectorAll('.embedvideo-wrapper').forEach(function (div) {
@@ -194,6 +194,6 @@
 			if (!div.classList.contains('no-fetch')) {
 				fetchThumb(iframe.dataset.src, consentDiv, div);
 			}
-		})
+		});
 	} );
 })();
