@@ -11,7 +11,7 @@
 			'titleKey': 'title',
 			'thumbnailKey': 'thumbnail_url',
 			'durationKey': 'duration'
-		}
+		};
 
 		switch( outerDiv.getAttribute('data-service') ) {
 			case 'bilibili':
@@ -54,7 +54,6 @@
 
 		// If queryKeys are defined, look for it directly
 		if (dataConfig.queryKeys !== null && typeof dataConfig.queryKeys === 'object') {
-			console.log( 'start loop' );
 			dataConfig.queryKeys.every(queryKey => {
 				const 
 					regex = new RegExp( `[?&]${queryKey}=(\\S[^?&]+)` ),
