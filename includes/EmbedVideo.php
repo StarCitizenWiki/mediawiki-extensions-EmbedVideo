@@ -500,7 +500,6 @@ class EmbedVideo {
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
 			$out->addModules( [
-				'ext.embedVideo.consent.modules',
 				'ext.embedVideo.consent',
 			] );
 		}

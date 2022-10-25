@@ -1,4 +1,4 @@
-const bilibili = function (url) {
+const fetcher = function (url) {
 	const baseUrl = 'https://api.bilibili.com/x/web-interface/view';
 	const defaultData = {
 		title: null,
@@ -30,4 +30,6 @@ const bilibili = function (url) {
 		.catch(error => {
 			return defaultData;
 		});
-}
+};
+
+module.exports = { fetcher };

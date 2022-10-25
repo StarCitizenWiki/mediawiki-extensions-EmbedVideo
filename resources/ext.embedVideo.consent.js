@@ -1,6 +1,6 @@
 (function () {
 	const fetchThumb = async (url, parent, outerDiv) => {
-		const fetcherFactory = require('./fetchFactory.js');
+		const fetcherFactory = require('./fetchFactory.js').fetchFactory;
 
 		const {
 			fetcher,

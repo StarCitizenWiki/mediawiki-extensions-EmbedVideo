@@ -21,4 +21,6 @@ const queryKeyParser = function (url, keys) {
 	}
 
 	return id;
-}
+};
+
+module.exports = { queryKeyParser };

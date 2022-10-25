@@ -2,15 +2,13 @@ const fetchFactory = function (service) {
 	const oEmbedFetchers = require('./oembed.js');
 	const bilibili = require('./bilibili.js');
 
-	console.log(oEmbedFetchers);
-
 	let fetcher = oEmbedFetchers.oembed;
 	let urlManipulation = true;
 
 	switch( service ) {
 		case 'bilibili':
 			urlManipulation = false;
-			fetcher = bilibili;
+			fetcher = bilibili.fetcher;
 			break;
 		case 'niconico':
 			// Not Oembed
@@ -44,4 +42,6 @@ const fetchFactory = function (service) {
 		fetcher,
 		urlManipulation
 	}
-}
+};
+
+module.exports = { fetchFactory };
