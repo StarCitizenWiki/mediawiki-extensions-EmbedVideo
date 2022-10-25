@@ -50,7 +50,7 @@ final class KakaoTV extends AbstractEmbedService {
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
