@@ -50,7 +50,7 @@ final class NaverTV extends AbstractEmbedService {
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
