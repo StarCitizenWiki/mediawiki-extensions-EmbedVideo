@@ -50,6 +50,13 @@ final class NaverTV extends AbstractEmbedService {
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://policy.naver.com/policy/privacy_en.html';
+	}
 
 	/**
 	 * @inheritDoc
