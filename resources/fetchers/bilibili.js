@@ -6,7 +6,7 @@ const fetcher = function (url) {
 		duration: null,
 	};
 
-	const queryParser = require('./queryKeyParser.js');
+	const queryParser = require('./queryKeyParser.js').queryKeyParser;
 
 	url = queryParser(url, ['aid', 'bvid']);
 	return fetch(`${baseUrl}${url}`, {

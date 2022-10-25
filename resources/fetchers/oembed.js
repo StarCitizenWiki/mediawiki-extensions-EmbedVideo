@@ -19,7 +19,7 @@ const spotifytrack = function(url) {
 };
 
 const soundcloud = function(url) {
-	const queryParser = require('./queryKeyParser.js');
+	const queryParser = require('./queryKeyParser.js').queryKeyParser;
 
 	url = queryParser(url, ['url']);
 	return oembed(`https://soundcloud.com/oembed${url}`);
