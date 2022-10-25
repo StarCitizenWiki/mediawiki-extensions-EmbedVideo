@@ -59,10 +59,10 @@ final class EmbedServiceFactory {
 			case 'nicovideo':
 			case 'niconico':
 				return new Niconico( $id );
-				
+
 			case 'navertv':
 				return new NaverTV( $id );
-				
+
 			case 'kakaotv':
 				return new KakaoTV( $id );
 
