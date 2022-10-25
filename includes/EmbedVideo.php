@@ -499,7 +499,9 @@ class EmbedVideo {
 		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
-			$out->addModules( [ 'ext.embedVideo.consent' ] );
+			$out->addModules( [
+				'ext.embedVideo.consent',
+			] );
 		}
 	}
 }

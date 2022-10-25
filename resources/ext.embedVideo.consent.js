@@ -1,72 +1,16 @@
 (function () {
 	const fetchThumb = async (url, parent, outerDiv) => {
-		let callUrl;
-		/**
-		 * An optional configuration dict for accessing data from the 'info' endpoint for titles and thumbnails
-		 * @type {{queryKeys: null, dataKey: null, titleKey: string, thumbnailKey: string, durationKey: string}}
-		 */
-		const dataConfig = {
-			'queryKeys': null,
-			'dataKey': null,
-			'titleKey': 'title',
-			'thumbnailKey': 'thumbnail_url',
-			'durationKey': 'duration'
-		};
+		const fetcherFactory = require('./fetchFactory.js').fetchFactory;
 
-		switch( outerDiv.getAttribute('data-service') ) {
-			case 'bilibili':
-				// Not Oembed
-				// This currently only work for bvid links,
-				callUrl = 'https://api.bilibili.com/x/web-interface/view';
-				dataConfig['queryKeys'] = ['aid', 'bvid'];
-				dataConfig['dataKey'] = 'data';
-				dataConfig['thumbnailKey'] = 'pic';
-				break;
-			case 'niconico':
-				// Not Oembed
-				// The official API is in XML sadly
-				//callUrl = 'https://ext.nicovideo.jp/api/getthumbinfo/';
-				break;
-			case 'soundcloud':
-				callUrl = 'https://soundcloud.com/oembed';
-				dataConfig['queryKeys'] = ['url'];
-				break;
-			case 'spotifyalbum':
-				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/album/';
-				break;
-			case 'spotifyartist':
-				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/artist/';
-				break;
-			case 'spotifytrack':
-				callUrl = 'https://open.spotify.com/oembed?url=https://open.spotify.com/track/';
-				break;
-			case 'vimeo':
-				callUrl = 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/';
-				break;
-			case 'youtube':
-			case 'youtubevideolist':
-			case 'youtubeplaylist':
-				callUrl = 'https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=';
-				break;
-		}
+		const {
+			fetcher,
+			urlManipulation
+		} = fetcherFactory( outerDiv.getAttribute('data-service') );
 
-		let id;
+		let id = url;
 
-		// If queryKeys are defined, look for it directly
-		if (dataConfig.queryKeys !== null && typeof dataConfig.queryKeys === 'object') {
-			dataConfig.queryKeys.every(queryKey => {
-				const 
-					regex = new RegExp( `[?&]${queryKey}=(\\S[^?&]+)` ),
-					match = url.match(regex) ? url.match(regex)[1] : null;
-
-				if (match !== null) {
-					id = `?${queryKey}=${match}&format=json`;
-					return false;
-				}
-				return true;
-			});
-		} else {
-			// Some url manipulation foo which tries to get the id of the requested video
+		// Some url manipulation foo which tries to get the id of the requested video
+		if (urlManipulation) {
 			if (url.substring(0, 1) === '/') {
 				url = 'http:' + url;
 			}
@@ -88,19 +32,9 @@
 		}
 
 		// Do the actual fetch
-		await fetch(callUrl + id, {
-			credentials: "omit",
-			cache: "force-cache"
-		})
-			.then(result => {
-				return result.json();
-			})
+		await fetcher(id)
 			.then(json => {
-				if (dataConfig.dataKey !== null) {
-					json = json[dataConfig.dataKey];
-				}
-
-				if (typeof json[dataConfig.thumbnailKey] === 'undefined' || parent.querySelectorAll('.embedvideo-thumbnail').length > 0) {
+				if (typeof json.thumbnail === 'undefined' || parent.querySelectorAll('.embedvideo-thumbnail').length > 0) {
 					return;
 				}
 
@@ -109,29 +43,29 @@
 					image = document.createElement('img');
 
 				picture.classList.add('embedvideo-thumbnail');
-				image.src = json[dataConfig.thumbnailKey];
+				image.src = json.thumbnail;
 				image.setAttribute('loading', 'lazy');
 				image.classList.add('embedvideo-thumbnail__image');
 				picture.append(image);
 				parent.prepend(picture);
 
-				if (typeof json[dataConfig.titleKey] !== 'undefined' && json[dataConfig.titleKey].length > 0) {
+				if (typeof json.title !== 'undefined' && json.title.length > 0) {
 					const
 						overlay = parent.querySelector('.embedvideo-loader'),
 						title = document.createElement('div');
 
 					title.classList.add('embedvideo-loader__title');
-					title.innerText = json[dataConfig.titleKey];
+					title.innerText = json.title;
 					overlay.prepend(title);
 				}
 
-				if (typeof json[dataConfig.durationKey] === 'number' ) {
+				if (typeof json.duration === 'number' ) {
 					const formatTime = seconds => {
-						const 
+						const
 							h = Math.floor(seconds / 3600),
 							m = Math.floor((seconds % 3600) / 60),
 							s = Math.round(seconds % 60);
-	
+
 						return [
 						  h,
 						  m > 9 ? m : (h ? '0' + m : m || '0'),
@@ -144,7 +78,7 @@
 						duration = document.createElement('div');
 
 					duration.classList.add('embedvideo-loader__duration');
-					duration.innerText = formatTime(json[dataConfig.durationKey]);
+					duration.innerText = formatTime(json.duration);
 					footer.append(duration);
 				}
 			})

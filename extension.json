@@ -37,7 +37,7 @@
 	"ResourceModules": {
 		"ext.embedVideo": {
 			"scripts": [
-				"resources/ext.embedVideo.js"
+				"ext.embedVideo.js"
 			],
 			"position": "top",
 			"targets": [
@@ -46,11 +46,16 @@
 			]
 		},
 		"ext.embedVideo.consent": {
-			"scripts": [
-				"resources/ext.embedVideo.consent.js"
+			"es6": true,
+			"packageFiles": [
+				"ext.embedVideo.consent.js",
+				{ "name": "fetchFactory.js", "file":  "fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file":  "fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file":  "fetchers/bilibili.js" },
+				{ "name": "oembed.js", "file":  "fetchers/oembed.js" }
 			],
 			"styles": [
-				"resources/ext.embedVideo.consent.less"
+				"ext.embedVideo.consent.less"
 			],
 			"position": "top",
 			"targets": [
@@ -60,10 +65,10 @@
 		},
 		"ext.embedVideo.overlay": {
 			"scripts": [
-				"resources/ext.embedVideo.overlay.js"
+				"ext.embedVideo.overlay.js"
 			],
 			"styles": [
-				"resources/ext.embedVideo.consent.less"
+				"ext.embedVideo.consent.less"
 			],
 			"position": "top",
 			"targets": [
@@ -76,7 +81,7 @@
 		},
 		"ext.embedVideo.styles": {
 			"styles": [
-				"resources/ext.embedVideo.styles.less"
+				"ext.embedVideo.styles.less"
 			],
 			"targets": [
 				"desktop",
@@ -85,8 +90,8 @@
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "",
-		"remoteExtPath": "EmbedVideo"
+		"localBasePath": "resources",
+		"remoteExtPath": "EmbedVideo/resources"
 	},
 	"config": {
 		"EmbedVideoAddFileExtensions": {
