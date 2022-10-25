@@ -50,6 +50,13 @@ final class KakaoTV extends AbstractEmbedService {
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPrivacyPolicyUrl(): ?string {
+		return 'https://www.kakao.com/policy/privacy';
+	}
 
 	/**
 	 * @inheritDoc
