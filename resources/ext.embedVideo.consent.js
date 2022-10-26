@@ -38,7 +38,7 @@
 		// Do the actual fetch
 		await fetcher(id)
 			.then(json => {
-				if (typeof json.thumbnail === 'undefined' || parent.querySelectorAll('.embedvideo-thumbnail').length > 0) {
+				if (json.thumbnail === null || parent.querySelectorAll('.embedvideo-thumbnail').length > 0) {
 					return;
 				}
 

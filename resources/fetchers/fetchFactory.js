@@ -9,10 +9,9 @@ const fetchFactory = function (service) {
 			break;
 		// Bilibili is missing CORS headers
 		case 'bilibili':
-			// urlManipulation = false;
-			// fetcher = bilibili.fetcher;
+			//fetcher = require('./bilibili.js').fetcher;
 			break;
-		// Bilibili is missing CORS headers
+		// Niconico is missing CORS headers
 		case 'niconico':
 			//fetcher = require('./niconico.js').fetcher;
 			break;

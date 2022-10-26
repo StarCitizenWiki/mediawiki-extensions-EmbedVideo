@@ -11,7 +11,7 @@ const fetcher = function (url) {
 	url = queryParser(url, ['aid', 'bvid']);
 	return fetch(`${baseUrl}${url}`, {
 		credentials: "omit",
-		cache: "force-cache"
+		cache: "force-cache",
 	})
 		.then(result => {
 			return result.json();
