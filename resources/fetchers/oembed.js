@@ -25,6 +25,14 @@ const soundcloud = function(url) {
 	return oembed(`https://soundcloud.com/oembed${url}`);
 };
 
+const navertv = function(url) {
+	return oembed(`https://tv.naver.com/oembed?url=${url}`);
+};
+
+const kakaotv = function(url) {
+	return oembed(`https://tv.kakao.com/oembed?url=${url}`);
+};
+
 const oembed = function(url) {
 	return fetch(url, {
 		credentials: "omit",
@@ -50,11 +58,13 @@ const oembed = function(url) {
 };
 
 module.exports = {
+	navertv,
+	kakaotv,
 	youtube,
 	vimeo,
 	spotifyalbum,
 	spotifyartist,
 	spotifytrack,
 	soundcloud,
-	oembed
+	oembed,
 };

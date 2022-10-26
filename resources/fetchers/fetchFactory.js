@@ -36,6 +36,17 @@ const fetchFactory = function (service) {
 		case 'youtubeplaylist':
 			fetcher = oEmbedFetchers.youtube;
 			break;
+
+		// Missing CORS
+		case 'navertv':
+			//urlManipulation=false;
+			//fetcher = oEmbedFetchers.navertv;
+			break;
+		// Missing CORS
+		case 'kakaotv':
+			//urlManipulation=false;
+			//fetcher = oEmbedFetchers.kakaotv;
+			break;
 	}
 
 	return {

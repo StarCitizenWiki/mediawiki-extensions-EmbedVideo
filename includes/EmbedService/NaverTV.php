@@ -39,6 +39,7 @@ final class NaverTV extends AbstractEmbedService {
 	protected function getUrlRegex(): array {
 		return [
 			'#tv.naver\.com/embed/((?:[a-zA-Z]{2})?[\d]+)#is',
+			'#tv.naver\.com/v/((?:[a-zA-Z]{2})?[\d]+)#is',
 		];
 	}
 

@@ -39,6 +39,7 @@ final class KakaoTV extends AbstractEmbedService {
 	protected function getUrlRegex(): array {
 		return [
 			'#play-tv.kakao\.com/embed/player/cliplink/((?:[a-zA-Z]{2})?[\d]+)#is',
+			'#tv.kakao\.com/channel/\d+/cliplink/((?:[a-zA-Z]{2})?[\d]+)#is',
 		];
 	}
 
