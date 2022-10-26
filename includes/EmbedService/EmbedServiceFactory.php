@@ -27,6 +27,8 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bilibili::class,
 		Niconico::class,
+		NaverTV::class,
+		KakaoTV::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
@@ -58,6 +60,12 @@ final class EmbedServiceFactory {
 			case 'nicovideo':
 			case 'niconico':
 				return new Niconico( $id );
+
+			case 'navertv':
+				return new NaverTV( $id );
+
+			case 'kakaotv':
+				return new KakaoTV( $id );
 
 			case 'soundcloud':
 				return new SoundCloud( $id );
