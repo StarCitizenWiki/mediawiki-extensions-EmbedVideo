@@ -8,7 +8,7 @@
 	"embedvideo-type-content": "content",
 	"embedvideo-type-video": "video",
 	"embedvideo-consent-privacy-policy": "Privacy Policy",
-	"embedvideo-consent-privacy-notice-text": "\"$1\" might collect personal data.",
+	"embedvideo-consent-privacy-notice-text": "$1 might collect personal data.",
 	"embedvideo-consent-privacy-notice-continue": "Continue",
 	"embedvideo-consent-privacy-notice-dismiss": "Dismiss",
 	"embedvideo-play": "Play Video",
