@@ -131,7 +131,7 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return string
 	 */
-	public function getContentType(): ?string {
+	public function getContentType(): string {
 		return 'content';
 	}
 
