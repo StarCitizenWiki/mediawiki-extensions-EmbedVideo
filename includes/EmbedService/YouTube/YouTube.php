@@ -76,7 +76,7 @@ class YouTube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getType(): ?string {
+	public function getContentType(): ?string {
 		return 'video';
 	}
 

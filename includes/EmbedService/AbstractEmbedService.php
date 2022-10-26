@@ -127,12 +127,12 @@ abstract class AbstractEmbedService {
 	}
 
 	/**
-	 * Get the embed type (audio/video)
+	 * Get the embed content type (audio/video)
 	 *
 	 * @return string
 	 */
-	public function getType(): ?string {
-		return null;
+	public function getContentType(): ?string {
+		return 'content';
 	}
 
 	/**

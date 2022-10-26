@@ -79,7 +79,7 @@ class Twitch extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getType(): ?string {
+	public function getContentType(): ?string {
 		return 'video';
 	}
 
