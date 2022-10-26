@@ -196,6 +196,9 @@ HTML;
 			//
 		}
 
+		$serviceMsgKey = $service->getServiceKey();
+		$serviceNameMsg = ( new Message( 'embedvideo-service-' . $serviceMsgKey ) )->text();
+
 		return sprintf(
 			$template,
 			// data-show-privacy-notice
@@ -207,9 +210,9 @@ HTML;
 			// -loader__fakeButton content
 			( new Message( 'embedvideo-consent-text' ) )->text(),
 			// -loader__service content
-			$service::getServiceNiceName(),
+			$serviceNameMsg,
 			// -privacyNotice text
-			( new Message( 'embedvideo-consent-privacy-notice-text', [ $service::getServiceNiceName() ] ) )->text(),
+			( new Message( 'embedvideo-consent-privacy-notice-text', [ $serviceNameMsg ] ) )->text(),
 			// -privacyNotice link to Privacy Policy (may be empty)
 			self::makePrivacyPolicyLink( $service ),
 			// -continue

@@ -28,6 +28,13 @@ class SpotifyAlbum extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getServiceKey(): string {
+		return 'spotify';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	protected function getDefaultWidth(): int {
 		return 300;
 	}
