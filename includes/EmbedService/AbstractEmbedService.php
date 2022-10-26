@@ -127,6 +127,15 @@ abstract class AbstractEmbedService {
 	}
 
 	/**
+	 * Get the embed type (audio/video)
+	 *
+	 * @return string
+	 */
+	public function getType(): ?string {
+		return null;
+	}
+
+	/**
 	 * An optional link to the services' privacy policy
 	 * Shown when explicit consent is activated
 	 *
