@@ -1,19 +1,20 @@
 const fetchFactory = function (service) {
 	const oEmbedFetchers = require('./oembed.js');
-	const bilibili = require('./bilibili.js');
 
-	let fetcher = oEmbedFetchers.oembed;
+	let fetcher = null;
 	let urlManipulation = true;
 
 	switch( service ) {
-		case 'bilibili':
-			urlManipulation = false;
-			fetcher = bilibili.fetcher;
+		case 'archiveorg':
 			break;
+		// Bilibili is missing CORS headers
+		case 'bilibili':
+			// urlManipulation = false;
+			// fetcher = bilibili.fetcher;
+			break;
+		// Bilibili is missing CORS headers
 		case 'niconico':
-			// Not Oembed
-			// The official API is in XML sadly
-			//callUrl = 'https://ext.nicovideo.jp/api/getthumbinfo/';
+			//fetcher = require('./niconico.js').fetcher;
 			break;
 		case 'soundcloud':
 			urlManipulation = false;

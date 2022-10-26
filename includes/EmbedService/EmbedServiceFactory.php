@@ -49,6 +49,7 @@ final class EmbedServiceFactory {
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
 			case 'archiveorg':
+			case 'archive.org':
 				return new ArchiveOrg( $id );
 
 			case 'bilibili':

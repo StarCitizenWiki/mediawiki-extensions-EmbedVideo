@@ -7,6 +7,10 @@
 			urlManipulation
 		} = fetcherFactory( outerDiv.getAttribute('data-service') );
 
+		if (fetcher === null) {
+			return;
+		}
+
 		let id = url;
 
 		// Some url manipulation foo which tries to get the id of the requested video
