@@ -196,6 +196,8 @@ HTML;
 			//
 		}
 
+		$contentTypeMsg = new Message( 'embedvideo-type-' . $service::getContentType() );
+
 		return sprintf(
 			$template,
 			// data-show-privacy-notice
@@ -205,7 +207,7 @@ HTML;
 			// -loader__title
 			self::makeTitleHtml( $service ),
 			// -loader__fakeButton content
-			( new Message( 'embedvideo-consent-text' ) )->text(),
+			( new Message( 'embedvideo-load', [ $contentTypeMsg ] ) )->text(),
 			// -loader__service content
 			$service::getServiceNiceName(),
 			// -privacyNotice text

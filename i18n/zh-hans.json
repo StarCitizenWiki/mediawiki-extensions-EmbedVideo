@@ -6,7 +6,10 @@
 		]
 	},
 	"embedvideo-description": "此分叉版本添加了一个解析器功能用于嵌入来自流行来源的视频。",
-	"embedvideo-consent-text": "点击加载内容",
+	"embedvideo-load": "加载$1",
+	"embedvideo-type-audio": "音频",
+	"embedvideo-type-content": "內容",
+	"embedvideo-type-video": "视频",
 	"embedvideo-error-missingparams": "EmbedVideo缺少一个必须的参数。",
 	"embedvideo-error-service": "嵌入视频无法识别视频服务“$1”。",
 	"embedvideo-error-id": "视频嵌入收到了一个对服务“$1”不可用的id “$2“",

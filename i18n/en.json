@@ -3,7 +3,10 @@
 		"authors": []
 	},
 	"embedvideo-description": "This forked version adds a parser function for embedding videos from popular sources.",
-	"embedvideo-consent-text": "Click to load content",
+	"embedvideo-load": "Load $1",
+	"embedvideo-type-audio": "audio",
+	"embedvideo-type-content": "content",
+	"embedvideo-type-video": "video",
 	"embedvideo-consent-privacy-policy": "Privacy Policy",
 	"embedvideo-consent-privacy-notice-text": "$1 might collect personal data.",
 	"embedvideo-consent-privacy-notice-continue": "Continue",
