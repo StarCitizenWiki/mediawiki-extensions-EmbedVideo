@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"embedvideo-consent-text": "Klickt fir den Inhalt ze lueden",
+	"embedvideo-consent-privacy-policy": "Dateschutz",
+	"embedvideo-consent-privacy-notice-continue": "Virufueren",
+	"embedvideo-consent-privacy-notice-dismiss": "Verwerfen",
+	"embedvideo-play": "Video spillen",
+	"embedvideo-error-cantdecode_evu": "Konnt de Video vun $1 net analyséieren",
+	"apihelp-embedvideo-param-service": "Numm vum Service (youtube, twitch, asw.)",
+	"apihelp-embedvideo-param-description": "Beschreiwung vum Video"
+}

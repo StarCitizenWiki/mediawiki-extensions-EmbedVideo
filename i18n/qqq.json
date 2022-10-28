@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"embedvideo-consent-privacy-notice-continue": "{{identical|Continue}}",
+	"embedvideo-consent-privacy-notice-dismiss": "{{identical|Dismiss}}"
+}

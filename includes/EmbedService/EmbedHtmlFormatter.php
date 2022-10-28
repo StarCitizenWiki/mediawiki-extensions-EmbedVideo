@@ -196,8 +196,8 @@ HTML;
 			//
 		}
 
-		$serviceMsgKey = $service->getServiceKey();
-		$serviceNameMsg = ( new Message( 'embedvideo-service-' . $serviceMsgKey ) )->text();
+		$serviceNameMsg = ( new Message( 'embedvideo-service-' . $service->getServiceKey() ) )->text();
+		$contentTypeMsg = new Message( 'embedvideo-type-' . $service::getContentType() );
 
 		return sprintf(
 			$template,
@@ -208,7 +208,7 @@ HTML;
 			// -loader__title
 			self::makeTitleHtml( $service ),
 			// -loader__fakeButton content
-			( new Message( 'embedvideo-consent-text' ) )->text(),
+			( new Message( 'embedvideo-load', [ $contentTypeMsg ] ) )->text(),
 			// -loader__service content
 			$serviceNameMsg,
 			// -privacyNotice text
