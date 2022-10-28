@@ -25,6 +25,13 @@ class Twitch extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getServiceKey(): string {
+		return 'twitch';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	protected function getDefaultWidth(): int {
 		return 620;
 	}

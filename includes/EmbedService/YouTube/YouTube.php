@@ -24,6 +24,13 @@ class YouTube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getServiceKey(): string {
+		return 'youtube';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	protected function getDefaultWidth(): int {
 		return 640;
 	}

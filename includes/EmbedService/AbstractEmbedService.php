@@ -174,21 +174,24 @@ abstract class AbstractEmbedService {
 
 	/**
 	 * Returns the service name
+	 * Unlike getServiceKey(), this can not be mutated so sub-services
+	 * can still use different message keyd
 	 *
 	 * @return string
 	 */
 	final public static function getServiceName(): string {
-		return strtolower( self::getServiceNiceName() );
+		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
 	}
 
 	/**
-	 * Returns the 'nice' name of a service, used in the modal when explicit consent is activated
+	 * Returns the key for the service, mainly used for messages
+	 * Can be overriden when message key does not match the service class
 	 * Defaults to the class name
 	 *
 	 * @return string
 	 */
-	public static function getServiceNiceName(): string {
-		return substr( static::class, strrpos( static::class, '\\' ) + 1 );
+	public function getServiceKey(): string {
+		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
 	}
 
 	/**
