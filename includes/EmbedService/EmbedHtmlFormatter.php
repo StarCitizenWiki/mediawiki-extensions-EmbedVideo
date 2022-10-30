@@ -197,7 +197,7 @@ HTML;
 		}
 
 		$serviceNameMsg = ( new Message( 'embedvideo-service-' . $service->getServiceKey() ) )->text();
-		$contentTypeMsg = new Message( 'embedvideo-type-' . $service::getContentType() );
+		$contentTypeMsg = new Message( 'embedvideo-type-' . $service->getContentType() );
 
 		return sprintf(
 			$template,

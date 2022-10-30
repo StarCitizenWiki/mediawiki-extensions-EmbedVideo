@@ -320,6 +320,10 @@ class EmbedVideo {
 
 		$this->service->setHeight( $height );
 
+		if ( $this->config->get( 'EmbedVideoRequireConsent' ) === true ) {
+			$this->service->setUrlArgs( $this->service->getAutoplayParameter() );
+		}
+
 		if ( !$this->service->setUrlArgs( $urlArgs ) ) {
 			throw new InvalidArgumentException( $this->error( 'urlargs', $service, $urlArgs )[0] );
 		}

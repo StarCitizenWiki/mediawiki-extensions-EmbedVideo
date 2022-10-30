@@ -71,18 +71,6 @@ class YouTube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getUrl(): string {
-		if ( $this->getUrlArgs() !== false ) {
-
-			return sprintf( '%s?%s', sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
-		}
-
-		return parent::getUrl();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getContentType(): ?string {
 		return 'video';
 	}

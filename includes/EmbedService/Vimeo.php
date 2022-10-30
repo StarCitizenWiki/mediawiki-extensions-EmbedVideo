@@ -9,8 +9,15 @@ final class Vimeo extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	protected $urlArgs = [
+		'dnt' => 'true',
+	];
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getBaseUrl(): string {
-		return '//player.vimeo.com/video/%1$s?dnt=true';
+		return '//player.vimeo.com/video/%1$s';
 	}
 
 	/**

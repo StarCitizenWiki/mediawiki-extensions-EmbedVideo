@@ -21,7 +21,7 @@ abstract class AbstractEmbedService {
 	protected $iframeAttributes = [
 		'loading' => 'lazy',
 		'frameborder' => 0,
-		'allow' => 'accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture',
+		'allow' => 'accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; autoplay',
 	];
 
 	/**
@@ -60,7 +60,7 @@ abstract class AbstractEmbedService {
 	protected $extraIds = [];
 
 	/**
-	 * String array of key value pairs
+	 * String array of key value pairs that is added to the embed url
 	 * Array is run through http_build_query
 	 *
 	 * @see http_build_query()
@@ -156,6 +156,18 @@ abstract class AbstractEmbedService {
 	}
 
 	/**
+	 * Parameter that allows autoplaying the embed
+	 * Set in the url as &key=value
+	 *
+	 * @return array
+	 */
+	public function getAutoplayParameter(): array {
+		return [
+			'autoplay' => 1,
+		];
+	}
+
+	/**
 	 * Returns the base url for this service.
 	 * Specify the location of the id with '%1$s'
 	 * E.g.: //www.youtube-nocookie.com/embed/%1$s
@@ -228,6 +240,10 @@ abstract class AbstractEmbedService {
 	 * @return string
 	 */
 	public function getUrl(): string {
+		if ( $this->getUrlArgs() !== false ) {
+			return sprintf( '%s?%s', sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
+		}
+
 		return sprintf( $this->getBaseUrl(), $this->getId() );
 	}
 
@@ -345,11 +361,16 @@ abstract class AbstractEmbedService {
 	/**
 	 * Set URL Arguments to optionally add to the embed URL.
 	 *
-	 * @param string $urlArgs Raw Arguments
+	 * @param array|string $urlArgs Raw Arguments
 	 * @return bool Success
 	 */
-	public function setUrlArgs( string $urlArgs ): bool {
+	public function setUrlArgs( $urlArgs ): bool {
 		if ( empty( $urlArgs ) ) {
+			return true;
+		}
+
+		if ( is_array( $urlArgs ) ) {
+			$this->urlArgs = array_merge( $this->urlArgs, $urlArgs );
 			return true;
 		}
 
@@ -371,7 +392,7 @@ abstract class AbstractEmbedService {
 			return false;
 		}
 
-		$this->urlArgs = $arguments;
+		$this->urlArgs += $arguments;
 		return true;
 	}
 
