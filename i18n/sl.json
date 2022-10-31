@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"embedvideo-load": "Naloži $1",
+	"embedvideo-type-audio": "avdio",
+	"embedvideo-type-content": "vsebina",
+	"embedvideo-type-video": "video",
+	"embedvideo-consent-privacy-policy": "Pravilnik o zasebnosti",
+	"embedvideo-consent-privacy-notice-text": "$1 morda zbira osebne podatke.",
+	"embedvideo-consent-privacy-notice-continue": "Nadaljuj",
+	"embedvideo-consent-privacy-notice-dismiss": "Opusti",
+	"embedvideo-service-archiveorg": "Archive.org",
+	"embedvideo-service-bilibili": "Bilibili",
+	"embedvideo-service-kakaotv": "KakaoTV",
+	"embedvideo-service-navertv": "NaverTV",
+	"embedvideo-service-niconico": "Niconico",
+	"embedvideo-service-soundcloud": "SoundCloud",
+	"embedvideo-service-spotify": "Spotify",
+	"embedvideo-service-twitch": "Twitch",
+	"embedvideo-service-vimeo": "Vimeo",
+	"embedvideo-service-youtube": "YouTube"
+}

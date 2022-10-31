@@ -6,7 +6,6 @@
 		]
 	},
 	"embedvideo-description": "Bu çatallı sürüm, popüler kaynaklardan videoları gömmek için bir ayrıştırıcı işlevi ekler.",
-	"embedvideo-consent-text": "İçeriği yüklemek için tıklayın",
 	"embedvideo-play": "Videoyu Oynat",
 	"embedvideo-error-missingparams": "EmbedVideo'da kullanılması zorunlu bir parametre eksik.",
 	"embedvideo-error-service": "EmbedVideo, \"$1\" video hizmetini tanımıyor.",

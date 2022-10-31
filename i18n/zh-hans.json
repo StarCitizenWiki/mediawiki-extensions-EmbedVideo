@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"GuoPC",
 			"Zhang8569"
 		]
@@ -10,6 +11,12 @@
 	"embedvideo-type-audio": "音频",
 	"embedvideo-type-content": "內容",
 	"embedvideo-type-video": "视频",
+	"embedvideo-consent-privacy-policy": "隐私政策",
+	"embedvideo-consent-privacy-notice-text": "$1可能会收集个人数据。",
+	"embedvideo-consent-privacy-notice-continue": "继续",
+	"embedvideo-consent-privacy-notice-dismiss": "关闭",
+	"embedvideo-service-bilibili": "哔哩哔哩",
+	"embedvideo-play": "播放视频",
 	"embedvideo-error-missingparams": "EmbedVideo缺少一个必须的参数。",
 	"embedvideo-error-service": "嵌入视频无法识别视频服务“$1”。",
 	"embedvideo-error-id": "视频嵌入收到了一个对服务“$1”不可用的id “$2“",

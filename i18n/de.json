@@ -6,7 +6,6 @@
 		]
 	},
 	"embedvideo-description": "Fügt eine Parserfunktion hinzu, mittels derer Videos populärer Dienste eingebettet werden können.",
-	"embedvideo-consent-text": "Klicken um Inhalt zu laden",
 	"embedvideo-play": "Video abspielen",
 	"embedvideo-error-missingparams": "EmbedVideo fehlt ein anzugebender Parameter.",
 	"embedvideo-error-service": "EmbedVideo erkennt den Videodienst „$1“ nicht.",

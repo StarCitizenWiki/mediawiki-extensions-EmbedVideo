@@ -6,6 +6,10 @@
 		]
 	},
 	"embedvideo-description": "Добавляет функцию синтаксического анализатора для встраивания видео с популярных видеохостингов.",
+	"embedvideo-load": "Загрузить $1",
+	"embedvideo-type-audio": "аудио",
+	"embedvideo-type-content": "содержание",
+	"embedvideo-type-video": "видео",
 	"embedvideo-consent-privacy-policy": "Политика конфиденциальности",
 	"embedvideo-consent-privacy-notice-continue": "Продолжить",
 	"embedvideo-error-missingparams": "В теге EmbedVideo отуствует обязательный параметр.",

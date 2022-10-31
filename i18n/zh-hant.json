@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"Kly",
 			"Lakejason0"
 		]
@@ -10,6 +11,11 @@
 	"embedvideo-type-audio": "音訊",
 	"embedvideo-type-content": "內容",
 	"embedvideo-type-video": "影片",
+	"embedvideo-consent-privacy-policy": "隱私權政策",
+	"embedvideo-consent-privacy-notice-text": "$1可能會收集個人數據。",
+	"embedvideo-consent-privacy-notice-continue": "繼續",
+	"embedvideo-consent-privacy-notice-dismiss": "關閉",
+	"embedvideo-service-bilibili": "嗶哩嗶哩",
 	"embedvideo-play": "播放影片",
 	"embedvideo-error-missingparams": "EmbedVideo 缺少一個必要的參數。",
 	"embedvideo-error-service": "EmbedVideo 無法識別影片服務「$1」。",

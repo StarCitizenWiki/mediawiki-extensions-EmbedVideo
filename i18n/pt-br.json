@@ -6,7 +6,6 @@
 		]
 	},
 	"embedvideo-description": "Esta versão bifurcada adiciona uma função de parser para incorporar vídeos de fontes populares.",
-	"embedvideo-consent-text": "Clique para carregar o conteúdo",
 	"embedvideo-consent-privacy-policy": "Politica de privacidade",
 	"embedvideo-consent-privacy-notice-text": "$1 pode coligir dados pessoais.",
 	"embedvideo-consent-privacy-notice-continue": "Continuar",

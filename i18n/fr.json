@@ -1,17 +1,31 @@
 {
 	"@metadata": {
 		"authors": [
+			"DavidL",
 			"DreZhsh",
 			"Gomoko",
 			"Verdy p"
 		]
 	},
 	"embedvideo-description": "Cette version modifiée ajoute une fonction de l’analyseur syntaxique permettant d’intégrer des vidéos provenant de sources populaires.",
-	"embedvideo-consent-text": "Cliquer pour charger le contenu",
+	"embedvideo-load": "Charger $1",
+	"embedvideo-type-audio": "audio",
+	"embedvideo-type-content": "contenu",
+	"embedvideo-type-video": "vidéo",
 	"embedvideo-consent-privacy-policy": "Politique de confidentialité",
 	"embedvideo-consent-privacy-notice-text": "$1 peut collecter des données personnelles.",
 	"embedvideo-consent-privacy-notice-continue": "Continuer",
 	"embedvideo-consent-privacy-notice-dismiss": "Ignorer",
+	"embedvideo-service-archiveorg": "Archive.org",
+	"embedvideo-service-bilibili": "Bilibili",
+	"embedvideo-service-kakaotv": "KakaoTV",
+	"embedvideo-service-navertv": "NaverTV",
+	"embedvideo-service-niconico": "Niconico",
+	"embedvideo-service-soundcloud": "SoundCloud",
+	"embedvideo-service-spotify": "Spotify",
+	"embedvideo-service-twitch": "Twitch",
+	"embedvideo-service-vimeo": "Vimeo",
+	"embedvideo-service-youtube": "YouTube",
 	"embedvideo-play": "Voir la vidéo",
 	"embedvideo-error-missingparams": "Il manque un paramètre obligatoire pour « EmbedVideo ».",
 	"embedvideo-error-service": "« EmbedVideo » ne reconnaît pas le service vidéo « $1 ».",

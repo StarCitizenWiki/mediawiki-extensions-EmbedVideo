@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajiniyaz Nurniyazov"
+		]
+	},
+	"embedvideo-load": "$1 dı júkleń",
+	"embedvideo-type-audio": "audio",
+	"embedvideo-type-video": "video",
+	"embedvideo-consent-privacy-policy": "Konfidenciallıq siyasatı",
+	"embedvideo-consent-privacy-notice-text": "$1 jeke maǵlıwmatlardı toplawı múmkin.",
+	"embedvideo-consent-privacy-notice-continue": "Dawam etiw",
+	"embedvideo-consent-privacy-notice-dismiss": "Biykarlaw",
+	"embedvideo-service-archiveorg": "Archive.org",
+	"embedvideo-service-kakaotv": "KakaoTV",
+	"embedvideo-service-navertv": "NaverTV",
+	"embedvideo-service-spotify": "Spotify"
+}
