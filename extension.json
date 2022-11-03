@@ -32,7 +32,8 @@
 		"MediaWiki\\Extension\\EmbedVideo\\": "includes/"
 	},
 	"APIModules": {
-		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
+		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo",
+		"embedinfo": "MediaWiki\\Extension\\EmbedVideo\\Fetcher\\ApiFetcher"
 	},
 	"ResourceModules": {
 		"ext.embedVideo": {
