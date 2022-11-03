@@ -1,11 +1,17 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"Lorem Ipsum",
 			"Messerjokke79"
 		]
 	},
 	"embedvideo-description": "Fügt eine Parserfunktion hinzu, mittels derer Videos populärer Dienste eingebettet werden können.",
+	"embedvideo-type-audio": "audio",
+	"embedvideo-type-video": "video",
+	"embedvideo-consent-privacy-policy": "Datenschutzrichtlinie",
+	"embedvideo-consent-privacy-notice-continue": "Fortfahren",
+	"embedvideo-consent-privacy-notice-dismiss": "Ausblenden",
 	"embedvideo-play": "Video abspielen",
 	"embedvideo-error-missingparams": "EmbedVideo fehlt ein anzugebender Parameter.",
 	"embedvideo-error-service": "EmbedVideo erkennt den Videodienst „$1“ nicht.",
