@@ -4,9 +4,13 @@
 			"Robby"
 		]
 	},
+	"embedvideo-load": "$1 lueden",
+	"embedvideo-type-content": "Inhalt",
+	"embedvideo-type-video": "Video",
 	"embedvideo-consent-privacy-policy": "Dateschutz",
 	"embedvideo-consent-privacy-notice-continue": "Virufueren",
 	"embedvideo-consent-privacy-notice-dismiss": "Verwerfen",
+	"embedvideo-service-bilibili": "Bilibili",
 	"embedvideo-play": "Video spillen",
 	"embedvideo-error-cantdecode_evu": "Konnt de Video vun $1 net analyséieren",
 	"apihelp-embedvideo-param-service": "Numm vum Service (youtube, twitch, asw.)",
