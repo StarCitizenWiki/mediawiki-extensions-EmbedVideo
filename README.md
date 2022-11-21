@@ -12,7 +12,7 @@
 
 # Extension Embed Video
 
-<p>![](docs/example-cover.png)![](docs/example-consent.png)</p>
+![](docs/example-cover.png)![](docs/example-consent.png)
 
 The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` and various parser tags like `<youtube>` for embedding video clips from various video sharing services.  
 It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
