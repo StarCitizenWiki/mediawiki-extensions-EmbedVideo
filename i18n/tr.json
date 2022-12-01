@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Hedda",
-			"SaldırganSincap"
+			"SaldırganSincap",
+			"ToprakM"
 		]
 	},
 	"embedvideo-description": "Bu çatallı sürüm, popüler kaynaklardan videoları gömmek için bir ayrıştırıcı işlevi ekler.",
@@ -10,7 +11,7 @@
 	"embedvideo-type-audio": "ses",
 	"embedvideo-type-content": "içerik",
 	"embedvideo-type-video": "video",
-	"embedvideo-consent-privacy-policy": "Gizlilik İlkesi",
+	"embedvideo-consent-privacy-policy": "Gizlilik Politikası",
 	"embedvideo-consent-privacy-notice-text": "$1 kişisel verileri toplayabilir.",
 	"embedvideo-consent-privacy-notice-continue": "Devam et",
 	"embedvideo-consent-privacy-notice-dismiss": "Kapat",
