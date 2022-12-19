@@ -2,14 +2,20 @@
 	"@metadata": {
 		"authors": [
 			"Eduardoaddad",
+			"Fúlvio",
 			"SaldırganSincap"
 		]
 	},
 	"embedvideo-description": "Esta versão bifurcada adiciona uma função de parser para incorporar vídeos de fontes populares.",
+	"embedvideo-load": "Carregar $1",
+	"embedvideo-type-audio": "áudio",
+	"embedvideo-type-content": "conteúdo",
+	"embedvideo-type-video": "vídeo",
 	"embedvideo-consent-privacy-policy": "Politica de privacidade",
 	"embedvideo-consent-privacy-notice-text": "$1 pode coligir dados pessoais.",
 	"embedvideo-consent-privacy-notice-continue": "Continuar",
 	"embedvideo-consent-privacy-notice-dismiss": "Dispensar",
+	"embedvideo-play": "Reproduzir vídeo",
 	"embedvideo-error-missingparams": "O EmbedVideo está faltando um parâmetro requerido.",
 	"embedvideo-error-width": "O EmbedVideo recebeu o parâmetro de largura ruim \"$1\".",
 	"embedvideo-error-height": "EmbedVideo recebeu o parâmetro de altura ruim \"$1\".",
@@ -22,5 +28,6 @@
 	"apihelp-embedvideo-param-dimensions": "Uma largura numérica (100) ou largura por altura (100x100)",
 	"apihelp-embedvideo-param-alignment": "Alinhamento de vídeo",
 	"apihelp-embedvideo-param-description": "Descrição do vídeo",
-	"apihelp-embedvideo-param-urlargs": "Argumentos adicionais para passar no URL de vídeo (por alguns serviços)"
+	"apihelp-embedvideo-param-urlargs": "Argumentos adicionais para passar no URL de vídeo (por alguns serviços)",
+	"apihelp-embedvideo-param-autoresize": "Redimensionar o vídeo automaticamente? (verdadeiro ou falso)"
 }
