@@ -18,11 +18,13 @@ abstract class AbstractEmbedService {
 	 *
 	 * @var array
 	 */
+	// phpcs:disable Generic.Files.LineLength.TooLong
 	protected $iframeAttributes = [
 		'loading' => 'lazy',
 		'frameborder' => 0,
 		'allow' => 'accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; autoplay',
 	];
+	// phpcs:enable Generic.Files.LineLength.TooLong
 
 	/**
 	 * Additional attributes that are set on the iframe
