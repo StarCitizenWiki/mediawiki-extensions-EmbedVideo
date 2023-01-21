@@ -62,7 +62,7 @@ final class Bilibili extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.bilibili.tv/en/privacy-policy';
+		return 'https://www.bilibili.com/blackboard/privacy-pc.html';
 	}
 
 	/**
