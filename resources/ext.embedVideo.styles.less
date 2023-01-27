@@ -1,6 +1,9 @@
 .embedvideo {
+	margin: 0;
+
 	&-wrapper {
 		position: relative;
+		display: block;
 	}
 
 	// Act as placeholder styles
@@ -20,51 +23,38 @@
 		display: none;
 	}
 
-	&.tcenter,
-	&.ev_center,
-	&.ev_center > .embedvideo-wrapper {
-		margin-left: auto;
-		margin-right: auto;
+	// From core
+	// We can safely remove this when Parsoid becomes default
+	&.mw-halign-right {
+		/* @noflip */
+		margin: 0 0 0.5em 0.5em;
+		/* @noflip */
+		clear: right;
+		/* @noflip */
+		float: right;
 	}
 
-	&.ev {
-		&_center {
-			.thumbcaption {
-				text-align: center;
-			}
-		}
-
+	&.mw-halign-left {
 		/* @noflip */
-		&_left {
-			clear: left;
-			float: left;
-		}
-
+		margin: 0 0.5em 0.5em 0;
 		/* @noflip */
-		&_right {
-			clear: right;
-			float: right;
-		}
+		clear: left;
+		/* @noflip */
+		float: left;
+	}
 
-		&_inline {
-			display: inline-block;
-		}
+	&.mw-halign-none {
+		clear: none;
+		float: none;
+	}
 
-		&_top {
-			vertical-align: top;
-		}
-
-		&_middle {
-			vertical-align: middle;
-		}
-
-		&_bottom {
-			vertical-align: bottom;
-		}
-
-		&_baseline {
-			vertical-align: baseline;
-		}
+	&.mw-halign-center {
+		/* Matches *.center * in element.css */
+		margin: 0 auto;
+		display: table;
+		border-collapse: collapse;
+		clear: none;
+		float: none;
 	}
 }
 

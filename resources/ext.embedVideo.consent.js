@@ -1,11 +1,11 @@
 (function () {
-	const fetchThumb = async (url, parent, outerDiv) => {
+	const fetchThumb = async (url, parent, container) => {
 		const fetcherFactory = require('./fetchFactory.js').fetchFactory;
 
 		const {
 			fetcher,
 			urlManipulation
-		} = fetcherFactory( outerDiv.getAttribute('data-service') );
+		} = fetcherFactory( container.getAttribute('data-service') );
 
 		if (fetcher === null) {
 			return;
@@ -130,7 +130,7 @@
 			}
 
 			if (!div.classList.contains('no-fetch')) {
-				fetchThumb(iframe.dataset.src, consentDiv, div);
+				fetchThumb(iframe.dataset.src, consentDiv, div.parentElement);
 			}
 		});
 	} );

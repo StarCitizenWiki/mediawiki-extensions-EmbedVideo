@@ -440,7 +440,6 @@ class EmbedVideo {
 	private function makeHtmlFormatConfig( $embedService, $addClass = null ): array {
 		$classString = implode( ' ', array_filter( [
 			'embedvideo',
-			'embedvideo-wrapper',
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );

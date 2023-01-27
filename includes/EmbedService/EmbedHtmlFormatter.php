@@ -33,10 +33,11 @@ final class EmbedHtmlFormatter {
 		}
 
 		$width = (int)$service->getWidth();
+		$height = (int)$service->getHeight();
 
 		$config = array_merge(
 			[
-				'class' => 'embedvideo embedvideo-wrapper',
+				'class' => 'embedvideo',
 				'style' => '',
 				'service' => '',
 				'withConsent' => false,
@@ -49,8 +50,21 @@ final class EmbedHtmlFormatter {
 			? sprintf( '<figcaption>%s</figcaption>', $config['description'] )
 			: '';
 
+		/**
+		 * TODO: Sync syntax with core image syntax
+		 * @see: https://www.mediawiki.org/wiki/Help:Images
+		 *
+		 * 1. Make caption/description acts the same as core, any unnamed attribute will become caption
+		 * 2. Sync container attribute with core
+		 * 3. typeof should be set according to attribute instead of hard-coded
+		 */
+		/**
+		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
+		 */
 		$template = <<<HTML
-			<figure class="%s" data-service="%s" style="width: %dpx %s">%s%s%s</figure>
+			<figure class="%s" data-service="%s" style="width:%dpx;%s">
+				<span class="embedvideo-wrapper" style="height:%dpx">%s%s</span>%s
+			</figure>
 			HTML;
 
 		return sprintf(
@@ -59,6 +73,7 @@ final class EmbedHtmlFormatter {
 			$config['service'] ?? '',
 			$width,
 			$config['style'] ?? '',
+			$height,
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,
 			$caption
