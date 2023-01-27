@@ -27,6 +27,7 @@ class VideoHandler extends AudioHandler {
 			'lazy' => 'lazy',
 			'title' => 'title',
 			'description' => 'description',
+			'autoresize' => 'autoresize',
 		] );
 	}
 
@@ -44,7 +45,7 @@ class VideoHandler extends AudioHandler {
 			return $value > 0;
 		}
 
-		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy' ] ) ) {
+		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy', 'autoresize' ] ) ) {
 			return true;
 		}
 
@@ -71,7 +72,12 @@ class VideoHandler extends AudioHandler {
 				$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
 				try {
-					$params['posterUrl'] = wfExpandUrl( $transform->getUrl() );
+					if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
+						$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $transform->getUrl() );
+					} else {
+						$url = wfExpandUrl( $transform->getUrl() );
+					}
+					$params['posterUrl'] = $url;
 				} catch ( Exception $e ) {
 					unset( $params['poster'], $params['posterUrl'] );
 				}

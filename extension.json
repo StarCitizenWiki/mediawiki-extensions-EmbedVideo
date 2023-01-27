@@ -1,9 +1,9 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.1.0",
+	"version": "3.2.0",
 	"author": [
-		"Octfx",
-		"Alistair3149",
+		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
+		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"Jim R. Wilson",
 		"Andrew Whitworth",
 		"Alexia E. Smith",
@@ -35,16 +35,6 @@
 		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
 	},
 	"ResourceModules": {
-		"ext.embedVideo": {
-			"scripts": [
-				"ext.embedVideo.js"
-			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"ext.embedVideo.consent": {
 			"es6": true,
 			"packageFiles": [

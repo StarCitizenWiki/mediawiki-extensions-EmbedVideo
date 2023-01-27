@@ -1,9 +1,26 @@
 .embedvideo {
+	margin: 0;
+	max-width: 100%; // no overflow
+
 	&-wrapper {
 		position: relative;
+		display: block;
+	}
+
+	// Let container control the dimension of the iframe
+	&-player {
+		width: 100%;
+		height: 100%;
 	}
 
 	// Act as placeholder styles
+	&-consent {
+		z-index: 1; // See #39
+		background-color: #eaecf0;
+	}
+
+	// Avoid weird overflow issues
+	&-player,
 	&-consent {
 		position: absolute;
 		left: 0;
@@ -12,7 +29,6 @@
 		bottom: 0;
 		z-index: 1; // See #39
 		overflow: hidden;
-		background-color: #eaecf0;
 	}
 
 	&-overlay {
@@ -20,51 +36,53 @@
 		display: none;
 	}
 
-	&.tcenter,
-	&.ev_center,
-	&.ev_center > .embedvideo-wrapper {
-		margin-left: auto;
-		margin-right: auto;
+	&--autoresize {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+
+		.embedvideo-wrapper {
+			height: 100%;
+		}
 	}
 
-	&.ev {
-		&_center {
-			.thumbcaption {
-				text-align: center;
-			}
-		}
-
+	// From core
+	// We can safely remove this when Parsoid becomes default
+	&.mw-halign-right {
 		/* @noflip */
-		&_left {
-			clear: left;
-			float: left;
-		}
-
+		margin: 0 0 0.5em 0.5em;
 		/* @noflip */
-		&_right {
-			clear: right;
-			float: right;
-		}
+		clear: right;
+		/* @noflip */
+		float: right;
+	}
 
-		&_inline {
-			display: inline-block;
-		}
+	&.mw-halign-left {
+		/* @noflip */
+		margin: 0 0.5em 0.5em 0;
+		/* @noflip */
+		clear: left;
+		/* @noflip */
+		float: left;
+	}
 
-		&_top {
-			vertical-align: top;
-		}
+	&.mw-halign-none {
+		clear: none;
+		float: none;
+	}
 
-		&_middle {
-			vertical-align: middle;
-		}
+	&.mw-halign-center {
+		/* Matches *.center * in element.css */
+		margin: 0 auto;
+		display: table;
+		border-collapse: collapse;
+		clear: none;
+		float: none;
+	}
 
-		&_bottom {
-			vertical-align: bottom;
-		}
-
-		&_baseline {
-			vertical-align: baseline;
-		}
+	figcaption {
+		// Same as skinning core
+		font-size: 88.4%;
+		padding: 3px 0;
 	}
 }
 

@@ -192,7 +192,7 @@ class FFProbe {
 			'-print_format json',
 			'-show_format',
 			'-show_streams',
-			$this->getFilePath(),
+			Shell::escape( $this->getFilePath() ),
 		] );
 
 		try {

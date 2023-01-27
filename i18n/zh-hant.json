@@ -3,7 +3,8 @@
 		"authors": [
 			"Alistair3149",
 			"Kly",
-			"Lakejason0"
+			"Lakejason0",
+			"Winston Sung"
 		]
 	},
 	"embedvideo-description": "此分叉版本添加可用於內嵌來自熱門來源的影片之解析功能。",
@@ -12,7 +13,7 @@
 	"embedvideo-type-content": "內容",
 	"embedvideo-type-video": "影片",
 	"embedvideo-consent-privacy-policy": "隱私權政策",
-	"embedvideo-consent-privacy-notice-text": "$1可能會收集個人數據。",
+	"embedvideo-consent-privacy-notice-text": "$1可能會收集個人資料。",
 	"embedvideo-consent-privacy-notice-continue": "繼續",
 	"embedvideo-consent-privacy-notice-dismiss": "關閉",
 	"embedvideo-service-archiveorg": "Archive.org",
