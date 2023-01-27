@@ -124,7 +124,6 @@ The EmbedVideo parser function expects to be called in any of the following ways
 * `{{#ev:service|id|dimensions|alignment|description}}`
 * `{{#ev:service|id|dimensions|alignment|description|container}}`
 * `{{#ev:service|id|dimensions|alignment|description|container|urlargs}}`
-* `{{#ev:service|id|dimensions|alignment|description|container|urlargs|autoresize}}`
 
 However, if needed optional arguments may be left blank by not putting anything between the pipes:
 
@@ -137,7 +136,8 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `description`
 * `container`
 * `urlArgs`
-* `autoResize`
+* `autoresize`
+  * Set `|autoresize=true` to have the embed automatically use all available width of the parent element 
 * `vAlignment`
 * `width`
 * `height`

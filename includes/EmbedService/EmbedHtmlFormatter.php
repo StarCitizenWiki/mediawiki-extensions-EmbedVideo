@@ -41,10 +41,15 @@ final class EmbedHtmlFormatter {
 				'style' => '',
 				'service' => '',
 				'withConsent' => false,
+				'autoresize' => false,
 				'description' => '',
 			],
 			$config
 		);
+
+		if ( $config['autoresize'] === true ) {
+			$config['class'] .= ' embedvideo--autoresize';
+		}
 
 		$caption = !empty( $config['description'] ?? '' )
 			? sprintf( '<figcaption>%s</figcaption>', $config['description'] )
@@ -134,7 +139,11 @@ final class EmbedHtmlFormatter {
 		}
 
 		try {
-			$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
+			if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
+				$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $service->getLocalThumb()->getUrl() );
+			} else {
+				$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
+			}
 
 			// phpcs:disable
 			return <<<HTML

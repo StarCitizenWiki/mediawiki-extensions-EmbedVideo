@@ -27,6 +27,7 @@ class VideoHandler extends AudioHandler {
 			'lazy' => 'lazy',
 			'title' => 'title',
 			'description' => 'description',
+			'autoresize' => 'autoresize',
 		] );
 	}
 
@@ -44,7 +45,7 @@ class VideoHandler extends AudioHandler {
 			return $value > 0;
 		}
 
-		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy' ] ) ) {
+		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy', 'autoresize' ] ) ) {
 			return true;
 		}
 
