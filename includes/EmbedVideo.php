@@ -153,7 +153,6 @@ class EmbedVideo {
 	public function output(): array {
 		[
 			'service' => $service,
-			'autoResize' => $autoResize,
 		] = $this->args;
 
 		try {
@@ -181,7 +180,7 @@ class EmbedVideo {
 			// This does the whole HTML generation
 			EmbedHtmlFormatter::toHtml(
 				$this->service,
-				$this->makeHtmlFormatConfig( $this->service, $autoResize ? 'autoResize' : null )
+				$this->makeHtmlFormatConfig( $this->service )
 			),
 			'noparse' => true,
 			'isHTML' => true
@@ -196,14 +195,14 @@ class EmbedVideo {
 	 * @return array
 	 */
 	private function parseArgs( array $args, bool $fromTag ): array {
-		$results = [
+		$supportedArgs = [
 			'id' => '',
 			'dimensions' => '',
 			'alignment' => '',
 			'description' => '',
 			'container' => '',
 			'urlArgs' => '',
-			'autoResize' => true,
+			'autoresize' => false,
 			'vAlignment' => '',
 			'width' => null,
 			'height' => null,
@@ -213,10 +212,10 @@ class EmbedVideo {
 		];
 
 		if ( $fromTag === true ) {
-			return array_merge( $results, $args );
+			return array_merge( $supportedArgs, $args );
 		}
 
-		$keys = array_keys( $results );
+		$keys = array_keys( $supportedArgs );
 
 		if ( $fromTag ) {
 			$serviceName = $args['service'] ?? null;
@@ -239,27 +238,30 @@ class EmbedVideo {
 			}
 			$pair = array_map( 'trim', $pair );
 
+			// We are handling a named argument
 			if ( count( $pair ) === 2 ) {
 				[ $name, $value ] = $pair;
-				if ( array_key_exists( $name, $results ) ) {
-					$results[$name] = $value;
+				if ( array_key_exists( $name, $supportedArgs ) ) {
+					$supportedArgs[$name] = $value;
 				}
+			// An unnamed argument we have to match by position
 			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
 				$pair = $pair[0];
 
-				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
-					$pair = false;
-				}
-
-				$results[$keys[$counter]] = $pair;
+				$supportedArgs[$keys[$counter]] = $pair;
 			}
 
 			++$counter;
 		}
 
-		$results['service'] = $serviceName;
+		$supportedArgs['service'] = $serviceName;
 
-		return $results;
+		// An intentional weak check
+		if ( $supportedArgs['autoresize'] == true ) {
+			$supportedArgs['autoresize'] = true;
+		}
+
+		return $supportedArgs;
 	}
 
 	/**
@@ -402,7 +404,7 @@ class EmbedVideo {
 	 * @return bool Valid
 	 */
 	private function setAlignment( $alignment ): bool {
-		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'inline' ], true ) ) {
+		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'none' ], true ) ) {
 			$this->alignment = $alignment;
 		} elseif ( !empty( $alignment ) ) {
 			return false;
@@ -419,10 +421,12 @@ class EmbedVideo {
 	 * @return bool Valid
 	 */
 	private function setVerticalAlignment( $vAlignment ): bool {
-		if ( !empty( $vAlignment ) && in_array( $vAlignment, [ 'top', 'middle', 'bottom', 'baseline' ], true ) ) {
-			if ( $vAlignment !== 'baseline' ) {
-				$this->alignment = 'inline';
-			}
+		if (
+			!empty( $vAlignment )
+			&& in_array( $vAlignment, [
+				'middle', 'baseline', 'sub', 'super', 'top', 'text-top', 'bottom', 'text-bottom'
+			], true )
+		) {
 			$this->vAlignment = $vAlignment;
 		} elseif ( !empty( $vAlignment ) ) {
 			return false;
@@ -437,44 +441,30 @@ class EmbedVideo {
 	 * @see EmbedHtmlFormatter::toHtml()
 	 *
 	 * @param AbstractEmbedService $embedService The service in question
-	 * @param string|null $addClass [Optional] Additional Classes to add to the wrapper
 	 * @return array
 	 */
-	private function makeHtmlFormatConfig( $embedService, $addClass = null ): array {
-		$classString = 'embedvideo';
-		$styleString = '';
-		$innerClassString = implode( ' ', array_filter( [
-			'embedvideo-wrapper',
+	private function makeHtmlFormatConfig( $embedService ): array {
+		$classString = implode( ' ', array_filter( [
+			'embedvideo',
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );
 		$serviceString = $embedService::getServiceName();
-		$outerClassString = 'embedvideo ';
-
-		if ( $this->container === 'frame' ) {
-			$classString .= ' thumbinner';
-		}
+		$styleString = '';
 
 		if ( $this->alignment !== false ) {
-			$outerClassString .= sprintf( ' ev_%s ', $this->alignment );
-			$styleString .= sprintf( ' width: %dpx;', ( $this->service->getWidth() + 6 ) );
+			$classString .= sprintf( ' mw-halign-%s', $this->alignment );
 		}
 
 		if ( $this->vAlignment !== false ) {
-			$outerClassString .= sprintf( ' ev_%s ', $this->vAlignment );
-		}
-
-		if ( $addClass !== null ) {
-			$classString .= ' ' . $addClass;
-			$outerClassString .= $addClass;
+			$classString .= sprintf( ' mw-valign-%s', $this->vAlignment );
 		}
 
 		return [
-			'outerClass' => $outerClassString,
 			'class' => $classString,
 			'style' => $styleString,
-			'innerClass' => $innerClassString,
 			'service' => $serviceString,
+			'autoresize' => $this->args['autoresize'] === true,
 			// phpcs:ignore Generic.Files.LineLength.TooLong
 			'withConsent' => !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ),
 			'description' => $this->description,
@@ -499,7 +489,6 @@ class EmbedVideo {
 			}
 		}
 
-		$out->addModules( [ 'ext.embedVideo' ] );
 		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {

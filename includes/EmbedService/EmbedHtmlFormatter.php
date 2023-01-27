@@ -21,10 +21,8 @@ final class EmbedHtmlFormatter {
 	 *
 	 * @param AbstractEmbedService $service
 	 * @param array $config Array containing the following keys:
-	 * outerClass: String - Class added to the thumb div,
-	 * class: String - Class added to the div following .thumb,
-	 * style: String - CSS Style added to the div,
-	 * innerClass: String - Class added to the inner div,
+	 * class: String - Class added to the container,
+	 * style: String - CSS Style added to the container,
 	 * withConsent: Boolean - Whether to add the consent HTML,
 	 * description: String - Optional Description
 	 * @return string
@@ -35,42 +33,66 @@ final class EmbedHtmlFormatter {
 		}
 
 		$width = (int)$service->getWidth();
-		$widthPad = $width + 8;
+		$height = (int)$service->getHeight();
 
 		$config = array_merge(
 			[
-				'outerClass' => 'embedvideo',
-				'class' => 'embedvideo thumbinner',
+				'class' => 'embedvideo',
 				'style' => '',
-				'innerClass' => 'embedvideo-wrapper',
 				'service' => '',
 				'withConsent' => false,
+				'autoresize' => false,
 				'description' => '',
 			],
 			$config
 		);
 
+		$inlineStyles = [
+			'container' => $config['style'] ?? '',
+			'wrapper' => '',
+		];
+
+		if ( $config['autoresize'] === true ) {
+			$config['class'] .= ' embedvideo--autoresize';
+		} else {
+			// Autoresize does not need inline width and height
+			$inlineStyles['container'] .= sprintf( 'width:%dpx', $width );
+			$inlineStyles['wrapper'] .= sprintf( 'height:%dpx', $height );
+		}
+
 		$caption = !empty( $config['description'] ?? '' )
-			? sprintf( '<div class="thumbcaption">%s</div>', $config['description'] )
+			? sprintf( '<figcaption>%s</figcaption>', $config['description'] )
 			: '';
 
+		foreach ( $inlineStyles as &$inlineStyle ) {
+			if ( !empty( $inlineStyle ) ) {
+				$inlineStyle = sprintf( 'style="%s"', $inlineStyle );
+			}
+		}
+
+		/**
+		 * TODO: Sync syntax with core image syntax
+		 * @see: https://www.mediawiki.org/wiki/Help:Images
+		 *
+		 * 1. Make caption/description acts the same as core, any unnamed attribute will become caption
+		 * 2. Sync container attribute with core
+		 * 3. typeof should be set according to attribute instead of hard-coded
+		 */
+		/**
+		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
+		 */
 		$template = <<<HTML
-			<div class="thumb %s" style="width: %dpx;">
-				<div class="%s" style="%s">
-					<div class="%s" data-service="%s" style="width: %dpx">%s%s</div>%s
-				</div>
-			</div>
+			<figure class="%s" data-service="%s" %s>
+				<span class="embedvideo-wrapper" %s>%s%s</span>%s
+			</figure>
 			HTML;
 
 		return sprintf(
 			$template,
-			$config['outerClass'] ?? '',
-			$widthPad,
 			$config['class'] ?? '',
-			$config['style'] ?? '',
-			$config['innerClass'] ?? '',
 			$config['service'] ?? '',
-			$width,
+			$inlineStyles['container'],
+			$inlineStyles['wrapper'],
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,
 			$caption
@@ -131,7 +153,11 @@ final class EmbedHtmlFormatter {
 		}
 
 		try {
-			$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
+			if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
+				$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $service->getLocalThumb()->getUrl() );
+			} else {
+				$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
+			}
 
 			// phpcs:disable
 			return <<<HTML

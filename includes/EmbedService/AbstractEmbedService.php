@@ -20,6 +20,7 @@ abstract class AbstractEmbedService {
 	 */
 	// phpcs:disable Generic.Files.LineLength.TooLong
 	protected $iframeAttributes = [
+		'class' => 'embedvideo-player',
 		'loading' => 'lazy',
 		'frameborder' => 0,
 		'allow' => 'accelerometer; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; autoplay',

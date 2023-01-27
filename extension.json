@@ -35,16 +35,6 @@
 		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
 	},
 	"ResourceModules": {
-		"ext.embedVideo": {
-			"scripts": [
-				"ext.embedVideo.js"
-			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"ext.embedVideo.consent": {
 			"es6": true,
 			"packageFiles": [

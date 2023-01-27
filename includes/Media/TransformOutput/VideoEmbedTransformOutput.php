@@ -20,9 +20,9 @@ class VideoEmbedTransformOutput extends VideoTransformOutput {
 		$service = new FauxEmbedService( $this, $this->parameters );
 
 		return EmbedHtmlFormatter::toHtml( $service, [
-			'outerClass' => 'embedvideo local-embed',
 			'service' => 'local-embed',
 			'withConsent' => true,
+			'autoresize' => $this->parameters['autoresize'] === true,
 			'description' => $this->parameters['description'] ?? null,
 		] );
 	}
