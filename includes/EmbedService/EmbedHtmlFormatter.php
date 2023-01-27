@@ -47,13 +47,28 @@ final class EmbedHtmlFormatter {
 			$config
 		);
 
+		$inlineStyles = [
+			'container' => $config['style'] ?? '',
+			'wrapper' => '',
+		];
+
 		if ( $config['autoresize'] === true ) {
 			$config['class'] .= ' embedvideo--autoresize';
+		} else {
+			// Autoresize does not need inline width and height
+			$inlineStyles['container'] .= sprintf( 'width:%dpx', $width );
+			$inlineStyles['wrapper'] .= sprintf( 'height:%dpx', $height );
 		}
 
 		$caption = !empty( $config['description'] ?? '' )
 			? sprintf( '<figcaption>%s</figcaption>', $config['description'] )
 			: '';
+
+		foreach ( $inlineStyles as &$inlineStyle ) {
+			if ( !empty( $inlineStyle ) ) {
+				$inlineStyle = sprintf( 'style="%s"', $inlineStyle );
+			}
+		}
 
 		/**
 		 * TODO: Sync syntax with core image syntax
@@ -67,8 +82,8 @@ final class EmbedHtmlFormatter {
 		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
 		 */
 		$template = <<<HTML
-			<figure class="%s" data-service="%s" style="width:%dpx; %s">
-				<span class="embedvideo-wrapper" style="height:%dpx">%s%s</span>%s
+			<figure class="%s" data-service="%s" %s>
+				<span class="embedvideo-wrapper" %s>%s%s</span>%s
 			</figure>
 			HTML;
 
@@ -76,9 +91,8 @@ final class EmbedHtmlFormatter {
 			$template,
 			$config['class'] ?? '',
 			$config['service'] ?? '',
-			$width,
-			$config['style'] ?? '',
-			$height,
+			$inlineStyles['container'],
+			$inlineStyles['wrapper'],
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,
 			$caption

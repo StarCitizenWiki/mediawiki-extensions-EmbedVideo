@@ -5,24 +5,29 @@
 	&-wrapper {
 		position: relative;
 		display: block;
+	}
 
-		// Let container control the dimension of the iframe
-		iframe {
-			width: 100%;
-			height: 100%;
-		}
+	// Let container control the dimension of the iframe
+	&-player {
+		width: 100%;
+		height: 100%;
 	}
 
 	// Act as placeholder styles
+	&-consent {
+		z-index: 1; // See #39
+		background-color: #eaecf0;
+	}
+
+	// Avoid weird overflow issues
+	&-player,
 	&-consent {
 		position: absolute;
 		left: 0;
 		right: 0;
 		top: 0;
 		bottom: 0;
-		z-index: 1; // See #39
 		overflow: hidden;
-		background-color: #eaecf0;
 	}
 
 	&-overlay {
@@ -30,14 +35,12 @@
 		display: none;
 	}
 
-	// FIXME: Do not set inline width and height when autoresize is on
-	// so that we don't need to use !important
 	&--autoresize {
-		width: 100% !important;
+		width: 100%;
 		aspect-ratio: 16 / 9;
 
 		.embedvideo-wrapper {
-			height: 100% !important;
+			height: 100%;
 		}
 	}
 
