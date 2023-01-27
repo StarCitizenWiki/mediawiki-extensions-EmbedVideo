@@ -5,6 +5,12 @@
 	&-wrapper {
 		position: relative;
 		display: block;
+
+		// Let container control the dimension of the iframe
+		iframe {
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 	// Act as placeholder styles
@@ -22,6 +28,10 @@
 	&-overlay {
 		// Hide until ready
 		display: none;
+	}
+
+	&--autoresize {
+		// TODO: Figure out a way to fix autoresize?
 	}
 
 	// From core

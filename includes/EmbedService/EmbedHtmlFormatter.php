@@ -62,7 +62,7 @@ final class EmbedHtmlFormatter {
 		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
 		 */
 		$template = <<<HTML
-			<figure class="%s" data-service="%s" style="width:%dpx;%s">
+			<figure class="%s" data-service="%s" style="width:%dpx; %s">
 				<span class="embedvideo-wrapper" style="height:%dpx">%s%s</span>%s
 			</figure>
 			HTML;

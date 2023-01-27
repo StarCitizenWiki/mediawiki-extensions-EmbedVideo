@@ -127,7 +127,6 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
 
 		if ( $config->get( 'EmbedVideoUseEmbedStyleForLocalVideos' ) === true ) {
-			$out->addModules( [ 'ext.embedVideo' ] );
 			$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 			$out->addModules( [ 'ext.embedVideo.overlay' ] );
 		}

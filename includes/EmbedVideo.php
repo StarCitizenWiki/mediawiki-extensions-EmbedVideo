@@ -181,7 +181,7 @@ class EmbedVideo {
 			// This does the whole HTML generation
 			EmbedHtmlFormatter::toHtml(
 				$this->service,
-				$this->makeHtmlFormatConfig( $this->service, $autoResize ? 'autoResize' : null )
+				$this->makeHtmlFormatConfig( $this->service, $autoResize ? 'embedvideo--autoresize' : null )
 			),
 			'noparse' => true,
 			'isHTML' => true
@@ -203,7 +203,7 @@ class EmbedVideo {
 			'description' => '',
 			'container' => '',
 			'urlArgs' => '',
-			'autoResize' => true,
+			'autoResize' => false,
 			'vAlignment' => '',
 			'width' => null,
 			'height' => null,
@@ -247,7 +247,7 @@ class EmbedVideo {
 			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
 				$pair = $pair[0];
 
-				if ( $keys[$counter] === 'autoresize' && strtolower( $pair ) === 'false' ) {
+				if ( $keys[$counter] === 'autoResize' && strtolower( $pair ) === 'false' ) {
 					$pair = false;
 				}
 
@@ -486,7 +486,6 @@ class EmbedVideo {
 			}
 		}
 
-		$out->addModules( [ 'ext.embedVideo' ] );
 		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
