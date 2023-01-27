@@ -244,7 +244,8 @@ class EmbedVideo {
 				if ( array_key_exists( $name, $supportedArgs ) ) {
 					$supportedArgs[$name] = $value;
 				}
-			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) { // An unnamed argument we have to match by position
+			// An unnamed argument we have to match by position
+			} elseif ( count( $pair ) === 1 && !empty( $pair[0] ) ) {
 				$pair = $pair[0];
 
 				$supportedArgs[$keys[$counter]] = $pair;
@@ -420,7 +421,12 @@ class EmbedVideo {
 	 * @return bool Valid
 	 */
 	private function setVerticalAlignment( $vAlignment ): bool {
-		if ( !empty( $vAlignment ) && in_array( $vAlignment, [ 'middle', 'baseline', 'sub', 'super', 'top', 'text-top', 'bottom', 'text-bottom' ], true ) ) {
+		if (
+			!empty( $vAlignment )
+			&& in_array( $vAlignment, [
+				'middle', 'baseline', 'sub', 'super', 'top', 'text-top', 'bottom', 'text-bottom'
+			], true )
+		) {
 			$this->vAlignment = $vAlignment;
 		} elseif ( !empty( $vAlignment ) ) {
 			return false;
