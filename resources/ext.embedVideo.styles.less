@@ -30,8 +30,15 @@
 		display: none;
 	}
 
+	// FIXME: Do not set inline width and height when autoresize is on
+	// so that we don't need to use !important
 	&--autoresize {
-		// TODO: Figure out a way to fix autoresize?
+		width: 100% !important;
+		aspect-ratio: 16 / 9;
+
+		.embedvideo-wrapper {
+			height: 100% !important;
+		}
 	}
 
 	// From core
