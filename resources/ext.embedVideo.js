@@ -1,3 +1,4 @@
+/*
 (function(mw, $, window) {
 	$(function() {
         autoResizer(); // run first thing, because we dont need a resize to be broken.
@@ -101,3 +102,4 @@
     });
 
 }(mediaWiki, jQuery, window));
+*/

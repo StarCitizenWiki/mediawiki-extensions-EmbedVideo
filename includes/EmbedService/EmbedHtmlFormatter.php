@@ -21,10 +21,8 @@ final class EmbedHtmlFormatter {
 	 *
 	 * @param AbstractEmbedService $service
 	 * @param array $config Array containing the following keys:
-	 * outerClass: String - Class added to the thumb div,
-	 * class: String - Class added to the div following .thumb,
-	 * style: String - CSS Style added to the div,
-	 * innerClass: String - Class added to the inner div,
+	 * class: String - Class added to the container,
+	 * style: String - CSS Style added to the container,
 	 * withConsent: Boolean - Whether to add the consent HTML,
 	 * description: String - Optional Description
 	 * @return string
@@ -35,14 +33,11 @@ final class EmbedHtmlFormatter {
 		}
 
 		$width = (int)$service->getWidth();
-		$widthPad = $width + 8;
 
 		$config = array_merge(
 			[
-				'outerClass' => 'embedvideo',
-				'class' => 'embedvideo thumbinner',
+				'class' => 'embedvideo embedvideo-wrapper',
 				'style' => '',
-				'innerClass' => 'embedvideo-wrapper',
 				'service' => '',
 				'withConsent' => false,
 				'description' => '',
@@ -51,26 +46,19 @@ final class EmbedHtmlFormatter {
 		);
 
 		$caption = !empty( $config['description'] ?? '' )
-			? sprintf( '<div class="thumbcaption">%s</div>', $config['description'] )
+			? sprintf( '<figcaption>%s</figcaption>', $config['description'] )
 			: '';
 
 		$template = <<<HTML
-			<div class="thumb %s" style="width: %dpx;">
-				<div class="%s" style="%s">
-					<div class="%s" data-service="%s" style="width: %dpx">%s%s</div>%s
-				</div>
-			</div>
+			<figure class="%s" data-service="%s" style="width: %dpx %s">%s%s%s</figure>
 			HTML;
 
 		return sprintf(
 			$template,
-			$config['outerClass'] ?? '',
-			$widthPad,
 			$config['class'] ?? '',
-			$config['style'] ?? '',
-			$config['innerClass'] ?? '',
 			$config['service'] ?? '',
 			$width,
+			$config['style'] ?? '',
 			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
 			$service,
 			$caption

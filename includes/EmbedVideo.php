@@ -402,7 +402,7 @@ class EmbedVideo {
 	 * @return bool Valid
 	 */
 	private function setAlignment( $alignment ): bool {
-		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'inline' ], true ) ) {
+		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'none' ], true ) ) {
 			$this->alignment = $alignment;
 		} elseif ( !empty( $alignment ) ) {
 			return false;
@@ -419,10 +419,7 @@ class EmbedVideo {
 	 * @return bool Valid
 	 */
 	private function setVerticalAlignment( $vAlignment ): bool {
-		if ( !empty( $vAlignment ) && in_array( $vAlignment, [ 'top', 'middle', 'bottom', 'baseline' ], true ) ) {
-			if ( $vAlignment !== 'baseline' ) {
-				$this->alignment = 'inline';
-			}
+		if ( !empty( $vAlignment ) && in_array( $vAlignment, [ 'middle', 'baseline', 'sub', 'super', 'top', 'text-top', 'bottom', 'text-bottom' ], true ) ) {
 			$this->vAlignment = $vAlignment;
 		} elseif ( !empty( $vAlignment ) ) {
 			return false;
@@ -441,39 +438,30 @@ class EmbedVideo {
 	 * @return array
 	 */
 	private function makeHtmlFormatConfig( $embedService, $addClass = null ): array {
-		$classString = 'embedvideo';
-		$styleString = '';
-		$innerClassString = implode( ' ', array_filter( [
+		$classString = implode( ' ', array_filter( [
+			'embedvideo',
 			'embedvideo-wrapper',
 			// This should probably be added as a RL variable
 			$this->config->get( 'EmbedVideoFetchExternalThumbnails' ) ? '' : 'no-fetch'
 		] ) );
 		$serviceString = $embedService::getServiceName();
-		$outerClassString = 'embedvideo ';
-
-		if ( $this->container === 'frame' ) {
-			$classString .= ' thumbinner';
-		}
+		$styleString = '';
 
 		if ( $this->alignment !== false ) {
-			$outerClassString .= sprintf( ' ev_%s ', $this->alignment );
-			$styleString .= sprintf( ' width: %dpx;', ( $this->service->getWidth() + 6 ) );
+			$classString .= sprintf( ' mw-halign-%s', $this->alignment );
 		}
 
 		if ( $this->vAlignment !== false ) {
-			$outerClassString .= sprintf( ' ev_%s ', $this->vAlignment );
+			$classString .= sprintf( ' mw-valign-%s', $this->vAlignment );
 		}
 
 		if ( $addClass !== null ) {
 			$classString .= ' ' . $addClass;
-			$outerClassString .= $addClass;
 		}
 
 		return [
-			'outerClass' => $outerClassString,
 			'class' => $classString,
 			'style' => $styleString,
-			'innerClass' => $innerClassString,
 			'service' => $serviceString,
 			// phpcs:ignore Generic.Files.LineLength.TooLong
 			'withConsent' => !( $this->service instanceof OEmbedServiceInterface ) && $this->config->get( 'EmbedVideoRequireConsent' ),
