@@ -92,14 +92,14 @@
 	};
 
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.embedvideo-wrapper').forEach(function (div) {
+		document.querySelectorAll('.embedvideo-wrapper').forEach(function (wrapper) {
 			const clickListener = function (event) {
 				if (iframe !== null) {
 					iframe.src = iframe.dataset.src ?? '';
 				}
 
 				event.target.removeEventListener('click', clickListener);
-				div.removeChild(consentDiv);
+				wrapper.removeChild(consentDiv);
 			};
 
 			const togglePrivacyClickListener = function (event) {
@@ -110,8 +110,8 @@
 			};
 
 			/** @type HTMLDivElement|null */
-			const consentDiv = div.querySelector('.embedvideo-consent');
-			const iframe = div.querySelector('iframe');
+			const consentDiv = wrapper.querySelector('.embedvideo-consent');
+			const iframe = wrapper.querySelector('iframe');
 
 			if (consentDiv === null || iframe === null) {
 				return;
@@ -129,8 +129,8 @@
 				consentDiv.addEventListener('click', clickListener);
 			}
 
-			if (!div.classList.contains('no-fetch')) {
-				fetchThumb(iframe.dataset.src, consentDiv, div.parentElement);
+			if (!wrapper.parentElement.classList.contains('no-fetch')) {
+				fetchThumb(iframe.dataset.src, consentDiv, wrapper.parentElement);
 			}
 		});
 	} );
