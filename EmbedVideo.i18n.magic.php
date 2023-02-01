@@ -22,6 +22,7 @@ $magicWords['en'] = [
 	'gif' => [ 0, 'gif' ],
 	'muted' => [ 0, 'muted' ],
 	'lazy' => [ 0, 'lazy' ],
+	'autoresize' => [ 0, 'autoresize' ],
 	'title' => [ 0, 'title=$1' ],
 	'description' => [ 0, 'description=$1' ],
 ];
