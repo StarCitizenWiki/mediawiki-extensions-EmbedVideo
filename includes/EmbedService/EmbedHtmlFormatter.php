@@ -82,8 +82,8 @@ final class EmbedHtmlFormatter {
 		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
 		 */
 		$template = <<<HTML
-			<figure class="%s" data-service="%s" %s>
-				<span class="embedvideo-wrapper" %s>%s%s</span>%s
+			<figure class="%s" data-service="%s" %s><!--
+				--><span class="embedvideo-wrapper" %s>%s%s</span>%s
 			</figure>
 			HTML;
 
@@ -126,7 +126,11 @@ final class EmbedHtmlFormatter {
 				->makeConfig( 'EmbedVideo' )
 				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
-				$srcType = 'data-src';
+				$attributes['src'] = $service->getUrl();
+				return sprintf(
+					'<div class="embedvideo--iframe" data-iframe=\'%s\'></div>',
+					json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES )
+				);
 			}
 		} catch ( ConfigException $e ) {
 			//

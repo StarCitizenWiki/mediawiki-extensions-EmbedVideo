@@ -94,12 +94,16 @@
 	mw.hook( 'wikipage.content' ).add( () => {
 		document.querySelectorAll('.embedvideo-wrapper').forEach(function (wrapper) {
 			const clickListener = function (event) {
-				if (iframe !== null) {
-					iframe.src = iframe.dataset.src ?? '';
+				wrapper.removeChild(iframe);
+				const finalIframe = document.createElement('iframe');
+
+				for (let [key, value] of Object.entries(iframeConfig)) {
+					finalIframe.setAttribute(key, value);
 				}
 
 				event.target.removeEventListener('click', clickListener);
 				wrapper.removeChild(consentDiv);
+				wrapper.appendChild(finalIframe);
 			};
 
 			const togglePrivacyClickListener = function (event) {
@@ -111,11 +115,13 @@
 
 			/** @type HTMLDivElement|null */
 			const consentDiv = wrapper.querySelector('.embedvideo-consent');
-			const iframe = wrapper.querySelector('iframe');
+			const iframe = wrapper.querySelector('.embedvideo--iframe');
 
 			if (consentDiv === null || iframe === null) {
 				return;
 			}
+
+			const iframeConfig = JSON.parse(iframe.dataset.iframe);
 
 			const loader = consentDiv.querySelector('.embedvideo-loader');
 			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
@@ -130,7 +136,7 @@
 			}
 
 			if (!wrapper.parentElement.classList.contains('no-fetch')) {
-				fetchThumb(iframe.dataset.src, consentDiv, wrapper.parentElement);
+				fetchThumb(iframeConfig.src, consentDiv, wrapper.parentElement);
 			}
 		});
 	} );
