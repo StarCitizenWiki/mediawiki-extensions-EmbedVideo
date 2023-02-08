@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use ConfigException;
 use Exception;
+use JsonException;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\MediaWikiServices;
@@ -128,11 +129,11 @@ final class EmbedHtmlFormatter {
 			if ( $consent === true ) {
 				$attributes['src'] = $service->getUrl();
 				return sprintf(
-					'<div class="embedvideo--iframe" data-iframe=\'%s\'></div>',
+					'<div data-iframeconfig=\'%s\'></div>',
 					json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES )
 				);
 			}
-		} catch ( ConfigException $e ) {
+		} catch ( JsonException | ConfigException $e ) {
 			//
 		}
 
