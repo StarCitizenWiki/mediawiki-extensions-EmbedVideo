@@ -4,6 +4,7 @@
 			"Eleassar"
 		]
 	},
+	"embedvideo-description": "Ta odvejena različica doda funkcijo razčlenjevalnika za vdelavo videoposnetkov iz priljubljenih virov.",
 	"embedvideo-load": "Naloži $1",
 	"embedvideo-type-audio": "avdio",
 	"embedvideo-type-content": "vsebina",
@@ -22,5 +23,28 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-error-missingparams": "EmbedVideo manjka obvezen parameter."
+	"embedvideo-play": "Predvajaj video",
+	"embedvideo-error-missingparams": "EmbedVideo manjka obvezen parameter.",
+	"embedvideo-error-service": "EmbedVideo ne prepozna videostoritve »$1«.",
+	"embedvideo-error-id": "EmbedVideo je prejel napačen ID »$2« za storitev »$1«.",
+	"embedvideo-error-width": "EmbedVideo je prejel neveljaven parameter širine »$1«.",
+	"embedvideo-error-height": "EmbedVideo je prejel neveljaven parameter višine »$1«.",
+	"embedvideo-error-alignment": "EmbedVideo je prejel nedovoljeno vrednost za parameter poravnave »$1«. Veljavne vrednosti so »left«, »center«, »right« ali »inline«.",
+	"embedvideo-error-valignment": "EmbedVideo je prejel nedovoljeno vrednost za parameter poravnave »$1«. Veljavne vrednosti so »top«, »middle«, »bottom« ali »baseline«.",
+	"embedvideo-error-urlargs": "EmbedVideo je prejel seznam URL-argumentov, ki so vsebovali nepravilno oblikovane podatke ali prazne argumente.",
+	"embedvideo-error-unknown": "EmbedVideo je med poskusom ustvarjanja tega bloka za vdelavo videoposnetka naletel na neznano napako. ($1)",
+	"embedvideo-error-evp_deprecated": "Funkcija razčlenjevalnika #evp je bila v EmbedVideo&nbsp;2.0 opuščena. Prosimo, pretvorite značko funkcije razčlenjevalnika v #ev.",
+	"embedvideo-error-container": "Parameter, naveden za »container«, je neveljaven.",
+	"embedvideo-video-long-desc": "$1, kodek $2, dolžina $3, $4 × $5 pikslov, skupno $6",
+	"embedvideo-audio-long-desc": "$1, kodek $2, dolžina $3, skupno $4",
+	"embedvideo-error-cantdecode_evu": "Videa iz $1 ni bilo mogoče razčleniti",
+	"apihelp-embedvideo-summary": "Pridobi ustvarjeno kodo za vdelavo videa za podane parametre.",
+	"apihelp-embedvideo-param-service": "Ime storitve (youtube, twitch idr.)",
+	"apihelp-embedvideo-param-id": "ID videa za to storitev",
+	"apihelp-embedvideo-param-dimensions": "Številska širina (100) ali širina krat višina (100x100)",
+	"apihelp-embedvideo-param-alignment": "Poravnava videa",
+	"apihelp-embedvideo-param-description": "Opis videa",
+	"apihelp-embedvideo-param-container": "Sprejme »frame« (okvir), lahko pa pustite prazno",
+	"apihelp-embedvideo-param-urlargs": "Dodatni argumenti za posredovanje URL-ja videoposnetka (za nekatere storitve)",
+	"apihelp-embedvideo-param-autoresize": "Samodejno spreminjanje velikosti videa? (»true« [pravilno] ali »false« [napačno])"
 }

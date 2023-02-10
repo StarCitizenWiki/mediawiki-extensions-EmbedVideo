@@ -93,13 +93,17 @@
 
 	mw.hook( 'wikipage.content' ).add( () => {
 		document.querySelectorAll('.embedvideo-wrapper').forEach(function (wrapper) {
-			const clickListener = function (event) {
-				if (iframe !== null) {
-					iframe.src = iframe.dataset.src ?? '';
+			const makeIframe = function (event) {
+				wrapper.removeChild(iframeConfigEl);
+				const iframe = document.createElement('iframe');
+
+				for (const [key, value] of Object.entries(iframeConfig)) {
+					iframe.setAttribute(key, value);
 				}
 
-				event.target.removeEventListener('click', clickListener);
+				event.target.removeEventListener('click', makeIframe);
 				wrapper.removeChild(consentDiv);
+				wrapper.appendChild(iframe);
 			};
 
 			const togglePrivacyClickListener = function (event) {
@@ -111,26 +115,27 @@
 
 			/** @type HTMLDivElement|null */
 			const consentDiv = wrapper.querySelector('.embedvideo-consent');
-			const iframe = wrapper.querySelector('iframe');
+			const iframeConfigEl = wrapper.querySelector('[data-iframeconfig]');
 
-			if (consentDiv === null || iframe === null) {
+			if (consentDiv === null || iframeConfigEl === null) {
 				return;
 			}
+
+			const iframeConfig = JSON.parse(iframeConfigEl.dataset.iframe);
 
 			const loader = consentDiv.querySelector('.embedvideo-loader');
 			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
 
 			if (consentDiv.dataset.showPrivacyNotice === '1') {
 				consentDiv.addEventListener('click', togglePrivacyClickListener);
-				consentDiv.querySelector('.embedvideo-privacyNotice__continue').addEventListener('click', clickListener);
+				consentDiv.querySelector('.embedvideo-privacyNotice__continue').addEventListener('click', makeIframe);
 				consentDiv.querySelector('.embedvideo-privacyNotice__dismiss').addEventListener('click', togglePrivacyClickListener);
-
 			} else {
-				consentDiv.addEventListener('click', clickListener);
+				consentDiv.addEventListener('click', makeIframe);
 			}
 
 			if (!wrapper.parentElement.classList.contains('no-fetch')) {
-				fetchThumb(iframe.dataset.src, consentDiv, wrapper.parentElement);
+				fetchThumb(iframeConfig.src, consentDiv, wrapper.parentElement);
 			}
 		});
 	} );
