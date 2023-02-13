@@ -121,7 +121,7 @@
 				return;
 			}
 
-			const iframeConfig = JSON.parse(iframeConfigEl.dataset.iframe);
+			const iframeConfig = JSON.parse(iframeConfigEl.dataset.iframeconfig);
 
 			const loader = consentDiv.querySelector('.embedvideo-loader');
 			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
