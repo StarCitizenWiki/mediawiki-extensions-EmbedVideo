@@ -407,8 +407,8 @@ class EmbedVideo {
 		if ( !empty( $alignment ) && in_array( $alignment, [ 'left', 'right', 'center', 'none' ], true ) ) {
 			$this->alignment = $alignment;
 		} elseif ( !empty( $alignment ) && $alignment !== 'inline' ) {
-            // 'inline' is removed since v3.2.3, but kept for backwards compatibility
-            // TODO: Remove check after some releases
+			// 'inline' is removed since v3.2.3, but kept for backwards compatibility
+			// TODO: Remove check after some releases
 			return false;
 		}
 

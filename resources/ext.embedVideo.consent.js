@@ -92,9 +92,10 @@
 	};
 
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.embedvideo-wrapper').forEach(function (wrapper) {
+		document.querySelectorAll('.embedvideo').forEach(function (ev) {
+			const wrapper = ev.querySelector('.embedvideo-wrapper');
+
 			const makeIframe = function (event) {
-				wrapper.removeChild(iframeConfigEl);
 				const iframe = document.createElement('iframe');
 
 				for (const [key, value] of Object.entries(iframeConfig)) {
@@ -115,13 +116,13 @@
 
 			/** @type HTMLDivElement|null */
 			const consentDiv = wrapper.querySelector('.embedvideo-consent');
-			const iframeConfigEl = wrapper.querySelector('[data-iframeconfig]');
+			let iframeConfig = ev.dataset.iframeconfig;
 
-			if (consentDiv === null || iframeConfigEl === null) {
+			if (consentDiv === null || iframeConfig === null) {
 				return;
 			}
 
-			const iframeConfig = JSON.parse(iframeConfigEl.dataset.iframeconfig);
+			iframeConfig = JSON.parse(iframeConfig);
 
 			const loader = consentDiv.querySelector('.embedvideo-loader');
 			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
