@@ -32,7 +32,7 @@
 	"embedvideo-error-id": "« EmbedVideo » a reçu l’identifiant erroné « $2 » pour le service « $1 ».",
 	"embedvideo-error-width": "« EmbedVideo » a reçu une valeur erronée « $1 » pour le paramètre de largeur.",
 	"embedvideo-error-height": "« EmbedVideo » a reçu une valeur erronée « $1 » pour le paramètre de hauteur.",
-	"embedvideo-error-alignment": "« EmbedVideo » a reçu une valeur une valeur erronée « $1 » pour le paramètre d’alignement. Les valeurs valides sont « left » (gauche), « center » (centre), ou « right » (droite).",
+	"embedvideo-error-alignment": "« EmbedVideo » a reçu une valeur une valeur erronée « $1 » pour le paramètre d’alignement. Les valeurs valides sont « left » (gauche), « center » (centre) ou « right » (droite).",
 	"embedvideo-error-valignment": "« EmbedVideo » a reçu une valeur une valeur erronée « $1 » pour le paramètre d’alignement vertical. Les valeurs valides sont « top » (haut), « middle » (milieu), « bottom » (bas) ou « baseline » (ligne de base).",
 	"embedvideo-error-urlargs": "« EmbedVideo » a reçu une liste d’arguments d’URL qui contiennent des données malformées ou des arguments vides.",
 	"embedvideo-error-unknown": "« EmbedVideo » a rencontré une erreur inconnue en essayant de générer ce bloc d’intégration vidéo. ($1)",

@@ -29,7 +29,7 @@
 	"embedvideo-error-id": "EmbedVideo je prejel napačen ID »$2« za storitev »$1«.",
 	"embedvideo-error-width": "EmbedVideo je prejel neveljaven parameter širine »$1«.",
 	"embedvideo-error-height": "EmbedVideo je prejel neveljaven parameter višine »$1«.",
-	"embedvideo-error-alignment": "EmbedVideo je prejel nedovoljeno vrednost za parameter poravnave »$1«. Veljavne vrednosti so »left«, »center«, »right« ali »inline«.",
+	"embedvideo-error-alignment": "EmbedVideo je prejel nedovoljeno vrednost za parameter poravnave »$1«. Veljavne vrednosti so »left«, »center«, »right« ali »right«.",
 	"embedvideo-error-valignment": "EmbedVideo je prejel nedovoljeno vrednost za parameter poravnave »$1«. Veljavne vrednosti so »top«, »middle«, »bottom« ali »baseline«.",
 	"embedvideo-error-urlargs": "EmbedVideo je prejel seznam URL-argumentov, ki so vsebovali nepravilno oblikovane podatke ali prazne argumente.",
 	"embedvideo-error-unknown": "EmbedVideo je med poskusom ustvarjanja tega bloka za vdelavo videoposnetka naletel na neznano napako. ($1)",

@@ -22,7 +22,7 @@
 	"embedvideo-error-id": "视频嵌入收到了一个对服务“$1”不可用的id “$2“",
 	"embedvideo-error-width": "EmbedVideo收到了一个错误的高度参数“$1”",
 	"embedvideo-error-height": "EmbedVideo收到了一个错误的高度参数“$1”",
-	"embedvideo-error-alignment": "嵌入的视频被给予了对校准参数一个不可用的数值“$1”。可用的数值为“左”，“中心”，“右”，或“行内”。",
+	"embedvideo-error-alignment": "嵌入的视频被给予了对校准参数一个不可用的数值“$1”。可用的数值为“left”“center”或“right”。",
 	"embedvideo-error-valignment": "嵌入的视频被给予了对校准参数一个不可用的数值“$1”。可用的数值为“上”，“中间”，“下”，或“基线”。",
 	"embedvideo-error-urlargs": "嵌入视频接收到了一个涵盖出错方程和空白争论的URL争论列表。",
 	"embedvideo-error-unknown": "EmbedVideo在尝试生成该视频嵌入块时遇到了一个未知的错误。（$1）",

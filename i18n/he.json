@@ -10,7 +10,7 @@
 	"embedvideo-error-missingparams": "ל־EmbedVideo חסר פרמטר חובה.",
 	"embedvideo-error-service": "EmbedVideo לא מזהה את שירות הסרטונים \"$1\".",
 	"embedvideo-error-id": "EmbedVideo קיבל מזהה רע \"$2\" עבור השירות \"$1\".",
-	"embedvideo-error-alignment": "EmbedVideo קיבל ערך לא תקין עבור הפרמטר alignment \"$1\". הערכים התקינים הם \"left\"‏, \"center\"‏, \"right\" או \"inline\".",
+	"embedvideo-error-alignment": "EmbedVideo קיבל ערך לא תקין עבור הפרמטר alignment \"$1\". הערכים התקינים הם \"left\"‏, \"center\"‏ או \"right\".",
 	"embedvideo-error-valignment": "EmbedVideo קיבל ערך לא תקין עבור הפרמטר valignment \"$1\". הערכים התקינים הם \"top\"‏, \"middle\"‏, \"bottom\" או \"baseline\".",
 	"embedvideo-error-urlargs": "EmbedVideo קיבל רשימה של ארגומנטי URL שהכילו מידע פגום או ארגומנטים ריקים.",
 	"embedvideo-error-unknown": "EmbedVideo נתקל בשגיאה לא ידועה כשניסה לייצר את בלוק הטבעת הסרטון הזה. ($1)",
