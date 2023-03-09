@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Adom",
-			"MathXplore"
+			"MathXplore",
+			"もなー(偽物)"
 		]
 	},
 	"embedvideo-type-video": "動画",
@@ -18,5 +19,9 @@
 	"embedvideo-service-spotify": "Spotify",
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
-	"embedvideo-service-youtube": "YouTube"
+	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-error-alignment": "EmbedVideo の配置パラメータ \" $1 \" に不正な値が指定されました。有効な値は、\"left(左)\"、\"center(中央)\"、または\"right(右)\"です。",
+	"embedvideo-error-valignment": "EmbedVideo の valignment パラメータ \" $1 \" に不正な値が指定されました。有効な値は、\"top\"、\"middle\"、\"bottom\"、または \"baseline\" です。",
+	"embedvideo-error-unknown": "ビデオ埋め込みブロックを生成しようとしたときに、EmbedVideo で不明なエラーが発生しました。 ( $1 )",
+	"embedvideo-error-evp_deprecated": "#evp パーサー関数は、EmbedVideo 2.0 で廃止されました。パーサー関数タグを #ev に変換してください。"
 }
