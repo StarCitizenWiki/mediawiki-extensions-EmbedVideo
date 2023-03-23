@@ -52,5 +52,5 @@
 	"apihelp-embedvideo-param-description": "Beschreibung des Videos",
 	"apihelp-embedvideo-param-container": "Akzeptiert Rahmen, oder leer lassen",
 	"apihelp-embedvideo-param-urlargs": "Zusätzliche Argumente für die Übergabe der Video-URL (für einige Dienste)",
-	"apihelp-embedvideo-param-autoresize": "Automatische Größenänderung des Videos (true oder false))"
+	"apihelp-embedvideo-param-autoresize": "Automatische Größenanpassung des Videos? (true oder false)"
 }
