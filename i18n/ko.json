@@ -1,22 +1,25 @@
 {
 	"@metadata": {
 		"authors": [
-			"gaon12"
+			"Alistair3149",
+			"Ykhwong",
+			"gaon12",
+			"렌즈"
 		]
 	},
 	"embedvideo-description": "이 포크 버전은 인기 있는 플랫폼들의 비디오을 임베드하기 위한 파서 기능을 추가합니다.",
-	"embedvideo-load": "$1 로드",
-	"embedvideo-type-audio": "오디오",
+	"embedvideo-load": "$1 불러오기",
+	"embedvideo-type-audio": "소리",
 	"embedvideo-type-content": "콘텐츠",
-	"embedvideo-type-video": "비디오",
-	"embedvideo-consent-privacy-policy": "개인정보 처리방침",
-	"embedvideo-consent-privacy-notice-text": "$1은 개인 데이터를 수집할 수 있습니다.",
+	"embedvideo-type-video": "동영상",
+	"embedvideo-consent-privacy-policy": "개인정보보호정책",
+	"embedvideo-consent-privacy-notice-text": "$1에서 개인정보가 수집될 수 있습니다.",
 	"embedvideo-consent-privacy-notice-continue": "계속",
 	"embedvideo-consent-privacy-notice-dismiss": "취소",
 	"embedvideo-service-archiveorg": "Archive.org",
 	"embedvideo-service-bilibili": "빌리빌리",
-	"embedvideo-service-kakaotv": "카카오 TV",
-	"embedvideo-service-navertv": "네이버 TV",
+	"embedvideo-service-kakaotv": "카카오TV",
+	"embedvideo-service-navertv": "네이버TV",
 	"embedvideo-service-niconico": "니코니코 동화",
 	"embedvideo-service-soundcloud": "사운드 클라우드",
 	"embedvideo-service-spotify": "스포티파이",
