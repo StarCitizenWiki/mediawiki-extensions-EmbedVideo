@@ -76,16 +76,13 @@ final class Bilibili extends AbstractEmbedService {
 	}
 
 	/**
-	 * Add '&page=1' if not set through parser
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getUrl(): string {
-		$page = 'page=1';
 		if ( $this->getUrlArgs() !== false ) {
-			$page = $this->getUrlArgs();
+			return sprintf( '%s&%s', sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
 		}
 
-		return sprintf( '%s&%s', parent::getUrl(), $page );
+		return sprintf( $this->getBaseUrl(), $this->getId() );
 	}
 }
