@@ -29,7 +29,7 @@
 	"embedvideo-error-id": "EmbedVideo ha recipite le ID mal \"$2\" pro le servicio \"$1\".",
 	"embedvideo-error-width": "EmbedVideo ha recipe le parametro de latitude mal \"$1\".",
 	"embedvideo-error-height": "EmbedVideo ha recipe le parametro de altitude mal \"$1\".",
-	"embedvideo-error-alignment": "EmbedVideo ha recipite un valor non valide pro le parametro de alineamento \"$1\". Valores valide es \"left\", \"center\", \"right\", o \"inline\".",
+	"embedvideo-error-alignment": "EmbedVideo ha recipite un valor non valide pro le parametro de alineamento \"$1\". Valores valide es \"left\" (sinistra), \"center\" (centro) o \"right\" (dextra).",
 	"embedvideo-error-valignment": "EmbedVideo ha recipite un valor non valide pro le parametro de alineamento vertical \"$1\". Valores valide es \"top\", \"middle\", \"bottom\", o \"baseline\".",
 	"embedvideo-error-urlargs": "EmbedVideo ha recipite un lista de argumentos de URL que contineva datos mal formate o argumentos vacue.",
 	"embedvideo-error-unknown": "EmbedVideo ha incontrate un error incognite durante le tentativa de generar iste bloco de incastration de video. ($1)",

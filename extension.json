@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.2.5",
+	"version": "3.2.6",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
@@ -115,7 +115,7 @@
 		},
 		"EmbedVideoDefaultWidth": {
 			"description": "Default fallback width",
-			"value": 320
+			"value": 640
 		},
 		"FFProbeLocation": {
 			"description": "Location to ffprobe",

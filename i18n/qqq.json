@@ -1,9 +1,20 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"Robby"
 		]
 	},
 	"embedvideo-consent-privacy-notice-continue": "{{identical|Continue}}",
-	"embedvideo-consent-privacy-notice-dismiss": "{{identical|Dismiss}}"
+	"embedvideo-consent-privacy-notice-dismiss": "{{identical|Dismiss}}",
+	"embedvideo-service-archiveorg": "{{Optional}}",
+	"embedvideo-service-bilibili": "{{Optional}}",
+	"embedvideo-service-kakaotv": "{{Optional}}",
+	"embedvideo-service-navertv": "{{Optional}}",
+	"embedvideo-service-niconico": "{{Optional}}",
+	"embedvideo-service-soundcloud": "{{Optional}}",
+	"embedvideo-service-spotify": "{{Optional}}",
+	"embedvideo-service-twitch": "{{Optional}}",
+	"embedvideo-service-vimeo": "{{Optional}}",
+	"embedvideo-service-youtube": "{{Optional}}"
 }

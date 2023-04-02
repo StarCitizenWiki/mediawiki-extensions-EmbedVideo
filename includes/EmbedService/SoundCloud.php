@@ -30,14 +30,14 @@ final class SoundCloud extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getDefaultWidth(): int {
+	public function getDefaultWidth(): int {
 		return 186;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function getDefaultHeight(): int {
+	public function getDefaultHeight(): int {
 		return 496;
 	}
 

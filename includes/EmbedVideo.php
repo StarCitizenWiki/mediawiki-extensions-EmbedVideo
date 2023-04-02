@@ -497,6 +497,15 @@ class EmbedVideo {
 			$out->addModules( [
 				'ext.embedVideo.consent',
 			] );
+
+			$serviceAttributes = $this->service->getIframeAttributes();
+			$serviceAttributes['height'] = $this->service->getDefaultHeight();
+			$serviceAttributes['width'] = $this->service->getDefaultWidth();
+
+			$this->parser->getOutput()->setJsConfigVar(
+				sprintf( 'ev-%s-config', $this->service::getServiceName() ),
+				$serviceAttributes
+			);
 		}
 	}
 }

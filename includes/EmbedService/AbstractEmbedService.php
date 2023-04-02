@@ -190,7 +190,7 @@ abstract class AbstractEmbedService {
 	/**
 	 * Returns the service name
 	 * Unlike getServiceKey(), this can not be mutated so sub-services
-	 * can still use different message keyd
+	 * can still use different message keys
 	 *
 	 * @return string
 	 */
@@ -214,14 +214,14 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return int
 	 */
-	abstract protected function getDefaultWidth(): int;
+	abstract public function getDefaultWidth(): int;
 
 	/**
 	 * The default iframe height if no height is set specified
 	 *
 	 * @return int
 	 */
-	abstract protected function getDefaultHeight(): int;
+	abstract public function getDefaultHeight(): int;
 
 	/**
 	 * Array of regexes to validate a given service url

@@ -122,7 +122,10 @@
 				return;
 			}
 
-			iframeConfig = JSON.parse(iframeConfig);
+			iframeConfig = {
+				...mw.config.get('ev-' + ev.dataset.service + '-config') ?? [],
+				...JSON.parse(iframeConfig)
+			};
 
 			const loader = consentDiv.querySelector('.embedvideo-loader');
 			const privacyNotice = consentDiv.querySelector('.embedvideo-privacyNotice');
