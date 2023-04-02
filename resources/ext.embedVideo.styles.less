@@ -1,6 +1,7 @@
 .embedvideo {
 	margin: 0;
 	max-width: 100%; // no overflow
+	display: inline-block; // default to render inline, like default MW syntax
 
 	&-wrapper {
 		position: relative;
@@ -76,6 +77,16 @@
 		border-collapse: collapse;
 		clear: none;
 		float: none;
+	}
+
+	// Any horizontal alignment will render block, same as default MW syntax
+	&.mw-halign {
+		&-right,
+		&-left,
+		&-none,
+		&-center {
+			display: block;
+		}
 	}
 
 	figcaption {
