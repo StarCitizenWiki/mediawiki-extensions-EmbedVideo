@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"embedvideo-load": "Įkelti $1",
+	"embedvideo-type-audio": "garso įrašas",
+	"embedvideo-type-content": "turinys",
+	"embedvideo-type-video": "vaizdo įrašas",
+	"embedvideo-consent-privacy-policy": "Privatumo politika",
+	"embedvideo-consent-privacy-notice-text": "$1 gali rinkti asmens duomenis.",
+	"embedvideo-consent-privacy-notice-continue": "Tęsti",
+	"embedvideo-consent-privacy-notice-dismiss": "Paslėpti",
+	"embedvideo-service-archiveorg": "Archive.org",
+	"embedvideo-play": "Leisti vaizdo įrašą",
+	"embedvideo-error-missingparams": "EmbedVideo trūksta būtino parametro.",
+	"embedvideo-error-service": "EmbedVideo neatpažįsta vaizdo paslaugos „$1“.",
+	"embedvideo-error-id": "EmbedVideo gavo blogą paslaugos „$1“ ID „$2“.",
+	"embedvideo-error-width": "EmbedVideo gavo netinkamą pločio parametrą „$1“.",
+	"embedvideo-error-height": "„EmbedVideo“ gavo netinkamą aukščio parametrą „$1“.",
+	"embedvideo-error-alignment": "EmbedVideo pateikta neteisėta lygiavimo parametro „$1“ reikšmė. Tinkamos reikšmės yra „left“, „center“ arba „right“.",
+	"embedvideo-error-unknown": "Bandant sugeneruoti šį vaizdo įrašo įterpimo bloką, EmbedVideo įvyko nežinoma klaida. ($1)",
+	"apihelp-embedvideo-param-service": "Paslaugos pavadinimas (youtube, twitch ir kt.)",
+	"apihelp-embedvideo-param-id": "Tos paslaugos vaizdo įrašo ID",
+	"apihelp-embedvideo-param-dimensions": "Skaitinis plotis (100) arba plotis su aukščiu (100x100)",
+	"apihelp-embedvideo-param-alignment": "Vaizdo įrašo lygiavimas",
+	"apihelp-embedvideo-param-description": "Vaizdo įrašo aprašymas"
+}
