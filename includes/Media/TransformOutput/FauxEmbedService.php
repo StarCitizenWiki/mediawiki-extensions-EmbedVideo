@@ -62,14 +62,14 @@ class FauxEmbedService extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getDefaultWidth(): int {
+	public function getDefaultWidth(): int {
 		return (int)$this->transformOutput->getWidth();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function getDefaultHeight(): int {
+	public function getDefaultHeight(): int {
 		return (int)$this->transformOutput->getHeight();
 	}
 
