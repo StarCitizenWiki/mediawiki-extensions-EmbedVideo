@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Hedda",
+			"MrSchipunov",
 			"SaldırganSincap",
 			"ToprakM"
 		]
@@ -25,6 +26,7 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-fauxembedservice": "Yerel Dosya",
 	"embedvideo-play": "Videoyu Oynat",
 	"embedvideo-error-missingparams": "EmbedVideo'da kullanılması zorunlu bir parametre eksik.",
 	"embedvideo-error-service": "EmbedVideo, \"$1\" video hizmetini tanımıyor.",
