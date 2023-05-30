@@ -63,6 +63,9 @@ class VideoHandler extends AudioHandler {
 	 */
 	public function normaliseParams( $image, &$params ): bool {
 		parent::normaliseParams( $image, $params );
+		$config = MediaWikiServices::getInstance()
+			->getConfigFactory()
+			->makeConfig( 'EmbedVideo' );
 
 		if ( isset( $params['poster'] ) ) {
 			$title = Title::newFromText( $params['poster'], NS_FILE );
@@ -89,10 +92,7 @@ class VideoHandler extends AudioHandler {
 		if ( isset( $params['lazy'] ) ) {
 			$params['lazy'] = true;
 		} else {
-			$params['lazy'] = MediaWikiServices::getInstance()
-				->getConfigFactory()
-				->makeConfig( 'EmbedVideo' )
-				->get( 'EmbedVideoLazyLoadLocalVideos' );
+			$params['lazy'] = $config->get( 'EmbedVideoLazyLoadLocalVideos' );
 		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
@@ -100,8 +100,8 @@ class VideoHandler extends AudioHandler {
 
 		if ( $width === 0 && $height === 0 ) {
 			// Force a reset.
-			$width = 640;
-			$height = 360;
+			$width = $config->get( 'EmbedVideoDefaultWidth' );
+			$height = (int)( $width * ( 16 / 9 ) );
 		}
 
 		if ( isset( $params['width'] ) &&
@@ -118,10 +118,10 @@ class VideoHandler extends AudioHandler {
 
 			if ( !isset( $params['height'] ) ) {
 				// Page embeds do not specify thumbnail height so correct it here based on aspect ratio.
-				$params['height'] = round( $height / $width * $params['width'] );
+				$params['height'] = round( ( $height / $width ) * $params['width'] );
 			}
 		} else {
-			$params['width'] = $width;
+			$params['width'] = $config->get( 'EmbedVideoDefaultWidth' );
 		}
 
 		if ( isset( $params['height'] ) && $params['height'] > 0 && $params['height'] < $height ) {
