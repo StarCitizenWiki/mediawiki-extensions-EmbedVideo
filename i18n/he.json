@@ -22,6 +22,7 @@
 	"apihelp-embedvideo-param-dimensions": "רוחב נומרי (100) או רוחב לפי גובה (100x100)",
 	"apihelp-embedvideo-param-alignment": "יישור סרטון",
 	"apihelp-embedvideo-param-description": "תיאור סרטון",
+	"apihelp-embedvideo-param-container": "קבלת התמונית או השארתה ריקה",
 	"apihelp-embedvideo-param-urlargs": "ארגומנטים נוספים להעברה בקישור הסרטון (עבור שירותים מסוימים)",
 	"apihelp-embedvideo-param-autoresize": "האם לשנות את גודל הסרטון אוטומטית? (true או false)"
 }
