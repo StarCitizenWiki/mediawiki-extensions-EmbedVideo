@@ -23,6 +23,7 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-fauxembedservice": "File local",
 	"embedvideo-play": "Reproducer video",
 	"embedvideo-error-missingparams": "Manca un parametro requirite a EmbedVideo.",
 	"embedvideo-error-service": "EmbedVideo non recognosce le servicio de video \"$1\".",

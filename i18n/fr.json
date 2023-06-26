@@ -26,6 +26,7 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-fauxembedservice": "Fichier local",
 	"embedvideo-play": "Voir la vidéo",
 	"embedvideo-error-missingparams": "Il manque un paramètre obligatoire pour « EmbedVideo ».",
 	"embedvideo-error-service": "« EmbedVideo » ne reconnaît pas le service vidéo « $1 ».",

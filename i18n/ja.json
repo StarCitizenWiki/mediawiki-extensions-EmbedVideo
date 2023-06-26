@@ -3,6 +3,7 @@
 		"authors": [
 			"Adom",
 			"MathXplore",
+			"Shirayuki",
 			"もなー(偽物)"
 		]
 	},
@@ -20,8 +21,8 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-error-alignment": "EmbedVideo の配置パラメータ \" $1 \" に不正な値が指定されました。有効な値は、\"left(左)\"、\"center(中央)\"、または\"right(右)\"です。",
-	"embedvideo-error-valignment": "EmbedVideo の valignment パラメータ \" $1 \" に不正な値が指定されました。有効な値は、\"top\"、\"middle\"、\"bottom\"、または \"baseline\" です。",
-	"embedvideo-error-unknown": "ビデオ埋め込みブロックを生成しようとしたときに、EmbedVideo で不明なエラーが発生しました。 ( $1 )",
+	"embedvideo-error-alignment": "EmbedVideo の配置パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"left\"、\"center\"、\"right\" のいずれかです。",
+	"embedvideo-error-valignment": "EmbedVideo の valignment パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"top\"、\"middle\"、\"bottom\"、または \"baseline\" です。",
+	"embedvideo-error-unknown": "動画埋め込みブロックを生成しようとしたときに、EmbedVideo で不明なエラーが発生しました。($1)",
 	"embedvideo-error-evp_deprecated": "#evp パーサー関数は、EmbedVideo 2.0 で廃止されました。パーサー関数タグを #ev に変換してください。"
 }

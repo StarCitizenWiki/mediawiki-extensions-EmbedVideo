@@ -22,7 +22,7 @@ class VideoEmbedTransformOutput extends VideoTransformOutput {
 		return EmbedHtmlFormatter::toHtml( $service, [
 			'service' => 'local-embed',
 			'withConsent' => true,
-			'autoresize' => $this->parameters['autoresize'] === true,
+			'autoresize' => ( $this->parameters['autoresize'] ?? false ) === true,
 			'description' => $this->parameters['description'] ?? null,
 		] );
 	}

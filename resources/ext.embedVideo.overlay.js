@@ -1,10 +1,11 @@
 (function () {
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.local-embed .embedvideo-wrapper').forEach(function (div) {
+		document.querySelectorAll('[data-service="local-embed"] .embedvideo-wrapper').forEach(function (div) {
 			const clickListener = function () {
-				consentDiv.classList.add('hidden');
 				video.controls = true;
 				video.play();
+				consentDiv.removeEventListener('click', clickListener);
+				consentDiv.parentElement.removeChild(consentDiv);
 			};
 
 			const consentDiv = div.querySelector('.embedvideo-consent');
@@ -17,22 +18,6 @@
 			}
 
 			video.controls = false;
-
-			video.addEventListener('click', function () {
-				if (video.paused) {
-					return;
-				}
-
-				// Remove thumb after the user clicked play
-				const thumb = consentDiv.querySelector('.embedvideo-thumbnail');
-				if (thumb !== null) {
-					consentDiv.removeChild(thumb);
-				}
-
-				video.pause();
-				video.controls = false;
-				consentDiv.classList.remove('hidden');
-			});
 
 			consentDiv.addEventListener('click', clickListener);
 		})

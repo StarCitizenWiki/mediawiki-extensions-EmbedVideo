@@ -176,8 +176,13 @@ final class EmbedHtmlFormatter {
 	 * @return string The final html (can be empty on error or missing data)
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
+		$emptyThumb = '';
+		if ( $service->getServiceName() === 'fauxembedservice' ) {
+			$emptyThumb = '<div class="embedvideo-thumbnail"></div>';
+		}
+
 		if ( $service->getLocalThumb() === null ) {
-			return '';
+			return $emptyThumb;
 		}
 
 		try {
@@ -195,7 +200,7 @@ final class EmbedHtmlFormatter {
 				HTML;
 			// phpcs:enable
 		} catch ( Exception $e ) {
-			return '';
+			return $emptyThumb;
 		}
 	}
 
