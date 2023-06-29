@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"McDutchie",
 			"Robby"
 		]
 	},
@@ -9,6 +10,7 @@
 	"embedvideo-consent-privacy-notice-dismiss": "{{identical|Dismiss}}",
 	"embedvideo-service-archiveorg": "{{Optional}}",
 	"embedvideo-service-bilibili": "{{Optional}}",
+	"embedvideo-service-dailymotion": "Name of Dailymotion video streaming service, see https://www.dailymotion.com",
 	"embedvideo-service-kakaotv": "{{Optional}}",
 	"embedvideo-service-navertv": "{{Optional}}",
 	"embedvideo-service-niconico": "{{Optional}}",
