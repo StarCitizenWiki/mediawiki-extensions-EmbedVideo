@@ -27,9 +27,10 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bilibili::class,
 		DailyMotion::class,
-		Niconico::class,
-		NaverTV::class,
 		KakaoTV::class,
+		NaverTV::class,
+		Niconico::class,
+		SharePoint::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
@@ -38,8 +39,8 @@ final class EmbedServiceFactory {
 		TwitchClip::class,
 		TwitchVod::class,
 		Vimeo::class,
-		YouTubeOEmbed::class,
 		YouTube::class,
+		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
 	];
@@ -70,6 +71,9 @@ final class EmbedServiceFactory {
 
 			case 'kakaotv':
 				return new KakaoTV( $id );
+
+			case 'sharepoint':
+				return new SharePoint( $id );
 
 			case 'soundcloud':
 				return new SoundCloud( $id );
