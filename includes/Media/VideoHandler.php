@@ -102,7 +102,7 @@ class VideoHandler extends AudioHandler {
 		if ( $width === 0 && $height === 0 ) {
 			// Force a reset.
 			$width = $config->get( 'EmbedVideoDefaultWidth' );
-			$height = (int)( $width * ( 16 / 9 ) );
+			$height = (int)( $width / ( 16 / 9 ) );
 		}
 
 		if ( isset( $params['width'] ) &&
