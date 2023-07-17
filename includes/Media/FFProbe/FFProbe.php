@@ -68,7 +68,8 @@ class FFProbe {
 
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		$cacheKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $this->filename, $select );
-		$ttl = ( $this->file instanceof File || is_string( $this->file ) ) ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE;
+		$ttl = ( $this->file instanceof File || is_string( $this->file ) )
+			? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE;
 
 		$result = $cache->getWithSetCallback(
 			$cacheKey,
