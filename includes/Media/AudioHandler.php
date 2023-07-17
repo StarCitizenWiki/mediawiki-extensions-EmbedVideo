@@ -21,6 +21,13 @@ class AudioHandler extends MediaHandler {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	protected function useLegacyMetadata() {
+		return false;
+	}
+
+	/**
 	 * Get an associative array mapping magic word IDs to parameter names.
 	 * Will be used by the parser to identify parameters.
 	 *
@@ -146,25 +153,6 @@ class AudioHandler extends MediaHandler {
 	}
 
 	/**
-	 * Get an image size array like that returned by getimagesize(), or false if it
-	 * can't be determined.
-	 *
-	 * This function is used for determining the width, height and bitdepth directly
-	 * from an image. The results are stored in the database in the img_width,
-	 * img_height, img_bits fields.
-	 *
-	 * @note If this is a multipage file, return the width and height of the
-	 *  first page.
-	 *
-	 * @param File $file The file object, or false if there isn't one
-	 * @param string $path The filename
-	 * @return array|false An array following the format of PHP getimagesize() function or false if not supported.
-	 */
-	public function getImageSize( $file, $path ) {
-		return false;
-	}
-
-	/**
 	 * Get a MediaTransformOutput object representing the transformed output. Does the
 	 * transform unless $flags contains self::TRANSFORM_LATER.
 	 *
@@ -258,44 +246,54 @@ class AudioHandler extends MediaHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function getMetadata( $image, $path ): string {
+	public function getSizeAndMetadata( $state, $path ) {
 		[
 			'stream' => $stream,
 			'format' => $format,
-		] = $this->getFFProbeResult( $image );
+		] = $this->getFFProbeResult( $path );
 
-		$streamData = [];
-		$formatData = [];
+		$data = [
+			'metadata' => [],
+		];
+
 		if ( $stream !== false ) {
-			$streamData = [
+			$data['metadata'] = [
 				'duration' => $stream->getDuration(),
 				'codec' => $stream->getCodecName(),
 				'bitdepth' => $stream->getBitDepth(),
 			];
 
 			if ( !empty( $stream->getWidth() ) ) {
-				$streamData['width'] = $stream->getWidth();
-				$streamData['height'] = $stream->getHeight();
+				$data['width'] = $stream->getWidth();
+				$data['height'] = $stream->getHeight();
 			}
 		}
 
 		if ( $format !== false ) {
-			$formatData = [
-				'bitrate' => $format->getBitRate(),
-			];
+			$data['bits'] = $format->getBitRate();
 		}
 
-		return serialize( array_merge( $streamData, $formatData ) );
+		return $data;
 	}
 
 	/**
 	 * Runs FFProbe and caches results in the Main WAN Object cache
 	 *
-	 * @param FSFile|File $file The file to work on
+	 * @param string|FSFile|File $file The file to work on
 	 * @param string $select Video / Audio track to select
 	 * @return array
 	 */
 	protected function getFFProbeResult( $file, string $select = 'v:0' ): array {
+		if ( $file instanceof File ) {
+			$file = $file->getLocalRefPath();
+		} elseif ( $file instanceof FSFile ) {
+			$file = $file->getPath();
+		}
+
+		if ( $file === false ) {
+			return [];
+		}
+
 		$probe = new FFProbe( $file );
 
 		return [

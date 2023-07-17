@@ -11,6 +11,7 @@ use FSFile;
 use JsonException;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\ProcOpenError;
+use MediaWiki\Settings\SettingsBuilder;
 use MediaWiki\Shell\Shell;
 use MediaWiki\ShellDisabledError;
 use Wikimedia\LightweightObjectStore\ExpirationAwareness;
@@ -19,7 +20,12 @@ class FFProbe {
 	/**
 	 * MediaWiki File
 	 *
-	 * @var File|FSFile
+	 * @var string
+	 */
+	private $filename;
+
+	/**
+	 * @var FSFile|File|string
 	 */
 	private $file;
 
@@ -33,10 +39,12 @@ class FFProbe {
 	/**
 	 * Main Constructor
 	 *
-	 * @param File|FSFile $file MediaWiki File
+	 * @param string $filename MediaWiki File name
+	 * @param FSFile|File|string $file
 	 * @return void
 	 */
-	public function __construct( $file ) {
+	public function __construct( $filename, $file ) {
+		$this->filename = $filename;
 		$this->file = $file;
 	}
 
@@ -47,40 +55,33 @@ class FFProbe {
 	 * @return bool Flag if loading did succeed
 	 */
 	public function loadMetaData( string $select = 'v:0' ): bool {
-		if ( $this->file instanceof FSFile ) {
-			$cacheKey = $this->file->getSha1Base36();
-		} else {
-			$cacheKey = $this->file->getSha1();
+		// If this is in a maintenance call context, don't use the cache
+		if ( isset( $GLOBALS['wgSettings'] ) && $GLOBALS['wgSettings'] instanceof SettingsBuilder ) {
+			$isMaintenance = $GLOBALS['wgSettings']->getConfig()->get( 'CommandLineMode' );
+			if ( $isMaintenance ) {
+				$metadata = $this->invokeFFProbe();
+				$this->metadata = $metadata;
+
+				return is_array( $metadata );
+			}
 		}
 
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$cacheKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $cacheKey, $select );
+		$cacheKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $this->filename, $select );
+		$ttl = ( $this->file instanceof File || is_string( $this->file ) ) ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE;
 
 		$result = $cache->getWithSetCallback(
 			$cacheKey,
-			// FSFiles are usually only present for uploads(?), only "real" files are relevant
-			$this->file instanceof File ? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE,
+			$ttl,
 			function ( $old, &$ttl ) {
-				if ( $this->file instanceof FSFile ) {
-					$title = 'Newly uploaded file';
-				} else {
-					$title = $this->file->getTitle();
-					$title = $title !== null ? $title->getBaseText() : 'Untitled file';
-				}
-
-				wfDebugLog(
-					'EmbedVideo',
-					sprintf( 'Writing FFProbe Cache for %s', $title )
-				);
-
 				$result = $this->invokeFFProbe();
 
-				if ( $result === false ) {
+				if ( $result === null ) {
 					$ttl = ExpirationAwareness::TTL_UNCACHEABLE;
 					return $old;
 				}
 
-				return $this->metadata;
+				return $result;
 			}
 		);
 
@@ -163,31 +164,26 @@ class FFProbe {
 	 * @return bool|string
 	 */
 	private function getFilePath() {
-		if ( $this->file instanceof FSFile ) {
-			return $this->file->getPath();
-		}
-
-		return $this->file->getLocalRefPath();
+		return $this->filename;
 	}
 
 	/**
 	 * Invoke ffprobe on the command line.
 	 *
-	 * @return bool Success
+	 * @return array|null Success
 	 */
-	private function invokeFFProbe(): bool {
+	private function invokeFFProbe(): ?array {
 		try {
 			$ffprobeLocation = MediaWikiServices::getInstance()
 				->getConfigFactory()
 				->makeConfig( 'EmbedVideo' )
 				->get( 'FFProbeLocation' );
 		} catch ( ConfigException $e ) {
-			return false;
+			return null;
 		}
 
 		if ( Shell::isDisabled() || $ffprobeLocation === false || !file_exists( $ffprobeLocation ) ) {
-			$this->metadata = [];
-			return false;
+			return null;
 		}
 
 		$command = Shell::command( $ffprobeLocation );
@@ -206,17 +202,13 @@ class FFProbe {
 			$json = json_decode( $result->getStdout(), true, 512, JSON_THROW_ON_ERROR );
 		} catch ( Exception | JsonException | ShellDisabledError | ProcOpenError $e ) {
 			wfLogWarning( $e->getMessage() );
-			$this->metadata = [];
-			return false;
+			return null;
 		}
 
 		if ( is_array( $json ) ) {
-			$this->metadata = $json;
-		} else {
-			$this->metadata = [];
-			return false;
+			return $json;
 		}
 
-		return true;
+		return null;
 	}
 }
