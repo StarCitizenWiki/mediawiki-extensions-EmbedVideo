@@ -284,17 +284,19 @@ class AudioHandler extends MediaHandler {
 	 * @return array
 	 */
 	protected function getFFProbeResult( $file, string $select = 'v:0' ): array {
+		$path = $file;
+
 		if ( $file instanceof File ) {
-			$file = $file->getLocalRefPath();
+			$path = $file->getLocalRefPath();
 		} elseif ( $file instanceof FSFile ) {
-			$file = $file->getPath();
+			$path = $file->getPath();
 		}
 
 		if ( $file === false ) {
 			return [];
 		}
 
-		$probe = new FFProbe( $file );
+		$probe = new FFProbe( $path, $file );
 
 		return [
 			'stream' => $probe->getStream( $select ),
