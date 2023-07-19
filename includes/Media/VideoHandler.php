@@ -59,7 +59,7 @@ class VideoHandler extends AudioHandler {
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
 	 * @param File $image File
-	 * @param array $params Parameters
+	 * @param array &$params Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $image, &$params ): bool {
@@ -97,7 +97,10 @@ class VideoHandler extends AudioHandler {
 		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
-		[ $width, $height ] = $this->getSizeAndMetadata( new TrivialMediaHandlerState(), $image->getLocalRefPath() );
+		[ 'width' => $width, 'height' => $height ] = $this->getSizeAndMetadata(
+			new TrivialMediaHandlerState(),
+			$image->getLocalRefPath()
+		);
 
 		if ( $width === 0 && $height === 0 ) {
 			// Force a reset.
