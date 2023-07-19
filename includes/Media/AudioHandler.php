@@ -256,7 +256,7 @@ class AudioHandler extends MediaHandler {
 			'metadata' => [],
 		];
 
-		if ( $stream !== false ) {
+		if ( $stream !== false && $stream !== null ) {
 			$data['metadata'] = [
 				'duration' => $stream->getDuration(),
 				'codec' => $stream->getCodecName(),
@@ -269,7 +269,7 @@ class AudioHandler extends MediaHandler {
 			}
 		}
 
-		if ( $format !== false ) {
+		if ( $format !== false && $format !== null ) {
 			$data['bits'] = $format->getBitRate();
 		}
 
