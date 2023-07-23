@@ -58,6 +58,7 @@ Downloadable archive packages for numbered releases will also be available from 
 1. Download the contents of the extension, as outlined above.
 2. Create an EmbedVideo folder in the extensions/ folder of your MediaWiki installation.
 3. Copy the contents of this distribution into that folder
+4. Install FFmpeg, when using the local video handler (enabled by default)
 
 Add the following line to your LocalSettings.php:
 
