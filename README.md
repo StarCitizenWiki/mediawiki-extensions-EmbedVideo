@@ -152,6 +152,9 @@ E.g. using named id and unnamed description `{{#ev:service||||This is the Descri
 
 ## Examples
 
+## SharePoint
+For more information on SharePoint embeds see [Issue #60](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/60).
+
 ### YouTube Examples
 
 #### YouTube Example #1
@@ -230,6 +233,7 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 | [KakaoTV](https://tv.kakao.com/)                         | `kakaotv`                       | 301157950                                              | https://play-tv.kakao.com/embed/player/cliplink/301157950                                                                 |
 | [NaverTV](https://tv.naver.com/)                         | `navertv`                       | 27831593                                               | https://tv.naver.com/embed/27831593                                                                                       |
 | [Niconico](http://nicovideo.jp/)                         | `niconico`                      | sm40807360                                             | https://embed.nicovideo.jp/watch/sm40807360                                                                               |
+| SharePoint                                               | `sharepoint`                    | Not Applicable                                         | https://[SUB].sharepoint.com/sites/[PATH]/_layouts/15/embed.aspx?UniqueId=[ID]&embed=[...]                                |
 | [SoundCloud](http://soundcloud.com/)                     | `soundcloud`                    |                                                        | https://soundcloud.com/skrillex/skrillex-rick-ross-purple-lamborghini                                                     |
 | [Spotify](http://spotify.com/)                           | `spotifyalbum` - Art embed      | 3B61kSKTxlY36cYgzvf3cP                                 | https://open.spotify.com/album/3B61kSKTxlY36cYgzvf3cP                                                                     |
 | [Spotify](http://spotify.com/)                           | `spotifyartist` - Artist embed  | 0YC192cP3KPCRWx8zr8MfZ                                 | https://open.spotify.com/artist/0YC192cP3KPCRWx8zr8MfZ                                                                    |
