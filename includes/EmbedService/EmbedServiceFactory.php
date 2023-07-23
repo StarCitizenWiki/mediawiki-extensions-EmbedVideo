@@ -28,6 +28,7 @@ final class EmbedServiceFactory {
 		Bilibili::class,
 		DailyMotion::class,
 		KakaoTV::class,
+		Loom::class,
 		NaverTV::class,
 		Niconico::class,
 		SharePoint::class,
@@ -62,15 +63,18 @@ final class EmbedServiceFactory {
 			case 'dailymotion':
 				return new DailyMotion( $id );
 
+			case 'kakaotv':
+				return new KakaoTV( $id );
+
+			case 'loom':
+				return new Loom( $id );
+
 			case 'nicovideo':
 			case 'niconico':
 				return new Niconico( $id );
 
 			case 'navertv':
 				return new NaverTV( $id );
-
-			case 'kakaotv':
-				return new KakaoTV( $id );
 
 			case 'sharepoint':
 				return new SharePoint( $id );
