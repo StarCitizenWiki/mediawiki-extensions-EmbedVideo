@@ -153,7 +153,7 @@ E.g. using named id and unnamed description `{{#ev:service||||This is the Descri
 ## Examples
 
 ## SharePoint
-For more information on SharePoint embeds see [Issue #60](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/60).
+For more information on SharePoint embeds see [Issue #60](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/60#issuecomment-1641493146).
 
 ### YouTube Examples
 
