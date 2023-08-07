@@ -11,6 +11,9 @@ const fetchFactory = function (service) {
 		case 'bilibili':
 			//fetcher = require('./bilibili.js').fetcher;
 			break;
+		case 'loom':
+			fetcher = oEmbedFetchers.loom;
+			break;
 		// Niconico is missing CORS headers
 		case 'niconico':
 			//fetcher = require('./niconico.js').fetcher;

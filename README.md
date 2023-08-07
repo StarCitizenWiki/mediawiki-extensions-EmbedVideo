@@ -58,6 +58,7 @@ Downloadable archive packages for numbered releases will also be available from 
 1. Download the contents of the extension, as outlined above.
 2. Create an EmbedVideo folder in the extensions/ folder of your MediaWiki installation.
 3. Copy the contents of this distribution into that folder
+4. Install FFmpeg, when using the local video handler (enabled by default)
 
 Add the following line to your LocalSettings.php:
 
@@ -151,6 +152,9 @@ E.g. using named id and unnamed description `{{#ev:service||||This is the Descri
 
 ## Examples
 
+## SharePoint
+For more information on SharePoint embeds see [Issue #60](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/60#issuecomment-1641493146).
+
 ### YouTube Examples
 
 #### YouTube Example #1
@@ -225,9 +229,12 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 |----------------------------------------------------------|---------------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 | [Archive.org Videos](https://archive.org/details/movies) | `archiveorg`                    | electricsheep-flock-244-80000-6                        | https://archive.org/details/electricsheep-flock-244-80000-6<br/>https://archive.org/embed/electricsheep-flock-244-80000-6 |
 | [Bilibili](https://www.bilibili.com/)                    | `bilibili`                      | BV1Hz4y1k7ae                                           | https://player.bilibili.com/player.html?bvid=1Hz4y1k7ae&amp;page=1                                                        |
-| [KakaoTV](https://tv.kakao.com/)                         | `kakaotv`                      | 301157950                                             | https://play-tv.kakao.com/embed/player/cliplink/301157950                                                                               |
-| [NaverTV](https://tv.naver.com/)                         | `navertv`                      | 27831593                                             | https://tv.naver.com/embed/27831593                                                                               |
+| [DailyMotion](https://dailymotion.com/)                  | `dailymotion`                   | x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms  | http://www.dailymotion.com/video/x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms                                    |
+| [KakaoTV](https://tv.kakao.com/)                         | `kakaotv`                       | 301157950                                              | https://play-tv.kakao.com/embed/player/cliplink/301157950                                                                 |
+| [Loom](https://www.loom.com/)                            | `loom`                          | e5b8c04bca094dd8a5507925ab887002                       | https://www.loom.com/share/e5b8c04bca094dd8a5507925ab887002                                                               |
+| [NaverTV](https://tv.naver.com/)                         | `navertv`                       | 27831593                                               | https://tv.naver.com/embed/27831593                                                                                       |
 | [Niconico](http://nicovideo.jp/)                         | `niconico`                      | sm40807360                                             | https://embed.nicovideo.jp/watch/sm40807360                                                                               |
+| SharePoint                                               | `sharepoint`                    | Not Applicable                                         | https://[SUB].sharepoint.com/sites/[PATH]/_layouts/15/embed.aspx?UniqueId=[ID]&embed=[...]                                |
 | [SoundCloud](http://soundcloud.com/)                     | `soundcloud`                    |                                                        | https://soundcloud.com/skrillex/skrillex-rick-ross-purple-lamborghini                                                     |
 | [Spotify](http://spotify.com/)                           | `spotifyalbum` - Art embed      | 3B61kSKTxlY36cYgzvf3cP                                 | https://open.spotify.com/album/3B61kSKTxlY36cYgzvf3cP                                                                     |
 | [Spotify](http://spotify.com/)                           | `spotifyartist` - Artist embed  | 0YC192cP3KPCRWx8zr8MfZ                                 | https://open.spotify.com/artist/0YC192cP3KPCRWx8zr8MfZ                                                                    |

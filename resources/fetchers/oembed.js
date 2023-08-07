@@ -33,6 +33,10 @@ const kakaotv = function(url) {
 	return oembed('https://tv.kakao.com/oembed?url=' + url);
 };
 
+const loom = function(url) {
+	return oembed('https://www.loom.com/v1/oembed?url=https://www.loom.com/share/' + url);
+};
+
 const oembed = function(url) {
 	return fetch(url, {
 		credentials: "omit",
@@ -60,6 +64,7 @@ const oembed = function(url) {
 module.exports = {
 	navertv,
 	kakaotv,
+	loom,
 	youtube,
 	vimeo,
 	spotifyalbum,

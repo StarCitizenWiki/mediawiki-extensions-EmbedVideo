@@ -26,9 +26,12 @@ final class EmbedServiceFactory {
 	private static $availableServices = [
 		ArchiveOrg::class,
 		Bilibili::class,
-		Niconico::class,
-		NaverTV::class,
+		DailyMotion::class,
 		KakaoTV::class,
+		Loom::class,
+		NaverTV::class,
+		Niconico::class,
+		SharePoint::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
@@ -37,8 +40,8 @@ final class EmbedServiceFactory {
 		TwitchClip::class,
 		TwitchVod::class,
 		Vimeo::class,
-		YouTubeOEmbed::class,
 		YouTube::class,
+		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
 	];
@@ -57,6 +60,15 @@ final class EmbedServiceFactory {
 			case 'bilibili':
 				return new Bilibili( $id );
 
+			case 'dailymotion':
+				return new DailyMotion( $id );
+
+			case 'kakaotv':
+				return new KakaoTV( $id );
+
+			case 'loom':
+				return new Loom( $id );
+
 			case 'nicovideo':
 			case 'niconico':
 				return new Niconico( $id );
@@ -64,8 +76,8 @@ final class EmbedServiceFactory {
 			case 'navertv':
 				return new NaverTV( $id );
 
-			case 'kakaotv':
-				return new KakaoTV( $id );
+			case 'sharepoint':
+				return new SharePoint( $id );
 
 			case 'soundcloud':
 				return new SoundCloud( $id );

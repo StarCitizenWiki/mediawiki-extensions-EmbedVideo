@@ -12,6 +12,7 @@ use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
 use Title;
+use TrivialMediaHandlerState;
 
 class VideoHandler extends AudioHandler {
 	/**
@@ -58,7 +59,7 @@ class VideoHandler extends AudioHandler {
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
 	 * @param File $image File
-	 * @param array $params Parameters
+	 * @param array &$params Parameters
 	 * @return bool Success
 	 */
 	public function normaliseParams( $image, &$params ): bool {
@@ -96,12 +97,15 @@ class VideoHandler extends AudioHandler {
 		}
 
 		// Note: MediaHandler declares getImageSize with a local path, but we don't need it here.
-		[ $width, $height ] = $this->getImageSize( $image, '' );
+		[ 'width' => $width, 'height' => $height ] = $this->getSizeAndMetadata(
+			new TrivialMediaHandlerState(),
+			$image->getLocalRefPath()
+		);
 
 		if ( $width === 0 && $height === 0 ) {
 			// Force a reset.
 			$width = $config->get( 'EmbedVideoDefaultWidth' );
-			$height = (int)( $width * ( 16 / 9 ) );
+			$height = (int)( $width / ( 16 / 9 ) );
 		}
 
 		if ( isset( $params['width'] ) &&
@@ -136,27 +140,6 @@ class VideoHandler extends AudioHandler {
 		}
 
 		return true;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getImageSize( $file, $path ): array {
-		[
-			'stream' => $stream,
-		] = $this->getFFProbeResult( $file );
-
-		if ( $stream !== false ) {
-			return [
-				$stream->getWidth(),
-				$stream->getHeight(),
-				0,
-				sprintf( 'width="%s" height="%s"', $stream->getWidth(), $stream->getHeight() ),
-				'bits' => $stream->getBitDepth()
-			];
-		}
-
-		return [ 0, 0, 0, 'width="0" height="0"', 'bits' => 0 ];
 	}
 
 	/**
