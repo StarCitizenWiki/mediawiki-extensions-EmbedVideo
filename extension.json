@@ -150,7 +150,7 @@
 			"services": [
 				"ConfigFactory",
 				"RepoGroup",
-				"WANObjectCache"
+				"MainWANObjectCache"
 			]
 		}
 	},
