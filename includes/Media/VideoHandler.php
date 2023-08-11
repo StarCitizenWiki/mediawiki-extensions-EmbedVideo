@@ -76,12 +76,8 @@ class VideoHandler extends AudioHandler {
 				$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
 				try {
-					if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
-						$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $transform->getUrl() );
-					} else {
-						$url = wfExpandUrl( $transform->getUrl() );
-					}
-					$params['posterUrl'] = $url;
+					$params['posterUrl'] = $url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $transform->getUrl() );
+
 				} catch ( Exception $e ) {
 					unset( $params['poster'], $params['posterUrl'] );
 				}
