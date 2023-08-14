@@ -9,8 +9,6 @@
 	"embedvideo-description": "Lägger till en parser-funktion för att bädda in videor från populära källor.",
 	"embedvideo-type-audio": "ljud",
 	"embedvideo-type-content": "innehåll",
-	"embedvideo-service-twitch": "Twitch",
-	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-error-missingparams": "EmbedVideo - En obligatorisk parameter har utelämnats.",
 	"embedvideo-error-service": "EmbedVideo - Känner inte till videotjänsten \"$1\".",
 	"embedvideo-error-id": "EmbedVideo - Felaktig id \"$2\" för tjänsten \"$1\" har angivits.",

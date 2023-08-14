@@ -10,13 +10,17 @@
 	"embedvideo-consent-privacy-notice-dismiss": "{{identical|Dismiss}}",
 	"embedvideo-service-archiveorg": "{{Optional}}",
 	"embedvideo-service-bilibili": "{{Optional}}",
-	"embedvideo-service-dailymotion": "Name of Dailymotion video streaming service, see https://www.dailymotion.com",
+	"embedvideo-service-dailymotion": "{{optional}}\nName of Dailymotion video streaming service, see https://www.dailymotion.com",
 	"embedvideo-service-kakaotv": "{{Optional}}",
+	"embedvideo-service-loom": "{{optional}}",
 	"embedvideo-service-navertv": "{{Optional}}",
 	"embedvideo-service-niconico": "{{Optional}}",
 	"embedvideo-service-soundcloud": "{{Optional}}",
+	"embedvideo-service-sharepoint": "{{optional}}",
 	"embedvideo-service-spotify": "{{Optional}}",
 	"embedvideo-service-twitch": "{{Optional}}",
 	"embedvideo-service-vimeo": "{{Optional}}",
-	"embedvideo-service-youtube": "{{Optional}}"
+	"embedvideo-service-youtube": "{{Optional}}",
+	"embedvideo-video-short-desc": "{{optional}}",
+	"embedvideo-audio-short-desc": "{{optional}}"
 }

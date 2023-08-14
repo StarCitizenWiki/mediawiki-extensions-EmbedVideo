@@ -12,7 +12,6 @@
 	"embedvideo-consent-privacy-notice-text": "$1 gali rinkti asmens duomenis.",
 	"embedvideo-consent-privacy-notice-continue": "Tęsti",
 	"embedvideo-consent-privacy-notice-dismiss": "Paslėpti",
-	"embedvideo-service-archiveorg": "Archive.org",
 	"embedvideo-play": "Leisti vaizdo įrašą",
 	"embedvideo-error-missingparams": "EmbedVideo trūksta būtino parametro.",
 	"embedvideo-error-service": "EmbedVideo neatpažįsta vaizdo paslaugos „$1“.",
