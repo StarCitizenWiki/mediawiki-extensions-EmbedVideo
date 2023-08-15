@@ -177,7 +177,8 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
 		$emptyThumb = '';
-		if ( in_array( $service::getServiceName(), [ LocalVideo::getServiceName(), ExternalVideo::getServiceName() ], true ) ) {
+		$emptyThumbServices = [ LocalVideo::getServiceName(), ExternalVideo::getServiceName() ];
+		if ( in_array( $service::getServiceName(), $emptyThumbServices, true ) ) {
 			$emptyThumb = '<div class="embedvideo-thumbnail"></div>';
 		}
 

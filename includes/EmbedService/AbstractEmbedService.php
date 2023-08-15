@@ -42,6 +42,7 @@ abstract class AbstractEmbedService {
 	 * @var string
 	 */
 	protected $id;
+	protected $unparsedId;
 
 	/**
 	 * Width of the iframe
@@ -101,6 +102,7 @@ abstract class AbstractEmbedService {
 			self::$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
 		}
 
+		$this->unparsedId = $id;
 		$this->id = $this->parseVideoID( $id );
 	}
 
@@ -186,8 +188,8 @@ abstract class AbstractEmbedService {
 	 * @return float|null
 	 */
 	public function getAspectRatio(): ?float {
-        return $this->getDefaultWidth() / $this->getDefaultHeight();
-    }
+		return $this->getDefaultWidth() / $this->getDefaultHeight();
+	}
 
 	/**
 	 * Returns the service name
@@ -216,18 +218,18 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return int
 	 */
-    public function getDefaultWidth(): int {
-        return 640;
-    }
+	public function getDefaultWidth(): int {
+		return 640;
+	}
 
 	/**
 	 * The default iframe height if no height is set specified
 	 *
 	 * @return int
 	 */
-    public function getDefaultHeight(): int {
-        return 360;
-    }
+	public function getDefaultHeight(): int {
+		return 360;
+	}
 
 	/**
 	 * Array of regexes to validate a given service url
