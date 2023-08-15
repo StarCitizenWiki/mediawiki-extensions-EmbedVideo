@@ -96,6 +96,11 @@
 			const wrapper = ev.querySelector('.embedvideo-wrapper');
 
 			const makeIframe = function (event) {
+				if (ev?.dataset?.service === 'externalvideo' || ev?.dataset?.service === 'local-embed') {
+					event.target.removeEventListener('click', makeIframe);
+					wrapper.removeChild(consentDiv);
+					return;
+				}
 				const iframe = document.createElement('iframe');
 
 				for (const [key, value] of Object.entries(iframeConfig)) {

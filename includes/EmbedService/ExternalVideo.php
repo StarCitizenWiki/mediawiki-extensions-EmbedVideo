@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use InvalidArgumentException;
-use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\ExternalVideoTransformOutput;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use Message;
@@ -70,16 +70,26 @@ final class ExternalVideo extends AbstractEmbedService {
 	 * @return string
 	 */
 	public function __toString() {
-		if ( isset( $this->properties['likeEmbed'] ) ) {
-			unset( $this->properties['poster'] );
-		}
+		$file = new class( false, false, $this->id, 'video/mp4' ) extends UnregisteredLocalFile {
+			public function __construct( $title = false, $repo = false, $path = false, $mime = false ) {
+				parent::__construct( $title, $repo, $path, $mime );
+				$this->url = $path;
+			}
 
-		$service = new ExternalVideoTransformOutput(
+			public function getUrl() {
+				return $this->path;
+			}
+		};
+
+		$service = new VideoTransformOutput(
 			// This is just 'some' file that won't be used any further
-			UnregisteredLocalFile::newFromPath( '/tmp', 'video/mp4' ),
-			$this->properties
+			$file,
+			[
+				'width' => $this->getWidth(),
+				'height' => $this->getHeight(),
+				'lazy' => false,
+			]
 		);
-		$service->setUrl( $this->id );
 
 		return $service->toHtml();
 	}

@@ -25,7 +25,7 @@ class LocalVideo extends AbstractEmbedService {
 	 *
 	 * @var array
 	 */
-	private $properties;
+	protected $properties;
 
 	/**
 	 * @param MediaTransformOutput $transformOutput
