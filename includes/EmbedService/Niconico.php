@@ -33,13 +33,6 @@ final class Niconico extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://en.dwango.co.jp/terms/privacy/';
 	}

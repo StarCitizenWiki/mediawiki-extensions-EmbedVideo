@@ -33,13 +33,6 @@ final class Loom extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://www.loom.com/privacy-policy';
 	}

@@ -137,7 +137,7 @@ abstract class AbstractEmbedService {
 	 * @return string
 	 */
 	public function getContentType(): ?string {
-		return 'content';
+		return 'video';
 	}
 
 	/**
@@ -236,14 +236,18 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return array
 	 */
-	abstract protected function getUrlRegex(): array;
+	protected function getUrlRegex(): array {
+		return [];
+	}
 
 	/**
 	 * Array of regexes to validate a given embed id
 	 *
 	 * @return array
 	 */
-	abstract protected function getIdRegex(): array;
+	protected function getIdRegex(): array {
+		return [];
+	}
 
 	/**
 	 * Returns the full url to the embed
@@ -263,7 +267,9 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return array
 	 */
-	abstract public function getCSPUrls(): array;
+	public function getCSPUrls(): array {
+		return [];
+	}
 
 	/**
 	 * Set the width of the player. This also will set the height automatically.

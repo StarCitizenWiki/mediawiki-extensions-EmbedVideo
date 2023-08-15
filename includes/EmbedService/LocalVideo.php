@@ -54,13 +54,6 @@ class LocalVideo extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return $this->transformOutput->getWidth() / $this->transformOutput->getHeight();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getDefaultWidth(): int {
 		return (int)$this->transformOutput->getWidth();
 	}
@@ -70,27 +63,6 @@ class LocalVideo extends AbstractEmbedService {
 	 */
 	public function getDefaultHeight(): int {
 		return (int)$this->transformOutput->getHeight();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getUrlRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getCSPUrls(): array {
-		return [];
 	}
 
 	/**

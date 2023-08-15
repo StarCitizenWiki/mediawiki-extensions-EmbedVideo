@@ -58,20 +58,6 @@ final class ExternalVideo extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getCSPUrls(): array {
 		return [
 			$this->id,

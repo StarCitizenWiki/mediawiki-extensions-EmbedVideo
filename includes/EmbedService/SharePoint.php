@@ -31,20 +31,6 @@ final class SharePoint extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://privacy.microsoft.com/en-us/privacystatement';
 	}
@@ -62,6 +48,6 @@ final class SharePoint extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getUrl(): string {
-	 return $this->id;
+		return $this->id;
 	}
 }

@@ -55,13 +55,6 @@ final class ArchiveOrg extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://archive.org/about/terms.php';
 	}

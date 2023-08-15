@@ -34,13 +34,6 @@ final class KakaoTV extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://www.kakao.com/policy/privacy';
 	}
