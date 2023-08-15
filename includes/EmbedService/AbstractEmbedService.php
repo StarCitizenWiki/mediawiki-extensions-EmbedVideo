@@ -185,7 +185,9 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return float|null
 	 */
-	abstract public function getAspectRatio(): ?float;
+	public function getAspectRatio(): ?float {
+        return $this->getDefaultWidth() / $this->getDefaultHeight();
+    }
 
 	/**
 	 * Returns the service name
@@ -214,14 +216,18 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return int
 	 */
-	abstract public function getDefaultWidth(): int;
+    public function getDefaultWidth(): int {
+        return 640;
+    }
 
 	/**
 	 * The default iframe height if no height is set specified
 	 *
 	 * @return int
 	 */
-	abstract public function getDefaultHeight(): int;
+    public function getDefaultHeight(): int {
+        return 360;
+    }
 
 	/**
 	 * Array of regexes to validate a given service url

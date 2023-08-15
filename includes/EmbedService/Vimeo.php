@@ -23,27 +23,6 @@ final class Vimeo extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 640 / 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#vimeo\.com/([\d]+)#is',

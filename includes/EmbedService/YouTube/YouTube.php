@@ -17,29 +17,8 @@ class YouTube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getServiceKey(): string {
 		return 'youtube';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
 	}
 
 	/**
