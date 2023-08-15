@@ -12,6 +12,7 @@ class YouTube extends AbstractEmbedService {
 	 */
 	protected $additionalIframeAttributes = [
 		'modestbranding' => 1,
+		'allowfullscreen' => 'true',
 	];
 
 	/**
