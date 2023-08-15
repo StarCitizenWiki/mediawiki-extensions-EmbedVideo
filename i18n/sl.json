@@ -13,7 +13,7 @@
 	"embedvideo-consent-privacy-notice-text": "$1 mogoče zbira osebne podatke.",
 	"embedvideo-consent-privacy-notice-continue": "Nadaljuj",
 	"embedvideo-consent-privacy-notice-dismiss": "Opusti",
-	"embedvideo-service-fauxembedservice": "Lokalna datoteka",
+	"embedvideo-service-localvideo": "Lokalna datoteka",
 	"embedvideo-play": "Predvajaj video",
 	"embedvideo-error-missingparams": "EmbedVideo manjka obvezen parameter.",
 	"embedvideo-error-service": "EmbedVideo ne prepozna videostoritve »$1«.",

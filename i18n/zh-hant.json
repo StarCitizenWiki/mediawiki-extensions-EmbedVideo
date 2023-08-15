@@ -17,7 +17,7 @@
 	"embedvideo-consent-privacy-notice-continue": "繼續",
 	"embedvideo-consent-privacy-notice-dismiss": "關閉",
 	"embedvideo-service-bilibili": "嗶哩嗶哩",
-	"embedvideo-service-fauxembedservice": "本地檔案",
+	"embedvideo-service-localvideo": "本地檔案",
 	"embedvideo-play": "播放影片",
 	"embedvideo-error-missingparams": "EmbedVideo 缺少一個必要的參數。",
 	"embedvideo-error-service": "EmbedVideo 無法識別影片服務「$1」。",

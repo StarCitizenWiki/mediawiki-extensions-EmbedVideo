@@ -13,7 +13,7 @@
 	"embedvideo-consent-privacy-notice-text": "$1 pote colliger datos personal.",
 	"embedvideo-consent-privacy-notice-continue": "Continuar",
 	"embedvideo-consent-privacy-notice-dismiss": "Clauder",
-	"embedvideo-service-fauxembedservice": "File local",
+	"embedvideo-service-localvideo": "File local",
 	"embedvideo-play": "Reproducer video",
 	"embedvideo-error-missingparams": "Manca un parametro requirite a EmbedVideo.",
 	"embedvideo-error-service": "EmbedVideo non recognosce le servicio de video \"$1\".",

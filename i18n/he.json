@@ -19,7 +19,7 @@
 	"embedvideo-service-twitch": "טוויטץ'",
 	"embedvideo-service-vimeo": "וימאו",
 	"embedvideo-service-youtube": "יוטיוב",
-	"embedvideo-service-fauxembedservice": "קובץ מקומי",
+	"embedvideo-service-localvideo": "קובץ מקומי",
 	"embedvideo-play": "לנגן סרטון",
 	"embedvideo-error-missingparams": "ל־EmbedVideo חסר פרמטר חובה.",
 	"embedvideo-error-service": "EmbedVideo לא מזהה את שירות הסרטונים \"$1\".",

@@ -17,7 +17,7 @@
 	"embedvideo-consent-privacy-notice-text": "$1 sammelt möglicherweise persönliche Daten.",
 	"embedvideo-consent-privacy-notice-continue": "Fortfahren",
 	"embedvideo-consent-privacy-notice-dismiss": "Ausblenden",
-	"embedvideo-service-fauxembedservice": "Lokale Datei",
+	"embedvideo-service-localvideo": "Lokale Datei",
 	"embedvideo-play": "Video abspielen",
 	"embedvideo-error-missingparams": "EmbedVideo fehlt ein anzugebender Parameter.",
 	"embedvideo-error-service": "EmbedVideo erkennt den Videodienst „$1“ nicht.",

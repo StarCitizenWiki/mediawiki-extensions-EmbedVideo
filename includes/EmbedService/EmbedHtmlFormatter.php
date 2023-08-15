@@ -8,7 +8,6 @@ use ConfigException;
 use Exception;
 use JsonException;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
-use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\FauxEmbedService;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\MediaWikiServices;
 use Message;
@@ -178,7 +177,7 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
 		$emptyThumb = '';
-		if ( $service::getServiceName() === FauxEmbedService::getServiceName() ) {
+		if ( in_array( $service::getServiceName(), [ LocalVideo::getServiceName(), ExternalVideo::getServiceName() ], true ) ) {
 			$emptyThumb = '<div class="embedvideo-thumbnail"></div>';
 		}
 
