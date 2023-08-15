@@ -71,11 +71,23 @@ final class ExternalVideo extends AbstractEmbedService {
 	 */
 	public function __toString() {
 		$file = new class( false, false, $this->id, 'video/mp4' ) extends UnregisteredLocalFile {
+			/**
+			 * Constructor using the $path arg as the url to the video
+			 *
+			 * @param bool $title
+			 * @param bool $repo
+			 * @param string|bool $path
+			 * @param string|bool $mime
+			 */
 			public function __construct( $title = false, $repo = false, $path = false, $mime = false ) {
 				parent::__construct( $title, $repo, $path, $mime );
 				$this->url = $path;
 			}
 
+			/**
+			 * Full URL to the external video
+			 * @return string
+			 */
 			public function getUrl() {
 				return $this->path;
 			}
