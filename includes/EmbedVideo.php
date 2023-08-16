@@ -81,6 +81,27 @@ class EmbedVideo {
 	}
 
 	/**
+	 * {{#evu}} parser function that tries to extract the service from the host name
+	 *
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @param array $args
+	 * @param bool $fromTag
+	 * @return array
+	 */
+	public static function parseEVU( Parser $parser, PPFrame $frame, array $args, bool $fromTag = false ): array {
+		$host = parse_url( $args[0] ?? '', PHP_URL_HOST );
+
+		if ( is_string( $host ) ) {
+			$host = explode( '.', trim( $host, 'w.' ) )[0] ?? null;
+		}
+
+		array_unshift( $args, $host );
+
+		return self::parseEV( $parser, $frame, $args, $fromTag );
+	}
+
+	/**
 	 * Parse the values input from the {{#ev}} parser function
 	 *
 	 * @param Parser $parser The active Parser instance

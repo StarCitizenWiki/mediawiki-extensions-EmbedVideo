@@ -116,6 +116,16 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			wfLogWarning( $e->getMessage() );
 		}
 
+		try {
+			$parser->setFunctionHook(
+				'evu',
+				[ EmbedVideo::class, 'parseEVU' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+		} catch ( MWException $e ) {
+			wfLogWarning( $e->getMessage() );
+		}
+
 		$enabledServices = $this->config->get( 'EmbedVideoEnabledServices' );
 		$checkEnabledServices = !empty( $enabledServices );
 
