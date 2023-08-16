@@ -303,11 +303,15 @@ class EmbedVideo {
 			'title' => $title,
 		] = $this->args;
 
-		// I am not using $parser->parseWidthParam() since it can not handle height only.  Example: x100
-		if ( stripos( $dimensions, 'x' ) !== false ) {
-			$dimensions = strtolower( $dimensions );
-			[ $width, $height ] = explode( 'x', $dimensions );
-		} elseif ( is_numeric( $dimensions ) ) {
+		$rpl = fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
+
+		// Height only
+		if ( strtolower( $dimensions )[0] === 'x' ) {
+			$height = $dimensions;
+		// Width and height
+		} elseif ( preg_match( '/[0-9]+(?:px)?x[0-9]+(?:px)?/i', $dimensions ) ) {
+			[ $width, $height ] = array_map( fn( $dim ) => $rpl( $dim ), array_filter( explode( 'x', $dimensions ) ) );
+		} elseif ( is_numeric( $rpl( $dimensions ) ) ) {
 			$width = $dimensions;
 		}
 
@@ -318,9 +322,8 @@ class EmbedVideo {
 		$this->service = EmbedServiceFactory::newFromName( $service, $id );
 
 		// Let the service automatically handle bad dimensional values.
-		$this->service->setWidth( $width );
-
-		$this->service->setHeight( $height );
+		$this->service->setWidth( $rpl( (string)$width ) );
+		$this->service->setHeight( $rpl( (string)$height ) );
 
 		if ( $this->config->get( 'EmbedVideoRequireConsent' ) === true ) {
 			$this->service->setUrlArgs( $this->service->getAutoplayParameter() );
