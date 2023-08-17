@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saraiki"
+		]
+	},
+	"embedvideo-type-audio": "آڈیو",
+	"embedvideo-type-video": "وڈیو",
+	"embedvideo-consent-privacy-policy": "رازداری پالیسی",
+	"embedvideo-consent-privacy-notice-continue": "جاری رکھو",
+	"embedvideo-consent-privacy-notice-dismiss": "مکاؤ",
+	"embedvideo-service-dailymotion": "ڈیلی موشن",
+	"embedvideo-service-vimeo": "ویمیو",
+	"embedvideo-service-youtube": "یوٹیوب",
+	"embedvideo-service-localvideo": "لوکیل فائل",
+	"embedvideo-service-externalvideo": "ٻاہرلی وڈیو"
+}
