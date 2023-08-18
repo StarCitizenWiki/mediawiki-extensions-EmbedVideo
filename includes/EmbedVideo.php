@@ -327,10 +327,10 @@ class EmbedVideo {
 		$rpl = fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
 
 		// Height only
-		if ( strtolower( $dimensions )[0] === 'x' ) {
+		if ( !empty( $dimensions ) && strtolower( $dimensions )[0] === 'x' ) {
 			$height = $dimensions;
 		// Width and height
-		} elseif ( preg_match( '/[0-9]+(?:px)?x[0-9]+(?:px)?/i', $dimensions ) ) {
+		} elseif ( preg_match( '/[0-9]+(?:px)?x[0-9]+(?:px)?/i', $dimensions ?? '' ) ) {
 			[ $width, $height ] = array_map( fn( $dim ) => $rpl( $dim ), array_filter( explode( 'x', $dimensions ) ) );
 		} elseif ( is_numeric( $rpl( $dimensions ) ) ) {
 			$width = $dimensions;

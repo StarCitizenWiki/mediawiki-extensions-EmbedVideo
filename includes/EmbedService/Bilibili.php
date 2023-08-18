@@ -18,6 +18,7 @@ final class Bilibili extends AbstractEmbedService {
 	protected function getUrlRegex(): array {
 		return [
 			'#bilibili\.com/(?:BV|AV)([\d\w]+)#is',
+			'#bilibili\.com/player\.html\?bvid=([\d\w]+)#is',
 		];
 	}
 
