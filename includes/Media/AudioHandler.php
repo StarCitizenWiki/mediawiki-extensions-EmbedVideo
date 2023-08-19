@@ -79,17 +79,20 @@ class AudioHandler extends MediaHandler {
 	 * @return false|float|int Integer seconds or false for a bad format.
 	 */
 	public function parseTimeString( $time ) {
-		$parts = explode( ":", $time );
-		if ( $parts === false ) {
+		$parts = explode( ':', $time );
+
+		if ( $parts === false || empty( $parts[0] ?? '' ) || !is_numeric( $parts[0] ?? null ) ) {
 			return false;
 		}
 		$parts = array_reverse( $parts );
 
 		$magnitude = [ 1, 60, 3600, 86400 ];
 		$seconds = 0;
+
 		foreach ( $parts as $index => $part ) {
-			$seconds += $part * $magnitude[$index];
+			$seconds += (int)$part * $magnitude[$index];
 		}
+
 		return $seconds;
 	}
 
@@ -293,7 +296,10 @@ class AudioHandler extends MediaHandler {
 		}
 
 		if ( $file === false ) {
-			return [];
+			return [
+				'stream' => false,
+				'format' => false,
+			];
 		}
 
 		$probe = new FFProbe( $path, $file );
