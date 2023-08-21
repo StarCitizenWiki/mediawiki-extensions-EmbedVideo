@@ -24,6 +24,15 @@ use Wikimedia\AtEase\AtEase;
  * @group EmbedVideo
  */
 class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
+	/**
+	 * Set FFProbe to an existing invalid location
+	 * @return void
+	 */
+	protected function setUp(): void {
+		$this->overrideConfigValues( [
+			'FFProbeLocation' => '/dev/null',
+		] );
+	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getParamMap
@@ -105,24 +114,10 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		] ) );
 
 		$this->mockFFProbeCommand( $result );
-//
-//        $output = $this->getMockBuilder(MediaTransformOutput::class)->getMock();
-//        $output->expects($this->once())->method('getUrl')->willReturn('http://localhost');
 
 		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-// $file->expects( $this->once() )
-//            ->method( 'transform' )
-//            ->with([
-//                'width' => 200,
-//            ])
-//            ->willReturn( sha1( 'foo' ) );
 
 		$file->method( 'getLocalRefPath' )->willReturn( '/dev/null' );
-
-// $repo = $this->getMockBuilder( RepoGroup::class )->disableOriginalConstructor()->getMock();
-//        $repo->expects( $this->once() )
-//            ->method( 'findFile' )
-//            ->willReturn( $file );
 
 		$handler->normaliseParams( $file, $params );
 

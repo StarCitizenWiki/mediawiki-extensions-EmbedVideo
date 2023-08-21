@@ -19,6 +19,15 @@ use Wikimedia\AtEase\AtEase;
  * @group EmbedVideo
  */
 class FFProbeTest extends MediaWikiIntegrationTestCase {
+	/**
+	 * Set FFProbe to an existing invalid location
+	 * @return void
+	 */
+	protected function setUp(): void {
+		$this->overrideConfigValues( [
+			'FFProbeLocation' => '/dev/null',
+		] );
+	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe
