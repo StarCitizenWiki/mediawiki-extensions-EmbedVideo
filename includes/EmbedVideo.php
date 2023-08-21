@@ -150,8 +150,8 @@ class EmbedVideo {
 	 * @param array $arguments Method arguments
 	 */
 	public static function __callStatic( $name, $arguments ) {
-		if ( strpos( $name, 'parseTag' ) !== 0 ) {
-			return;
+		if ( !str_starts_with( $name, 'parseTag' ) ) {
+			return '';
 		}
 
 		[
@@ -172,9 +172,7 @@ class EmbedVideo {
 	 * @return array
 	 */
 	public function output(): array {
-		[
-			'service' => $service,
-		] = $this->args;
+		$service = $this->args['service'] ?? null;
 
 		try {
 			$enabledServices = $this->config->get( 'EmbedVideoEnabledServices' ) ?? [];
@@ -233,16 +231,14 @@ class EmbedVideo {
 		];
 
 		if ( $fromTag === true ) {
+			$supportedArgs['service'] = $args['service'] ?? null;
+
 			return array_merge( $supportedArgs, $args );
 		}
 
 		$keys = array_keys( $supportedArgs );
 
-		if ( $fromTag ) {
-			$serviceName = $args['service'] ?? null;
-		} else {
-			$serviceName = array_shift( $args );
-		}
+		$serviceName = array_shift( $args );
 
 		$counter = 0;
 
@@ -254,7 +250,7 @@ class EmbedVideo {
 			$pair = [ $arg ];
 			// Only split arg if it is not an url and not urlArgs
 			// phpcs:ignore Generic.Files.LineLength.TooLong
-			if ( ( $keys[$counter] !== 'urlArgs' || strpos( $arg, 'urlArgs' ) !== false ) && preg_match( '/https?:/', $arg ) !== 1 ) {
+			if ( ( $keys[$counter] !== 'urlArgs' || str_contains( $arg, 'urlArgs' ) ) && preg_match( '/https?:/', $arg ) !== 1 ) {
 				$pair = explode( '=', $arg, 2 );
 			}
 			$pair = array_map( 'trim', $pair );
@@ -275,7 +271,7 @@ class EmbedVideo {
 			++$counter;
 		}
 
-		$supportedArgs['service'] = $serviceName;
+		$supportedArgs['service'] = $serviceName ?? false;
 
 		// An intentional weak check
 		if ( $supportedArgs['autoresize'] == true ) {

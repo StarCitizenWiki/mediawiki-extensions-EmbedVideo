@@ -53,8 +53,8 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			[ 'explode', null, false ],
 		];
 
-		foreach ( $test as $test ) {
-			$this->assertEquals( $test[2], $handler->validateParam( $test[0], $test[1] ) );
+		foreach ( $test as $toTest ) {
+			$this->assertEquals( $toTest[2], $handler->validateParam( $toTest[0], $toTest[1] ) );
 		}
 	}
 }

@@ -13,6 +13,16 @@ use UnregisteredLocalFile;
 class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler
+	 * @return void
+	 */
+	public function testConstructor() {
+		$handler = new AudioHandler();
+
+		$this->assertInstanceOf( AudioHandler::class, $handler );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getParamMap
 	 * @return void
 	 */
@@ -50,8 +60,8 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 			[ 'gif', null, false ],
 		];
 
-		foreach ( $test as $test ) {
-			$this->assertEquals( $test[2], $handler->validateParam( $test[0], $test[1] ) );
+		foreach ( $test as $toTest ) {
+			$this->assertEquals( $toTest[2], $handler->validateParam( $toTest[0], $toTest[1] ) );
 		}
 	}
 

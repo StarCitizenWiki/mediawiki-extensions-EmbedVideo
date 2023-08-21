@@ -5,13 +5,33 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use Exception;
+use HashBagOStuff;
+use LocalFile;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedVideoHooks;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
+use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 use OutputPage;
+use RepoGroup;
 use RequestContext;
+use WANObjectCache;
 
-class EmbedVideoHooksTest extends \MediaWikiIntegrationTestCase {
+class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testConstructor() {
+		$hooks = new EmbedVideoHooks(
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup(),
+			$this->getServiceContainer()->getMainWANObjectCache()
+		);
+
+		$this->assertInstanceOf( EmbedVideoHooks::class, $hooks );
+	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks::onBeforePageDisplay
@@ -156,5 +176,63 @@ class EmbedVideoHooksTest extends \MediaWikiIntegrationTestCase {
 				$this->assertNotContains( $service, $tags );
 			}
 		}
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks::onArticlePurge
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testOnArticlePurgeHooksNotAFile() {
+		$repo = $this->getMockBuilder( RepoGroup::class )->disableOriginalConstructor()->getMock();
+
+		$repo->expects( $this->never() )->method( 'findFile' );
+
+		$hooks = new EmbedVideoHooks(
+			$this->getServiceContainer()->getConfigFactory(),
+			$repo,
+			$this->getServiceContainer()->getMainWANObjectCache()
+		);
+
+		$title = Title::newFromText( 'OnArticlePurge' );
+		$page = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle( $title );
+
+		$hooks->onArticlePurge( $page );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks::onArticlePurge
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testOnArticlePurgeHooksFile() {
+		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$file->expects( $this->exactly( 2 ) )
+			->method( 'getSha1' )
+			->willReturn( sha1( 'foo' ) );
+
+		$repo = $this->getMockBuilder( RepoGroup::class )->disableOriginalConstructor()->getMock();
+		$repo->expects( $this->once() )
+			->method( 'findFile' )
+			->willReturn( $file );
+
+		$cache = $this->getMockBuilder( WANObjectCache::class )
+			->setConstructorArgs( [
+				[ 'cache' => new HashBagOStuff() ],
+			] )->getMock();
+		$cache->expects( $this->exactly( 2 ) )
+			->method( 'makeGlobalKey' )
+			->willReturn( 'foo' );
+
+		$hooks = new EmbedVideoHooks(
+			$this->getServiceContainer()->getConfigFactory(),
+			$repo,
+			$cache
+		);
+
+		$title = Title::newFromText( 'OnArticlePurge.jpg', NS_FILE );
+		$page = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle( $title );
+
+		$hooks->onArticlePurge( $page );
 	}
 }

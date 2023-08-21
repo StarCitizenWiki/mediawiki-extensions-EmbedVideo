@@ -171,6 +171,10 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 
 		$file = $this->repoGroup->findFile( $wikiPage->getTitle() );
 
+		if ( $file === false ) {
+			return;
+		}
+
 		// The last part is only ever a:0 or v:0
 		$audioKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0' );
 		$videoKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0' );
