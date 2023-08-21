@@ -267,7 +267,7 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getDimensionsString
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getSizeAndMetadata
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getFFProbeResult
 	 * @return void
 	 */
@@ -286,5 +286,45 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 			] );
 
 		$this->assertEquals( [ 'metadata' => [], 'bits' => 100 ], $handler->getSizeAndMetadata( null, null ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getSizeAndMetadata
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getFFProbeResult
+	 * @return void
+	 */
+	public function testGetSizeAndMetadataStreamAndInfo(): void {
+		$handler = $this->getMockBuilder( AudioHandler::class )
+			->onlyMethods( [ 'getFFProbeResult' ] )
+			->getMock();
+
+		$handler->expects( $this->once() )
+			->method( 'getFFProbeResult' )
+			->willReturn( [
+				'stream' => new StreamInfo( [
+					'codec_type' => 'video',
+					'codec_name' => 'mp4',
+					'codec_long_name' => 'video/mp4',
+					'width' => 320,
+					'height' => 160,
+					'bits_per_raw_sample' => 1000,
+					'duration' => 1000,
+					'bit_rate' => 1000,
+				] ),
+				'format' => new FormatInfo( [
+					'bit_rate' => 100,
+				] ),
+			] );
+
+		$this->assertEquals( [
+			'metadata' => [
+				'duration' => 1000,
+				'codec' => 'mp4',
+				'bitdepth' => 1000,
+			],
+			'bits' => 100,
+			'width' => 320,
+			'height' => 160,
+		], $handler->getSizeAndMetadata( null, null ) );
 	}
 }
