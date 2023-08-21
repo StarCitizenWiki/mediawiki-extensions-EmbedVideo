@@ -260,6 +260,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 		$titleFactoryMock = $this->getMockBuilder( TitleFactory::class )
 			->disableOriginalConstructor()
+			->onlyMethods( [ 'newFromText' ] )
 			->getMock();
 		$titleFactoryMock->expects( $this->once() )
 			->method( 'newFromText' )
