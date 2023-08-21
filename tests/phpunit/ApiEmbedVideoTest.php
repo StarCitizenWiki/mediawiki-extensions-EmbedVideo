@@ -7,6 +7,9 @@ namespace MediaWiki\Extension\EmbedVideo\Tests;
 use ApiTestCase;
 use ApiUsageException;
 
+/**
+ * @group EmbedVideo
+ */
 class ApiEmbedVideoTest extends ApiTestCase {
 
 	/**

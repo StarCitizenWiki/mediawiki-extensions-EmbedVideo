@@ -8,6 +8,9 @@ use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutp
 use MediaWikiIntegrationTestCase;
 use UnregisteredLocalFile;
 
+/**
+ * @group EmbedVideo
+ */
 class VideoEmbedTransformOutputTest extends MediaWikiIntegrationTestCase {
 
 	/**

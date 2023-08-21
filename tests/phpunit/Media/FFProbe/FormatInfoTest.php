@@ -7,6 +7,9 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\Media\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FormatInfo;
 use MediaWikiIntegrationTestCase;
 
+/**
+ * @group EmbedVideo
+ */
 class FormatInfoTest extends MediaWikiIntegrationTestCase {
 
 	/**

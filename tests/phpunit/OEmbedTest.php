@@ -10,6 +10,9 @@ use MediaWiki\Http\HttpRequestFactory;
 use MWHttpRequest;
 use Status;
 
+/**
+ * @group EmbedVideo
+ */
 class OEmbedTest extends \MediaWikiIntegrationTestCase {
 
 	/**

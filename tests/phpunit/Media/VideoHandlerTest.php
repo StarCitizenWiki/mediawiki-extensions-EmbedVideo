@@ -20,6 +20,9 @@ use RequestContext;
 use Shellbox\Command\UnboxedResult;
 use Wikimedia\AtEase\AtEase;
 
+/**
+ * @group EmbedVideo
+ */
 class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**

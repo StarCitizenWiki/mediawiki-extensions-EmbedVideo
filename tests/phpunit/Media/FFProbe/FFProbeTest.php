@@ -15,6 +15,9 @@ use Shellbox\Command\UnboxedResult;
 use UnregisteredLocalFile;
 use Wikimedia\AtEase\AtEase;
 
+/**
+ * @group EmbedVideo
+ */
 class FFProbeTest extends MediaWikiIntegrationTestCase {
 
 	/**

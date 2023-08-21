@@ -17,6 +17,9 @@ use RepoGroup;
 use RequestContext;
 use WANObjectCache;
 
+/**
+ * @group EmbedVideo
+ */
 class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks

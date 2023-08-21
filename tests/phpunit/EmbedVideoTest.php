@@ -12,6 +12,9 @@ use ParserOptions;
 use PPCustomFrame_Hash;
 use PPFrame_Hash;
 
+/**
+ * @group EmbedVideo
+ */
 class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 	/**

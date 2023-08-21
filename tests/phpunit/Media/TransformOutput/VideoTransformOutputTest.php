@@ -7,6 +7,9 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\Media\TransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use UnregisteredLocalFile;
 
+/**
+ * @group EmbedVideo
+ */
 class VideoTransformOutputTest extends \MediaWikiIntegrationTestCase {
 
 	/**
