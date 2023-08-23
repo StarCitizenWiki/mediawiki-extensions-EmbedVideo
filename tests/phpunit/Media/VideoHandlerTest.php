@@ -291,9 +291,9 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			->with( 'http://localhost' )
 			->willReturn( 'expanded-url' );
 
-		$this->getServiceContainer()->redefineService( 'RepoGroup', fn() => $repoMock );
-		$this->getServiceContainer()->redefineService( 'TitleFactory', fn() => $titleFactoryMock );
-		$this->getServiceContainer()->redefineService( 'UrlUtils', fn() => $urlMock );
+		$this->setService( 'RepoGroup', $repoMock );
+		$this->setService( 'TitleFactory', $titleFactoryMock );
+		$this->setService( 'UrlUtils', $urlMock );
 
 		$handler->normaliseParams( $file, $params );
 
@@ -526,6 +526,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$shellMock = $this->getMockBuilder( CommandFactory::class )->disableOriginalConstructor()->getMock();
 		$shellMock->expects( $this->atLeast( 1 ) )->method( 'create' )->willReturn( $commandMock );
 
-		$this->getServiceContainer()->redefineService( 'ShellCommandFactory', fn() => $shellMock );
+		$this->setService( 'ShellCommandFactory', $shellMock );
 	}
 }

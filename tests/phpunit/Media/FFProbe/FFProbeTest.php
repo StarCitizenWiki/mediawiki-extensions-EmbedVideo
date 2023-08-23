@@ -236,7 +236,7 @@ class FFProbeTest extends MediaWikiIntegrationTestCase {
 		$shellMock = $this->getMockBuilder( CommandFactory::class )->disableOriginalConstructor()->getMock();
 		$shellMock->expects( $this->once() )->method( 'create' )->willReturn( $commandMock );
 
-		$this->getServiceContainer()->redefineService( 'ShellCommandFactory', fn() => $shellMock );
+		$this->setService( 'ShellCommandFactory', $shellMock );
 	}
 
 }

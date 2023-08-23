@@ -146,6 +146,6 @@ class OEmbedTest extends \MediaWikiIntegrationTestCase {
 		$mock = $this->getMockBuilder( HttpRequestFactory::class )->disableOriginalConstructor()->getMock();
 		$mock->expects( $this->once() )->method( 'create' )->willReturn( $req );
 
-		$this->getServiceContainer()->redefineService( 'HttpRequestFactory', fn() => $mock );
+		$this->setService( 'HttpRequestFactory', $mock );
 	}
 }
