@@ -15,6 +15,7 @@ use MediaWikiIntegrationTestCase;
 class ExternalVideoTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::getUrlRegex
 	 * @return void
 	 */
 	public function testWhitelistedUrl() {
@@ -29,6 +30,7 @@ class ExternalVideoTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::getUrlRegex
 	 * @return void
 	 */
 	public function testNonWhitelistedUrl() {
@@ -38,5 +40,33 @@ class ExternalVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->expectException( InvalidArgumentException::class );
 		EmbedServiceFactory::newFromName( 'external', 'foo' );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::getBaseUrl
+	 * @return void
+	 */
+	public function testGetBaseUrl() {
+		$this->overrideConfigValues( [
+			'AllowExternalImagesFrom' => 'foo',
+		] );
+
+		$service = EmbedServiceFactory::newFromName( 'external', 'foo' );
+
+		$this->assertEmpty( $service->getBaseUrl() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo::getCSPUrls
+	 * @return void
+	 */
+	public function testGetCspUrls() {
+		$this->overrideConfigValues( [
+			'AllowExternalImagesFrom' => 'foo',
+		] );
+
+		$service = EmbedServiceFactory::newFromName( 'external', 'foo' );
+
+		$this->assertEquals( [ 'foo' ], $service->getCSPUrls() );
 	}
 }

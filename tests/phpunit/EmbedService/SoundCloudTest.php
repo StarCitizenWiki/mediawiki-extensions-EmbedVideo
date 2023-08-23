@@ -95,4 +95,45 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertStringContainsString( 'https://w.soundcloud.com/player/?url=', $service->getUrl() );
 	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getBaseUrl
+	 * @return void
+	 */
+	public function testGetBaseUrl() {
+		$service = new SoundCloud( $this->validUrlId );
+
+		$this->assertEquals(
+            // phpcs:ignore Generic.Files.LineLength.TooLong
+			'https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true',
+			$service->getBaseUrl()
+		);
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getAspectRatio
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getDefaultWidth
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getDefaultHeight
+	 * @return void
+	 */
+	public function testGetAspectRatio() {
+		$service = new SoundCloud( $this->validUrlId );
+
+		$this->assertEquals(
+			round( $service->getDefaultHeight() / $service->getDefaultWidth(), 2 ),
+			round( $service->getAspectRatio(), 2 )
+		);
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getAspectRatio
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getDefaultWidth
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getDefaultHeight
+	 * @return void
+	 */
+	public function testGetContentType() {
+		$service = new SoundCloud( $this->validUrlId );
+
+		$this->assertEquals( 'audio', $service->getContentType() );
+	}
 }

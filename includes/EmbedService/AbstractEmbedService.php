@@ -204,13 +204,13 @@ abstract class AbstractEmbedService {
 
 	/**
 	 * Returns the key for the service, mainly used for messages
-	 * Can be overriden when message key does not match the service class
+	 * Can be overridden when message key does not match the service class
 	 * Defaults to the class name
 	 *
 	 * @return string
 	 */
 	public function getServiceKey(): string {
-		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
+		return self::getServiceName();
 	}
 
 	/**
@@ -395,18 +395,14 @@ abstract class AbstractEmbedService {
 		$_args = explode( '&', $urlArgs );
 		$arguments = [];
 
-		if ( is_array( $_args ) ) {
-			foreach ( $_args as $rawPair ) {
-				[ $key, $value ] = explode( "=", $rawPair, 2 );
+		foreach ( $_args as $rawPair ) {
+			[ $key, $value ] = explode( "=", $rawPair, 2 );
 
-				if ( empty( $key ) || ( $value === null || $value === '' ) ) {
-					return false;
-				}
-
-				$arguments[$key] = htmlentities( $value, ENT_QUOTES );
+			if ( empty( $key ) || ( $value === null || $value === '' ) ) {
+				continue;
 			}
-		} else {
-			return false;
+
+			$arguments[$key] = htmlentities( $value, ENT_QUOTES );
 		}
 
 		$this->urlArgs += $arguments;
