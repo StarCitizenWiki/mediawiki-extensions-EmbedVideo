@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.2.8",
+	"version": "3.3.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
@@ -14,9 +14,9 @@
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.37.0",
+		"MediaWiki": ">= 1.39.0",
 		"platform": {
-			"php": ">=7.3.0",
+			"php": ">=8.0",
 			"ext-curl": "*"
 		}
 	},
@@ -146,7 +146,12 @@
 	],
 	"HookHandlers": {
 		"EmbedVideoHooks": {
-			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks"
+			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks",
+			"services": [
+				"ConfigFactory",
+				"RepoGroup",
+				"MainWANObjectCache"
+			]
 		}
 	},
 	"Hooks": {

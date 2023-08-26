@@ -12,7 +12,7 @@
 	"embedvideo-type-video": "видео",
 	"embedvideo-consent-privacy-policy": "Политика конфиденциальности",
 	"embedvideo-consent-privacy-notice-continue": "Продолжить",
-	"embedvideo-service-fauxembedservice": "Локальный файл",
+	"embedvideo-service-localvideo": "Локальный файл",
 	"embedvideo-error-missingparams": "В теге EmbedVideo отуствует обязательный параметр.",
 	"embedvideo-error-service": "Тег EmbedVideo не может распознать сервис \"$1\".",
 	"embedvideo-error-id": "В тег EmbedVideo введен неверный id \"$2\" видео для сервиса \"$1\".",

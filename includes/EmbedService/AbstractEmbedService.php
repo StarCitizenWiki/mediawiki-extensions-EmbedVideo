@@ -42,6 +42,7 @@ abstract class AbstractEmbedService {
 	 * @var string
 	 */
 	protected $id;
+	protected $unparsedId;
 
 	/**
 	 * Width of the iframe
@@ -101,6 +102,7 @@ abstract class AbstractEmbedService {
 			self::$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
 		}
 
+		$this->unparsedId = $id;
 		$this->id = $this->parseVideoID( $id );
 	}
 
@@ -135,7 +137,7 @@ abstract class AbstractEmbedService {
 	 * @return string
 	 */
 	public function getContentType(): ?string {
-		return 'content';
+		return 'video';
 	}
 
 	/**
@@ -185,7 +187,9 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return float|null
 	 */
-	abstract public function getAspectRatio(): ?float;
+	public function getAspectRatio(): ?float {
+		return $this->getDefaultWidth() / $this->getDefaultHeight();
+	}
 
 	/**
 	 * Returns the service name
@@ -200,13 +204,13 @@ abstract class AbstractEmbedService {
 
 	/**
 	 * Returns the key for the service, mainly used for messages
-	 * Can be overriden when message key does not match the service class
+	 * Can be overridden when message key does not match the service class
 	 * Defaults to the class name
 	 *
 	 * @return string
 	 */
 	public function getServiceKey(): string {
-		return strtolower( substr( static::class, strrpos( static::class, '\\' ) + 1 ) );
+		return self::getServiceName();
 	}
 
 	/**
@@ -214,28 +218,36 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return int
 	 */
-	abstract public function getDefaultWidth(): int;
+	public function getDefaultWidth(): int {
+		return 640;
+	}
 
 	/**
 	 * The default iframe height if no height is set specified
 	 *
 	 * @return int
 	 */
-	abstract public function getDefaultHeight(): int;
+	public function getDefaultHeight(): int {
+		return 360;
+	}
 
 	/**
 	 * Array of regexes to validate a given service url
 	 *
 	 * @return array
 	 */
-	abstract protected function getUrlRegex(): array;
+	protected function getUrlRegex(): array {
+		return [];
+	}
 
 	/**
 	 * Array of regexes to validate a given embed id
 	 *
 	 * @return array
 	 */
-	abstract protected function getIdRegex(): array;
+	protected function getIdRegex(): array {
+		return [];
+	}
 
 	/**
 	 * Returns the full url to the embed
@@ -255,7 +267,9 @@ abstract class AbstractEmbedService {
 	 *
 	 * @return array
 	 */
-	abstract public function getCSPUrls(): array;
+	public function getCSPUrls(): array {
+		return [];
+	}
 
 	/**
 	 * Set the width of the player. This also will set the height automatically.
@@ -381,18 +395,14 @@ abstract class AbstractEmbedService {
 		$_args = explode( '&', $urlArgs );
 		$arguments = [];
 
-		if ( is_array( $_args ) ) {
-			foreach ( $_args as $rawPair ) {
-				[ $key, $value ] = explode( "=", $rawPair, 2 );
+		foreach ( $_args as $rawPair ) {
+			[ $key, $value ] = explode( "=", $rawPair, 2 );
 
-				if ( empty( $key ) || ( $value === null || $value === '' ) ) {
-					return false;
-				}
-
-				$arguments[$key] = htmlentities( $value, ENT_QUOTES );
+			if ( empty( $key ) || ( $value === null || $value === '' ) ) {
+				continue;
 			}
-		} else {
-			return false;
+
+			$arguments[$key] = htmlentities( $value, ENT_QUOTES );
 		}
 
 		$this->urlArgs += $arguments;

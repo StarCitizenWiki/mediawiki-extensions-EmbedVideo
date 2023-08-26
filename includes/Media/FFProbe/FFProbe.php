@@ -183,11 +183,12 @@ class FFProbe {
 			return null;
 		}
 
-		if ( Shell::isDisabled() || $ffprobeLocation === false || !file_exists( $ffprobeLocation ) ) {
+		if ( Shell::isDisabled() || empty( $ffprobeLocation ) || !file_exists( $ffprobeLocation ) ) {
 			return null;
 		}
 
-		$command = Shell::command( $ffprobeLocation );
+		$command = MediaWikiServices::getInstance()->getShellCommandFactory()->create();
+		$command->params( $ffprobeLocation );
 
 		$command->unsafeParams( [
 			'-v quiet',

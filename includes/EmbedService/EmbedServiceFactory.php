@@ -27,6 +27,7 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bilibili::class,
 		DailyMotion::class,
+		ExternalVideo::class,
 		KakaoTV::class,
 		Loom::class,
 		NaverTV::class,
@@ -62,6 +63,10 @@ final class EmbedServiceFactory {
 
 			case 'dailymotion':
 				return new DailyMotion( $id );
+
+			case 'external':
+			case 'externalvideo':
+				return new ExternalVideo( $id );
 
 			case 'kakaotv':
 				return new KakaoTV( $id );

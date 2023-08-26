@@ -86,13 +86,6 @@ class Twitch extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getContentType(): ?string {
-		return 'video';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://www.twitch.tv/p/en/legal/privacy-notice/';
 	}

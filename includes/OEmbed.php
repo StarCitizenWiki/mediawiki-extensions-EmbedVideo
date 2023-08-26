@@ -14,7 +14,6 @@ namespace MediaWiki\Extension\EmbedVideo;
 
 use JsonException;
 use MediaWiki\MediaWikiServices;
-use MWException;
 use UnexpectedValueException;
 
 class OEmbed {
@@ -202,18 +201,12 @@ class OEmbed {
 
 		$req->setHeader( 'Date', gmdate( "D, d M Y H:i:s", time() ) . " GMT" );
 
-		try {
-			$status = $req->execute();
+		$status = $req->execute();
 
-			if ( !$status->isOK() ) {
-				return false;
-			}
-
-			return $req->getContent();
-		} catch ( MWException $e ) {
-			wfLogWarning( $e->getMessage() );
-
+		if ( !$status->isOK() ) {
 			return false;
 		}
+
+		return $req->getContent();
 	}
 }

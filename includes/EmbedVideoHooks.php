@@ -4,17 +4,20 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
+use Config;
+use ConfigFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\Hook\ArticlePurgeHook;
 use MWException;
 use OutputPage;
 use Parser;
+use RepoGroup;
 use Skin;
+use WANObjectCache;
 use WikiPage;
 
 /**
@@ -27,6 +30,22 @@ use WikiPage;
  */
 
 class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook, ArticlePurgeHook {
+
+	private Config $config;
+	private RepoGroup $repoGroup;
+	private WANObjectCache $cache;
+
+	/**
+	 * @param ConfigFactory $factory
+	 * @param RepoGroup $group
+	 * @param WANObjectCache $cache
+	 */
+	public function __construct( ConfigFactory $factory, RepoGroup $group, WANObjectCache $cache ) {
+		$this->config = $factory->makeConfig( 'EmbedVideo' );
+		$this->repoGroup = $group;
+		$this->cache = $cache;
+	}
+
 	/**
 	 * Adds the appropriate audio and video handlers
 	 *
@@ -97,8 +116,17 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			wfLogWarning( $e->getMessage() );
 		}
 
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
-		$enabledServices = $config->get( 'EmbedVideoEnabledServices' );
+		try {
+			$parser->setFunctionHook(
+				'evu',
+				[ EmbedVideo::class, 'parseEVU' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+		} catch ( MWException $e ) {
+			wfLogWarning( $e->getMessage() );
+		}
+
+		$enabledServices = $this->config->get( 'EmbedVideoEnabledServices' );
 		$checkEnabledServices = !empty( $enabledServices );
 
 		foreach ( EmbedServiceFactory::getAvailableServices() as $service ) {
@@ -124,9 +152,7 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
-
-		if ( $config->get( 'EmbedVideoUseEmbedStyleForLocalVideos' ) === true ) {
+		if ( $this->config->get( 'EmbedVideoUseEmbedStyleForLocalVideos' ) === true ) {
 			$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 			$out->addModules( [ 'ext.embedVideo.overlay' ] );
 		}
@@ -143,15 +169,18 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			return;
 		}
 
-		$file = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $wikiPage->getTitle() );
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$file = $this->repoGroup->findFile( $wikiPage->getTitle() );
+
+		if ( $file === false ) {
+			return;
+		}
 
 		// The last part is only ever a:0 or v:0
-		$audioKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0' );
-		$videoKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0' );
+		$audioKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0' );
+		$videoKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0' );
 
-		$cache->delete( $audioKey );
-		$cache->delete( $videoKey );
+		$this->cache->delete( $audioKey );
+		$this->cache->delete( $videoKey );
 
 		wfDebugLog(
 			'EmbedVideo',

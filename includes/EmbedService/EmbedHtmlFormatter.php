@@ -177,7 +177,8 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeThumbHtml( AbstractEmbedService $service ): string {
 		$emptyThumb = '';
-		if ( $service->getServiceName() === 'fauxembedservice' ) {
+		$emptyThumbServices = [ LocalVideo::getServiceName(), ExternalVideo::getServiceName() ];
+		if ( in_array( $service::getServiceName(), $emptyThumbServices, true ) ) {
 			$emptyThumb = '<div class="embedvideo-thumbnail"></div>';
 		}
 
@@ -186,11 +187,7 @@ final class EmbedHtmlFormatter {
 		}
 
 		try {
-			if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
-				$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $service->getLocalThumb()->getUrl() );
-			} else {
-				$url = wfExpandUrl( $service->getLocalThumb()->getUrl() );
-			}
+			$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $service->getLocalThumb()->getUrl() );
 
 			// phpcs:disable
 			return <<<HTML

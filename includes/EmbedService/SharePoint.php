@@ -22,45 +22,10 @@ final class SharePoint extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#^(https://[\w-]+.sharepoint.com/sites/.+\.\w+)$#is',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**
@@ -83,6 +48,6 @@ final class SharePoint extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getUrl(): string {
-	 return $this->id;
+		return $this->id;
 	}
 }

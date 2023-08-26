@@ -66,7 +66,7 @@ class VideoTransformOutput extends AudioTransformOutput {
 			'muted' => isset( $this->parameters['muted'] ),
 		];
 
-		if ( $this->parameters['lazy'] === true && !isset( $this->parameters['gif'] ) ) {
+		if ( ( $this->parameters['lazy'] ?? false ) === true && !isset( $this->parameters['gif'] ) ) {
 			$attrs['preload'] = 'none';
 		}
 

@@ -12,34 +12,14 @@ class YouTube extends AbstractEmbedService {
 	 */
 	protected $additionalIframeAttributes = [
 		'modestbranding' => 1,
+		'allowfullscreen' => 'true',
 	];
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getServiceKey(): string {
 		return 'youtube';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
 	}
 
 	/**
@@ -66,13 +46,6 @@ class YouTube extends AbstractEmbedService {
 	 */
 	public function getBaseUrl(): string {
 		return '//www.youtube-nocookie.com/embed/%1$s';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**

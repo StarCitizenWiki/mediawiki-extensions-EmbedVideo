@@ -15,27 +15,6 @@ final class DailyMotion extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#dailymotion\.com/(?:video|embed/video)/([a-zA-Z0-9]+)(?:_\S+?)?#is',
@@ -49,13 +28,6 @@ final class DailyMotion extends AbstractEmbedService {
 		return [
 			'#^([a-zA-Z0-9]+)(?:_\S+?)?#is',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**

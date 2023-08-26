@@ -23,26 +23,26 @@ class ApiEmbedVideo extends ApiBase {
 	 */
 	public function execute(): bool {
 		$ev = new EmbedVideo( null, [
-			sprintf( 'service=%s', $this->getMain()->getVal( 'service' ) ),
-			sprintf( 'id=%s', $this->getMain()->getVal( 'id' ) ),
-			sprintf( 'dimensions=%s', $this->getMain()->getVal( 'dimensions' ) ),
-			sprintf( 'alignment=%s', $this->getMain()->getVal( 'alignment' ) ),
-			sprintf( 'description=%s', $this->getMain()->getVal( 'description' ) ),
-			sprintf( 'container=%s', $this->getMain()->getVal( 'container' ) ),
-			sprintf( 'urlargs=%s', $this->getMain()->getVal( 'urlargs' ) ),
-			sprintf( 'autoresize=%s', $this->getMain()->getVal( 'autoresize' ) ),
-			sprintf( 'valignment=%s', $this->getMain()->getVal( 'valignment' ) ),
-		] );
+			'service' => $this->getMain()->getVal( 'service' ),
+			'id' => $this->getMain()->getVal( 'id' ),
+			'dimensions' => $this->getMain()->getVal( 'dimensions' ),
+			'alignment' => $this->getMain()->getVal( 'alignment' ),
+			'description' => $this->getMain()->getVal( 'description' ),
+			'container' => $this->getMain()->getVal( 'container' ),
+			'urlargs' => $this->getMain()->getVal( 'urlargs' ),
+			'autoresize' => $this->getMain()->getVal( 'autoresize' ),
+			'valignment' => $this->getMain()->getVal( 'valignment' ),
+		], true );
 
 		$getHTML = $ev->output();
 
 		if ( is_array( $getHTML ) ) {
-			$HTML = $getHTML[0];
+			$html = $getHTML[0];
 		} else {
-			$HTML = "Unable to load video from API.";
+			$html = "Unable to load video from API.";
 		}
 
-		$this->getResult()->addValue( null, $this->getModuleName(), [ 'html' => $HTML ] );
+		$this->getResult()->addValue( null, $this->getModuleName(), [ 'html' => $html ] );
 		return true;
 	}
 

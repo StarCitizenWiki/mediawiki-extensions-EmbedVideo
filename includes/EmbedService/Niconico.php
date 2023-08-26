@@ -15,27 +15,6 @@ final class Niconico extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#nicovideo\.jp/watch/((?:[a-zA-Z]{2})?[\d]+)#is',
@@ -49,13 +28,6 @@ final class Niconico extends AbstractEmbedService {
 		return [
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**

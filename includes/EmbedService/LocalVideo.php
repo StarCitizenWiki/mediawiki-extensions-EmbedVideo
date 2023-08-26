@@ -2,17 +2,16 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
+namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use MediaTransformOutput;
-use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
-use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
+use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 
 /**
  * This faux service takes a local file for use in EmbedHtmlFormatter
  * @see EmbedHtmlFormatter
  */
-class FauxEmbedService extends AbstractEmbedService {
+class LocalVideo extends AbstractEmbedService {
 	/**
 	 * This is the local video
 	 *
@@ -26,7 +25,7 @@ class FauxEmbedService extends AbstractEmbedService {
 	 *
 	 * @var array
 	 */
-	private $properties;
+	protected $properties;
 
 	/**
 	 * @param MediaTransformOutput $transformOutput
@@ -55,13 +54,6 @@ class FauxEmbedService extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return $this->transformOutput->getWidth() / $this->transformOutput->getHeight();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getDefaultWidth(): int {
 		return (int)$this->transformOutput->getWidth();
 	}
@@ -71,27 +63,6 @@ class FauxEmbedService extends AbstractEmbedService {
 	 */
 	public function getDefaultHeight(): int {
 		return (int)$this->transformOutput->getHeight();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getUrlRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getCSPUrls(): array {
-		return [];
 	}
 
 	/**

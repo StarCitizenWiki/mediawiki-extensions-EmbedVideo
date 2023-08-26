@@ -11,7 +11,6 @@ use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutp
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
-use Title;
 use TrivialMediaHandlerState;
 
 class VideoHandler extends AudioHandler {
@@ -69,19 +68,18 @@ class VideoHandler extends AudioHandler {
 			->makeConfig( 'EmbedVideo' );
 
 		if ( isset( $params['poster'] ) ) {
-			$title = Title::newFromText( $params['poster'], NS_FILE );
+			$factory = MediaWikiServices::getInstance()->getTitleFactory();
+			$title = $factory->newFromText( $params['poster'], NS_FILE );
 
 			if ( $title !== null && $title->exists() ) {
 				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
 				$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
 				try {
-					if ( method_exists( MediaWikiServices::class, 'getUrlUtils' ) ) {
-						$url = MediaWikiServices::getInstance()->getUrlUtils()->expand( $transform->getUrl() );
-					} else {
-						$url = wfExpandUrl( $transform->getUrl() );
-					}
-					$params['posterUrl'] = $url;
+					$params['posterUrl'] = MediaWikiServices::getInstance()->getUrlUtils()->expand(
+						$transform->getUrl()
+					);
+
 				} catch ( Exception $e ) {
 					unset( $params['poster'], $params['posterUrl'] );
 				}
@@ -111,7 +109,7 @@ class VideoHandler extends AudioHandler {
 		if ( isset( $params['width'] ) &&
 			isset( $params['height'] ) &&
 			$params['width'] > 0 &&
-			$params['height'] === $params['width'] ) {
+			(int)$params['height'] === (int)$params['width'] ) {
 			// special allowance for square video embeds needed by some wikis,
 			// otherwise forced 16:9 ratios are followed.
 			return true;
@@ -136,7 +134,7 @@ class VideoHandler extends AudioHandler {
 
 		if ( $width > 0 && $params['width'] > 0 &&
 			( $height / $width ) !== ( $params['height'] / $params['width'] ) ) {
-			$params['height'] = round( $height / $width * $params['width'] );
+			$params['height'] = round( ( $height / $width ) * $params['width'] );
 		}
 
 		return true;
@@ -165,10 +163,11 @@ class VideoHandler extends AudioHandler {
 
 		$request = RequestContext::getMain();
 		$useEmbedTransform = false;
-		if ( $request !== null && $request->getTitle() !== null ) {
+
+		if ( $request->getTitle() !== null ) {
 			$useEmbedTransform = $request->getTitle()->isContentPage();
 
-			// Always preload page is file
+			// Always preload if is file page
 			if ( $request->getTitle()->getNamespace() === NS_FILE ) {
 				$params['lazy'] = false;
 			}
@@ -259,5 +258,19 @@ class VideoHandler extends AudioHandler {
 			$stream->getHeight(),
 			$this->contentLanguage->formatBitrate( $format->getBitRate() )
 		)->text();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getSizeAndMetadata( $state, $path ): ?array {
+		$data = parent::getSizeAndMetadata( $state, $path );
+
+		if ( !isset( $data['width'] ) ) {
+			$data['width'] = 0;
+			$data['height'] = 0;
+		}
+
+		return $data;
 	}
 }

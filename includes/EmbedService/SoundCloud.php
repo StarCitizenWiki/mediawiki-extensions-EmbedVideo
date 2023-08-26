@@ -53,13 +53,6 @@ final class SoundCloud extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getIdRegex(): array {
-		return [];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getContentType(): ?string {
 		return 'audio';
 	}

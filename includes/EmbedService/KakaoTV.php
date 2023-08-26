@@ -15,27 +15,6 @@ final class KakaoTV extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#play-tv.kakao\.com/embed/player/cliplink/((?:[a-zA-Z]{2})?[\d]+)#is',
@@ -50,13 +29,6 @@ final class KakaoTV extends AbstractEmbedService {
 		return [
 			'#^((?:[a-zA-Z]{2})?[\d]+)$#is',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**

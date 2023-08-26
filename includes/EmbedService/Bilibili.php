@@ -15,30 +15,10 @@ final class Bilibili extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 16 / 9;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 360;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	protected function getUrlRegex(): array {
 		return [
 			'#bilibili\.com/(?:BV|AV)([\d\w]+)#is',
+			'#bilibili\.com/player\.html\?bvid=([\d\w]+)#is',
 		];
 	}
 
@@ -49,13 +29,6 @@ final class Bilibili extends AbstractEmbedService {
 		return [
 			'#^(?:BV|AV)([\d\w]+)$#is',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'video';
 	}
 
 	/**
