@@ -99,7 +99,7 @@
 		},
 		"EmbedVideoUseEmbedStyleForLocalVideos": {
 			"description": "Styles local videos like they are embedded",
-			"value": false
+			"value": true
 		},
 		"EmbedVideoEnableAudioHandler": {
 			"description": "Enables the audio handler which displays local videos using the html5 <audio> tag.",
@@ -126,11 +126,11 @@
 			"value": []
 		},
 		"EmbedVideoRequireConsent": {
-			"description": "Explicitly require consent by only loading the iframe if the user clicks it",
+			"description": "Explicitly require consent by only loading the iframe after the user clicks play",
 			"value": true
 		},
 		"EmbedVideoFetchExternalThumbnails": {
-			"description": "Don't try to fetch thumbnails when consent is required.",
+			"description": "Fetch video thumbnails by querying the respective external oembed endpoints. This results in a http call.",
 			"value": true
 		},
 		"EmbedVideoShowPrivacyNotice": {
