@@ -16,13 +16,6 @@ final class ArchiveOrg extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 640 / 493;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getDefaultWidth(): int {
 		return 640;
 	}

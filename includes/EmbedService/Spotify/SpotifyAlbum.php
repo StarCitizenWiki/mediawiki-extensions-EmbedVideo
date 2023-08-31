@@ -21,13 +21,6 @@ class SpotifyAlbum extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 0.7895;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getServiceKey(): string {
 		return 'spotify';
 	}

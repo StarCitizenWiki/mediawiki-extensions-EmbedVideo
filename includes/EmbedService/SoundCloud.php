@@ -23,13 +23,6 @@ final class SoundCloud extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 2.666667;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getDefaultWidth(): int {
 		return 186;
 	}
