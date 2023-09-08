@@ -120,7 +120,7 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 		$service = new SoundCloud( $this->validUrlId );
 
 		$this->assertEquals(
-			round( $service->getDefaultHeight() / $service->getDefaultWidth(), 2 ),
+			round( $service->getDefaultWidth() / $service->getDefaultHeight(), 2 ),
 			round( $service->getAspectRatio(), 2 )
 		);
 	}
