@@ -26,6 +26,7 @@ final class EmbedServiceFactory {
 	private static $availableServices = [
 		ArchiveOrg::class,
 		Bilibili::class,
+		Ccc::class,
 		DailyMotion::class,
 		ExternalVideo::class,
 		KakaoTV::class,
@@ -60,6 +61,10 @@ final class EmbedServiceFactory {
 
 			case 'bilibili':
 				return new Bilibili( $id );
+
+			case 'ccc':
+			case 'media.ccc.de':
+				return new Ccc( $id );
 
 			case 'dailymotion':
 				return new DailyMotion( $id );

@@ -37,6 +37,10 @@ const loom = function(url) {
 	return oembed('https://www.loom.com/v1/oembed?url=https://www.loom.com/share/' + url);
 };
 
+const ccc = function(url) {
+	return oembed('https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url);
+};
+
 const oembed = function(url) {
 	return fetch(url, {
 		credentials: "omit",
@@ -71,5 +75,6 @@ module.exports = {
 	spotifyartist,
 	spotifytrack,
 	soundcloud,
+	ccc,
 	oembed,
 };

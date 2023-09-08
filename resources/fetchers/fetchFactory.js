@@ -11,6 +11,9 @@ const fetchFactory = function (service) {
 		case 'bilibili':
 			//fetcher = require('./bilibili.js').fetcher;
 			break;
+		case 'ccc':
+			fetcher = oEmbedFetchers.ccc;
+			break;
 		case 'loom':
 			fetcher = oEmbedFetchers.loom;
 			break;
