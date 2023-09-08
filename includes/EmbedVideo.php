@@ -90,7 +90,7 @@ class EmbedVideo {
 	 * @return array
 	 */
 	public static function parseEVU( Parser $parser, PPFrame $frame, array $args, bool $fromTag = false ): array {
-		$host = parse_url( $args[0] ?? '', PHP_URL_HOST );
+		$host = parse_url( $args[0] ?? '', PHP_URL_HOST ) ?? '';
 
 		if ( is_string( $host ) ) {
 			$host = explode( '.', trim( $host, 'w.' ) )[0] ?? null;

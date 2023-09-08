@@ -83,6 +83,31 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVU
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::addModules
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::makeHtmlFormatConfig
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVUEmpty() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVU(
+			$parser,
+			$this->getFrame( $parser ),
+			[],
+			false
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'errorbox', $output[0] );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
