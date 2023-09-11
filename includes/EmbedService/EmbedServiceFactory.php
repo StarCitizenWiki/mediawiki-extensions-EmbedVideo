@@ -55,11 +55,13 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+			case 'archive':
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
 
 			case 'bilibili':
+			case 'player.bilibili':
 				return new Bilibili( $id );
 
 			case 'ccc':
@@ -75,6 +77,7 @@ final class EmbedServiceFactory {
 				return new ExternalVideo( $id );
 
 			case 'kakaotv':
+			case 'play-tv.kakao':
 				return new KakaoTV( $id );
 
 			case 'loom':
@@ -82,9 +85,11 @@ final class EmbedServiceFactory {
 
 			case 'nicovideo':
 			case 'niconico':
+			case 'embed.nicovideo':
 				return new Niconico( $id );
 
 			case 'navertv':
+			case 'tv.naver':
 				return new NaverTV( $id );
 
 			case 'sharepoint':

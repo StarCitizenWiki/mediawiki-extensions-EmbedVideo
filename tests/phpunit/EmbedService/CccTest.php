@@ -26,6 +26,7 @@ class CccTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
+	// phpcs:ignore Generic.Files.LineLength.TooLong
 	private string $validUrlId = 'https://media.ccc.de/v/rc3-791680-introducing_utk_web_a_web_developer_s_view_on_firmware';
 
 	/**
@@ -76,7 +77,7 @@ class CccTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 * @throws Exception
 	 */
-	public function testEvu() {
+	public function testEvu(): void {
 		$parser = $this->getServiceContainer()->getParser();
 		$parser->setOptions( ParserOptions::newFromAnon() );
 		$parser->resetOutput();

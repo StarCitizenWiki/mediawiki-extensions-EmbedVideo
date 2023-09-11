@@ -4,9 +4,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
+use Exception;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\DailyMotion;
+use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWikiIntegrationTestCase;
+use ParserOptions;
+use PPCustomFrame_Hash;
 
 /**
  * @group EmbedVideo
@@ -95,5 +99,30 @@ class DailyMotionTest extends MediaWikiIntegrationTestCase {
 		$service = new DailyMotion( $this->validUrlId );
 
 		$this->assertStringContainsString( '//www.dailymotion.com/embed/video/', $service->getUrl() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVU
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testEvu(): void {
+		$parser = $this->getServiceContainer()->getParser();
+		$parser->setOptions( ParserOptions::newFromAnon() );
+		$parser->resetOutput();
+
+		$out = EmbedVideo::parseEVU(
+			$parser, new PPCustomFrame_Hash( $parser->getPreprocessor(), [] ), [
+			$this->validUrlId
+		] );
+
+		$this->assertIsArray( $out );
+		$this->assertCount( 3, $out );
+		$this->assertStringContainsString(
+			'x1adiiw',
+			$out[0]
+		);
 	}
 }
