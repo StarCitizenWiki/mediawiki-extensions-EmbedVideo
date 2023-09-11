@@ -63,6 +63,7 @@ final class EmbedServiceFactory {
 				return new Bilibili( $id );
 
 			case 'ccc':
+			case 'media.ccc':
 			case 'media.ccc.de':
 				return new Ccc( $id );
 

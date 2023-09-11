@@ -93,7 +93,9 @@ class EmbedVideo {
 		$host = parse_url( $args[0] ?? '', PHP_URL_HOST ) ?? '';
 
 		if ( is_string( $host ) ) {
-			$host = explode( '.', trim( $host, 'w.' ) )[0] ?? null;
+			$host = explode( '.', trim( strtolower( $host ), 'w.' ) );
+			array_pop( $host );
+			$host = implode( '.', $host ?? '' );
 		}
 
 		array_unshift( $args, $host );
