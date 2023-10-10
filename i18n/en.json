@@ -25,7 +25,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-youtube": "YouTube",
 	"embedvideo-service-localvideo": "Local File",
-	"embedvideo-service-externalvideo": "External Video ",
+	"embedvideo-service-externalvideo": "External Video",
 	"embedvideo-play": "Play Video",
 	"embedvideo-error-missingparams": "EmbedVideo is missing a required parameter.",
 	"embedvideo-error-service": "EmbedVideo does not recognize the video service \"$1\".",
