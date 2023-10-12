@@ -424,6 +424,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$parser = $this->getServiceContainer()->getParserFactory()->create();
 		$parser->setOptions( ParserOptions::newFromAnon() );
 		$parser->clearState();
+		$parser->setOutputType( Parser::OT_HTML );
 
 		return $parser;
 	}
