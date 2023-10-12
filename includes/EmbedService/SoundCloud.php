@@ -39,7 +39,7 @@ final class SoundCloud extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#^(https://soundcloud\.com/[\w\-\.]+[/]+[\w\-\.]+/?)$#is',
+			'#^(https://soundcloud\.com(?:/[\w\-\.]+){2,5})/?(?:\?.*)?$#is',
 		];
 	}
 
