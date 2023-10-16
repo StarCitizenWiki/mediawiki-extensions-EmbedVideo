@@ -35,15 +35,58 @@
 		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
 	},
 	"ResourceModules": {
+		"ext.embedVideo.messages": {
+			"messages": [
+				"embedvideo-service-archiveorg",
+				"embedvideo-service-bilibili",
+				"embedvideo-service-dailymotion",
+				"embedvideo-service-kakaotv",
+				"embedvideo-service-loom",
+				"embedvideo-service-navertv",
+				"embedvideo-service-niconico",
+				"embedvideo-service-soundcloud",
+				"embedvideo-service-sharepoint",
+				"embedvideo-service-spotify",
+				"embedvideo-service-twitch",
+				"embedvideo-service-videolink",
+				"embedvideo-service-vimeo",
+				"embedvideo-service-youtube",
+				"embedvideo-service-localvideo",
+				"embedvideo-service-externalvideo",
+				"embedvideo-consent-privacy-notice-text",
+				"embedvideo-consent-privacy-policy"
+			]
+		},
+		"ext.embedVideo.videolink": {
+			"es6": true,
+			"packageFiles": [
+				"ext.embedVideo.videolink.js",
+				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
+				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
+				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
+				{ "name": "iframe.js", "file": "modules/iframe.js" }
+			],
+			"styles": [
+				"ext.embedVideo.consent.less"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"ext.embedVideo.consent": {
 			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.consent.js",
-				{ "name": "fetchFactory.js", "file":  "fetchers/fetchFactory.js" },
-				{ "name": "queryKeyParser.js", "file":  "fetchers/queryKeyParser.js" },
-				{ "name": "bilibili.js", "file":  "fetchers/bilibili.js" },
-				{ "name": "niconico.js", "file":  "fetchers/niconico.js" },
-				{ "name": "oembed.js", "file":  "fetchers/oembed.js" }
+				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
+				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
+				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
+				{ "name": "iframe.js", "file": "modules/iframe.js" }
 			],
 			"styles": [
 				"ext.embedVideo.consent.less"

@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use Config;
 use InvalidArgumentException;
+use JsonException;
 use MediaTransformOutput;
 use MediaWiki\MediaWikiServices;
 use RuntimeException;
@@ -478,6 +479,26 @@ abstract class AbstractEmbedService {
 	 */
 	public function getTitle(): ?string {
 		return $this->title;
+	}
+
+	/**
+	 * @param null|int $width
+	 * @param null|int $height
+	 * @return string
+	 * @throws JsonException
+	 */
+	public function getIframeConfig( ?int $width = 0, ?int $height = 0 ): string {
+		$attributes = [];
+		if ( !empty( $width ) && $width !== $this->getDefaultWidth() ) {
+			$attributes['width'] = $width;
+		}
+		if ( !empty( $height ) && $height !== $this->getDefaultHeight() ) {
+			$attributes['height'] = $height;
+		}
+
+		$attributes['src'] = $this->getUrl();
+
+		return json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES );
 	}
 
 	/**

@@ -31,6 +31,7 @@ const fetchFactory = function (service) {
 		case 'spotifyartist':
 			fetcher = oEmbedFetchers.spotifyartist;
 			break;
+		case 'spotify':
 		case 'spotifytrack':
 			fetcher = oEmbedFetchers.spotifytrack;
 			break;

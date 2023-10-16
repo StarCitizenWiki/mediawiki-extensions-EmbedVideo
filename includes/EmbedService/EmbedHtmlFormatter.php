@@ -78,18 +78,9 @@ final class EmbedHtmlFormatter {
 				->makeConfig( 'EmbedVideo' )
 				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
-				$attributes = [];
-				if ( $width !== $service->getDefaultWidth() ) {
-					$attributes['width'] = $width;
-				}
-				if ( $height !== $service->getDefaultHeight() ) {
-					$attributes['height'] = $height;
-				}
-
-				$attributes['src'] = $service->getUrl();
 				$iframeConfig = sprintf(
 					"data-iframeconfig='%s'",
-					json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES )
+					$service->getIframeConfig( $width, $height )
 				);
 			}
 		} catch ( JsonException | ConfigException $e ) {

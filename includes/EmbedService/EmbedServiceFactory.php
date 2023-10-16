@@ -41,6 +41,7 @@ final class EmbedServiceFactory {
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
+		VideoLink::class,
 		Vimeo::class,
 		YouTube::class,
 		YouTubeOEmbed::class,
@@ -116,6 +117,9 @@ final class EmbedServiceFactory {
 
 			case 'twitchvod':
 				return new TwitchVod( $id );
+
+			case 'videolink':
+				return new VideoLink( $id );
 
 			case 'vimeo':
 				return new Vimeo( $id );
