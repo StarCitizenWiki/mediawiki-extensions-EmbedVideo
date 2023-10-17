@@ -114,6 +114,12 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			);
 
 			$parser->setFunctionHook(
+				'evt',
+				[ EmbedVideo::class, 'parseEV' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+
+			$parser->setFunctionHook(
 				'evu',
 				[ EmbedVideo::class, 'parseEVU' ],
 				Parser::SFH_OBJECT_ARGS

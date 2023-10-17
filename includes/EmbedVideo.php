@@ -354,7 +354,7 @@ class EmbedVideo {
 
 		$keys = array_keys( $supportedArgs );
 
-		$serviceName = array_shift( $args );
+		$serviceName = str_replace( 'service=', '', array_shift( $args ) ?? '' );
 
 		$counter = 0;
 
@@ -387,7 +387,7 @@ class EmbedVideo {
 			++$counter;
 		}
 
-		$supportedArgs['service'] = $serviceName ?? false;
+		$supportedArgs['service'] = empty( $serviceName ) ? false : $serviceName;
 
 		// An intentional weak check
 		if ( $supportedArgs['autoresize'] == true ) {
