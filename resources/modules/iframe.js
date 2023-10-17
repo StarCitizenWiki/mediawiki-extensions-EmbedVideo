@@ -1,4 +1,3 @@
-
 const fetchThumb = async (url, parent, container) => {
     const fetcherFactory = require('./fetchFactory.js').fetchFactory;
 
@@ -119,7 +118,6 @@ const makeIframe = function(ev) {
         let iframeConfig = ev.dataset.iframeconfig;
 
         iframeConfig = {
-            ...mw.config.get('ev-default-config') ?? [],
             ...mw.config.get('ev-' + ev.dataset.service + '-config') ?? [],
             ...JSON.parse(iframeConfig)
         };

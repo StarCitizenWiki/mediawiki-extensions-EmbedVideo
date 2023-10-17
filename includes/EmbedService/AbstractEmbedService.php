@@ -485,9 +485,8 @@ abstract class AbstractEmbedService {
 	 * @param null|int $width
 	 * @param null|int $height
 	 * @return string
-	 * @throws JsonException
 	 */
-	public function getIframeConfig( ?int $width = 0, ?int $height = 0 ): string {
+	public function getIframeConfig( $width = 0, $height = 0 ): string {
 		$attributes = [];
 		if ( !empty( $width ) && $width !== $this->getDefaultWidth() ) {
 			$attributes['width'] = $width;
@@ -498,7 +497,11 @@ abstract class AbstractEmbedService {
 
 		$attributes['src'] = $this->getUrl();
 
-		return json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES );
+		try {
+			return json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES );
+		} catch ( JsonException $e ) {
+			return '{"error": "Could not encode iframe config"}';
+		}
 	}
 
 	/**

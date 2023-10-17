@@ -1,4 +1,4 @@
-const makeIframe = require('./iframe.js').makeIframe;
+const { makeIframe } = require('./iframe.js');
 
 (function () {
 	mw.hook( 'wikipage.content' ).add( () => {

@@ -4,4 +4,7 @@
 .DS_Store
 .svn
 /vendor
-composer.lock
+/composer.lock
+/node_modules
+/.eslintcache
+/package-lock.json

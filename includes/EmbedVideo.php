@@ -185,11 +185,14 @@ class EmbedVideo {
 		$linkConfig = [
 			'data-iframeconfig' => $ev->service->getIframeConfig( $ev->args['width'], $ev->args['height'] ),
 			'data-service' => $ev->args['service'],
-			'data-privacy-url' => $ev->service->getPrivacyPolicyUrl(),
 			'data-player' => $ev->args['player'] ?? 'default',
 			'class' => 'embedvideo-evl vplink',
 			'href' => '#',
 		];
+
+		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
+			$linkConfig['data-privacy-url'] = $ev->service->getPrivacyPolicyUrl();
+		}
 
 		return [
 			Html::element( 'a', $linkConfig, $ev->args['text'] ),
@@ -366,7 +369,7 @@ class EmbedVideo {
 			if ( ( $keys[$counter] !== 'urlArgs' || str_contains( $arg, 'urlArgs' ) ) && preg_match( '/https?:/', $arg ) !== 1 ) {
 				$pair = explode( '=', $arg, 2 );
 			}
-			$pair = array_map( 'trim', $pair );
+			$pair = array_map( 'strip_tags', array_map( 'trim', $pair ) );
 
 			// We are handling a named argument
 			if ( count( $pair ) === 2 ) {
