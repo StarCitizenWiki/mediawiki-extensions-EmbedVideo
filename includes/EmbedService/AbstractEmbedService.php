@@ -189,6 +189,10 @@ abstract class AbstractEmbedService {
 	 * @return float|null
 	 */
 	public function getAspectRatio(): ?float {
+		if ( $this->width !== null && $this->height !== null ) {
+			return $this->width / $this->height;
+		}
+
 		return $this->getDefaultWidth() / $this->getDefaultHeight();
 	}
 

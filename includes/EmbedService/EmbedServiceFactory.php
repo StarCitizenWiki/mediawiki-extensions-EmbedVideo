@@ -25,6 +25,7 @@ final class EmbedServiceFactory {
 	 */
 	private static $availableServices = [
 		ArchiveOrg::class,
+		Bandcamp::class,
 		Bilibili::class,
 		Ccc::class,
 		DailyMotion::class,
@@ -60,6 +61,9 @@ final class EmbedServiceFactory {
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
+
+			case 'bandcamp':
+				return new Bandcamp( $id );
 
 			case 'bilibili':
 			case 'player.bilibili':
