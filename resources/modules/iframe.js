@@ -9,7 +9,7 @@ const fetchThumb = async (url, parent, container) => {
 
         // Title
         const overlay = parent.querySelector('.embedvideo-loader');
-        overlay.querySelectorAll('.embedvideo-loader__title').forEach(title => {
+        overlay.querySelectorAll('.embedvideo-loader__title:not(.embedvideo-loader__title--manual)').forEach(title => {
             overlay.removeChild(title);
         });
 
@@ -73,13 +73,21 @@ const fetchThumb = async (url, parent, container) => {
             picture.append(image);
             parent.prepend(picture);
 
-            if (typeof json.title !== 'undefined' && json.title.length > 0) {
+            if (typeof json.title !== 'undefined' && json.title.length > 0 && parent.querySelector('.embedvideo-loader__title--manual') === null) {
                 const
                     overlay = parent.querySelector('.embedvideo-loader'),
-                    title = document.createElement('div');
+                    title = document.createElement('div'),
+                    link = document.createElement('a');
 
                 title.classList.add('embedvideo-loader__title');
-                title.innerText = json.title;
+
+                link.classList.add('embedvideo-loader__link');
+                link.href = JSON.parse(container?.dataset?.iframeconfig ?? '{"src": "#"}').src;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer nofollow';
+                link.innerText = json.title;
+
+                title.append(link);
                 overlay.prepend(title);
             }
 
@@ -144,6 +152,10 @@ const makeIframe = function(ev) {
 
     const togglePrivacyClickListener = function (event) {
         event.stopPropagation();
+
+        if (event.target.classList.contains('embedvideo-loader__link')) {
+            return;
+        }
 
         loader.classList.toggle('hidden');
         privacyNotice.classList.toggle('hidden');

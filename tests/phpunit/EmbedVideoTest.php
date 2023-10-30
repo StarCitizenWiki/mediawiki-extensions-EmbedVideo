@@ -409,7 +409,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString( '"width":320,"height":320', $output[0] );
 		$this->assertStringContainsString(
-			'<div class="embedvideo-loader__title">Title of the Embed</div>',
+			'<div class="embedvideo-loader__title embedvideo-loader__title--manual"><a',
 			$output[0]
 		);
 	}
