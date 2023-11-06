@@ -23,6 +23,7 @@
 	"embedvideo-service-soundcloud": "사운드 클라우드",
 	"embedvideo-service-spotify": "스포티파이",
 	"embedvideo-service-twitch": "트위치",
+	"embedvideo-service-videolink": "비디오 링크",
 	"embedvideo-service-vimeo": "비메오",
 	"embedvideo-service-youtube": "유튜브",
 	"embedvideo-service-localvideo": "로컬 파일",
