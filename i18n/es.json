@@ -13,6 +13,7 @@
 	"embedvideo-consent-privacy-notice-text": "$1 podría recabar datos personales.",
 	"embedvideo-consent-privacy-notice-continue": "Continuar",
 	"embedvideo-consent-privacy-notice-dismiss": "Descartar",
+	"embedvideo-service-videolink": "Enlace del video",
 	"embedvideo-service-externalvideo": "Video external",
 	"embedvideo-play": "Reproducir",
 	"embedvideo-error-missingparams": "EmbedVideo; falta un parámetro requerido.",

@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
+use Html;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\LocalVideo;
@@ -148,7 +149,19 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 
 		$output = EmbedHtmlFormatter::makeTitleHtml( $service );
 
-		$this->assertEquals( '<div class="embedvideo-loader__title">Foo</div>', $output );
+		$link = Html::element( 'a', [
+			'target' => '_blank',
+			'href' => $service->getUrl(),
+			'rel' => 'noopener noreferrer nofollow'
+		], $service->getTitle() );
+
+		$this->assertEquals(
+			sprintf(
+				'<div class="embedvideo-loader__title embedvideo-loader__title--manual">%s</div>',
+				$link
+			),
+			$output
+		);
 	}
 
 	/**

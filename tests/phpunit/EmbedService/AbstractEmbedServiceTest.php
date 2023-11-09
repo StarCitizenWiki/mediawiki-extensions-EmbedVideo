@@ -7,6 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\YouTube;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 use MediaWikiIntegrationTestCase;
+use RuntimeException;
 
 /**
  * @group EmbedVideo
@@ -337,7 +338,12 @@ class AbstractEmbedServiceTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testSetLocalThumb() {
-		$this->expectException( InvalidArgumentException::class );
+		if ( version_compare( MW_VERSION, '1.41.0', '>=' ) ) {
+			$this->expectException( RuntimeException::class );
+		} else {
+			$this->expectException( InvalidArgumentException::class );
+		}
+
 		$this->service->setLocalThumb( 'FooFile.jpg' );
 	}
 

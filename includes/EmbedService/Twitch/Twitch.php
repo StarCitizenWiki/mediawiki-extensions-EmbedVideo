@@ -18,13 +18,6 @@ class Twitch extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 620 / 378;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getServiceKey(): string {
 		return 'twitch';
 	}

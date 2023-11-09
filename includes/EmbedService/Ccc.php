@@ -4,27 +4,12 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-final class ArchiveOrg extends AbstractEmbedService {
-
+final class Ccc extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return '//archive.org/embed/%1$s';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultWidth(): int {
-		return 640;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getDefaultHeight(): int {
-		return 493;
+		return '//media.ccc.de/v/%1$s/oembed';
 	}
 
 	/**
@@ -32,7 +17,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#archive\.org/(?:details|embed)/([\d\w\-_][^/\?\#\'"<>]+)#is'
+			'#media\.ccc\.de\/v\/([\w-]+)(?:\/oembed)?#is',
 		];
 	}
 
@@ -41,7 +26,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([\d\w\-_][^/\?\#]+)$#is'
+			'#([\w-]+)(?:\/oembed)?#is',
 		];
 	}
 
@@ -49,7 +34,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://archive.org/about/terms.php';
+		return 'https://media.ccc.de/about.html#privacy';
 	}
 
 	/**
@@ -57,7 +42,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://archive.org'
+			'https://media.ccc.de',
 		];
 	}
 }

@@ -25,7 +25,9 @@ final class EmbedServiceFactory {
 	 */
 	private static $availableServices = [
 		ArchiveOrg::class,
+		Bandcamp::class,
 		Bilibili::class,
+		Ccc::class,
 		DailyMotion::class,
 		ExternalVideo::class,
 		KakaoTV::class,
@@ -40,6 +42,7 @@ final class EmbedServiceFactory {
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
+		VideoLink::class,
 		Vimeo::class,
 		YouTube::class,
 		YouTubeOEmbed::class,
@@ -54,12 +57,22 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+			case 'archive':
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
 
+			case 'bandcamp':
+				return new Bandcamp( $id );
+
 			case 'bilibili':
+			case 'player.bilibili':
 				return new Bilibili( $id );
+
+			case 'ccc':
+			case 'media.ccc':
+			case 'media.ccc.de':
+				return new Ccc( $id );
 
 			case 'dailymotion':
 				return new DailyMotion( $id );
@@ -69,6 +82,7 @@ final class EmbedServiceFactory {
 				return new ExternalVideo( $id );
 
 			case 'kakaotv':
+			case 'play-tv.kakao':
 				return new KakaoTV( $id );
 
 			case 'loom':
@@ -76,9 +90,11 @@ final class EmbedServiceFactory {
 
 			case 'nicovideo':
 			case 'niconico':
+			case 'embed.nicovideo':
 				return new Niconico( $id );
 
 			case 'navertv':
+			case 'tv.naver':
 				return new NaverTV( $id );
 
 			case 'sharepoint':
@@ -105,6 +121,9 @@ final class EmbedServiceFactory {
 
 			case 'twitchvod':
 				return new TwitchVod( $id );
+
+			case 'videolink':
+				return new VideoLink( $id );
 
 			case 'vimeo':
 				return new Vimeo( $id );

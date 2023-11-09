@@ -6,7 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
 use Exception;
 use InvalidArgumentException;
-use MediaWiki\Extension\EmbedVideo\EmbedService\Niconico;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWikiIntegrationTestCase;
 use ParserOptions;
@@ -15,13 +15,13 @@ use PPCustomFrame_Hash;
 /**
  * @group EmbedVideo
  */
-class NiconicoTest extends MediaWikiIntegrationTestCase {
+class BandcampTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * A valid ID
 	 * @var string
 	 */
-	private string $validId = 'sm40807360';
+	private string $validId = '1003592798';
 
 	/**
 	 * An invalid id
@@ -33,13 +33,14 @@ class NiconicoTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
-	private string $validUrlId = 'https://embed.nicovideo.jp/watch/sm40807360';
+	// phpcs:ignore Generic.Files.LineLength.TooLong
+	private string $validUrlId = 'https://bandcamp.com/EmbeddedPlayer/album=1003592798/size=large/bgcol=181a1b/linkcol=056cc4/tracklist=false/transparent=true/';
 
 	/**
 	 * An invalid url
 	 * @var string
 	 */
-	private string $invalidUrlId = 'https://nicovideo.jp/video/40807360';
+	private string $invalidUrlId = 'https://bandcamp.com/EmbeddedPlayer/song=Foo/';
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
@@ -48,56 +49,59 @@ class NiconicoTest extends MediaWikiIntegrationTestCase {
 	public function testInvalidId() {
 		$this->expectException( InvalidArgumentException::class );
 
-		new Niconico( $this->invalidId );
+		new Bandcamp( $this->invalidId );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getIdRegex
 	 * @return void
 	 */
 	public function testValidId() {
-		$service = new Niconico( $this->validId );
+		$service = new Bandcamp( $this->validId );
 
-		$this->assertInstanceOf( Niconico::class, $service );
+		$this->assertInstanceOf( Bandcamp::class, $service );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getIdRegex
 	 * @return void
 	 */
 	public function testValidUrlId() {
-		$service = new Niconico( $this->validUrlId );
+		$service = new Bandcamp( $this->validUrlId );
 
-		$this->assertInstanceOf( Niconico::class, $service );
-		$this->assertEquals( 'sm40807360', $service->parseVideoID( $this->validUrlId ) );
+		$this->assertInstanceOf( Bandcamp::class, $service );
+		$this->assertEquals(
+			$this->validId,
+			$service->parseVideoID( $this->validUrlId )
+		);
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getIdRegex
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
 		$this->expectException( InvalidArgumentException::class );
-		new Niconico( $this->invalidUrlId );
+		new Bandcamp( $this->invalidUrlId );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Niconico::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp::getIdRegex
 	 * @return void
 	 */
 	public function testUrl() {
-		$service = new Niconico( $this->validUrlId );
+		$service = new Bandcamp( $this->validUrlId );
 
-		$this->assertStringContainsString( '//embed.nicovideo.jp/watch/', $service->getUrl() );
+		$this->assertStringContainsString( '//bandcamp.com/EmbeddedPlayer/album=', $service->getUrl() );
 	}
 
 	/**

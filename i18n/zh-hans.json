@@ -3,6 +3,7 @@
 		"authors": [
 			"Alistair3149",
 			"GuoPC",
+			"LittlePaw365",
 			"Zhang8569"
 		]
 	},
@@ -16,15 +17,17 @@
 	"embedvideo-consent-privacy-notice-continue": "继续",
 	"embedvideo-consent-privacy-notice-dismiss": "关闭",
 	"embedvideo-service-bilibili": "哔哩哔哩",
+	"embedvideo-service-localvideo": "本地文件",
+	"embedvideo-service-externalvideo": "外部视频",
 	"embedvideo-play": "播放视频",
 	"embedvideo-error-missingparams": "EmbedVideo缺少一个必须的参数。",
 	"embedvideo-error-service": "嵌入视频无法识别视频服务“$1”。",
 	"embedvideo-error-id": "视频嵌入收到了一个对服务“$1”不可用的id “$2“",
 	"embedvideo-error-width": "EmbedVideo收到了一个错误的高度参数“$1”",
 	"embedvideo-error-height": "EmbedVideo收到了一个错误的高度参数“$1”",
-	"embedvideo-error-alignment": "嵌入的视频被给予了对校准参数一个不可用的数值“$1”。可用的数值为“left”“center”或“right”。",
-	"embedvideo-error-valignment": "嵌入的视频被给予了对校准参数一个不可用的数值“$1”。可用的数值为“上”，“中间”，“下”，或“基线”。",
-	"embedvideo-error-urlargs": "嵌入视频接收到了一个涵盖出错方程和空白争论的URL争论列表。",
+	"embedvideo-error-alignment": "EmbedVideo的对齐参数“$1”有非法值。有效值为“left”“center”或“right”。",
+	"embedvideo-error-valignment": "EmbedVideo的对齐参数“$1”有非法值。有效值为“top”“middle”“bottom”或“baseline”。",
+	"embedvideo-error-urlargs": "EmbedVideo收到的URL参数列表包含畸形数据或空参数。",
 	"embedvideo-error-unknown": "EmbedVideo在尝试生成该视频嵌入块时遇到了一个未知的错误。（$1）",
 	"embedvideo-error-evp_deprecated": "#evp解析器函数在EmbedVideo 2.0中已弃用。请将您的解析器函数标记转换为#ev。",
 	"embedvideo-error-container": "为‘集装箱’ 提供的参数为不可用的。",
@@ -37,7 +40,7 @@
 	"apihelp-embedvideo-param-dimensions": "一个数字宽度（100）或宽比高（100 x 100）",
 	"apihelp-embedvideo-param-alignment": "视频校准",
 	"apihelp-embedvideo-param-description": "视频描述",
-	"apihelp-embedvideo-param-container": "接受该框架，或留下空白",
+	"apihelp-embedvideo-param-container": "接受框架，或留空",
 	"apihelp-embedvideo-param-urlargs": "视频URL中额外需要通过的争论（对于部分服务）",
 	"apihelp-embedvideo-param-autoresize": "自动调整视频大小？（是或否）"
 }

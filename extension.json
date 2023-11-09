@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.3.0",
+	"version": "3.4.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
@@ -35,15 +35,59 @@
 		"embedvideo": "MediaWiki\\Extension\\EmbedVideo\\ApiEmbedVideo"
 	},
 	"ResourceModules": {
+		"ext.embedVideo.messages": {
+			"messages": [
+				"embedvideo-service-archiveorg",
+				"embedvideo-service-bandcamp",
+				"embedvideo-service-bilibili",
+				"embedvideo-service-dailymotion",
+				"embedvideo-service-kakaotv",
+				"embedvideo-service-loom",
+				"embedvideo-service-navertv",
+				"embedvideo-service-niconico",
+				"embedvideo-service-soundcloud",
+				"embedvideo-service-sharepoint",
+				"embedvideo-service-spotify",
+				"embedvideo-service-twitch",
+				"embedvideo-service-videolink",
+				"embedvideo-service-vimeo",
+				"embedvideo-service-youtube",
+				"embedvideo-service-localvideo",
+				"embedvideo-service-externalvideo",
+				"embedvideo-consent-privacy-notice-text",
+				"embedvideo-consent-privacy-policy"
+			]
+		},
+		"ext.embedVideo.videolink": {
+			"es6": true,
+			"packageFiles": [
+				"ext.embedVideo.videolink.js",
+				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
+				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
+				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
+				{ "name": "iframe.js", "file": "modules/iframe.js" }
+			],
+			"styles": [
+				"ext.embedVideo.consent.less"
+			],
+			"position": "top",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"ext.embedVideo.consent": {
 			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.consent.js",
-				{ "name": "fetchFactory.js", "file":  "fetchers/fetchFactory.js" },
-				{ "name": "queryKeyParser.js", "file":  "fetchers/queryKeyParser.js" },
-				{ "name": "bilibili.js", "file":  "fetchers/bilibili.js" },
-				{ "name": "niconico.js", "file":  "fetchers/niconico.js" },
-				{ "name": "oembed.js", "file":  "fetchers/oembed.js" }
+				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
+				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
+				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
+				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
+				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
+				{ "name": "iframe.js", "file": "modules/iframe.js" }
 			],
 			"styles": [
 				"ext.embedVideo.consent.less"
@@ -99,7 +143,7 @@
 		},
 		"EmbedVideoUseEmbedStyleForLocalVideos": {
 			"description": "Styles local videos like they are embedded",
-			"value": false
+			"value": true
 		},
 		"EmbedVideoEnableAudioHandler": {
 			"description": "Enables the audio handler which displays local videos using the html5 <audio> tag.",
@@ -126,11 +170,11 @@
 			"value": []
 		},
 		"EmbedVideoRequireConsent": {
-			"description": "Explicitly require consent by only loading the iframe if the user clicks it",
+			"description": "Explicitly require consent by only loading the iframe after the user clicks play",
 			"value": true
 		},
 		"EmbedVideoFetchExternalThumbnails": {
-			"description": "Don't try to fetch thumbnails when consent is required.",
+			"description": "Fetch video thumbnails by querying the respective external oembed endpoints. This results in a http call.",
 			"value": true
 		},
 		"EmbedVideoShowPrivacyNotice": {

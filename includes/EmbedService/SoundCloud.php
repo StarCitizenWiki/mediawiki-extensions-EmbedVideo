@@ -23,13 +23,6 @@ final class SoundCloud extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAspectRatio(): ?float {
-		return 2.666667;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getDefaultWidth(): int {
 		return 186;
 	}
@@ -46,7 +39,7 @@ final class SoundCloud extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#^(https://soundcloud\.com/[\w\-\.]+[/]+[\w\-\.]+/?)$#is',
+			'#^(https://soundcloud\.com(?:/[\w\-\.]+){2,5})/?(?:\?.*)?$#is',
 		];
 	}
 

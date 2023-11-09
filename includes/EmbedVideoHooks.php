@@ -105,23 +105,40 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 	 */
 	public function onParserFirstCallInit( $parser ): void {
 		try {
+			$parser->setHook( 'embedvideo', [ EmbedVideo::class, 'parseEVTag' ] );
+
 			$parser->setFunctionHook(
 				'ev',
 				[ EmbedVideo::class, 'parseEV' ],
 				Parser::SFH_OBJECT_ARGS
 			);
 
-			$parser->setHook( 'embedvideo', [ EmbedVideo::class, 'parseEVTag' ] );
-		} catch ( MWException $e ) {
-			wfLogWarning( $e->getMessage() );
-		}
+			$parser->setFunctionHook(
+				'evt',
+				[ EmbedVideo::class, 'parseEV' ],
+				Parser::SFH_OBJECT_ARGS
+			);
 
-		try {
 			$parser->setFunctionHook(
 				'evu',
 				[ EmbedVideo::class, 'parseEVU' ],
 				Parser::SFH_OBJECT_ARGS
 			);
+
+			$parser->setFunctionHook(
+				'evl',
+				[ EmbedVideo::class, 'parseEVL' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+
+			$parser->setFunctionHook(
+				'vlink',
+				[ EmbedVideo::class, 'parseEVL' ],
+				Parser::SFH_OBJECT_ARGS
+			);
+
+			$parser->setHook( 'evlplayer', [ EmbedVideo::class, 'parseEVLTag' ] );
+			$parser->setHook( 'vplayer', [ EmbedVideo::class, 'parseEVLTag' ] );
 		} catch ( MWException $e ) {
 			wfLogWarning( $e->getMessage() );
 		}

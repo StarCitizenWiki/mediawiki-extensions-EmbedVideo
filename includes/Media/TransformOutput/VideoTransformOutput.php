@@ -39,16 +39,7 @@ class VideoTransformOutput extends AudioTransformOutput {
 	/**
 	 * Fetch HTML for this transform output
 	 *
-	 * @param array $options Associative array of options. Boolean options
-	 *                        should be indicated with a value of true for true, and false or
-	 *                        absent for false.
-	 *                        alt                Alternate text or caption
-	 *                        desc-link          Boolean, show a description link
-	 *                        file-link          Boolean, show a file download link
-	 *                        custom-url-link    Custom URL to link to
-	 *                        custom-title-link  Custom Title object to link to
-	 *                        valign             vertical-align property, if the output is an inline element
-	 *                        img-class          Class applied to the "<img>" tag, if there is such a tag
+	 * @param array $options Associative array of options.
 	 *
 	 * @return string HTML
 	 */

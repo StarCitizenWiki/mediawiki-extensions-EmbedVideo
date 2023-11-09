@@ -83,6 +83,31 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVU
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::addModules
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::makeHtmlFormatConfig
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVUEmpty() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVU(
+			$parser,
+			$this->getFrame( $parser ),
+			[],
+			false
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'errorbox', $output[0] );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
@@ -384,9 +409,37 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString( '"width":320,"height":320', $output[0] );
 		$this->assertStringContainsString(
-			'<div class="embedvideo-loader__title">Title of the Embed</div>',
+			'<div class="embedvideo-loader__title embedvideo-loader__title--manual"><a',
 			$output[0]
 		);
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVL
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::addModules
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getIframeConfig
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getPrivacyPolicyUrl
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLYouTube() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVL(
+			$parser,
+			$this->getFrame( $parser ),
+			[
+				'pSsYTj9kCHE',
+				'text=Test Text'
+			]
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+        // phpcs:ignore Generic.Files.LineLength.TooLong
+		$this->assertStringContainsString( '<a data-iframeconfig="', $output[0] );
+		$this->assertStringContainsString( 'Test Text', $output[0] );
 	}
 
 	/**
@@ -399,6 +452,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$parser = $this->getServiceContainer()->getParserFactory()->create();
 		$parser->setOptions( ParserOptions::newFromAnon() );
 		$parser->clearState();
+		$parser->setOutputType( Parser::OT_HTML );
 
 		return $parser;
 	}

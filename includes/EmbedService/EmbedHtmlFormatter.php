@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use ConfigException;
 use Exception;
+use Html;
 use JsonException;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
@@ -78,18 +79,9 @@ final class EmbedHtmlFormatter {
 				->makeConfig( 'EmbedVideo' )
 				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
-				$attributes = [];
-				if ( $width !== $service->getDefaultWidth() ) {
-					$attributes['width'] = $width;
-				}
-				if ( $height !== $service->getDefaultHeight() ) {
-					$attributes['height'] = $height;
-				}
-
-				$attributes['src'] = $service->getUrl();
 				$iframeConfig = sprintf(
 					"data-iframeconfig='%s'",
-					json_encode( $attributes, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES )
+					$service->getIframeConfig( $width, $height )
 				);
 			}
 		} catch ( JsonException | ConfigException $e ) {
@@ -212,7 +204,13 @@ final class EmbedHtmlFormatter {
 			return '';
 		}
 
-		return sprintf( '<div class="embedvideo-loader__title">%s</div>', $service->getTitle() );
+		$link = Html::element( 'a', [
+			'target' => '_blank',
+			'href' => $service->getUrl(),
+			'rel' => 'noopener noreferrer nofollow'
+		], $service->getTitle() );
+
+		return sprintf( '<div class="embedvideo-loader__title embedvideo-loader__title--manual">%s</div>', $link );
 	}
 
 	/**

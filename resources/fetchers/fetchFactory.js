@@ -11,6 +11,9 @@ const fetchFactory = function (service) {
 		case 'bilibili':
 			//fetcher = require('./bilibili.js').fetcher;
 			break;
+		case 'ccc':
+			fetcher = oEmbedFetchers.ccc;
+			break;
 		case 'loom':
 			fetcher = oEmbedFetchers.loom;
 			break;
@@ -28,6 +31,7 @@ const fetchFactory = function (service) {
 		case 'spotifyartist':
 			fetcher = oEmbedFetchers.spotifyartist;
 			break;
+		case 'spotify':
 		case 'spotifytrack':
 			fetcher = oEmbedFetchers.spotifytrack;
 			break;

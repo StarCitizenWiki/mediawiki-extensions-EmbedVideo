@@ -4,9 +4,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
+use Exception;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud;
+use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWikiIntegrationTestCase;
+use ParserOptions;
+use PPCustomFrame_Hash;
 
 /**
  * @group EmbedVideo
@@ -120,7 +124,7 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 		$service = new SoundCloud( $this->validUrlId );
 
 		$this->assertEquals(
-			round( $service->getDefaultHeight() / $service->getDefaultWidth(), 2 ),
+			round( $service->getDefaultWidth() / $service->getDefaultHeight(), 2 ),
 			round( $service->getAspectRatio(), 2 )
 		);
 	}
@@ -135,5 +139,30 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 		$service = new SoundCloud( $this->validUrlId );
 
 		$this->assertEquals( 'audio', $service->getContentType() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVU
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testEvu(): void {
+		$parser = $this->getServiceContainer()->getParser();
+		$parser->setOptions( ParserOptions::newFromAnon() );
+		$parser->resetOutput();
+
+		$out = EmbedVideo::parseEVU(
+			$parser, new PPCustomFrame_Hash( $parser->getPreprocessor(), [] ), [
+			$this->validUrlId
+		] );
+
+		$this->assertIsArray( $out );
+		$this->assertCount( 3, $out );
+		$this->assertStringContainsString(
+			$this->validId,
+			$out[0]
+		);
 	}
 }
