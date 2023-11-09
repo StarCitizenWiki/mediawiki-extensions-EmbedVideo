@@ -21,7 +21,7 @@ class BandcampTest extends MediaWikiIntegrationTestCase {
 	 * A valid ID
 	 * @var string
 	 */
-	private string $validId = '826968881';
+	private string $validId = '1003592798';
 
 	/**
 	 * An invalid id
@@ -40,7 +40,7 @@ class BandcampTest extends MediaWikiIntegrationTestCase {
 	 * An invalid url
 	 * @var string
 	 */
-	private string $invalidUrlId = 'https://bandcamp.com/EmbeddedPlayer/song=1003592798/';
+	private string $invalidUrlId = 'https://bandcamp.com/EmbeddedPlayer/song=Foo/';
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID

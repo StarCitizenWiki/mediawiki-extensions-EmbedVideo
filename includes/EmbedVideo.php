@@ -6,12 +6,12 @@ namespace MediaWiki\Extension\EmbedVideo;
 
 use Config;
 use ConfigException;
+use Html;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\OEmbedServiceInterface;
-use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use Parser;
 use PPFrame;
