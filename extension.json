@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.3.0",
+	"version": "3.4.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
@@ -38,6 +38,7 @@
 		"ext.embedVideo.messages": {
 			"messages": [
 				"embedvideo-service-archiveorg",
+				"embedvideo-service-bandcamp",
 				"embedvideo-service-bilibili",
 				"embedvideo-service-dailymotion",
 				"embedvideo-service-kakaotv",
