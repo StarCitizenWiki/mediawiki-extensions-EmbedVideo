@@ -415,6 +415,34 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVL
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::init
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::addModules
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getIframeConfig
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getPrivacyPolicyUrl
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLYouTube() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVL(
+			$parser,
+			$this->getFrame( $parser ),
+			[
+				'pSsYTj9kCHE',
+				'text=Test Text'
+			]
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+        // phpcs:ignore Generic.Files.LineLength.TooLong
+		$this->assertStringContainsString( '<a data-iframeconfig="', $output[0] );
+		$this->assertStringContainsString( 'Test Text', $output[0] );
+	}
+
+	/**
 	 * Get a fresh parser
 	 *
 	 * @return Parser

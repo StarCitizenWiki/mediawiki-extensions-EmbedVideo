@@ -150,6 +150,41 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 **Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.  
 E.g. using named id and unnamed description `{{#ev:service||||This is the Description|id=abc}}`/ `{{#ev:service|id=abc|||This is the Description}}`
 
+### \#evu - Embed Video Url
+The `{{#evu}}` parser function tries to extract the service from the host name of an url.
+
+It takes the same arguments as `{{#ev}}`.
+
+### \#evl - Embed Video Link
+The support for `{{#evl}} / {{#vlink}}` and `<evlplayer> / <vplayer>` has been added with version 3.4.0.
+
+The link parser function takes the following arguments:
+* `id` - Video ID
+* `text` - Link Text
+* `player` - ID of the `<evlplayer>` if multiple exist on a page
+* `service` - Name of the embed service, defaults to YouTube
+
+Named arguments can be passed in any order, unnamed args must be passed in the order defined above.
+
+#### \<evlplayer> / \<vplayer>
+The corresponding player that plays the videos defined by `{{#evl}}` links.
+
+Note that this implementation differs from EmbedVideo v2.x in the following areas:
+* No `default content` is supported, i.e. text inside the tags
+* A default video id should be defined, else the player displays a blank embed
+  * In the old implementation nothing was shown
+* No `style` attribute can be set
+* Video lists are not supported
+
+### Example
+```mediawiki
+<evlplayer w="width" h="height" class="class" id="example-player" defaultid="pSsYTj9kCHE"></evlplayer>`
+{{#evl:21X5lGlDOfg|NASA Live|player=example-player}}`
+{{#evl:6ZFbXIJkuI1dVNWvzJzown|text=Spotify Track|service=spotifytrack|player=example-player}}
+```
+
+Shows a YouTube embed for the video `pSsYTj9kCHE` and two video links, one for another YouTube video (NASA Live) and a Spotify track.
+
 ## Examples
 
 ## SharePoint
@@ -228,7 +263,7 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 | Site                                                     | Service Name(s)                 | ID Example                                             | URL Example(s)                                                                                                            |
 |----------------------------------------------------------|---------------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 | [Archive.org Videos](https://archive.org/details/movies) | `archiveorg`                    | electricsheep-flock-244-80000-6                        | https://archive.org/details/electricsheep-flock-244-80000-6<br/>https://archive.org/embed/electricsheep-flock-244-80000-6 |
-| [Bandcamp](https://bandcamp.com/)                        | `bandcamp`                      | 1003592798                                           | https://emptyhousesmusic.bandcamp.com/album/empty-houses (Click on share/embed, and copy the id after `album=`)           |
+| [Bandcamp](https://bandcamp.com/)                        | `bandcamp`                      | 1003592798                                             | https://emptyhousesmusic.bandcamp.com/album/empty-houses (Click on share/embed, and copy the id after `album=`)           |
 | [Bilibili](https://www.bilibili.com/)                    | `bilibili`                      | BV1Hz4y1k7ae                                           | https://player.bilibili.com/player.html?bvid=1Hz4y1k7ae&amp;page=1                                                        |
 | [DailyMotion](https://dailymotion.com/)                  | `dailymotion`                   | x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms  | http://www.dailymotion.com/video/x1adiiw_archer-waking-up-as-h-jon-benjamin_shortfilms                                    |
 | [KakaoTV](https://tv.kakao.com/)                         | `kakaotv`                       | 301157950                                              | https://play-tv.kakao.com/embed/player/cliplink/301157950                                                                 |

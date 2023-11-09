@@ -142,7 +142,6 @@ class EmbedVideo {
 		$expandedArgs = [
 			'id' => null,
 			'text' => null,
-			'video' => null,
 			'player' => null,
 			'service' => null,
 		];
