@@ -49,6 +49,10 @@ final class EmbedHtmlFormatter {
 			$config
 		);
 
+		if ( !empty( $config['img-class'] ) ) {
+			$config['class'] .= ' ' . $config['img-class'];
+		}
+
 		$inlineStyles = [
 			'container' => $config['style'] ?? '',
 			'wrapper' => '',

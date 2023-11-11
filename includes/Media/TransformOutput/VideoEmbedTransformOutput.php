@@ -24,6 +24,7 @@ class VideoEmbedTransformOutput extends VideoTransformOutput {
 			'withConsent' => true,
 			'autoresize' => ( $this->parameters['autoresize'] ?? false ) === true,
 			'description' => $this->parameters['description'] ?? null,
+			'img-class' => $this->parameters['img-class'] ?? null,
 		] );
 	}
 }
