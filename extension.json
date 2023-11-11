@@ -70,7 +70,8 @@
 				{ "name": "iframe.js", "file": "modules/iframe.js" }
 			],
 			"styles": [
-				"ext.embedVideo.consent.less"
+				"ext.embedVideo.consent.less",
+				"ext.embedVideo.evl.less"
 			],
 			"position": "top",
 			"targets": [
