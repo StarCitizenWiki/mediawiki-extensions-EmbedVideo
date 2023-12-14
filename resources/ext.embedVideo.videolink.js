@@ -6,12 +6,15 @@ const {makeIframe, fetchThumb} = require('./iframe.js');
             evl.addEventListener('click', e => {
                 e.preventDefault();
 
-                const player = evl?.dataset?.player ?? 'default';
-                const iframeConfig = JSON.parse(evl.dataset.iframeconfig);
+                const player = evl.dataset?.player ?? 'default';
+                const iframeConfig = JSON.parse(evl.dataset?.iframeconfig ?? '{}');
 
-                const iframe = document.querySelector(`.embedvideo.evlplayer-${player} iframe`);
+                const playerContainer = document.querySelector(`.embedvideo.evlplayer-${player}`);
+                const iframe = playerContainer.querySelector('iframe');
                 // Iframe exists, no consent required or already given
                 if (iframe !== null) {
+                    playerContainer.dataset.service = evl.dataset?.service ?? 'youtube';
+
                     for (const [key, value] of Object.entries(iframeConfig)) {
                         iframe.setAttribute(key, value);
                     }

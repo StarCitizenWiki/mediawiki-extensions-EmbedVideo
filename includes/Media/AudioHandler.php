@@ -42,6 +42,7 @@ class AudioHandler extends MediaHandler {
 			'loop' => 'loop',
 			'nocontrols' => 'nocontrols',
 			'muted'	=> 'muted',
+			'class'	=> 'class',
 		];
 	}
 
@@ -63,7 +64,7 @@ class AudioHandler extends MediaHandler {
 			return $this->parseTimeString( $value ) !== false;
 		}
 
-		if ( $name === 'autoplay' || $name === 'loop' || $name === 'nocontrols' ) {
+		if ( in_array( $name, [ 'autoplay', 'loop', 'nocontrols', 'class' ], true ) ) {
 			return true;
 		}
 
@@ -124,7 +125,7 @@ class AudioHandler extends MediaHandler {
 	 * Returns false if the parameters are unacceptable and the transform should fail
 	 *
 	 * @param stdClass|File $image
-	 * @param array $params
+	 * @param array &$params
 	 * @return bool Success
 	 */
 	public function normaliseParams( $image, &$params ): bool {
@@ -151,6 +152,7 @@ class AudioHandler extends MediaHandler {
 		}
 
 		$params['page'] = 1;
+		$params['img-class'] = $params['img-class'] ?? $params['class'] ?? null;
 
 		return true;
 	}

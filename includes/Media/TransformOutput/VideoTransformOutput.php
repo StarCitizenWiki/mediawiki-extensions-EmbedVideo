@@ -48,7 +48,7 @@ class VideoTransformOutput extends AudioTransformOutput {
 			'src' => $this->getSrc(),
 			'width' => $this->getWidth(),
 			'height' => $this->getHeight(),
-			'class' => $options['img-class'] ?? false,
+			'class' => $options['img-class'] ?? $this->parameters['img-class'] ?? false,
 			'style' => $this->getStyle( $options ),
 			'poster' => $this->parameters['posterUrl'] ?? false,
 			'controls' => !isset( $this->parameters['nocontrols'] ),

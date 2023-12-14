@@ -29,4 +29,5 @@ $magicWords['en'] = [
 	'autoresize' => [ 0, 'autoresize' ],
 	'title' => [ 0, 'title=$1' ],
 	'description' => [ 0, 'description=$1' ],
+	'class' => [ 0, 'class=$1' ],
 ];

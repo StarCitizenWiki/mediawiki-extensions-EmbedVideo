@@ -52,7 +52,7 @@ class AudioTransformOutput extends MediaTransformOutput {
 		return Html::rawElement( 'audio', [
 			'src' => $this->getSrc(),
 			'width' => $this->getWidth(),
-			'class' => $options['img-class'] ?? false,
+			'class' => $options['img-class'] ?? $this->parameters['img-class'] ?? false,
 			'style' => $this->getStyle( $options ),
 			'controls' => !isset( $this->parameters['nocontrols'] ),
 			'autoplay' => isset( $this->parameters['autoplay'] ),

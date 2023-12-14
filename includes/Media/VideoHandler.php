@@ -45,7 +45,7 @@ class VideoHandler extends AudioHandler {
 			return $value > 0;
 		}
 
-		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy', 'autoresize' ] ) ) {
+		if ( in_array( $name, [ 'poster', 'gif', 'muted', 'title', 'description', 'lazy', 'autoresize' ], true ) ) {
 			return true;
 		}
 
