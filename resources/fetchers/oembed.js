@@ -18,6 +18,14 @@ const spotifytrack = function(url) {
 	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/track/' + url);
 };
 
+const spotifyepisode = function(url) {
+	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/episode/' + url);
+};
+
+const spotifyshow = function(url) {
+	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/show/' + url);
+};
+
 const soundcloud = function(url) {
 	const queryParser = require('./queryKeyParser.js').queryKeyParser;
 
@@ -39,6 +47,10 @@ const loom = function(url) {
 
 const ccc = function(url) {
 	return oembed('https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url);
+};
+
+const wistia = function(url) {
+	return oembed('http://fast.wistia.net/oembed?url=http://fast.wistia.net/embed/iframe/' + url);
 };
 
 const oembed = function(url) {
@@ -73,8 +85,11 @@ module.exports = {
 	vimeo,
 	spotifyalbum,
 	spotifyartist,
+	spotifyepisode,
+	spotifyshow,
 	spotifytrack,
 	soundcloud,
 	ccc,
+	wistia,
 	oembed,
 };

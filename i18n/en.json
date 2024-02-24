@@ -25,6 +25,7 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-videolink": "Video Link",
 	"embedvideo-service-vimeo": "Vimeo",
+	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
 	"embedvideo-service-localvideo": "Local File",
 	"embedvideo-service-externalvideo": "External Video",

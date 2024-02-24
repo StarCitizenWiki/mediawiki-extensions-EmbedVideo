@@ -35,8 +35,17 @@ const fetchFactory = function (service) {
 		case 'spotifytrack':
 			fetcher = oEmbedFetchers.spotifytrack;
 			break;
+		case 'spotifyshow':
+			fetcher = oEmbedFetchers.spotifyshow;
+			break;
+		case 'spotifyepisode':
+			fetcher = oEmbedFetchers.spotifyepisode;
+			break;
 		case 'vimeo':
 			fetcher = oEmbedFetchers.vimeo;
+			break;
+		case 'wistia':
+			fetcher = oEmbedFetchers.wistia;
 			break;
 		case 'youtube':
 		case 'youtubevideolist':
