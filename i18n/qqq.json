@@ -21,6 +21,7 @@
 	"embedvideo-service-spotify": "{{Optional}}",
 	"embedvideo-service-twitch": "{{Optional}}",
 	"embedvideo-service-vimeo": "{{Optional}}",
+	"embedvideo-service-wistia": "{{optional}}\n\nName of https://wistia.com/ service.",
 	"embedvideo-service-youtube": "{{Optional}}",
 	"embedvideo-video-short-desc": "{{optional}}",
 	"embedvideo-audio-short-desc": "{{optional}}"
