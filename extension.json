@@ -16,7 +16,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.39.0",
 		"platform": {
-			"php": ">=8.0",
+			"php": ">= 7.4",
 			"ext-curl": "*"
 		}
 	},
