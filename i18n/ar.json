@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lolekek",
+			"محمد أحمد عبد الفتاح"
+		]
+	},
+	"embedvideo-description": "يضيف هذا الإصدار المتفرع ميزة تضمين مقاطع الفيديو من المصادر الشائعة للمحلل.",
+	"embedvideo-load": "تحميل $1",
+	"embedvideo-type-audio": "الصوت",
+	"embedvideo-type-content": "المحتوى",
+	"embedvideo-type-video": "الفيديو",
+	"embedvideo-consent-privacy-policy": "سياسة الخصوصية",
+	"embedvideo-consent-privacy-notice-text": "قد يقوم $1 بجمع البيانات الشخصية.",
+	"embedvideo-consent-privacy-notice-continue": "استمرار",
+	"embedvideo-consent-privacy-notice-dismiss": "تجاهل",
+	"embedvideo-service-videolink": "وصلة الفيديو",
+	"embedvideo-service-localvideo": "ملف محلي",
+	"embedvideo-service-externalvideo": "فيديو خارجي",
+	"embedvideo-play": "تشغيل الفيديو",
+	"embedvideo-error-missingparams": "يفتقد EmbedVideo معلمة مطلوبة.",
+	"embedvideo-error-service": "لم يتعرف EmbedVideo على خدمة الفيديو \"$1\".",
+	"embedvideo-error-id": "تلقى EmbedVideo المعرف السيئ \" $2 \" للخدمة \" $1 \".",
+	"embedvideo-error-width": "تلقى EmbedVideo معلمة عرض سيئة \" $1 \".",
+	"embedvideo-error-height": "تلقى EmbedVideo معلمة ارتفاع سيئة \" $1 \".",
+	"embedvideo-error-alignment": "تم منح EmbedVideo قيمة غير مسموحة لمعلمة المحاذاة \" $1 \". القيم الصالحة هي \"left\" (يسار)، أو \"center\" (مركز) أو \"right\" (يمين).",
+	"embedvideo-error-valignment": "تم منح EmbedVideo قيمة غير مسموحة لمعلمة المحاذاة \" $1 \". القيم الصالحة هي \"top\" (أعلى)، أو \"middle\" (وسط)، أو \"bottom\" (أسفل)، أو \"baseline\" (خط الأساس).",
+	"embedvideo-error-urlargs": "تلقى EmbedVideo قائمة بوسائط URL التي تحتوي على بيانات مشوهة أو وسائط فارغة.",
+	"embedvideo-error-unknown": "واجه EmbedVideo خطًأغير معروف أثناء محاولة إنشاء كتلة تضمين الفيديو هذه. ($1)",
+	"embedvideo-error-evp_deprecated": "تم إهمال وظيفة المحلل اللغوي #evp في EmbedVideo 2.0. يرجى تحويل علامة وظيفة المحلل اللغوي إلى #ev.",
+	"apihelp-embedvideo-param-description": "وصف الفيديو"
+}
