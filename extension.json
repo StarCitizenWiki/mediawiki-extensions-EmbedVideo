@@ -16,8 +16,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.39.0",
 		"platform": {
-			"php": ">=8.0",
-			"ext-curl": "*"
+			"php": ">=8.0"
 		}
 	},
 	"MessagesDirs": {
