@@ -153,6 +153,11 @@ const makeIframe = function(ev) {
     const togglePrivacyClickListener = function (event) {
         event.stopPropagation();
 
+        if (window.sessionStorage.getItem(getSessionStorageKey()) === '1') {
+            makeIframe(event);
+            return;
+        }
+
         if (event.target.classList.contains('embedvideo-loader__link')) {
             return;
         }
@@ -160,6 +165,10 @@ const makeIframe = function(ev) {
         loader.classList.toggle('hidden');
         privacyNotice.classList.toggle('hidden');
     };
+
+    const getSessionStorageKey = function () {
+        return `ev-${ev.dataset.service}-consent-given`;
+    }
 
     /** @type HTMLDivElement|null */
     const consentDiv = wrapper.querySelector('.embedvideo-consent');
@@ -179,7 +188,10 @@ const makeIframe = function(ev) {
         const dismissBtn = consentDiv.querySelector('.embedvideo-privacyNotice__dismiss');
 
         consentDiv.addEventListener('click', togglePrivacyClickListener);
-        continueBtn.addEventListener('click', makeIframe);
+        continueBtn.addEventListener('click', (event) => {
+            window.sessionStorage.setItem(getSessionStorageKey(), '1');
+            makeIframe(event);
+        });
         dismissBtn.addEventListener('click', togglePrivacyClickListener);
     } else {
         consentDiv.addEventListener('click', makeIframe);
