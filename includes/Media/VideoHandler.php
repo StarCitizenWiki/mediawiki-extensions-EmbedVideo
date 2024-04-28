@@ -73,20 +73,22 @@ class VideoHandler extends AudioHandler {
 
 			if ( $title !== null && $title->exists() ) {
 				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
-				$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
-				try {
-					$params['posterUrl'] = MediaWikiServices::getInstance()->getUrlUtils()->expand(
-						$transform->getUrl()
-					);
+				if ( !$coverFile !== false ) {
+					$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
-				} catch ( Exception $e ) {
-					unset( $params['poster'], $params['posterUrl'] );
+					try {
+						$params['posterUrl'] = MediaWikiServices::getInstance()->getUrlUtils()->expand(
+							$transform->getUrl()
+						);
+					} catch ( Exception $e ) {
+						unset( $params['posterUrl'] );
+					}
 				}
-			} else {
-				unset( $params['poster'] );
 			}
 		}
+
+		unset( $params['poster'] );
 
 		if ( isset( $params['lazy'] ) ) {
 			$params['lazy'] = true;
