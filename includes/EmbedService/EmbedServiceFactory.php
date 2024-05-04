@@ -7,6 +7,8 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyArtist;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\Twitch;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchClip;
@@ -38,12 +40,15 @@ final class EmbedServiceFactory {
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
+		SpotifyShow::class,
+		SpotifyEpisode::class,
 		SpotifyTrack::class,
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
 		VideoLink::class,
 		Vimeo::class,
+		Wistia::class,
 		YouTube::class,
 		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
@@ -113,6 +118,14 @@ final class EmbedServiceFactory {
 			case 'spotifytrack':
 				return new SpotifyTrack( $id );
 
+			case 'spotifypodcast':
+			case 'spotifyshow':
+				return new SpotifyShow( $id );
+
+			case 'spotifypodcastepisode':
+			case 'spotifyepisode':
+				return new SpotifyEpisode( $id );
+
 			case 'twitch':
 				return new Twitch( $id );
 
@@ -127,6 +140,9 @@ final class EmbedServiceFactory {
 
 			case 'vimeo':
 				return new Vimeo( $id );
+
+			case 'wistia':
+				return new Wistia( $id );
 
 			case 'youtubeoembed':
 				return new YouTubeOEmbed( $id );

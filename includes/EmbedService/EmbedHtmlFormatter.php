@@ -27,9 +27,10 @@ final class EmbedHtmlFormatter {
 	 * style: String - CSS Style added to the container,
 	 * withConsent: Boolean - Whether to add the consent HTML,
 	 * description: String - Optional Description
+	 * @param array $args - Optional args from the actual parser call
 	 * @return string
 	 */
-	public static function toHtml( AbstractEmbedService $service, array $config = [] ): string {
+	public static function toHtml( AbstractEmbedService $service, array $config = [], array $args = [] ): string {
 		if ( $service instanceof OEmbedServiceInterface ) {
 			return self::makeIframe( $service );
 		}
@@ -60,6 +61,12 @@ final class EmbedHtmlFormatter {
 
 		if ( $config['autoresize'] === true ) {
 			$config['class'] .= ' embedvideo--autoresize';
+			if ( isset( $args['width'] ) ) {
+				$inlineStyles['container'] .= sprintf( 'max-width:%dpx', $width );
+			}
+			if ( isset( $args['height'] ) ) {
+				$inlineStyles['wrapper'] .= sprintf( 'max-height:%dpx', $height );
+			}
 		} else {
 			// Autoresize does not need inline width and height
 			$inlineStyles['container'] .= sprintf( 'width:%dpx', $width );

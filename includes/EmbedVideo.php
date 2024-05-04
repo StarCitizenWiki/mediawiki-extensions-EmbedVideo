@@ -314,7 +314,8 @@ class EmbedVideo {
 			// This does the whole HTML generation
 			EmbedHtmlFormatter::toHtml(
 				$this->service,
-				$this->makeHtmlFormatConfig( $this->service )
+				$this->makeHtmlFormatConfig( $this->service ),
+				$this->args
 			),
 			'noparse' => true,
 			'isHTML' => true
