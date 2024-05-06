@@ -112,7 +112,7 @@ final class EmbedHtmlFormatter {
 		 */
 		$template = <<<HTML
 			<figure class="%s" data-service="%s" %s %s><!--
-				--><span class="embedvideo-wrapper" %s>%s%s</span>%s
+				--><div class="embedvideo-wrapper" %s>%s%s</div>%s
 			</figure>
 			HTML;
 
