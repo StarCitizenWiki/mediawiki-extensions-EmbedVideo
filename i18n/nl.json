@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie",
+			"Romaine"
+		]
+	},
+	"embedvideo-type-audio": "audio",
+	"embedvideo-type-content": "inhoud",
+	"embedvideo-type-video": "video",
+	"embedvideo-consent-privacy-policy": "Privacybeleid",
+	"embedvideo-consent-privacy-notice-continue": "Doorgaan",
+	"embedvideo-consent-privacy-notice-dismiss": "Afwijzen",
+	"embedvideo-service-videolink": "Videolink",
+	"embedvideo-service-localvideo": "Lokaal bestand",
+	"embedvideo-service-externalvideo": "Externe video",
+	"embedvideo-play": "Video afspelen",
+	"embedvideo-error-alignment": "EmbedVideo heeft een ongeldige waarde gekregen voor de uitlijningsparameter \"$1\". Geldige waarden zijn \"left\" (links), \"center\" (midden) of \"right\" (rechts).",
+	"embedvideo-error-valignment": "EmbedVideo heeft een ongeldige waarde gekregen voor de parameter voor verticale uitlijning \"$1\". Geldige waarden zijn \"top\" (boven), \"middle\" (midden), \"bottom\" (onder) of \"baseline\" (basislijn).",
+	"embedvideo-error-unknown": "EmbedVideo is een onbekende fout tegengekomen bij het genereren van dit video-insluitblok. ($1)",
+	"embedvideo-error-evp_deprecated": "De parserfunctie #evp is verouderd in EmbedVideo 2.0. Zet uw parserfunctie-tag om naar #ev."
+}
