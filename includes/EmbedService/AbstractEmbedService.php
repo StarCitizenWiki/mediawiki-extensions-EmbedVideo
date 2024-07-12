@@ -261,7 +261,7 @@ abstract class AbstractEmbedService {
 	 */
 	public function getUrl(): string {
 		if ( $this->getUrlArgs() !== false ) {
-			return sprintf( '%s?%s', sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
+			return wfAppendQuery( sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
 		}
 
 		return sprintf( $this->getBaseUrl(), $this->getId() );
