@@ -194,8 +194,8 @@ final class EmbedHtmlFormatter {
 
 			// phpcs:disable
 			return <<<HTML
-				<picture class="embedvideo-thumbnail">
-					<img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				<picture class="embedvideo-thumbnail"><!--
+				--><img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
 				</picture>
 				HTML;
 			// phpcs:enable

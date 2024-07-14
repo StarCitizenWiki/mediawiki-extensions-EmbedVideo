@@ -120,7 +120,7 @@ class EmbedVideo {
 		foreach ( $args as $key => $arg ) {
 			$value = trim( $frame->expand( $arg ) );
 			if ( $fromTag === true ) {
-				$expandedArgs[$key] = $value;
+				$expandedArgs[$key] = $parser->recursiveTagParse( $value, $frame );
 			} else {
 				$expandedArgs[] = $value;
 			}
