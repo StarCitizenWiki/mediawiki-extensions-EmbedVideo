@@ -157,7 +157,7 @@ final class EmbedServiceFactory {
 			case 'youtubevideolist':
 				return new YouTubeVideoList( $id );
 			case 'youku':
-				return new Youku( $id )
+				return new Youku( $id );
 
 			default:
 				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
