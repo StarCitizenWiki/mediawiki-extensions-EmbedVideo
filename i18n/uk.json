@@ -21,6 +21,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-error-missingparams": "У EmbedVideo відсутній необхідний параметр.",
 	"embedvideo-error-service": "EmbedVideo не розпізнає відеосервіс \"$1\".",
 	"embedvideo-error-id": "EmbedVideo отримав поганий ідентифікатор \"$2\" за послугу \"$1\".",

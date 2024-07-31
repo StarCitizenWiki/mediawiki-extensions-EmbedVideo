@@ -27,6 +27,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-error-alignment": "EmbedVideo の配置パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"left\"、\"center\"、\"right\" のいずれかです。",
 	"embedvideo-error-valignment": "EmbedVideo の valignment パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"top\"、\"middle\"、\"bottom\"、または \"baseline\" です。",
 	"embedvideo-error-unknown": "動画埋め込みブロックを生成しようとしたときに、EmbedVideo で不明なエラーが発生しました。($1)",

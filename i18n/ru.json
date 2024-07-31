@@ -28,6 +28,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-localvideo": "Локальный файл",
 	"embedvideo-error-missingparams": "В теге EmbedVideo отуствует обязательный параметр.",
 	"embedvideo-error-service": "Тег EmbedVideo не может распознать сервис \"$1\".",

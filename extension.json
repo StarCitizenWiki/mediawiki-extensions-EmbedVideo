@@ -51,6 +51,7 @@
 				"embedvideo-service-videolink",
 				"embedvideo-service-vimeo",
 				"embedvideo-service-youtube",
+				"embedvideo-service-youku",
 				"embedvideo-service-localvideo",
 				"embedvideo-service-externalvideo",
 				"embedvideo-consent-privacy-notice-text",

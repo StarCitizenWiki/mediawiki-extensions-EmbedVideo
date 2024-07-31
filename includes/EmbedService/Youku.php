@@ -8,6 +8,18 @@ final class Youku extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	protected $additionalIframeAttributes = [
+		'allowfullscreen' => 'true',
+	];
+	/**
+	 * @inheritDoc
+	 */
+	public function getServiceKey(): string {
+		return 'youku';
+	}
+	/**
+	 * @inheritDoc
+	 */
 	public function getBaseUrl(): string {
 		return '//player.youku.com/embed/%1$s';
 	}
