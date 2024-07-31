@@ -53,6 +53,7 @@ final class EmbedServiceFactory {
 		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
+		Youku::class,
 	];
 
 	/**
@@ -155,6 +156,8 @@ final class EmbedServiceFactory {
 
 			case 'youtubevideolist':
 				return new YouTubeVideoList( $id );
+			case 'youku':
+				return new Youku( $id )
 
 			default:
 				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
