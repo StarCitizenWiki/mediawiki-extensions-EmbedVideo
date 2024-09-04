@@ -152,7 +152,7 @@ class EmbedVideo {
 			$value = trim( $frame->expand( $arg ) );
 
 			if ( str_contains( $value, '=' ) ) {
-				$parts = array_map( 'trim', explode( '=', $value ) );
+				$parts = array_map( 'trim', explode( '=', $value, 1 ) );
 
 				$expandedArgs[$parts[0]] = $parts[1] ?? null;
 			} else {
