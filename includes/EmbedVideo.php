@@ -144,6 +144,7 @@ class EmbedVideo {
 			'text' => null,
 			'player' => null,
 			'service' => null,
+			'urlArgs' => null,
 		];
 
 		$keys = array_keys( $expandedArgs );
@@ -152,7 +153,7 @@ class EmbedVideo {
 			$value = trim( $frame->expand( $arg ) );
 
 			if ( str_contains( $value, '=' ) ) {
-				$parts = array_map( 'trim', explode( '=', $value ) );
+				$parts = array_map( 'trim', explode( '=', $value, 2 ) );
 
 				$expandedArgs[$parts[0]] = $parts[1] ?? null;
 			} else {
