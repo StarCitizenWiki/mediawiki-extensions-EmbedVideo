@@ -44,6 +44,7 @@
 	"embedvideo-video-long-desc": "$1, $2 코덱, 길이 $3, $4x$5 픽셀, 전체 $6",
 	"embedvideo-audio-long-desc": "$1, $2 코덱, 길이 $3, 전체 $4",
 	"embedvideo-error-cantdecode_evu": "$1에서 비디오를 구문 분석할 수 없습니다",
+	"embedvideo-error-url-not-whitelisted": "제공된 URL은 $wgAllowExternalImagesFrom에 정의되지 않음",
 	"apihelp-embedvideo-summary": "주어진 매개변수에 대해 생성된 비디오 임베드 코드를 가져옵니다.",
 	"apihelp-embedvideo-param-service": "서비스 이름(유튜브, 트위치 등)",
 	"apihelp-embedvideo-param-id": "해당 서비스의 비디오 ID 값",
