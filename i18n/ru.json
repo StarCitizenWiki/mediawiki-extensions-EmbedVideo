@@ -3,7 +3,8 @@
 		"authors": [
 			"Kareyac",
 			"Okras",
-			"P@S@f"
+			"P@S@f",
+			"Yurina Tatiana"
 		]
 	},
 	"embedvideo-description": "Добавляет функцию синтаксического анализатора для встраивания видео с популярных видеохостингов.",
@@ -25,10 +26,14 @@
 	"embedvideo-service-sharepoint": "SharePoint",
 	"embedvideo-service-spotify": "Spotify",
 	"embedvideo-service-twitch": "Twitch",
+	"embedvideo-service-videolink": "Ссылка на видео",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-localvideo": "Локальный файл",
+	"embedvideo-service-externalvideo": "Внешнее видео",
+	"embedvideo-play": "Воспроизвести видео",
 	"embedvideo-error-missingparams": "В теге EmbedVideo отуствует обязательный параметр.",
 	"embedvideo-error-service": "Тег EmbedVideo не может распознать сервис \"$1\".",
 	"embedvideo-error-id": "В тег EmbedVideo введен неверный id \"$2\" видео для сервиса \"$1\".",

@@ -40,7 +40,7 @@ final class Bandcamp extends AbstractEmbedService {
 			unset( $this->urlArgs['autoplay'] );
 
 			$args = array_shift( $this->urlArgs );
-			return sprintf( '%s&%s', sprintf( $this->getBaseUrl(), $this->getId() ), $args ?? '' );
+			return wfAppendQuery( sprintf( $this->getBaseUrl(), $this->getId() ), $args ?? '' );
 		}
 
 		return parent::getUrl();

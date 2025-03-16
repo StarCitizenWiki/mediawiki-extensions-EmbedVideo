@@ -48,9 +48,12 @@ const fetchFactory = function (service) {
 			fetcher = oEmbedFetchers.wistia;
 			break;
 		case 'youtube':
+			fetcher = oEmbedFetchers.youtube;
+			break;
 		case 'youtubevideolist':
 		case 'youtubeplaylist':
-			fetcher = oEmbedFetchers.youtube;
+			urlManipulation = false;
+			fetcher = oEmbedFetchers.youtubeplaylist;
 			break;
 
 		// Missing CORS

@@ -120,7 +120,7 @@ class EmbedVideo {
 		foreach ( $args as $key => $arg ) {
 			$value = trim( $frame->expand( $arg ) );
 			if ( $fromTag === true ) {
-				$expandedArgs[$key] = $value;
+				$expandedArgs[$key] = $parser->recursiveTagParse( $value, $frame );
 			} else {
 				$expandedArgs[] = $value;
 			}
@@ -144,6 +144,7 @@ class EmbedVideo {
 			'text' => null,
 			'player' => null,
 			'service' => null,
+			'urlArgs' => null,
 		];
 
 		$keys = array_keys( $expandedArgs );
@@ -152,7 +153,7 @@ class EmbedVideo {
 			$value = trim( $frame->expand( $arg ) );
 
 			if ( str_contains( $value, '=' ) ) {
-				$parts = array_map( 'trim', explode( '=', $value ) );
+				$parts = array_map( 'trim', explode( '=', $value, 2 ) );
 
 				$expandedArgs[$parts[0]] = $parts[1] ?? null;
 			} else {
@@ -317,7 +318,7 @@ class EmbedVideo {
 				$this->makeHtmlFormatConfig( $this->service ),
 				$this->args
 			),
-			'noparse' => true,
+			'noparse' => false,
 			'isHTML' => true
 		];
 	}
@@ -427,6 +428,7 @@ class EmbedVideo {
 			'dimensions' => $dimensions,
 			'alignment' => $alignment,
 			'description' => $description,
+			'container' => $container,
 			'urlArgs' => $urlArgs,
 			'width' => $width,
 			'height' => $height,
@@ -472,8 +474,8 @@ class EmbedVideo {
 			$this->setDescriptionNoParse( $description );
 		}
 
-		if ( !$this->setContainer( $this->container ) ) {
-			throw new InvalidArgumentException( $this->error( 'container', $this->container )[0] );
+		if ( !$this->setContainer( $container ) ) {
+			throw new InvalidArgumentException( $this->error( 'container', $container )[0] );
 		}
 
 		if ( !$this->setAlignment( $alignment ) ) {
@@ -590,6 +592,10 @@ class EmbedVideo {
 		] ) );
 		$serviceString = $embedService::getServiceName();
 		$styleString = '';
+
+		if ( $this->container === 'frame' ) {
+			$classString .= ' frame';
+		}
 
 		if ( $this->alignment !== false ) {
 			$classString .= sprintf( ' mw-halign-%s', $this->alignment );

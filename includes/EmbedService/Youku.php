@@ -4,12 +4,26 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-final class Bilibili extends AbstractEmbedService {
+final class Youku extends AbstractEmbedService {
+	/**
+	 * @inheritDoc
+	 */
+	protected $additionalIframeAttributes = [
+		'allowfullscreen' => 'true',
+	];
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getServiceKey(): string {
+		return 'youku';
+	}
+
 	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return '//player.bilibili.com/player.html?bvid=%1$s';
+		return '//player.youku.com/embed/%1$s';
 	}
 
 	/**
@@ -17,8 +31,7 @@ final class Bilibili extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#bilibili\.com/(?:BV|AV)([\d\w]+)#is',
-			'#bilibili\.com/player\.html\?bvid=([\d\w]+)#is',
+			'#id_([\d\w-]+).html#is',
 		];
 	}
 
@@ -27,7 +40,7 @@ final class Bilibili extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^(?:BV|AV)([\d\w]+)$#is',
+			'#^(?:id_)?([\d\w-]+)$#is'
 		];
 	}
 
@@ -35,7 +48,8 @@ final class Bilibili extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.bilibili.com/blackboard/privacy-pc.html';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
+		return 'https://terms.alicdn.com/legal-agreement/terms/suit_bu1_unification/suit_bu1_unification202005141916_91107.html';
 	}
 
 	/**
@@ -43,8 +57,8 @@ final class Bilibili extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://bilibili.com',
-			'https://player.bilibili.com',
+			'https://youku.com',
+			'https://player.youku.com',
 		];
 	}
 
@@ -52,10 +66,6 @@ final class Bilibili extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getUrl(): string {
-		if ( $this->getUrlArgs() !== false ) {
-			return wfAppendQuery( sprintf( $this->getBaseUrl(), $this->getId() ), $this->getUrlArgs() );
-		}
-
 		return sprintf( $this->getBaseUrl(), $this->getId() );
 	}
 }

@@ -175,6 +175,7 @@ Note that this implementation differs from EmbedVideo v2.x in the following area
   * In the old implementation nothing was shown
 * No `style` attribute can be set
 * Video lists are not supported
+* This currently disregards `$wgEmbedVideoFetchExternalThumbnails` and will fetch thumbnails upon clicking a link
 
 ### Example
 ```mediawiki
@@ -283,6 +284,7 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 | [YouTube](http://www.youtube.com/)                       | `youtube` - Single Videos           | pSsYTj9kCHE                                            | https://www.youtube.com/watch?v=pSsYTj9kCHE                                                                               |
 | [YouTube](http://www.youtube.com/)                       | `youtubeplaylist` - Playlists       | PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                     | https://www.youtube.com/embed/?listType=playlist&list=PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                                  |
 | [YouTube](http://www.youtube.com/)                       | `youtubevideolist` - Video List     | pSsYTj9kCHE - urlargs=playlist=pSsYTj9kCHE,pSsYTj9kCHE | https://www.youtube.com/embed/pSsYTj9kCHE?playlist=pSsYTj9kCHE,pSsYTj9kCHE                                                |
+| [Youku](http://www.youku.com/)                       |  `youku`      | XMzc0Mzg4NTE5Mg |https://player.youku.com/embed/XMzc0Mzg4NTE5Mg                                              |
 
 ### New Services
 New services can be requested by using the following [link](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/new?assignees=&labels=enhancement&template=embed-service-request.md&title=Embed+Service+Request%3A+Service+Name) or clicking `New Issue`.

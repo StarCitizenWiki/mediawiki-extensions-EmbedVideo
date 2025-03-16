@@ -2,6 +2,10 @@ const youtube = function(url) {
 	return oembed('https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=' + url);
 };
 
+const youtubeplaylist = function(url) {
+	return oembed('https://www.youtube-nocookie.com/oembed?url=' + url);
+};
+
 const vimeo = function(url) {
 	return oembed('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + url);
 };
@@ -82,6 +86,7 @@ module.exports = {
 	kakaotv,
 	loom,
 	youtube,
+	youtubeplaylist,
 	vimeo,
 	spotifyalbum,
 	spotifyartist,

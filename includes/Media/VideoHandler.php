@@ -74,7 +74,7 @@ class VideoHandler extends AudioHandler {
 			if ( $title !== null && $title->exists() ) {
 				$coverFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile( $title );
 
-				if ( !$coverFile !== false ) {
+				if ( $coverFile !== false ) {
 					$transform = $coverFile->transform( [ 'width' => $params['width'] ] );
 
 					try {

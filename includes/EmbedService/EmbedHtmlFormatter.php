@@ -112,7 +112,7 @@ final class EmbedHtmlFormatter {
 		 */
 		$template = <<<HTML
 			<figure class="%s" data-service="%s" %s %s><!--
-				--><span class="embedvideo-wrapper" %s>%s%s</span>%s
+				--><div class="embedvideo-wrapper" %s>%s%s</div>%s
 			</figure>
 			HTML;
 
@@ -194,8 +194,8 @@ final class EmbedHtmlFormatter {
 
 			// phpcs:disable
 			return <<<HTML
-				<picture class="embedvideo-thumbnail">
-					<img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				<picture class="embedvideo-thumbnail"><!--
+				--><img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
 				</picture>
 				HTML;
 			// phpcs:enable

@@ -43,16 +43,19 @@ final class EmbedServiceFactory {
 		SpotifyShow::class,
 		SpotifyEpisode::class,
 		SpotifyTrack::class,
+		Substack::class,
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
 		VideoLink::class,
 		Vimeo::class,
+		Vk::class,
 		Wistia::class,
 		YouTube::class,
 		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
+		Youku::class,
 	];
 
 	/**
@@ -126,6 +129,9 @@ final class EmbedServiceFactory {
 			case 'spotifyepisode':
 				return new SpotifyEpisode( $id );
 
+			case 'substack':
+				return new Substack( $id );
+
 			case 'twitch':
 				return new Twitch( $id );
 
@@ -141,6 +147,9 @@ final class EmbedServiceFactory {
 			case 'vimeo':
 				return new Vimeo( $id );
 
+			case 'vk':
+				return new Vk( $id );
+
 			case 'wistia':
 				return new Wistia( $id );
 
@@ -155,6 +164,8 @@ final class EmbedServiceFactory {
 
 			case 'youtubevideolist':
 				return new YouTubeVideoList( $id );
+			case 'youku':
+				return new Youku( $id );
 
 			default:
 				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );

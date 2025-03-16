@@ -73,7 +73,7 @@ class Twitch extends AbstractEmbedService {
 			$urlArgs = http_build_query( $parsedArgs );
 		}
 
-		return sprintf( '%s&%s', sprintf( $this->getBaseUrl(), $this->getId() ), $urlArgs );
+		return wfAppendQuery( sprintf( $this->getBaseUrl(), $this->getId() ), $urlArgs );
 	}
 
 	/**

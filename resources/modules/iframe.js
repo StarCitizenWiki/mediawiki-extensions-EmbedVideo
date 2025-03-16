@@ -119,6 +119,9 @@ const fetchThumb = async (url, parent, container) => {
         });
 };
 
+/**
+ * @param ev {HTMLDivElement}
+ */
 const makeIframe = function(ev) {
     const wrapper = ev.querySelector('.embedvideo-wrapper');
 
@@ -146,7 +149,8 @@ const makeIframe = function(ev) {
         }
 
         event.target.removeEventListener('click', makeIframe);
-        wrapper.removeChild(consentDiv);
+
+        consentDiv.parentElement.removeChild(consentDiv);
         wrapper.appendChild(iframe);
     };
 

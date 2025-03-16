@@ -22,11 +22,6 @@ const fetcher = function (url) {
 			const thumbMatcher = new RegExp(/<thumbnail_url>(.*)<\/thumbnail_url>/);
 			const durationMatcher = new RegExp(/<length>(.*)<\/length>/);
 
-			console.log(text);
-			console.log(titleMatcher.match(text));
-			console.log(thumbMatcher.match(text));
-			console.log(durationMatcher.match(text));
-
 			return {
 				title: titleMatcher.match(text) ? titleMatcher.match(text)[1] : null,
 				thumbnail: thumbMatcher.match(text) ? thumbMatcher.match(text)[1] : null,

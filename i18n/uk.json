@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"DDPAT",
-			"Ice bulldog"
+			"Ice bulldog",
+			"Ата"
 		]
 	},
 	"embedvideo-description": "Ця роздвоєна версія додає функцію парсеру для вбудовування відео з популярних джерел.",
@@ -21,12 +22,13 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-error-missingparams": "У EmbedVideo відсутній необхідний параметр.",
 	"embedvideo-error-service": "EmbedVideo не розпізнає відеосервіс \"$1\".",
 	"embedvideo-error-id": "EmbedVideo отримав поганий ідентифікатор \"$2\" за послугу \"$1\".",
 	"embedvideo-error-width": "EmbedVideo отримав неправильний параметр ширини \"$1\".",
 	"embedvideo-error-height": "EmbedVideo отримав неправильний параметр висоти \"$1\".",
-	"embedvideo-error-alignment": "EmbedVideo отримав незаконне значення для параметра вирівнювання \"$1\". Допустимими значеннями є \"зліва\", \"по центру\", \"праворуч\" або \"вбудований\".",
+	"embedvideo-error-alignment": "EmbedVideo отримав незаконне значення для параметра вирівнювання «$1». Допустимими значеннями є left, center або right.",
 	"embedvideo-error-valignment": "EmbedVideo отримав незаконне значення для параметра вирівнювання \"$1\". Допустимими значеннями є «верхня», «середня», «нижня» або «вихідна лінія».",
 	"embedvideo-error-urlargs": "EmbedVideo отримав список аргументів URL-адреси, які містили неправильні дані або порожні аргументи.",
 	"embedvideo-error-unknown": "EmbedVideo зіткнувся з невідомою помилкою під час спроби створити цей блок вбудовування відео. ($1)",
