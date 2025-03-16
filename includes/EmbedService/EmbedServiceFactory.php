@@ -43,6 +43,7 @@ final class EmbedServiceFactory {
 		SpotifyShow::class,
 		SpotifyEpisode::class,
 		SpotifyTrack::class,
+		Substack::class,
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
@@ -125,6 +126,9 @@ final class EmbedServiceFactory {
 			case 'spotifypodcastepisode':
 			case 'spotifyepisode':
 				return new SpotifyEpisode( $id );
+
+			case 'substack':
+				return new Substack( $id );
 
 			case 'twitch':
 				return new Twitch( $id );
