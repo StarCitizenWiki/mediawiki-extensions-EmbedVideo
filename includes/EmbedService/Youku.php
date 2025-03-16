@@ -49,7 +49,7 @@ final class Youku extends AbstractEmbedService {
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
         // phpcs:ignore Generic.Files.LineLength.TooLong
-        return 'https://terms.alicdn.com/legal-agreement/terms/suit_bu1_unification/suit_bu1_unification202005141916_91107.html';
+		return 'https://terms.alicdn.com/legal-agreement/terms/suit_bu1_unification/suit_bu1_unification202005141916_91107.html';
 	}
 
 	/**
