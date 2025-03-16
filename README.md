@@ -175,6 +175,7 @@ Note that this implementation differs from EmbedVideo v2.x in the following area
   * In the old implementation nothing was shown
 * No `style` attribute can be set
 * Video lists are not supported
+* This currently disregards `$wgEmbedVideoFetchExternalThumbnails` and will fetch thumbnails upon clicking a link
 
 ### Example
 ```mediawiki
