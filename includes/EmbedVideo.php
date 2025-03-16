@@ -428,6 +428,7 @@ class EmbedVideo {
 			'dimensions' => $dimensions,
 			'alignment' => $alignment,
 			'description' => $description,
+			'container' => $container,
 			'urlArgs' => $urlArgs,
 			'width' => $width,
 			'height' => $height,
@@ -473,8 +474,8 @@ class EmbedVideo {
 			$this->setDescriptionNoParse( $description );
 		}
 
-		if ( !$this->setContainer( $this->container ) ) {
-			throw new InvalidArgumentException( $this->error( 'container', $this->container )[0] );
+		if ( !$this->setContainer( $container ) ) {
+			throw new InvalidArgumentException( $this->error( 'container', $container )[0] );
 		}
 
 		if ( !$this->setAlignment( $alignment ) ) {
@@ -591,6 +592,10 @@ class EmbedVideo {
 		] ) );
 		$serviceString = $embedService::getServiceName();
 		$styleString = '';
+
+		if ( $this->container === 'frame' ) {
+			$classString .= ' frame';
+		}
 
 		if ( $this->alignment !== false ) {
 			$classString .= sprintf( ' mw-halign-%s', $this->alignment );
