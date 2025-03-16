@@ -29,6 +29,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-localvideo": "Lokalna datoteka",
 	"embedvideo-service-externalvideo": "Zunanji video",
 	"embedvideo-play": "Predvajaj video",

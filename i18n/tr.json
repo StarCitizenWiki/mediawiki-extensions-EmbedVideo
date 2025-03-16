@@ -31,6 +31,7 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-localvideo": "Yerel Dosya",
 	"embedvideo-play": "Videoyu Oynat",
 	"embedvideo-error-missingparams": "EmbedVideo'da kullanılması zorunlu bir parametre eksik.",
