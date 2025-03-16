@@ -318,7 +318,7 @@ class EmbedVideo {
 				$this->makeHtmlFormatConfig( $this->service ),
 				$this->args
 			),
-			'noparse' => true,
+			'noparse' => false,
 			'isHTML' => true
 		];
 	}
