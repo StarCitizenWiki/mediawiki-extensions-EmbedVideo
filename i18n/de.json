@@ -33,7 +33,6 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-localvideo": "Lokale Datei",
 	"embedvideo-service-externalvideo": "Externes Video",
 	"embedvideo-play": "Video abspielen",

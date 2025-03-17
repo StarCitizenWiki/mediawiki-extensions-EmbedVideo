@@ -23,6 +23,7 @@
 	"embedvideo-service-vimeo": "{{Optional}}",
 	"embedvideo-service-wistia": "{{optional}}\n\nName of https://wistia.com/ service.",
 	"embedvideo-service-youtube": "{{Optional}}",
+	"embedvideo-service-youku": "{{optional}}\n\nName of https://www.youku.com/ service.",
 	"embedvideo-video-short-desc": "{{optional}}",
 	"embedvideo-audio-short-desc": "{{optional}}"
 }
