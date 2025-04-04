@@ -148,6 +148,7 @@ final class EmbedServiceFactory {
 				return new Vimeo( $id );
 
 			case 'vk':
+			case 'vkvideo':
 				return new Vk( $id );
 
 			case 'wistia':
