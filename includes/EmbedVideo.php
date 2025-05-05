@@ -68,17 +68,21 @@ class EmbedVideo {
 	 */
 	private $container = false;
 
+	private PPFrame|null $frame;
+
 	/**
 	 * Creates a new EmbedVideo instance
 	 *
 	 * @param Parser|null $parser
 	 * @param array $args
 	 * @param bool $fromTag
+	 * @param PPFrame|null $frame
 	 */
-	public function __construct( ?Parser $parser, array $args, bool $fromTag = false ) {
+	public function __construct( ?Parser $parser, array $args, bool $fromTag = false, PPFrame|null $frame = null ) {
 		$this->parser = $parser;
 		$this->args = $this->parseArgs( $args, $fromTag );
 		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
+		$this->frame = $frame;
 	}
 
 	/**
@@ -126,7 +130,7 @@ class EmbedVideo {
 			}
 		}
 
-		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag ) )->output();
+		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag, $frame ) )->output();
 	}
 
 	/**
@@ -438,7 +442,7 @@ class EmbedVideo {
 			'title' => $title,
 		] = $this->args;
 
-		$rpl = fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
+		$rpl = static fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
 
 		// Height only
 		if ( !empty( $dimensions ) && strtolower( $dimensions )[0] === 'x' ) {
@@ -506,7 +510,14 @@ class EmbedVideo {
 	 * @return void
 	 */
 	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+		$this->description = !$description
+			? false
+			: trim(
+				preg_replace(
+					'/^<p>(.*)<\/p>\s*$/is',
+					'$1',
+					$parser->recursiveTagParseFully( $description, $this->frame ) )
+			);
 	}
 
 	/**
