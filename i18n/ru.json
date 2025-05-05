@@ -31,6 +31,7 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-videolink": "Ссылка на видео",
 	"embedvideo-service-vimeo": "Vimeo",
+  "embedvideo-service-vk": "ВКонтакте",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
 	"embedvideo-service-localvideo": "Локальный файл",
