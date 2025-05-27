@@ -13,6 +13,7 @@ class YouTube extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'modestbranding' => 1,
 		'allowfullscreen' => 'true',
+		'frameBorder' => 0
 	];
 
 	/**
@@ -45,7 +46,7 @@ class YouTube extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return '//www.youtube-nocookie.com/embed/%1$s';
+		return 'https://www.youtube-nocookie.com/embed/%1$s';
 	}
 
 	/**
