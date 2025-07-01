@@ -9,9 +9,9 @@ use InvalidArgumentException;
 use JsonException;
 use MediaTransformOutput;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use RuntimeException;
 use ThumbnailImage;
-use Title;
 
 abstract class AbstractEmbedService {
 	/**
