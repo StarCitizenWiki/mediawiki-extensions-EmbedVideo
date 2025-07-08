@@ -17,10 +17,10 @@ jobs:
           - mw: 'REL1_39'
             php: 8.1
             experimental: false
-          - mw: 'REL1_40'
+          - mw: 'REL1_43'
             php: 8.1
-            experimental: true
-          - mw: 'REL1_41'
+            experimental: false
+          - mw: 'REL1_44'
             php: 8.1
             experimental: true
           #- mw: 'REL1_42'
