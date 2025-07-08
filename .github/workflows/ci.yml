@@ -55,12 +55,12 @@ jobs:
           key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v20
 
       - name: Cache Composer cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache
           key: composer-php${{ matrix.php }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: EarlyCopy
 
@@ -69,12 +69,15 @@ jobs:
         working-directory: ~
         run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: mediawiki/extensions/EmbedVideo
 
       - name: Composer update
         run: composer update
 
+      - name: Run update.php
+        run: php maintenance/update.php --quick
+
       - name: Run PHPUnit
-        run: composer phpunit:entrypoint -- --group EmbedVideo
+        run: php tests/phpunit/phpunit.php -c extensions/EmbedVideo/
