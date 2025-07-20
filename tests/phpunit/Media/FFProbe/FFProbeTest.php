@@ -8,11 +8,11 @@ use Exception;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FormatInfo;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\StreamInfo;
+use MediaWiki\FileRepo\File\UnregisteredLocalFile;
 use MediaWiki\Shell\Command;
 use MediaWiki\Shell\CommandFactory;
 use MediaWikiIntegrationTestCase;
 use Shellbox\Command\UnboxedResult;
-use UnregisteredLocalFile;
 use Wikimedia\AtEase\AtEase;
 
 /**

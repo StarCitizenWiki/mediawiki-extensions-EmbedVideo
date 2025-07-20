@@ -9,8 +9,8 @@ use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTube;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWikiIntegrationTestCase;
-use ParserOptions;
-use PPCustomFrame_Hash;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPCustomFrame_Hash;
 
 /**
  * @group EmbedVideo

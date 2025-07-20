@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests;
 
-use ApiTestCase;
-use ApiUsageException;
+use MediaWiki\Api\ApiUsageException;
+use MediaWiki\Tests\Api\ApiTestCase;
 
 /**
  * @group EmbedVideo

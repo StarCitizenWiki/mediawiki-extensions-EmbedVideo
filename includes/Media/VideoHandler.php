@@ -5,12 +5,12 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use Exception;
-use File;
+use MediaWiki\FileRepo\File\FSFile;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MediaWikiServices;
-use RequestContext;
+use MediaWiki\Context\RequestContext;
 use TrivialMediaHandlerState;
 
 class VideoHandler extends AudioHandler {

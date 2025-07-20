@@ -6,8 +6,8 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
 use MediaWiki\Extension\EmbedVideo\EmbedService\LocalVideo;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
+use MediaWiki\FileRepo\File\UnregisteredLocalFile;
 use MediaWikiIntegrationTestCase;
-use UnregisteredLocalFile;
 
 /**
  * @group EmbedVideo

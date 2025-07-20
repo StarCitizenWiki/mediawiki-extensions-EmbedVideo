@@ -8,7 +8,7 @@ use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FormatInfo;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\StreamInfo;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
-use UnregisteredLocalFile;
+use MediaWiki\FileRepo\File\UnregisteredLocalFile;
 
 class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 

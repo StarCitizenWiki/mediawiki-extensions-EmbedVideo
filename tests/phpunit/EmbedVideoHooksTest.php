@@ -5,17 +5,17 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use Exception;
-use HashBagOStuff;
-use LocalFile;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedVideoHooks;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
+use MediaWiki\FileRepo\File\LocalFile;
+use MediaWiki\FileRepo\RepoGroup;
+use MediaWiki\ObjectCache\WANObjectCache;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
-use OutputPage;
-use RepoGroup;
-use RequestContext;
-use WANObjectCache;
+use Wikimedia\ObjectCache\HashBagOStuff;
 
 /**
  * @group EmbedVideo

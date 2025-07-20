@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
-use File;
-use FSFile;
+use MediaWiki\FileRepo\File\FSFile;
+use Wikimedia\FileBackend\FSFile\FSFile;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;

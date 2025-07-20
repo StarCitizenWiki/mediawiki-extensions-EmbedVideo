@@ -6,11 +6,11 @@ namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use Exception;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPCustomFrame_Hash;
+use MediaWiki\Parser\PPFrame_Hash;
 use MediaWikiIntegrationTestCase;
-use Parser;
-use ParserOptions;
-use PPCustomFrame_Hash;
-use PPFrame_Hash;
 
 /**
  * @group EmbedVideo

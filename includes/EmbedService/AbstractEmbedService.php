@@ -4,10 +4,10 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-use Config;
 use InvalidArgumentException;
 use JsonException;
 use MediaTransformOutput;
+use MediaWiki\Config\Config;
 use MediaWiki\MediaWikiServices;
 use RuntimeException;
 use ThumbnailImage;
