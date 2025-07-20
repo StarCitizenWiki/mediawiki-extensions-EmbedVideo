@@ -5,18 +5,18 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests\Media;
 
 use Exception;
-use MediaWiki\FileRepo\File\LocalFile;
 use MediaTransformOutput;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
+use MediaWiki\FileRepo\File\LocalFile;
+use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Shell\Command;
 use MediaWiki\Shell\CommandFactory;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use MediaWiki\Utils\UrlUtils;
-use MediaWiki\FileRepo\RepoGroup;
-use MediaWiki\Context\RequestContext;
 use Shellbox\Command\UnboxedResult;
 use Wikimedia\AtEase\AtEase;
 

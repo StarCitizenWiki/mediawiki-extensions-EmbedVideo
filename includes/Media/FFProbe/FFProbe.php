@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\Media\FFProbe;
 use Exception;
 use JsonException;
 use MediaWiki\Config\ConfigException;
-use MediaWiki\FileRepo\File\FSFile;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\ProcOpenError;
 use MediaWiki\Settings\SettingsBuilder;

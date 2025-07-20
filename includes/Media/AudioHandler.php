@@ -4,14 +4,14 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
-use MediaWiki\FileRepo\File\FSFile;
-use Wikimedia\FileBackend\FSFile\FSFile;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\MediaWikiServices;
 use stdClass;
+use Wikimedia\FileBackend\FSFile\FSFile;
 
 class AudioHandler extends MediaHandler {
 	protected $contentLanguage;
