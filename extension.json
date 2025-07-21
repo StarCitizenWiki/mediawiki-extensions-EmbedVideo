@@ -14,7 +14,7 @@
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.39.0",
+		"MediaWiki": ">= 1.39.0 < 1.44.0",
 		"platform": {
 			"php": ">=8.0"
 		}
