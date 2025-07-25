@@ -9,7 +9,7 @@ final class DeezerTrack extends DeezerAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.deezer.com/widget/embed/track/%1$s';
+		return 'https://widget.deezer.com/widget/auto/track/%1$s';
 	}
 
 	/**
@@ -17,7 +17,7 @@ final class DeezerTrack extends DeezerAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/us/track/([a-zA-Z0-9]+)#is',
+			'#www\.deezer\.com/en/track/([a-zA-Z0-9]+)#is',
 		];
 	}
 }

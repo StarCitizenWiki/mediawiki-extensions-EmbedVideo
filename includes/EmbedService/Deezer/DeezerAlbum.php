@@ -9,6 +9,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 class DeezerAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media; clipboard-write',
+		'allowtransparency' => true,
 	];
 
 	/**
@@ -44,7 +45,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/us/album/([a-zA-Z0-9]+)#is',
+			'#www\.deezer\.com/en/album/([a-zA-Z0-9]+)#is',
 		];
 	}
 

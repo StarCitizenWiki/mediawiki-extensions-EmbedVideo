@@ -17,7 +17,7 @@ class DeezerEpisode extends DeezerAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/us/episode/([a-zA-Z0-9]+)#is',
+			'#www\.deezer\.com/en/episode/([a-zA-Z0-9]+)#is',
 		];
 	}
 }

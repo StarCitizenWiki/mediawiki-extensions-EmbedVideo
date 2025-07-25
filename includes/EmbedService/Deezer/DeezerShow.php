@@ -9,7 +9,7 @@ class DeezerShow extends DeezerAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.deezer.com/widget/show/%1$s';
+		return 'https://widget.deezer.com/widget/auto/show/%1$s';
 	}
 
 	/**
@@ -17,7 +17,7 @@ class DeezerShow extends DeezerAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/us/show/([a-zA-Z0-9]+)#is',
+			'#www\.deezer\.com/en/show/([a-zA-Z0-9]+)#is',
 		];
 	}
 }

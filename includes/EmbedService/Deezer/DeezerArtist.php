@@ -17,7 +17,7 @@ final class DeezerArtist extends DeezerAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/us/artist/([a-zA-Z0-9]+)#is',
+			'#www\.deezer\.com/en/artist/([a-zA-Z0-9]+)#is',
 		];
 	}
 }
