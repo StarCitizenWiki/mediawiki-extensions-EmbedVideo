@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerEpisode;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
@@ -38,8 +39,9 @@ final class EmbedServiceFactory {
 		DailyMotion::class,
 		DeezerAlbum::class,
 		DeezerArtist::class,
-		DeezerShow::class,
 		DeezerEpisode::class,
+		DeezerPlaylist::class,
+		DeezerShow::class,
 		DeezerTrack::class,
 		ExternalVideo::class,
 		KakaoTV::class,
@@ -50,8 +52,8 @@ final class EmbedServiceFactory {
 		SoundCloud::class,
 		SpotifyAlbum::class,
 		SpotifyArtist::class,
-		SpotifyShow::class,
 		SpotifyEpisode::class,
+		SpotifyShow::class,
 		SpotifyTrack::class,
 		Substack::class,
 		Twitch::class,
@@ -100,6 +102,9 @@ final class EmbedServiceFactory {
 
 			case 'deezerartist':
 				return new DeezerArtist( $id );
+
+			case 'deezerplaylist':
+				return new DeezerPlaylist( $id );
 
 			case 'deezer':
 			case 'deezertrack':
