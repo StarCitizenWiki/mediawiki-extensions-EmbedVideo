@@ -8,7 +8,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 
 class DeezerAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
-		'allow' => 'encrypted-media',
+		'allow' => 'encrypted-media; clipboard-write',
 	];
 
 	/**
