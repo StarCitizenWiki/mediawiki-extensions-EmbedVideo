@@ -14,9 +14,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - mw: 'REL1_39'
-            php: 8.1
-            experimental: false
+          #- mw: 'REL1_39'
+          #  php: 8.1
+          #  experimental: false
           - mw: 'REL1_43'
             php: 8.1
             experimental: false
@@ -26,9 +26,9 @@ jobs:
           #- mw: 'REL1_42'
           #  php: 8.1
           #  experimental: true
-          #- mw: 'master'
-          #  php: 8.1
-          #  experimental: true
+          - mw: 'master'
+            php: 8.1
+            experimental: true
 
     runs-on: ubuntu-latest
 
