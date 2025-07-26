@@ -9,7 +9,7 @@ final class DeezerArtist extends DeezerAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.deezer.com/widget/auto/artist/%1$s';
+		return 'https://widget.deezer.com/widget/auto/artist/%1$s/top_tracks';
 	}
 
 	/**
