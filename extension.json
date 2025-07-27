@@ -14,10 +14,7 @@
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.39.0",
-		"platform": {
-			"php": ">=8.0"
-		}
+		"MediaWiki": ">= 1.43.0"
 	},
 	"MessagesDirs": {
 		"EmbedVideo": [
