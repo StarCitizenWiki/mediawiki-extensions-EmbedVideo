@@ -1,0 +1,12 @@
+<phpunit colors="true">
+	<testsuites>
+		<testsuite name="EmbedVideo">
+			<directory>tests/</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">src</directory>
+		</whitelist>
+	</filter>
+</phpunit>

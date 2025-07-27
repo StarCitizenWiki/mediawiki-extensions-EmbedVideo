@@ -28,7 +28,6 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-externalvideo": "Išorinis vaizdo įrašas",
 	"embedvideo-play": "Leisti vaizdo įrašą",
 	"embedvideo-error-missingparams": "EmbedVideo trūksta būtino parametro.",

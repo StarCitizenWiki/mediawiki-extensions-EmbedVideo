@@ -26,6 +26,5 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
-	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku"
+	"embedvideo-service-youtube": "YouTube"
 }

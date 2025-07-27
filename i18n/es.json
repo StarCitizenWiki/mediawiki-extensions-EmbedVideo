@@ -30,7 +30,6 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku",
 	"embedvideo-service-externalvideo": "Video external",
 	"embedvideo-play": "Reproducir",
 	"embedvideo-error-missingparams": "EmbedVideo; falta un parámetro requerido.",

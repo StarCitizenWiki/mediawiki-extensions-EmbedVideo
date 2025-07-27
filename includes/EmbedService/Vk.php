@@ -9,7 +9,7 @@ final class Vk extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://vk.com/video_ext.php?oid=%1$s&id=%2$s&hd=2';
+		return 'https://vkvideo.ru/video_ext.php?oid=%1$s&id=%2$s&hd=2';
 	}
 
 	/**
@@ -17,7 +17,8 @@ final class Vk extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#vk\.com/video(-?\d+)_(-?\d+)?#is',
+			'#vkvideo\.ru/video(-?\d+)_(-?\d+)?#is',
+			'#vk\.com/video(-?\d+)_(-?\d+)?#is'
 		];
 	}
 
@@ -42,6 +43,7 @@ final class Vk extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
+			'https://vkvideo.ru',
 			'https://vk.com',
 		];
 	}

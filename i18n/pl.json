@@ -21,7 +21,6 @@
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku",
 	"embedvideo-error-missingparams": "Nie podano wymaganego parametru EmbedVideo.",
 	"embedvideo-error-service": "EmbedVideo nie rozpoznaje usługi wideo „$1”.",
 	"embedvideo-error-id": "EmbedVideo napotkał błędne ID „$2” dla usługi „$1”.",

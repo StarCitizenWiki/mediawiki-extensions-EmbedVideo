@@ -14,21 +14,21 @@ jobs:
     strategy:
       matrix:
         include:
-          - mw: 'REL1_39'
+          #- mw: 'REL1_39'
+          #  php: 8.1
+          #  experimental: false
+          - mw: 'REL1_43'
             php: 8.1
             experimental: false
-          - mw: 'REL1_40'
-            php: 8.1
-            experimental: true
-          - mw: 'REL1_41'
+          - mw: 'REL1_44'
             php: 8.1
             experimental: true
           #- mw: 'REL1_42'
           #  php: 8.1
           #  experimental: true
-          #- mw: 'master'
-          #  php: 8.1
-          #  experimental: true
+          - mw: 'master'
+            php: 8.1
+            experimental: true
 
     runs-on: ubuntu-latest
 
@@ -55,12 +55,12 @@ jobs:
           key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v20
 
       - name: Cache Composer cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache
           key: composer-php${{ matrix.php }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: EarlyCopy
 
@@ -69,12 +69,15 @@ jobs:
         working-directory: ~
         run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: mediawiki/extensions/EmbedVideo
 
       - name: Composer update
         run: composer update
 
+      - name: Run update.php
+        run: php maintenance/update.php --quick
+
       - name: Run PHPUnit
-        run: composer phpunit:entrypoint -- --group EmbedVideo
+        run: php tests/phpunit/phpunit.php -c extensions/EmbedVideo/

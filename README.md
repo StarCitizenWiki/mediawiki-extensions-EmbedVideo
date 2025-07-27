@@ -286,13 +286,15 @@ As of version 3.x, EmbedVideo supports embedding video content from the followin
 | [Spotify](http://spotify.com/)                           | `spotifyepisode` - Podcast episodes | 11mET6sr9ghOJ6mi4lmZmZ                                 | https://open.spotify.com/episode/11mET6sr9ghOJ6mi4lmZmZ                                                                   |
 | [Twitch](http://www.twitch.tv)                           | `twitch` - Live Streams             | `twitchvod` - Archived Videos on Demand                | twitchplayspokemon                                                                                                        |
 | [Vimeo](http://www.vimeo.com)                            | `vimeo`                             | 105035718                                              | http://vimeo.com/105035718                                                                                                |
+| [VK](https://vkvideo.ru/)                                | `vk`                                | -22822305_456241864                                    | http://vkvideo.ru/video-22822305_456241864                                                                                |
 | [Wistia](http://wistia.com)                              | `wistia`                            | 62svuailn2                                             | https://softwareag-2.wistia.com/medias/62svuailn2                                                                         |
 | [YouTube](http://www.youtube.com/)                       | `youtube` - Single Videos           | pSsYTj9kCHE                                            | https://www.youtube.com/watch?v=pSsYTj9kCHE                                                                               |
 | [YouTube](http://www.youtube.com/)                       | `youtubeplaylist` - Playlists       | PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                     | https://www.youtube.com/embed/?listType=playlist&list=PLY0KbDiiFYeNgQkjujixr7qD-FS8qecoP                                  |
 | [YouTube](http://www.youtube.com/)                       | `youtubevideolist` - Video List     | pSsYTj9kCHE - urlargs=playlist=pSsYTj9kCHE,pSsYTj9kCHE | https://www.youtube.com/embed/pSsYTj9kCHE?playlist=pSsYTj9kCHE,pSsYTj9kCHE                                                |
-| [Youku](http://www.youku.com/)                       |  `youku`      | XMzc0Mzg4NTE5Mg |https://player.youku.com/embed/XMzc0Mzg4NTE5Mg                                              |
+| [Youku](http://www.youku.com/)                           | `youku`                             | XMzc0Mzg4NTE5Mg                                        | https://player.youku.com/embed/XMzc0Mzg4NTE5Mg                                                                            |
 
 ### New Services
+
 New services can be requested by using the following [link](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/issues/new?assignees=&labels=enhancement&template=embed-service-request.md&title=Embed+Service+Request%3A+Service+Name) or clicking `New Issue`.
 
 # Configuration Settings
