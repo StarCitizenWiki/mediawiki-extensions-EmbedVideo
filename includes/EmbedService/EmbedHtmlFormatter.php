@@ -4,14 +4,14 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-use ConfigException;
 use Exception;
-use Html;
 use JsonException;
+use MediaWiki\Config\ConfigException;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
-use Message;
+use MediaWiki\Message\Message;
 use UnexpectedValueException;
 
 final class EmbedHtmlFormatter {

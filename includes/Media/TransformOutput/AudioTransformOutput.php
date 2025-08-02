@@ -14,8 +14,8 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
 use File;
-use Html;
 use MediaTransformOutput;
+use MediaWiki\Html\Html;
 
 class AudioTransformOutput extends MediaTransformOutput {
 	/**
