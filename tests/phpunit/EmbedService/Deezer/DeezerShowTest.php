@@ -29,7 +29,7 @@ class DeezerShowTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
-	private string $validUrlId = 'https://www.deezer.com/show/1129782';
+	private string $validUrlId = 'https://www.deezer.com/en/show/1129782';
 
 	/**
 	 * An invalid url

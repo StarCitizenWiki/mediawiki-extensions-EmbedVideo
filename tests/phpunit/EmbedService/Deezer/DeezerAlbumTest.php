@@ -29,13 +29,13 @@ class DeezerAlbumTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
-	private string $validUrlId = 'https://www.deezer.com/en/track/15684526';
+	private string $validUrlId = 'https://www.deezer.com/en/album/15684526';
 
 	/**
 	 * An invalid url
 	 * @var string
 	 */
-	private string $invalidUrlId = 'https://www.deezer.com/en/track/1234567890';
+	private string $invalidUrlId = 'https://www.deezer.com/album/1234567890';
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID

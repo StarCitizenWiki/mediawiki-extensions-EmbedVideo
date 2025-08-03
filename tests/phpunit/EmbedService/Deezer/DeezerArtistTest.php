@@ -29,7 +29,7 @@ class DeezerArtistTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
-	private string $validUrlId = 'https://www.deezer.com/artist/12051760';
+	private string $validUrlId = 'https://www.deezer.com/en/artist/12051760';
 
 	/**
 	 * An invalid url
