@@ -111,8 +111,8 @@ final class EmbedHtmlFormatter {
 		 * @see https://www.mediawiki.org/wiki/Specs/HTML/2.7.0#Audio/Video
 		 */
 		$template = <<<HTML
-			<figure class="%s" data-service="%s" %s %s><!--
-				--><div class="embedvideo-wrapper" %s>%s%s</div>%s
+			<figure class="%s" data-service="%s" %s %s>
+				<div class="embedvideo-wrapper" %s>%s%s</div>%s
 			</figure>
 			HTML;
 
@@ -194,8 +194,8 @@ final class EmbedHtmlFormatter {
 
 			// phpcs:disable
 			return <<<HTML
-				<picture class="embedvideo-thumbnail"><!--
-				--><img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
+				<picture class="embedvideo-thumbnail">
+					<img src="{$url}" loading="lazy" class="embedvideo-thumbnail__image" alt="Thumbnail for {$service->getTitle()}"/>
 				</picture>
 				HTML;
 			// phpcs:enable
@@ -232,23 +232,23 @@ final class EmbedHtmlFormatter {
 	 */
 	public static function makeConsentContainerHtml( AbstractEmbedService $service ): string {
 		$template = <<<HTML
-<div class="embedvideo-consent" data-show-privacy-notice="%s">%s<!--
---><div class="embedvideo-overlay"><!--
-	--><div class="embedvideo-loader" role="button">%s<!--
-		--><div class="embedvideo-loader__fakeButton">%s</div><!--
-		--><div class="embedvideo-loader__footer"><!--
-			--><div class="embedvideo-loader__service">%s</div><!--
-		--></div><!--
-	--></div><!--
-	--><div class="embedvideo-privacyNotice hidden"><!--
-		--><div class="embedvideo-privacyNotice__content">%s%s</div><!--
-		--><div class="embedvideo-privacyNotice__buttons"><!--
-			--><button class="embedvideo-privacyNotice__continue">%s</button><!--
-			--><button class="embedvideo-privacyNotice__dismiss">%s</button><!--
-		--></div><!--
-	--></div><!--
---></div><!--
---></div>
+<div class="embedvideo-consent" data-show-privacy-notice="%s">%s
+	<div class="embedvideo-overlay">
+		<div class="embedvideo-loader" role="button">%s
+			<div class="embedvideo-loader__fakeButton">%s</div>
+			<div class="embedvideo-loader__footer">
+				<div class="embedvideo-loader__service">%s</div>
+			</div>
+		</div>
+		<div class="embedvideo-privacyNotice hidden">
+			<div class="embedvideo-privacyNotice__content">%s%s</div>
+			<div class="embedvideo-privacyNotice__buttons">
+				<button class="embedvideo-privacyNotice__continue">%s</button>
+				<button class="embedvideo-privacyNotice__dismiss">%s</button>
+			</div>
+		</div>
+	</div>
+</div>
 HTML;
 
 		$showPrivacyNotice = false;

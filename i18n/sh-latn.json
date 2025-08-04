@@ -14,6 +14,7 @@
 	"embedvideo-service-bilibili": "Bilibili",
 	"embedvideo-service-bandcamp": "Bandcamp",
 	"embedvideo-service-dailymotion": "Dailymotion",
+	"embedvideo-service-deezer": "Deezer",
 	"embedvideo-service-kakaotv": "KakaoTV",
 	"embedvideo-service-loom": "Loom",
 	"embedvideo-service-navertv": "NaverTV",
@@ -24,6 +25,5 @@
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
-	"embedvideo-service-youtube": "YouTube",
-	"embedvideo-service-youku": "Youku"
+	"embedvideo-service-youtube": "YouTube"
 }
