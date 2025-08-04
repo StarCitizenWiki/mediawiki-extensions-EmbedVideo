@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
-use Message;
+use MediaWiki\Message\Message;
 use UnregisteredLocalFile;
 
 final class ExternalVideo extends AbstractEmbedService {

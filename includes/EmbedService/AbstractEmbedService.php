@@ -4,14 +4,14 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-use Config;
 use InvalidArgumentException;
 use JsonException;
 use MediaTransformOutput;
+use MediaWiki\Config\Config;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use RuntimeException;
 use ThumbnailImage;
-use Title;
 
 abstract class AbstractEmbedService {
 	/**

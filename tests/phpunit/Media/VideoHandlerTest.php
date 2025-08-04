@@ -7,6 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\Tests\Media;
 use Exception;
 use LocalFile;
 use MediaTransformOutput;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
@@ -16,7 +17,6 @@ use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use MediaWiki\Utils\UrlUtils;
 use RepoGroup;
-use RequestContext;
 use Shellbox\Command\UnboxedResult;
 use Wikimedia\AtEase\AtEase;
 

@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"embedvideo-load": "Чуйаккха $1",
+	"embedvideo-type-audio": "аудио",
+	"embedvideo-type-content": "чулацам",
+	"embedvideo-type-video": "видео",
+	"embedvideo-consent-privacy-policy": "Конфиденционаллин политика",
+	"embedvideo-consent-privacy-notice-continue": "Кхин дӀа",
+	"embedvideo-consent-privacy-notice-dismiss": "ДӀачӀагӀа",
+	"embedvideo-service-videolink": "Видео тӀе хьажорг",
+	"embedvideo-service-localvideo": "Локалан файл",
+	"embedvideo-service-externalvideo": "Арахьара видео",
+	"embedvideo-play": "Видео латайе",
+	"apihelp-embedvideo-param-alignment": "Видео нисйар",
+	"apihelp-embedvideo-param-description": "Видеох лаьцна",
+	"apihelp-embedvideo-param-container": "frame билгалйаккха йа йаьсса йита",
+	"apihelp-embedvideo-param-autoresize": "Видео барам авто хийца беза? (true йа false)"
+}

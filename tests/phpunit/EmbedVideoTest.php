@@ -6,11 +6,11 @@ namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use Exception;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPCustomFrame_Hash;
+use MediaWiki\Parser\PPFrame_Hash;
 use MediaWikiIntegrationTestCase;
-use Parser;
-use ParserOptions;
-use PPCustomFrame_Hash;
-use PPFrame_Hash;
 
 /**
  * @group EmbedVideo
@@ -136,7 +136,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-iframeconfig=\'{"src":"//www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
+		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
 	}
 
 	/**

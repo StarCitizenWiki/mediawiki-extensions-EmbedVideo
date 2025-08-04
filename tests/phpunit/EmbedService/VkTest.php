@@ -8,9 +8,9 @@ use Exception;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Vk;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPCustomFrame_Hash;
 use MediaWikiIntegrationTestCase;
-use ParserOptions;
-use PPCustomFrame_Hash;
 
 /**
  * @group EmbedVideo
@@ -33,7 +33,7 @@ class VkTest extends MediaWikiIntegrationTestCase {
 	 * A valid url containing an id
 	 * @var string
 	 */
-	private string $validUrlId = 'https://vk.com/video-22822305_456241864';
+	private string $validUrlId = 'https://vkvideo.ru/video-22822305_456241864';
 
 	/**
 	 * An invalid url
@@ -97,7 +97,7 @@ class VkTest extends MediaWikiIntegrationTestCase {
 	public function testUrl() {
 		$service = new Vk( $this->validUrlId );
 
-		$this->assertStringContainsString( 'https://vk.com/video_ext', $service->getUrl() );
+		$this->assertStringContainsString( 'https://vkvideo.ru/video_ext', $service->getUrl() );
 	}
 
 	/**
