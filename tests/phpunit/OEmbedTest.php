@@ -7,8 +7,8 @@ namespace MediaWiki\Extension\EmbedVideo\Tests;
 use Exception;
 use MediaWiki\Extension\EmbedVideo\OEmbed;
 use MediaWiki\Http\HttpRequestFactory;
+use MediaWiki\Status\Status;
 use MWHttpRequest;
-use Status;
 
 /**
  * @group EmbedVideo

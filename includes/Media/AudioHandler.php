@@ -5,13 +5,13 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use File;
-use FSFile;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\MediaWikiServices;
 use stdClass;
+use Wikimedia\FileBackend\FSFile\FSFile;
 
 class AudioHandler extends MediaHandler {
 	protected $contentLanguage;

@@ -4,21 +4,21 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
-use Config;
-use ConfigFactory;
+use MediaWiki\Config\Config;
+use MediaWiki\Config\ConfigFactory;
+use MediaWiki\Exception\MWException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\Hook\ArticlePurgeHook;
-use MWException;
-use OutputPage;
-use Parser;
+use MediaWiki\Page\WikiPage;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Skin\Skin;
 use RepoGroup;
-use Skin;
-use WANObjectCache;
-use WikiPage;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 /**
  * EmbedVideo

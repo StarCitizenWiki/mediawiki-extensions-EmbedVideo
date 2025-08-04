@@ -12,7 +12,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
-use ApiBase;
+use MediaWiki\Api\ApiBase;
 use Wikimedia\ParamValidator\ParamValidator;
 
 class ApiEmbedVideo extends ApiBase {

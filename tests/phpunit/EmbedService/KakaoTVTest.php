@@ -8,9 +8,9 @@ use Exception;
 use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\KakaoTV;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPCustomFrame_Hash;
 use MediaWikiIntegrationTestCase;
-use ParserOptions;
-use PPCustomFrame_Hash;
 
 /**
  * @group EmbedVideo

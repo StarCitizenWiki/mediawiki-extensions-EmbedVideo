@@ -4,17 +4,17 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
-use Config;
-use ConfigException;
 use InvalidArgumentException;
+use MediaWiki\Config\Config;
+use MediaWiki\Config\ConfigException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\OEmbedServiceInterface;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
-use Parser;
-use PPFrame;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\PPFrame;
 use RuntimeException;
 
 class EmbedVideo {
@@ -68,21 +68,17 @@ class EmbedVideo {
 	 */
 	private $container = false;
 
-	private PPFrame|null $frame;
-
 	/**
 	 * Creates a new EmbedVideo instance
 	 *
 	 * @param Parser|null $parser
 	 * @param array $args
 	 * @param bool $fromTag
-	 * @param PPFrame|null $frame
 	 */
-	public function __construct( ?Parser $parser, array $args, bool $fromTag = false, PPFrame|null $frame = null ) {
+	public function __construct( ?Parser $parser, array $args, bool $fromTag = false ) {
 		$this->parser = $parser;
 		$this->args = $this->parseArgs( $args, $fromTag );
 		$this->config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'EmbedVideo' );
-		$this->frame = $frame;
 	}
 
 	/**
@@ -130,7 +126,7 @@ class EmbedVideo {
 			}
 		}
 
-		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag, $frame ) )->output();
+		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag ) )->output();
 	}
 
 	/**
@@ -442,7 +438,7 @@ class EmbedVideo {
 			'title' => $title,
 		] = $this->args;
 
-		$rpl = static fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
+		$rpl = fn( $input ) => preg_replace( '/[a-z]/i', '', (string)$input );
 
 		// Height only
 		if ( !empty( $dimensions ) && strtolower( $dimensions )[0] === 'x' ) {
@@ -510,14 +506,7 @@ class EmbedVideo {
 	 * @return void
 	 */
 	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = !$description
-			? false
-			: trim(
-				preg_replace(
-					'/^<p>(.*)<\/p>\s*$/is',
-					'$1',
-					$parser->recursiveTagParseFully( $description, $this->frame ) )
-			);
+		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
 	}
 
 	/**

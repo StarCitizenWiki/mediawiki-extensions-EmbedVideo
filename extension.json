@@ -1,6 +1,6 @@
 {
 	"name": "EmbedVideo",
-	"version": "3.4.2",
+	"version": "4.0.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
@@ -14,7 +14,10 @@
 	"license-name": "MIT",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.43.0"
+		"MediaWiki": ">= 1.43.0",
+		"platform": {
+			"php": ">=8.0"
+		}
 	},
 	"MessagesDirs": {
 		"EmbedVideo": [
@@ -37,7 +40,6 @@
 				"embedvideo-service-bandcamp",
 				"embedvideo-service-bilibili",
 				"embedvideo-service-dailymotion",
-				"embedvideo-service-deezer",
 				"embedvideo-service-kakaotv",
 				"embedvideo-service-loom",
 				"embedvideo-service-navertv",
