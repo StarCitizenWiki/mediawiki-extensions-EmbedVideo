@@ -14,6 +14,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\Twitch;
@@ -55,6 +56,7 @@ final class EmbedServiceFactory {
 		SpotifyEpisode::class,
 		SpotifyShow::class,
 		SpotifyTrack::class,
+		SpotifyPlaylist::class,
 		Substack::class,
 		Twitch::class,
 		TwitchClip::class,
@@ -161,6 +163,9 @@ final class EmbedServiceFactory {
 			case 'spotifypodcastepisode':
 			case 'spotifyepisode':
 				return new SpotifyEpisode( $id );
+
+			case 'spotifyplaylist':
+				return new SpotifyPlaylist( $id );
 
 			case 'substack':
 				return new Substack( $id );

@@ -30,6 +30,10 @@ const spotifyshow = function(url) {
 	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/show/' + url);
 };
 
+const spotifyplaylist = function(url) {
+	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/playlist/' + url);
+};
+
 const soundcloud = function(url) {
 	const queryParser = require('./queryKeyParser.js').queryKeyParser;
 
@@ -93,6 +97,7 @@ module.exports = {
 	spotifyepisode,
 	spotifyshow,
 	spotifytrack,
+	spotifyplaylist,
 	soundcloud,
 	ccc,
 	wistia,
