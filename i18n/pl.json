@@ -17,6 +17,7 @@
 	"embedvideo-service-soundcloud": "SoundCloud",
 	"embedvideo-service-sharepoint": "SharePoint",
 	"embedvideo-service-spotify": "Spotify",
+	"embedvideo-service-tidal": "Tidal",
 	"embedvideo-service-twitch": "Twitch",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
