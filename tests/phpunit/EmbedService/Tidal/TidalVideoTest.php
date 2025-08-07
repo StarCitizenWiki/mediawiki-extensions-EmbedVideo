@@ -5,13 +5,13 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\Tidal;
 
 use InvalidArgumentException;
-use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo;
 use MediaWikiIntegrationTestCase;
 
 /**
  * @group EmbedVideo
  */
-class TidalShowTest extends MediaWikiIntegrationTestCase {
+class TidalVideoTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * A valid ID
@@ -44,64 +44,64 @@ class TidalShowTest extends MediaWikiIntegrationTestCase {
 	public function testInvalidId() {
 		$this->expectException( InvalidArgumentException::class );
 
-		new TidalShow( $this->invalidId );
+		new TidalVideo( $this->invalidId );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getIdRegex
 	 * @return void
 	 */
 	public function testValidId() {
-		$service = new TidalShow( $this->validId );
+		$service = new TidalVideo( $this->validId );
 
-		$this->assertInstanceOf( TidalShow::class, $service );
+		$this->assertInstanceOf( TidalVideo::class, $service );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getIdRegex
 	 * @return void
 	 */
 	public function testValidUrlId() {
-		$service = new TidalShow( $this->validUrlId );
+		$service = new TidalVideo( $this->validUrlId );
 
-		$this->assertInstanceOf( TidalShow::class, $service );
+		$this->assertInstanceOf( TidalVideo::class, $service );
 		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validUrlId ) );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getIdRegex
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
 		$this->expectException( InvalidArgumentException::class );
-		new TidalShow( $this->invalidUrlId );
+		new TidalVideo( $this->invalidUrlId );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getUrlRegex
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getIdRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getIdRegex
 	 * @return void
 	 */
 	public function testUrl() {
-		$service = new TidalShow( $this->validUrlId );
+		$service = new TidalVideo( $this->validUrlId );
 
 		$this->assertStringContainsString( 'https://embed.tidal.com/videos/', $service->getUrl() );
 	}
 
 	/**
-	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalShow::getServiceKey
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo::getServiceKey
 	 * @return void
 	 */
 	public function testServiceKey() {
-		$service = new TidalShow( $this->validUrlId );
+		$service = new TidalVideo( $this->validUrlId );
 		$this->assertEquals( 'tidal', $service->getServiceKey() );
 	}
 }
