@@ -8,6 +8,13 @@ final class TidalTrack extends TidalAlbum {
 	/**
 	 * @inheritDoc
 	 */
+	public function getDefaultHeight(): int {
+		return 96;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getBaseUrl(): string {
 		return 'https://embed.tidal.com/tracks/%1$s';
 	}

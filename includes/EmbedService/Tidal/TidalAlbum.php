@@ -9,6 +9,8 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 class TidalAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
+		'allowfullscreen' => 'allowfullscreen',
+		'frameborder' => 0,
 	];
 
 	/**
