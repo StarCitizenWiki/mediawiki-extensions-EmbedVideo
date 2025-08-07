@@ -20,4 +20,11 @@ final class TidalVideo extends TidalAlbum {
 			'#tidal\.com/video/([a-zA-Z0-9]+)#is',
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getContentType(): ?string {
+		return 'video';
+	}
 }
