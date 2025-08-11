@@ -3,6 +3,7 @@
 		"authors": [
 			"Alistair3149",
 			"GuoPC",
+			"Lakejason0",
 			"LittlePaw365",
 			"Zhang8569"
 		]
@@ -18,6 +19,7 @@
 	"embedvideo-consent-privacy-notice-dismiss": "关闭",
 	"embedvideo-service-bilibili": "哔哩哔哩",
 	"embedvideo-service-videolink": "视频链接",
+	"embedvideo-service-youku": "优酷",
 	"embedvideo-service-localvideo": "本地文件",
 	"embedvideo-service-externalvideo": "外部视频",
 	"embedvideo-play": "播放视频",
