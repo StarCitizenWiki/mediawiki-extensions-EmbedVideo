@@ -184,7 +184,7 @@
 		}
 	},
 	"ConfigRegistry": {
-		"EmbedVideo": "GlobalVarConfig::newInstance"
+		"EmbedVideo": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
 	"ExtensionFunctions": [
 		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
@@ -206,3 +206,4 @@
 	},
 	"manifest_version": 2
 }
+
