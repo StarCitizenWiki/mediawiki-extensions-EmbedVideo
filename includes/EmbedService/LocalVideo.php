@@ -77,4 +77,19 @@ class LocalVideo extends AbstractEmbedService {
 
 		return ( new VideoTransformOutput( $this->transformOutput->getFile(), $this->properties ) )->toHtml();
 	}
+
+	/**
+	 * Render the underlying <video> element with options propagated from the caller
+	 * (e.g., galleries may pass 'no-dimensions' so CSS controls sizing).
+	 *
+	 * @param array $options
+	 * @return string
+	 */
+	public function renderVideoHtml( array $options = [] ): string {
+		if ( isset( $this->properties['likeEmbed'] ) ) {
+			unset( $this->properties['poster'] );
+		}
+
+		return ( new VideoTransformOutput( $this->transformOutput->getFile(), $this->properties ) )->toHtml( $options );
+	}
 }

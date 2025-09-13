@@ -54,10 +54,20 @@ final class EmbedHtmlFormatter {
 			$config['class'] .= ' ' . $config['img-class'];
 		}
 
+		// Detect gallery-like contexts for local videos (packed galleries provide override-* options)
+		$isGalleryLike = $service instanceof LocalVideo && (
+			isset( $args['override-width'] ) || isset( $args['override-height'] )
+		);
+
 		$inlineStyles = [
 			'container' => $config['style'] ?? '',
 			'wrapper' => '',
 		];
+
+		// Force autoresize for gallery-like local embeds to avoid fixed dimensions
+		if ( $isGalleryLike ) {
+			$config['autoresize'] = true;
+		}
 
 		if ( $config['autoresize'] === true ) {
 			$config['class'] .= ' embedvideo--autoresize';
@@ -116,6 +126,14 @@ final class EmbedHtmlFormatter {
 			</figure>
 			HTML;
 
+		$consentHtml = ( $config['withConsent'] ?? false ) === true
+			? self::makeConsentContainerHtml( $service )
+			: '';
+
+		$embedHtml = $service instanceof LocalVideo
+			? $service->renderVideoHtml( $args )
+			: (string)$service;
+
 		return sprintf(
 			$template,
 			$config['class'] ?? '',
@@ -123,8 +141,8 @@ final class EmbedHtmlFormatter {
 			$iframeConfig,
 			$inlineStyles['container'],
 			$inlineStyles['wrapper'],
-			( $config['withConsent'] ?? false ) === true ? self::makeConsentContainerHtml( $service ) : '',
-			$service,
+			$consentHtml,
+			$embedHtml,
 			$caption
 		);
 	}

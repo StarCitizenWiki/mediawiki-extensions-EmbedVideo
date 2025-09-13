@@ -13,8 +13,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
-use File;
 use MediaTransformOutput;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\Html\Html;
 
 class AudioTransformOutput extends MediaTransformOutput {
@@ -49,7 +49,7 @@ class AudioTransformOutput extends MediaTransformOutput {
 	 * @return string HTML
 	 */
 	public function toHtml( $options = [] ): string {
-		return Html::rawElement( 'audio', [
+		$attrs = [
 			'src' => $this->getSrc(),
 			'width' => $this->getWidth(),
 			'class' => $options['img-class'] ?? $this->parameters['img-class'] ?? false,
@@ -57,7 +57,17 @@ class AudioTransformOutput extends MediaTransformOutput {
 			'controls' => !isset( $this->parameters['nocontrols'] ),
 			'autoplay' => isset( $this->parameters['autoplay'] ),
 			'loop' => isset( $this->parameters['loop'] ),
-		], $this->getDescription() );
+		];
+
+		if (
+			!empty( $options['no-dimensions'] ) ||
+			isset( $options['override-width'] ) ||
+			isset( $options['override-height'] )
+		) {
+			unset( $attrs['width'] );
+		}
+
+		return Html::rawElement( 'audio', $attrs, $this->getDescription() );
 	}
 
 	/**
@@ -92,7 +102,10 @@ class AudioTransformOutput extends MediaTransformOutput {
 
 		$style[] = "max-width: 100%;";
 
-		if ( empty( $options['no-dimensions'] ) ) {
+		if (
+			empty( $options['no-dimensions'] ) &&
+			!isset( $options['override-width'] ) && !isset( $options['override-height'] )
+		) {
 			$style[] = "width: {$this->getWidth()}px;";
 		}
 

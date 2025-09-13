@@ -100,4 +100,41 @@ class AudioTransformOutputTest extends \MediaWikiIntegrationTestCase {
 		$this->assertStringContainsString( 'FooDesc', $out );
 		$this->assertStringContainsString( '#t=', $out );
 	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput::toHtml
+	 * Ensures that in gallery contexts, width attribute is omitted
+	 * when 'no-dimensions' is set.
+	 * @return void
+	 */
+	public function testToHtmlNoDimensions() {
+		$out = new AudioTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[
+				'width' => 200,
+			]
+		);
+
+		$html = $out->toHtml( [ 'no-dimensions' => true ] );
+		$this->assertStringStartsWith( '<audio src="', $html );
+		$this->assertStringNotContainsString( 'width="', $html );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput::toHtml
+	 * Ensures override-width/override-height behave like gallery sizing flags.
+	 * @return void
+	 */
+	public function testToHtmlOverrideDimensions() {
+		$out = new AudioTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[
+				'width' => 320,
+			]
+		);
+
+		$html = $out->toHtml( [ 'override-width' => 427.0, 'override-height' => 240.0 ] );
+		$this->assertStringStartsWith( '<audio src="', $html );
+		$this->assertStringNotContainsString( 'width="', $html );
+	}
 }
