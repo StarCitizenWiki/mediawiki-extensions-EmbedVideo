@@ -443,6 +443,67 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * Ensure <evlplayer> without defaultid renders a visible placeholder container
+	 * using the videolink service and the correct player class.
+	 *
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVLTag
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLTagPlaceholderWithoutDefaultId() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVLTag(
+			'',
+			[
+				'id' => 'p1',
+				'w' => '400',
+				'h' => '200',
+			],
+			$parser,
+			$this->getFrame( $parser ),
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'class="embedvideo evlplayer evlplayer-p1"', $output[0] );
+		$this->assertStringContainsString( 'data-service="videolink"', $output[0] );
+	}
+
+	/**
+	 * Ensure the explicit 'player' attribute on <evlplayer> overrides the legacy 'id'
+	 * attribute as the player name, preserving backwards compatibility.
+	 *
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVLTag
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLTagPlayerAttributeOverridesId() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVLTag(
+			'',
+			[
+				'id' => 'legacy-id',
+				'player' => 'explicit-player',
+				'defaultid' => 'pSsYTj9kCHE',
+				'service' => 'youtube',
+				'w' => '400',
+				'h' => '200',
+			],
+			$parser,
+			$this->getFrame( $parser ),
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'class="embedvideo evlplayer evlplayer-explicit-player"', $output[0] );
+	}
+
+	/**
 	 * Get a fresh parser
 	 *
 	 * @return Parser

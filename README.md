@@ -14,10 +14,10 @@
 
 ![](docs/example-cover.png)![](docs/example-consent.png)
 
-The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` and various parser tags like `<youtube>` for embedding video clips from various video sharing services.  
+The EmbedVideo Extension is a MediaWiki extension which adds a parser function called `#ev` and various parser tags like `<youtube>` for embedding video clips from various video sharing services.
 It also adds video and audio media handlers to support transforming standard `[[File:Example.mp4]]` file links into embedded HTML5 `<video>` and `<audio>` tags.
 
-This privacy enhanced fork adds a toggleable setting that only loads external content _after_ the user gave explicit consent by clicking the video.  
+This privacy enhanced fork adds a toggleable setting that only loads external content _after_ the user gave explicit consent by clicking the video.
 Do note that thumbnails are still fetched from the respective service, which results in a connection to an external url. This behaviour can be disabled by setting `$wgEmbedVideoFetchExternalThumbnails` to `false`.
 
 
@@ -84,11 +84,11 @@ Additionally, a cover image can be set for video files by specifying a `cover=` 
 	[[File:Example.mp4|start=2|end=6|poster=File:LocalFile.png]]
 
 ### Example
-![](docs/local_file_with_cover.png)  
+![](docs/local_file_with_cover.png)
 Example of a local file with a custom cover image.
 
 ### Available options
-The following options are available when using the media handler for local files.  
+The following options are available when using the media handler for local files.
 Options are added to the wikitext like `|poster=File:...` or `|start=2`.
 
 * loop
@@ -109,9 +109,9 @@ Options only available for video files:
 
 When `$wgEmbedVideoUseEmbedStyleForLocalVideos` is enabled two additional options are available
 * title
-  * Title of the video 
+  * Title of the video
 * description
-  * Description shown below the video 
+  * Description shown below the video
 
 ## Tags
 
@@ -138,7 +138,7 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `container`
 * `urlArgs`
 * `autoresize`
-  * Set `|autoresize=true` to have the embed automatically use all available width of the parent element 
+  * Set `|autoresize=true` to have the embed automatically use all available width of the parent element
 * `vAlignment`
 * `width`
 * `height`
@@ -147,7 +147,7 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `title`
   * This only has an effect if `$wgEmbedVideoRequireConsent` is set to true
 
-**Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.  
+**Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.
 E.g. using named id and unnamed description `{{#ev:service||||This is the Description|id=abc}}`/ `{{#ev:service|id=abc|||This is the Description}}`
 
 ### \#evu - Embed Video Url
@@ -171,8 +171,8 @@ The corresponding player that plays the videos defined by `{{#evl}}` links.
 
 Note that this implementation differs from EmbedVideo v2.x in the following areas:
 * No `default content` is supported, i.e. text inside the tags
-* A default video id should be defined, else the player displays a blank embed
-  * In the old implementation nothing was shown
+* If no `defaultid` is provided, the player displays a visible placeholder container (service=`videolink`) until a link is clicked
+  * This restores legacy usage where a single player sits above a list of links
 * No `style` attribute can be set
 * Video lists are not supported
 * This currently disregards `$wgEmbedVideoFetchExternalThumbnails` and will fetch thumbnails upon clicking a link
@@ -185,6 +185,16 @@ Note that this implementation differs from EmbedVideo v2.x in the following area
 ```
 
 Shows a YouTube embed for the video `pSsYTj9kCHE` and two video links, one for another YouTube video (NASA Live) and a Spotify track.
+
+When `defaultid` is omitted, a placeholder player is shown until a link is clicked. You can style this placeholder via CSS, e.g.:
+
+```css
+.embedvideo.evlplayer[data-service="videolink"] .embedvideo-wrapper {
+  background: #000; /* visible area before a link is clicked */
+}
+```
+
+Tip: `<evlplayer>` accepts either `id` or `player` as the player name; if both are provided, `player` takes precedence.
 
 ## Examples
 
@@ -237,7 +247,7 @@ Using named parameters
 
 #### YouTube Example #8
 
-For YouTube to have the video start at a specific time code utilize the urlargs(URL arguments) parameter. Take the rest of the URL arguments from the custom URL and place them into the urlargs. 
+For YouTube to have the video start at a specific time code utilize the urlargs(URL arguments) parameter. Take the rest of the URL arguments from the custom URL and place them into the urlargs.
 
 Please note that not all video services support extra URL arguments or may have different keys for their URL arguments.
 

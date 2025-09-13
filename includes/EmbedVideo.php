@@ -228,7 +228,8 @@ class EmbedVideo {
 	 * @return array
 	 */
 	public static function parseEVLTag( $input, array $args, Parser $parser, PPFrame $frame ): array {
-		$args['player'] = $args['id'] ?? 'default';
+		// Prefer explicit player attribute, fall back to id for backwards compatibility
+		$args['player'] = $args['player'] ?? ( $args['id'] ?? 'default' );
 		$args['id'] = $args['defaultid'] ?? null;
 		$args['service'] = $args['service'] ?? 'youtube';
 
