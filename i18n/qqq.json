@@ -18,6 +18,7 @@
 	"embedvideo-service-navertv": "{{Optional}}",
 	"embedvideo-service-niconico": "{{Optional}}",
 	"embedvideo-service-soundcloud": "{{Optional}}",
+	"embedvideo-service-podbean": "{{Optional}}\nName of https://www.podbean.com/ service.",
 	"embedvideo-service-sharepoint": "{{Optional}}",
 	"embedvideo-service-spotify": "{{Optional}}",
 	"embedvideo-service-takhtesefid": "{{Optional}}",

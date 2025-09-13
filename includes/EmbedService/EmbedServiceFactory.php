@@ -39,6 +39,7 @@ final class EmbedServiceFactory {
 		Aparat::class,
 		Ccc::class,
 		DailyMotion::class,
+		Podbean::class,
 		DeezerAlbum::class,
 		DeezerArtist::class,
 		DeezerEpisode::class,
@@ -135,6 +136,9 @@ final class EmbedServiceFactory {
 
 			case 'loom':
 				return new Loom( $id );
+
+			case 'podbean':
+				return new Podbean( $id );
 
 			case 'nicovideo':
 			case 'niconico':
