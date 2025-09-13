@@ -507,7 +507,22 @@ class EmbedVideo {
 	 * @return void
 	 */
 	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = ( !$description ? false : $parser->recursiveTagParseFully( $description ) );
+		if ( !$description ) {
+			$this->description = false;
+			return;
+		}
+
+		// Parse the description using the MediaWiki parser to allow wikitext,
+		// but strip a single outer <p> wrapper so the caption matches
+		// expectations like "<figcaption>Example description</figcaption>".
+		$parsed = $parser->recursiveTagParseFully( $description );
+		$trimmed = trim( $parsed );
+		if ( preg_match( '/^<p>(.*)<\/p>$/s', $trimmed, $m ) ) {
+			$content = $m[1];
+		} else {
+			$content = $trimmed;
+		}
+		$this->description = trim( $content );
 	}
 
 	/**
