@@ -285,7 +285,7 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 				] ),
 			] );
 
-		$this->assertEquals( [ 'metadata' => [], 'bits' => 100 ], $handler->getSizeAndMetadata( null, null ) );
+		$this->assertEquals( [ 'metadata' => [ 'bitrate' => 100 ] ], $handler->getSizeAndMetadata( null, null ) );
 	}
 
 	/**
@@ -321,8 +321,8 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 				'duration' => 1000,
 				'codec' => 'mp4',
 				'bitdepth' => 1000,
+				'bitrate' => 100,
 			],
-			'bits' => 100,
 			'width' => 320,
 			'height' => 160,
 		], $handler->getSizeAndMetadata( null, null ) );
