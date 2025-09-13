@@ -53,6 +53,7 @@
 				"embedvideo-service-twitch",
 				"embedvideo-service-videolink",
 				"embedvideo-service-vimeo",
+				"embedvideo-service-reddit",
 				"embedvideo-service-youtube",
 				"embedvideo-service-youku",
 				"embedvideo-service-localvideo",

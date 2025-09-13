@@ -39,6 +39,7 @@ final class EmbedServiceFactory {
 		Aparat::class,
 		Ccc::class,
 		DailyMotion::class,
+		Reddit::class,
 		Podbean::class,
 		DeezerAlbum::class,
 		DeezerArtist::class,
@@ -136,6 +137,12 @@ final class EmbedServiceFactory {
 
 			case 'loom':
 				return new Loom( $id );
+
+			case 'reddit':
+			case 'reddit.com':
+			case 'www.reddit':
+			case 'embed.reddit':
+				return new Reddit( $id );
 
 			case 'podbean':
 				return new Podbean( $id );

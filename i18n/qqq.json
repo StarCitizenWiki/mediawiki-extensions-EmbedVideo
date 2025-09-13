@@ -26,6 +26,7 @@
 	"embedvideo-service-vk": "{{optional}}",
 	"embedvideo-service-vimeo": "{{Optional}}",
 	"embedvideo-service-wistia": "{{Optional}}\n\nName of https://wistia.com/ service.",
+	"embedvideo-service-reddit": "{{Optional}}\n\nName of https://www.reddit.com/ service.",
 	"embedvideo-service-youtube": "{{Optional}}",
 	"embedvideo-service-youku": "{{Optional}}\n\nName of https://www.youku.com/ service.",
 	"embedvideo-video-short-desc": "{{Optional}}",

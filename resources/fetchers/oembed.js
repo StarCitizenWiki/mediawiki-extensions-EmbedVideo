@@ -54,11 +54,25 @@ const loom = function(url) {
 };
 
 const ccc = function(url) {
-	return oembed('https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url);
+    return oembed('https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url);
 };
 
 const wistia = function(url) {
-	return oembed('http://fast.wistia.net/oembed?url=http://fast.wistia.net/embed/iframe/' + url);
+    return oembed('http://fast.wistia.net/oembed?url=http://fast.wistia.net/embed/iframe/' + url);
+};
+
+const reddit = function(url) {
+    // url can be an embed URL; convert to a canonical reddit.com post URL for oEmbed
+    try {
+        const u = new URL(url);
+        // Normalize host to www.reddit.com and strip query
+        u.hostname = 'www.reddit.com';
+        u.search = '';
+        return oembed('https://www.reddit.com/oembed?url=' + u.origin + u.pathname);
+    } catch (e) {
+        // Fallback: assume we already have a usable path
+        return oembed('https://www.reddit.com/oembed?url=' + url);
+    }
 };
 
 const oembed = function(url) {
@@ -99,7 +113,8 @@ module.exports = {
 	spotifytrack,
 	spotifyplaylist,
 	soundcloud,
-	ccc,
-	wistia,
-	oembed,
+    ccc,
+    wistia,
+    reddit,
+    oembed,
 };
