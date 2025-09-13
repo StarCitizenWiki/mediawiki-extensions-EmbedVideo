@@ -37,6 +37,7 @@
 		"ext.embedVideo.messages": {
 			"messages": [
 				"embedvideo-service-archiveorg",
+				"embedvideo-service-aparat",
 				"embedvideo-service-bandcamp",
 				"embedvideo-service-bilibili",
 				"embedvideo-service-dailymotion",

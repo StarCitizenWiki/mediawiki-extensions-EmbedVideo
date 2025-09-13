@@ -36,6 +36,7 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bandcamp::class,
 		Bilibili::class,
+		Aparat::class,
 		Ccc::class,
 		DailyMotion::class,
 		DeezerAlbum::class,
@@ -84,6 +85,9 @@ final class EmbedServiceFactory {
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
+
+			case 'aparat':
+				return new Aparat( $id );
 
 			case 'bandcamp':
 				return new Bandcamp( $id );
