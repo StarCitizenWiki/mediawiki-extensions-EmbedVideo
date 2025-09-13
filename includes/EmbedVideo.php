@@ -120,7 +120,7 @@ class EmbedVideo {
 		foreach ( $args as $key => $arg ) {
 			$value = trim( $frame->expand( $arg ) );
 			if ( $fromTag === true ) {
-				$expandedArgs[$key] = $parser->recursiveTagParse( $value, $frame );
+				$expandedArgs[$key] = $value;
 			} else {
 				$expandedArgs[] = $value;
 			}
@@ -251,7 +251,7 @@ class EmbedVideo {
 
 		$args = array_filter( $args );
 
-		$parser->getOutput()->addModules( [
+		$parser->getOutput()?->addModules( [
 			'ext.embedVideo.videolink',
 			'ext.embedVideo.messages',
 		] );
@@ -318,7 +318,7 @@ class EmbedVideo {
 				$this->makeHtmlFormatConfig( $this->service ),
 				$this->args
 			),
-			'noparse' => false,
+			'noparse' => true,
 			'isHTML' => true
 		];
 	}
@@ -506,7 +506,7 @@ class EmbedVideo {
 	 * @return void
 	 */
 	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+		$this->description = ( !$description ? false : $parser->recursiveTagParseFully( $description ) );
 	}
 
 	/**
@@ -630,14 +630,14 @@ class EmbedVideo {
 		$defaultSrcArr = $this->service->getCSPUrls();
 		if ( !empty( $defaultSrcArr ) ) {
 			foreach ( $defaultSrcArr as $defaultSrc ) {
-				$out->addExtraCSPDefaultSrc( $defaultSrc );
+				$out?->addExtraCSPDefaultSrc( $defaultSrc );
 			}
 		}
 
-		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
+		$out?->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
-			$out->addModules( [
+			$out?->addModules( [
 				'ext.embedVideo.consent',
 			] );
 
@@ -645,7 +645,7 @@ class EmbedVideo {
 			$serviceAttributes['width'] = $this->service->getDefaultWidth();
 			$serviceAttributes['height'] = $this->service->getDefaultHeight();
 
-			$this->parser->getOutput()->setJsConfigVar(
+			$this->parser->getOutput()?->setJsConfigVar(
 				sprintf( 'ev-%s-config', $this->service::getServiceName() ),
 				$serviceAttributes
 			);
