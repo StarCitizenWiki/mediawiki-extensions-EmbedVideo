@@ -78,12 +78,20 @@ class StreamInfo {
 	}
 
 	/**
-	 * Return bit depth for a video or thumbnail.
+	 * Return bit depth for a stream.
 	 *
-	 * @return int Bit Depth or false if unavailable.
+	 * FFprobe reports bit depth using different fields depending on stream type:
+	 * - Video: 'bits_per_raw_sample'
+	 * - Audio: 'bits_per_sample'
+	 *
+	 * @return int|false Bit Depth or false if unavailable.
 	 */
 	public function getBitDepth() {
-		return $this->getField( 'bits_per_raw_sample' );
+		$depth = $this->getField( 'bits_per_raw_sample' );
+		if ( $depth === false ) {
+			$depth = $this->getField( 'bits_per_sample' );
+		}
+		return $depth;
 	}
 
 	/**

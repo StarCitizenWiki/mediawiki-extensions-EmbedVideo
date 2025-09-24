@@ -5,7 +5,8 @@
 			"MidnightLG",
 			"Okras",
 			"P@S@f",
-			"Yurina Tatiana"
+			"Yurina Tatiana",
+			"Умар"
 		]
 	},
 	"embedvideo-description": "Добавляет функцию синтаксического анализатора для встраивания видео с популярных видеохостингов.",
@@ -45,11 +46,11 @@
 	"embedvideo-error-width": "В тег EmbedVideo введен неверный параметр ширины \"$1\".",
 	"embedvideo-error-height": "В тег EmbedVideo введен неверный параметр высота \"$1\".",
 	"embedvideo-error-alignment": "EmbedVideo получило недопустимое значение параметра выравнивания «$1». Допустимые значения: «left» (слева), «center» (по центру) или «right» (справа).",
-	"embedvideo-error-valignment": "EmbedVideo was given an illegal value for the valignment parameter \"$1\".  Valid values are \"top\", \"middle\", \"bottom\", or \"baseline\".",
-	"embedvideo-error-urlargs": "EmbedVideo received a list of URL arguments that contained malformed data or blank arguments.",
+	"embedvideo-error-valignment": "Для параметра выравнивания EmbedVideo задано недопустимое значение «$1». Допустимые значения: «top», «middle», «bottom» или «baseline».",
+	"embedvideo-error-urlargs": "EmbedVideo получил список аргументов URL, содержащих неверные данные или пустые аргументы.",
 	"embedvideo-error-unknown": "EmbedVideo столкнулся с неизвестной ошибкой при попытке сформировать блок встраивания видео. ($1)",
-	"embedvideo-error-evp_deprecated": "The #evp parser function was deprecated in EmbedVideo 2.0.  Please convert your parser function tag to #ev.",
-	"embedvideo-error-container": "The parameter provided for 'container' is invalid.",
+	"embedvideo-error-evp_deprecated": "Функция парсера #evp устарела в EmbedVideo 2.0. Измените тег функции парсера на #ev.",
+	"embedvideo-error-container": "Указанный параметр для «контейнера» недействителен.",
 	"embedvideo-video-long-desc": "$1, кодек $2, продолжительность $3, разрешение $4x$5, битрейт $6",
 	"embedvideo-audio-long-desc": "$1, кодек $2, продолжительность $3, битрейт $4",
 	"embedvideo-error-cantdecode_evu": "Не удалось проанализировать видео $1",

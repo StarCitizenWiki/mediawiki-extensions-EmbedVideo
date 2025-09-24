@@ -13,7 +13,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
-use File;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\Html\Html;
 
 class VideoTransformOutput extends AudioTransformOutput {
@@ -57,6 +57,13 @@ class VideoTransformOutput extends AudioTransformOutput {
 			'muted' => isset( $this->parameters['muted'] ),
 		];
 
+		if (
+			!empty( $options['no-dimensions'] ) ||
+			isset( $options['override-width'] ) ||
+			isset( $options['override-height'] ) ) {
+			unset( $attrs['width'], $attrs['height'] );
+		}
+
 		if ( ( $this->parameters['lazy'] ?? false ) === true && !isset( $this->parameters['gif'] ) ) {
 			$attrs['preload'] = 'none';
 		}
@@ -77,7 +84,10 @@ class VideoTransformOutput extends AudioTransformOutput {
 		$style[] = 'max-width: 100%;';
 		$style[] = 'max-height: 100%;';
 
-		if ( empty( $options['no-dimensions'] ) ) {
+		if (
+			empty( $options['no-dimensions'] ) &&
+			!isset( $options['override-width'] ) && !isset( $options['override-height'] )
+		) {
 			$style[] = "width: {$this->getWidth()}px;";
 			$style[] = "height: {$this->getHeight()}px;";
 		}

@@ -120,7 +120,7 @@ class EmbedVideo {
 		foreach ( $args as $key => $arg ) {
 			$value = trim( $frame->expand( $arg ) );
 			if ( $fromTag === true ) {
-				$expandedArgs[$key] = $parser->recursiveTagParse( $value, $frame );
+				$expandedArgs[$key] = $value;
 			} else {
 				$expandedArgs[] = $value;
 			}
@@ -183,7 +183,7 @@ class EmbedVideo {
 		}
 
 		$linkConfig = [
-			'data-iframeconfig' => $ev->service->getIframeConfig( $ev->args['width'], $ev->args['height'] ),
+			'data-mw-iframeconfig' => $ev->service->getIframeConfig( $ev->args['width'], $ev->args['height'] ),
 			'data-service' => $ev->args['service'],
 			'data-player' => $ev->args['player'] ?? 'default',
 			'class' => 'embedvideo-evl vplink',
@@ -228,7 +228,8 @@ class EmbedVideo {
 	 * @return array
 	 */
 	public static function parseEVLTag( $input, array $args, Parser $parser, PPFrame $frame ): array {
-		$args['player'] = $args['id'] ?? 'default';
+		// Prefer explicit player attribute, fall back to id for backwards compatibility
+		$args['player'] = $args['player'] ?? ( $args['id'] ?? 'default' );
 		$args['id'] = $args['defaultid'] ?? null;
 		$args['service'] = $args['service'] ?? 'youtube';
 
@@ -251,7 +252,7 @@ class EmbedVideo {
 
 		$args = array_filter( $args );
 
-		$parser->getOutput()->addModules( [
+		$parser->getOutput()?->addModules( [
 			'ext.embedVideo.videolink',
 			'ext.embedVideo.messages',
 		] );
@@ -318,7 +319,7 @@ class EmbedVideo {
 				$this->makeHtmlFormatConfig( $this->service ),
 				$this->args
 			),
-			'noparse' => false,
+			'noparse' => true,
 			'isHTML' => true
 		];
 	}
@@ -506,7 +507,22 @@ class EmbedVideo {
 	 * @return void
 	 */
 	private function setDescription( string $description, Parser $parser ): void {
-		$this->description = ( !$description ? false : $parser->recursiveTagParse( $description ) );
+		if ( !$description ) {
+			$this->description = false;
+			return;
+		}
+
+		// Parse the description using the MediaWiki parser to allow wikitext,
+		// but strip a single outer <p> wrapper so the caption matches
+		// expectations like "<figcaption>Example description</figcaption>".
+		$parsed = $parser->recursiveTagParseFully( $description );
+		$trimmed = trim( $parsed );
+		if ( preg_match( '/^<p>(.*)<\/p>$/s', $trimmed, $m ) ) {
+			$content = $m[1];
+		} else {
+			$content = $trimmed;
+		}
+		$this->description = trim( $content );
 	}
 
 	/**
@@ -630,14 +646,14 @@ class EmbedVideo {
 		$defaultSrcArr = $this->service->getCSPUrls();
 		if ( !empty( $defaultSrcArr ) ) {
 			foreach ( $defaultSrcArr as $defaultSrc ) {
-				$out->addExtraCSPDefaultSrc( $defaultSrc );
+				$out?->addExtraCSPDefaultSrc( $defaultSrc );
 			}
 		}
 
-		$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
+		$out?->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
-			$out->addModules( [
+			$out?->addModules( [
 				'ext.embedVideo.consent',
 			] );
 
@@ -645,7 +661,7 @@ class EmbedVideo {
 			$serviceAttributes['width'] = $this->service->getDefaultWidth();
 			$serviceAttributes['height'] = $this->service->getDefaultHeight();
 
-			$this->parser->getOutput()->setJsConfigVar(
+			$this->parser->getOutput()?->setJsConfigVar(
 				sprintf( 'ev-%s-config', $this->service::getServiceName() ),
 				$serviceAttributes
 			);

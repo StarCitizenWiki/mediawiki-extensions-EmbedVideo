@@ -14,6 +14,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalAlbum;
@@ -39,8 +40,11 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bandcamp::class,
 		Bilibili::class,
+		Aparat::class,
 		Ccc::class,
 		DailyMotion::class,
+		Reddit::class,
+		Podbean::class,
 		DeezerAlbum::class,
 		DeezerArtist::class,
 		DeezerEpisode::class,
@@ -59,6 +63,8 @@ final class EmbedServiceFactory {
 		SpotifyEpisode::class,
 		SpotifyShow::class,
 		SpotifyTrack::class,
+		SpotifyPlaylist::class,
+		TakhteSefid::class,
 		TidalAlbum::class,
 		TidalMix::class,
 		TidalTrack::class,
@@ -89,6 +95,9 @@ final class EmbedServiceFactory {
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
+
+			case 'aparat':
+				return new Aparat( $id );
 
 			case 'bandcamp':
 				return new Bandcamp( $id );
@@ -137,6 +146,15 @@ final class EmbedServiceFactory {
 			case 'loom':
 				return new Loom( $id );
 
+			case 'reddit':
+			case 'reddit.com':
+			case 'www.reddit':
+			case 'embed.reddit':
+				return new Reddit( $id );
+
+			case 'podbean':
+				return new Podbean( $id );
+
 			case 'nicovideo':
 			case 'niconico':
 			case 'embed.nicovideo':
@@ -170,6 +188,9 @@ final class EmbedServiceFactory {
 			case 'spotifyepisode':
 				return new SpotifyEpisode( $id );
 
+			case 'spotifyplaylist':
+				return new SpotifyPlaylist( $id );
+
 			case 'tidalalbum':
 				return new TidalAlbum( $id );
 
@@ -185,6 +206,9 @@ final class EmbedServiceFactory {
 
 			case 'substack':
 				return new Substack( $id );
+
+			case 'takhtesefid':
+				return new TakhteSefid( $id );
 
 			case 'twitch':
 				return new Twitch( $id );

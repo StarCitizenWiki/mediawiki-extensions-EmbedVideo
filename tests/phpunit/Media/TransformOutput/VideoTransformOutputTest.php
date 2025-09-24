@@ -158,4 +158,52 @@ class VideoTransformOutputTest extends \MediaWikiIntegrationTestCase {
 		$this->assertStringStartsWith( '<video src="', $out );
 		$this->assertStringContainsString( 'preload="none"', $out );
 	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput::toHtml
+	 * Ensures that in gallery contexts, width/height attributes are omitted
+	 * and style does not include fixed width/height when 'no-dimensions' is set.
+	 * @return void
+	 */
+	public function testToHtmlNoDimensions() {
+		$out = new VideoTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[
+				'width' => 200,
+				'height' => 100,
+			]
+		);
+
+		$html = $out->toHtml( [ 'no-dimensions' => true ] );
+		$this->assertStringStartsWith( '<video src="', $html );
+		$this->assertStringNotContainsString( 'width="', $html );
+		$this->assertStringNotContainsString( 'height="', $html );
+		$this->assertStringContainsString( 'style="', $html );
+		$this->assertStringContainsString( 'max-width: 100%', $html );
+		$this->assertStringNotContainsString( 'width: 200px', $html );
+		$this->assertStringNotContainsString( 'height: 100px', $html );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput::toHtml
+	 * Ensures override-width/override-height behave like gallery sizing flags.
+	 * @return void
+	 */
+	public function testToHtmlOverrideDimensions() {
+		$out = new VideoTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[
+				'width' => 320,
+				'height' => 180,
+			]
+		);
+
+		$html = $out->toHtml( [ 'override-width' => 427.0, 'override-height' => 240.0 ] );
+		$this->assertStringStartsWith( '<video src="', $html );
+		$this->assertStringNotContainsString( 'width="', $html );
+		$this->assertStringNotContainsString( 'height="', $html );
+		$this->assertStringContainsString( 'max-width: 100%', $html );
+		$this->assertStringNotContainsString( 'width: 320px', $html );
+		$this->assertStringNotContainsString( 'height: 180px', $html );
+	}
 }

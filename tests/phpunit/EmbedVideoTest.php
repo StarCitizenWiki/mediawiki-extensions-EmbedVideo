@@ -136,7 +136,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
+		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
 	}
 
 	/**
@@ -308,7 +308,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString(
-			'<figure class="embedvideo" data-service="youtube" data-iframeconfig',
+			'<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig',
 			$output[0]
 		);
 	}
@@ -339,7 +339,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString(
-			'<figure class="embedvideo" data-service="youtube" data-iframeconfig',
+			'<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig',
 			$output[0]
 		);
 	}
@@ -438,8 +438,69 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<a data-iframeconfig="', $output[0] );
+		$this->assertStringContainsString( '<a data-mw-iframeconfig="', $output[0] );
 		$this->assertStringContainsString( 'Test Text', $output[0] );
+	}
+
+	/**
+	 * Ensure <evlplayer> without defaultid renders a visible placeholder container
+	 * using the videolink service and the correct player class.
+	 *
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVLTag
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::output
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLTagPlaceholderWithoutDefaultId() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVLTag(
+			'',
+			[
+				'id' => 'p1',
+				'w' => '400',
+				'h' => '200',
+			],
+			$parser,
+			$this->getFrame( $parser ),
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'class="embedvideo evlplayer evlplayer-p1"', $output[0] );
+		$this->assertStringContainsString( 'data-service="videolink"', $output[0] );
+	}
+
+	/**
+	 * Ensure the explicit 'player' attribute on <evlplayer> overrides the legacy 'id'
+	 * attribute as the player name, preserving backwards compatibility.
+	 *
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEVLTag
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideo::parseEV
+	 * @return void
+	 * @throws Exception
+	 */
+	public function testParseEVLTagPlayerAttributeOverridesId() {
+		$parser = $this->getParser();
+
+		$output = EmbedVideo::parseEVLTag(
+			'',
+			[
+				'id' => 'legacy-id',
+				'player' => 'explicit-player',
+				'defaultid' => 'pSsYTj9kCHE',
+				'service' => 'youtube',
+				'w' => '400',
+				'h' => '200',
+			],
+			$parser,
+			$this->getFrame( $parser ),
+		);
+
+		$this->assertIsArray( $output );
+		$this->assertCount( 3, $output );
+		$this->assertStringContainsString( 'class="embedvideo evlplayer evlplayer-explicit-player"', $output[0] );
 	}
 
 	/**
