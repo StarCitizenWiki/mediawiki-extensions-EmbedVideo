@@ -7,7 +7,7 @@ const {makeIframe, fetchThumb} = require('./iframe.js');
                 e.preventDefault();
 
                 const player = evl.dataset?.player ?? 'default';
-                const iframeConfig = JSON.parse(evl.dataset?.iframeconfig ?? '{}');
+                const iframeConfig = JSON.parse(evl.dataset?.mwIframeconfig ?? '{}');
 
                 const playerContainer = document.querySelector(`.embedvideo.evlplayer-${player}`);
                 const iframe = playerContainer.querySelector('iframe');
@@ -25,7 +25,7 @@ const {makeIframe, fetchThumb} = require('./iframe.js');
                 // No iframe exists, only when explicit consent is required
                 const div = document.querySelector(`.embedvideo.evlplayer-${player}`);
 
-                if (div === null || evl.dataset?.iframeconfig === null) {
+                if (div === null || evl.dataset?.mwIframeconfig === null) {
                     console.warn(`No player with id '${player}' found!.`);
                     return;
                 }
@@ -35,7 +35,7 @@ const {makeIframe, fetchThumb} = require('./iframe.js');
 
                 const origService = div.dataset?.service;
 
-                div.dataset.iframeconfig = evl.dataset.iframeconfig;
+                div.dataset.mwIframeconfig = evl.dataset.mwIframeconfig;
                 div.dataset.service = evl.dataset.service;
 
                 const serviceMessage = mw.message('embedvideo-service-' + (evl.dataset?.service ?? 'youtube')).escaped();
@@ -46,7 +46,7 @@ const {makeIframe, fetchThumb} = require('./iframe.js');
 
                 if (evl.dataset?.privacyUrl !== null) {
                     const link = document.createElement('a');
-                    link.href = evl.dataset.privacyUrl;
+					link.href = evl.dataset.privacyUrl;
                     link.rel = 'nofollow,noopener';
                     link.target = '_blank';
                     link.classList.add('embedvideo-privacyNotice__link');

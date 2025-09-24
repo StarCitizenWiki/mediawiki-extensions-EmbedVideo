@@ -183,7 +183,7 @@ class EmbedVideo {
 		}
 
 		$linkConfig = [
-			'data-iframeconfig' => $ev->service->getIframeConfig( $ev->args['width'], $ev->args['height'] ),
+			'data-mw-iframeconfig' => $ev->service->getIframeConfig( $ev->args['width'], $ev->args['height'] ),
 			'data-service' => $ev->args['service'],
 			'data-player' => $ev->args['player'] ?? 'default',
 			'class' => 'embedvideo-evl vplink',

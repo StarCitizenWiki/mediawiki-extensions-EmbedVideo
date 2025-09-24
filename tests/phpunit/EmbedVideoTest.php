@@ -136,7 +136,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
+		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
 	}
 
 	/**
@@ -308,7 +308,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString(
-			'<figure class="embedvideo" data-service="youtube" data-iframeconfig',
+			'<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig',
 			$output[0]
 		);
 	}
@@ -339,7 +339,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
 		$this->assertStringContainsString(
-			'<figure class="embedvideo" data-service="youtube" data-iframeconfig',
+			'<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig',
 			$output[0]
 		);
 	}
@@ -438,7 +438,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<a data-iframeconfig="', $output[0] );
+		$this->assertStringContainsString( '<a data-mw-iframeconfig="', $output[0] );
 		$this->assertStringContainsString( 'Test Text', $output[0] );
 	}
 
