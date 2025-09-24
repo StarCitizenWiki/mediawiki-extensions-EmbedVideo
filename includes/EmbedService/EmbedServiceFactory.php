@@ -17,6 +17,10 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyTrack;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalAlbum;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalMix;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalTrack;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Tidal\TidalVideo;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\Twitch;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchClip;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchVod;
@@ -61,6 +65,10 @@ final class EmbedServiceFactory {
 		SpotifyTrack::class,
 		SpotifyPlaylist::class,
 		TakhteSefid::class,
+		TidalAlbum::class,
+		TidalMix::class,
+		TidalTrack::class,
+		TidalVideo::class,
 		Substack::class,
 		Twitch::class,
 		TwitchClip::class,
@@ -182,6 +190,19 @@ final class EmbedServiceFactory {
 
 			case 'spotifyplaylist':
 				return new SpotifyPlaylist( $id );
+
+			case 'tidalalbum':
+				return new TidalAlbum( $id );
+
+			case 'tidalmix':
+				return new TidalMix( $id );
+
+			case 'tidal':
+			case 'tidaltrack':
+				return new TidalTrack( $id );
+
+			case 'tidalvideo':
+				return new TidalVideo( $id );
 
 			case 'substack':
 				return new Substack( $id );

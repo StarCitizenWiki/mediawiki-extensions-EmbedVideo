@@ -51,6 +51,7 @@
 				"embedvideo-service-spotify",
 				"embedvideo-service-takhtesefid",
 				"embedvideo-service-twitch",
+				"embedvideo-service-tidal",
 				"embedvideo-service-videolink",
 				"embedvideo-service-vimeo",
 				"embedvideo-service-reddit",
@@ -61,7 +62,7 @@
 				"embedvideo-consent-privacy-notice-text",
 				"embedvideo-consent-privacy-policy"
 			]
-		},
+    },
 		"ext.embedVideo.videolink": {
 			"es6": true,
 			"packageFiles": [
