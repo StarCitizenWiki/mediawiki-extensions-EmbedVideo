@@ -82,7 +82,7 @@ const fetchThumb = async (url, parent, container) => {
                 title.classList.add('embedvideo-loader__title');
 
                 link.classList.add('embedvideo-loader__link');
-                link.href = JSON.parse(container?.dataset?.iframeconfig ?? '{"src": "#"}').src;
+                link.href = JSON.parse(container?.dataset?.mwIframeconfig ?? '{"src": "#"}').src;
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer nofollow';
                 link.innerText = json.title;
@@ -126,7 +126,7 @@ const makeIframe = function(ev) {
     const wrapper = ev.querySelector('.embedvideo-wrapper');
 
     const getIframeConfig = function() {
-        let iframeConfig = ev.dataset.iframeconfig;
+        let iframeConfig = ev.dataset.mwIframeconfig;
 
         iframeConfig = {
             ...mw.config.get('ev-' + ev.dataset.service + '-config') ?? [],
@@ -176,7 +176,7 @@ const makeIframe = function(ev) {
 
     /** @type HTMLDivElement|null */
     const consentDiv = wrapper.querySelector('.embedvideo-consent');
-    let iframeConfig = ev.dataset.iframeconfig;
+    let iframeConfig = ev.dataset.mwIframeconfig;
 
     if (consentDiv === null || iframeConfig === null) {
         return;

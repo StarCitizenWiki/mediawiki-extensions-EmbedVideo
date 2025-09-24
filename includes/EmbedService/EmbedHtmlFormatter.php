@@ -91,7 +91,7 @@ final class EmbedHtmlFormatter {
 				->get( 'EmbedVideoRequireConsent' );
 			if ( $consent === true ) {
 				$iframeConfig = sprintf(
-					"data-iframeconfig='%s'",
+					"data-mw-iframeconfig='%s'",
 					$service->getIframeConfig( $width, $height )
 				);
 			}

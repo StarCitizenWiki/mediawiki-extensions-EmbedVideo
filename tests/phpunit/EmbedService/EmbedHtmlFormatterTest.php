@@ -44,7 +44,7 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 		$service = EmbedServiceFactory::newFromName( 'archiveorg', 'foo' );
 
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( 'data-iframeconfig=\'{"src":"//archive.org/embed/foo"}\'', EmbedHtmlFormatter::toHtml( $service ) );
+		$this->assertStringContainsString( 'data-mw-iframeconfig=\'{"src":"//archive.org/embed/foo"}\'', EmbedHtmlFormatter::toHtml( $service ) );
 		$this->assertStringNotContainsString( '<iframe', EmbedHtmlFormatter::toHtml( $service ) );
 	}
 
