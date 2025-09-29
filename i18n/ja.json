@@ -2,11 +2,14 @@
 	"@metadata": {
 		"authors": [
 			"Adom",
+			"Ant176",
 			"MathXplore",
 			"Shirayuki",
 			"もなー(偽物)"
 		]
 	},
+	"embedvideo-load": "$1を読み込む",
+	"embedvideo-type-audio": "音声",
 	"embedvideo-type-video": "動画",
 	"embedvideo-consent-privacy-policy": "プライバシー・ポリシー",
 	"embedvideo-consent-privacy-notice-text": "$1は個人データを収集する可能性があります。",
