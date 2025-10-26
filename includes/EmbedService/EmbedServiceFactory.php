@@ -16,6 +16,8 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerEpisode;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerTrack;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
@@ -66,6 +68,8 @@ final class EmbedServiceFactory {
 		Loom::class,
 		NaverTV::class,
 		Niconico::class,
+		QobuzAlbum::class,
+		QobuzTrack::class,
 		SharePoint::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
@@ -171,7 +175,14 @@ final class EmbedServiceFactory {
 
 			case 'loom':
 				return new Loom( $id );
+			
+			case 'qobuzalbum':
+				return new QobuzAlbum( $id );
 
+			case 'qobuz':
+			case 'qobuztrack':
+				return new QobuzTrack( $id );
+			
 			case 'reddit':
 			case 'reddit.com':
 			case 'www.reddit':

@@ -1,0 +1,30 @@
+<?php
+
+declare( strict_types=1 );
+
+namespace MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz;
+
+final class QobuzTrack extends QobuzAlbum {
+	/**
+	 * @inheritDoc
+	 */
+	public function getBaseUrl(): string {
+		return 'https://widget.qobuz.com/track/%1$s?zone=US-en';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function getUrlRegex(): array {
+		return [
+			'#widget\.qobuz\.com/track/([a-zA-Z0-9]+)?zone=US-en#is',
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getDefaultHeight(): int {
+		return 102;
+	}
+}
