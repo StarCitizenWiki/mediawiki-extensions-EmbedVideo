@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use InvalidArgumentException;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist;
@@ -41,6 +42,7 @@ final class EmbedServiceFactory {
 	 * @var AbstractEmbedService[]
 	 */
 	private static $availableServices = [
+		AmazonMusic::class,
 		AppleMusicAlbum::class,
 		AppleMusicArtist::class,
 		AppleMusicTrack::class,
@@ -99,6 +101,9 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+			case 'amazonmusic':
+				return new AmazonMusic( $id );
+
 			case 'applemusicalbum':
 				return new AppleMusicAlbum( $id );
 
