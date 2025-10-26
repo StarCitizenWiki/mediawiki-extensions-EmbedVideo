@@ -5,6 +5,10 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use InvalidArgumentException;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerEpisode;
@@ -37,6 +41,10 @@ final class EmbedServiceFactory {
 	 * @var AbstractEmbedService[]
 	 */
 	private static $availableServices = [
+		AppleMusicAlbum::class,
+		AppleMusicArtist::class,
+		AppleMusicTrack::class,
+		AppleMusicPlaylist::class,
 		ArchiveOrg::class,
 		Bandcamp::class,
 		Bilibili::class,
@@ -91,6 +99,19 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+			case 'applemusicalbum':
+				return new AppleMusicAlbum( $id );
+
+			case 'applemusicartist':
+				return new AppleMusicArtist( $id );
+
+			case 'applemusic':
+			case 'applemusictrack':
+				return new AppleMusicTrack( $id );
+
+			case 'applemusicplaylist':
+				return new AppleMusicPlaylist( $id );
+
 			case 'archive':
 			case 'archiveorg':
 			case 'archive.org':

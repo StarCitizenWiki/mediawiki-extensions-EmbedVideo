@@ -36,6 +36,7 @@
 	"ResourceModules": {
 		"ext.embedVideo.messages": {
 			"messages": [
+				"embedvideo-service-applemusic",
 				"embedvideo-service-archiveorg",
 				"embedvideo-service-aparat",
 				"embedvideo-service-bandcamp",
