@@ -44,7 +44,9 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#embed\.music\.apple\.com/album/([a-zA-Z0-9]+)#is',
+			'#embed\.music\.apple\.com/album/([0-9]+)#is',
+			'#music\.apple\.com/us/album/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
+			'#music\.apple\.com/album/([0-9]+)#is',
 		];
 	}
 
@@ -53,7 +55,7 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([a-zA-Z0-9]+)$#is'
+			'#^([0-9]+)$#is'
 		];
 	}
 

@@ -17,7 +17,9 @@ final class AppleMusicTrack extends AppleMusicAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#embed\.music\.apple\.com/song/([a-zA-Z0-9]+)#is',
+			'#embed\.music\.apple\.com/song/([0-9]+)#is',
+			'#music\.apple\.com/us/song/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
+			'#music\.apple\.com/song/([0-9]+)#is',
 		];
 	}
 

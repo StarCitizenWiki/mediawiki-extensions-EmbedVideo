@@ -5,7 +5,6 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use InvalidArgumentException;
-use MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist;
@@ -175,14 +174,14 @@ final class EmbedServiceFactory {
 
 			case 'loom':
 				return new Loom( $id );
-			
+
 			case 'qobuzalbum':
 				return new QobuzAlbum( $id );
 
 			case 'qobuz':
 			case 'qobuztrack':
 				return new QobuzTrack( $id );
-			
+
 			case 'reddit':
 			case 'reddit.com':
 			case 'www.reddit':

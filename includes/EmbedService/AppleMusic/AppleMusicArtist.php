@@ -17,7 +17,9 @@ final class AppleMusicArtist extends AppleMusicAlbum {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#embed\.music\.apple\.com/artist/([a-zA-Z0-9]+)#is',
+			'#embed\.music\.apple\.com/artist/([0-9]+)#is',
+			'#music\.apple\.com/us/artist/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
+			'#music\.apple\.com/artist/([0-9]+)#is',
 		];
 	}
 }

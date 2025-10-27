@@ -45,6 +45,8 @@ class QobuzAlbum extends AbstractEmbedService {
 	protected function getUrlRegex(): array {
 		return [
 			'#widget\.qobuz\.com/album/([a-zA-Z0-9]+)?zone=US-en#is',
+			'#play\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
+			'#open\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
 		];
 	}
 

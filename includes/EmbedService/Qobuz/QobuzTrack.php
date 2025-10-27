@@ -18,6 +18,7 @@ final class QobuzTrack extends QobuzAlbum {
 	protected function getUrlRegex(): array {
 		return [
 			'#widget\.qobuz\.com/track/([a-zA-Z0-9]+)?zone=US-en#is',
+			'#open\.qobuz\.com/track/([a-zA-Z0-9]+)#is'
 		];
 	}
 
