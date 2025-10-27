@@ -44,8 +44,8 @@ class AmazonMusic extends AbstractEmbedService {
 		return [
 			'#music\.amazon\.com/albums/([a-zA-Z0-9]+)#is',
 			'#music\.amazon\.com/embed/([a-zA-Z0-9]+)#is',
-			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)',
-			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)/(?:[a-zA-Z0-9-]+)'
+			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)#is',
+			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)/(?:[a-zA-Z0-9-]+)#is'
 		];
 	}
 
