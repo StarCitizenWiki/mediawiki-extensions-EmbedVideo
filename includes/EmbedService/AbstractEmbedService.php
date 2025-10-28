@@ -333,7 +333,7 @@ abstract class AbstractEmbedService {
 		}
 
 		// Audio content doesn't need aspect ratio calculations
-		if($this->getContentType() === 'audio'){
+		if ( $this->getContentType() === 'audio' ) {
 			$this->height = $this->getDefaultHeight();
 			return;
 		}

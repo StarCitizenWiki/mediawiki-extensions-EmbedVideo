@@ -10,7 +10,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media; clipboard-write',
 		'allowtransparency' => true,
-		'style' => 'border-radius:10px;', 
+		'style' => 'border-radius:10px;'
 	];
 
 	/**
