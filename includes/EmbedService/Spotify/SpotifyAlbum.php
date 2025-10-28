@@ -9,6 +9,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 class SpotifyAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
+		'style' => 'border-radius:12px;',
 	];
 
 	/**

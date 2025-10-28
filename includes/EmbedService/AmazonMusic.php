@@ -7,6 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 class AmazonMusic extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
+		'style' => 'border-radius:20px;'
 	];
 
 	/**
