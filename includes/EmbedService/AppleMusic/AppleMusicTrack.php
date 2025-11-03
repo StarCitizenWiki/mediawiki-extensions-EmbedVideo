@@ -9,7 +9,7 @@ final class AppleMusicTrack extends AppleMusicAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://embed.music.apple.com/song/%1$s';
+		return 'https://embed.music.apple.com/song/%1$s?theme=auto';
 	}
 
 	/**

@@ -16,7 +16,7 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://embed.music.apple.com/album/%1$s';
+		return 'https://embed.music.apple.com/album/%1$s?theme=auto';
 	}
 
 	/**

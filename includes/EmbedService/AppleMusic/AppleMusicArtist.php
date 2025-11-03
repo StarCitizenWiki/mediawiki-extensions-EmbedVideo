@@ -9,7 +9,7 @@ final class AppleMusicArtist extends AppleMusicAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://embed.music.apple.com/artist/%1$s';
+		return 'https://embed.music.apple.com/artist/%1$s?theme=auto';
 	}
 
 	/**

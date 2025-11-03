@@ -9,7 +9,7 @@ class AppleMusicPlaylist extends AppleMusicAlbum {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://embed.music.apple.com/playlist/%1$s';
+		return 'https://embed.music.apple.com/playlist/%1$s?theme=auto';
 	}
 
 	/**
