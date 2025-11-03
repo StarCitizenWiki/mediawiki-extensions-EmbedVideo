@@ -5,12 +5,18 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 use InvalidArgumentException;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist;
+use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerEpisode;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerPlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerShow;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Deezer\DeezerTrack;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum;
+use MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzTrack;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Spotify\SpotifyEpisode;
@@ -37,6 +43,11 @@ final class EmbedServiceFactory {
 	 * @var AbstractEmbedService[]
 	 */
 	private static $availableServices = [
+		AmazonMusic::class,
+		AppleMusicAlbum::class,
+		AppleMusicArtist::class,
+		AppleMusicTrack::class,
+		AppleMusicPlaylist::class,
 		ArchiveOrg::class,
 		Bandcamp::class,
 		Bilibili::class,
@@ -56,6 +67,8 @@ final class EmbedServiceFactory {
 		Loom::class,
 		NaverTV::class,
 		Niconico::class,
+		QobuzAlbum::class,
+		QobuzTrack::class,
 		SharePoint::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
@@ -91,6 +104,22 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+			case 'amazonmusic':
+				return new AmazonMusic( $id );
+
+			case 'applemusicalbum':
+				return new AppleMusicAlbum( $id );
+
+			case 'applemusicartist':
+				return new AppleMusicArtist( $id );
+
+			case 'applemusic':
+			case 'applemusictrack':
+				return new AppleMusicTrack( $id );
+
+			case 'applemusicplaylist':
+				return new AppleMusicPlaylist( $id );
+
 			case 'archive':
 			case 'archiveorg':
 			case 'archive.org':
@@ -145,6 +174,13 @@ final class EmbedServiceFactory {
 
 			case 'loom':
 				return new Loom( $id );
+
+			case 'qobuzalbum':
+				return new QobuzAlbum( $id );
+
+			case 'qobuz':
+			case 'qobuztrack':
+				return new QobuzTrack( $id );
 
 			case 'reddit':
 			case 'reddit.com':
