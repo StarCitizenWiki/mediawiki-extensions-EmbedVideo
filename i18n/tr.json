@@ -39,7 +39,7 @@
 	"embedvideo-error-id": "EmbedVideo, \"$1\" hizmeti için \"$2\" hatalı kimliğine sahip.",
 	"embedvideo-error-width": "EmbedVideo, \"$1\" hatalı genişlik parametresine sahip.",
 	"embedvideo-error-height": "EmbedVideo, \"$1\" hatalı yükseklik parametresine sahip.",
-	"embedvideo-error-alignment": "EmbedVideo'ya \"$1\" hizalama parametresi için geçersiz bir değer verildi. Geçerli değerler \"left\", \"center\", \"right\" veya \"inline\"dir.",
+	"embedvideo-error-alignment": "EmbedVideo'ya \"$1\" hizalama parametresi için geçersiz bir değer verildi. Geçerli değerler: \"left\", \"center\" veya \"right\".",
 	"embedvideo-error-valignment": "EmbedVideo'ya \"$1\" doğrulama parametresi için geçersiz bir değer verildi. Geçerli değerler \"top\", \"middle\", \"bottom\" veya \"baseline\" değerleridir.",
 	"embedvideo-error-urlargs": "EmbedVideo, hatalı biçimlendirilmiş veriler veya boş bağımsız değişkenler içeren bir URL parametre listesine sahip.",
 	"embedvideo-error-unknown": "EmbedVideo, bu video yerleştirme bloğunu oluşturmaya çalışırken bilinmeyen bir hatayla karşılaştı.  ($1)",
