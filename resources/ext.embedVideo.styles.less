@@ -1,7 +1,7 @@
 .embedvideo {
-	margin: 0;
-	max-width: 100%; // no overflow
 	display: inline-block; // default to render inline, like default MW syntax
+	max-width: 100%; // no overflow
+	margin: 0;
 
 	&-wrapper {
 		position: relative;
@@ -24,10 +24,10 @@
 	&-player,
 	&-consent {
 		position: absolute;
-		left: 0;
-		right: 0;
 		top: 0;
+		right: 0;
 		bottom: 0;
+		left: 0;
 		overflow: hidden;
 	}
 
@@ -46,14 +46,14 @@
 	}
 
 	&.frame {
-		border: 1pt solid #c8ccd1;
 		padding: 0.5em;
-  }
+		border: 1pt solid #c8ccd1;
+	}
 
 	// Use the same syntax used by <img> element in gallerybox (#94)
 	.gallerybox & {
-		margin: 0 auto;
 		display: block;
+		margin: 0 auto;
 	}
 
 	// From core
@@ -82,9 +82,9 @@
 	}
 
 	&.mw-halign-center {
+		display: table;
 		/* Matches *.center * in element.css */
 		margin: 0 auto;
-		display: table;
 		border-collapse: collapse;
 		clear: none;
 		float: none;
@@ -104,33 +104,40 @@
 		&-middle {
 			vertical-align: middle;
 		}
+
 		&-baseline {
 			vertical-align: baseline;
 		}
+
 		&-sub {
 			vertical-align: sub;
 		}
+
 		&-super {
 			vertical-align: super;
 		}
+
 		&-top {
 			vertical-align: top;
 		}
+
 		&-text-top {
 			vertical-align: text-top;
 		}
+
 		&-bottom {
 			vertical-align: bottom;
 		}
+
 		&-text-bottom {
 			vertical-align: text-bottom;
 		}
 	}
 
 	figcaption {
+		padding: 3px 0;
 		// Same as skinning core
 		font-size: 88.4%;
-		padding: 3px 0;
 	}
 }
 
@@ -140,4 +147,3 @@ audio {
 		border: 1pt solid #c8ccd1;
 	}
 }
-
