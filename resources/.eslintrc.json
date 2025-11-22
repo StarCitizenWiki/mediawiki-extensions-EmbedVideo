@@ -1,6 +1,6 @@
 {
 	"extends": [
-		"wikimedia/client/es6",
+		"wikimedia/client",
 		"wikimedia/mediawiki"
 	],
 	"env": {
@@ -14,6 +14,7 @@
 	},
 	"rules": {
 		"jsdoc/no-undefined-types": "off",
-		"max-len": "off"
+		"max-len": "off",
+		"mediawiki/no-nodelist-unsupported-methods": "off"
 	}
 }
