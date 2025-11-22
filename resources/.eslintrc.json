@@ -1,0 +1,19 @@
+{
+	"extends": [
+		"wikimedia/client/es6",
+		"wikimedia/mediawiki"
+	],
+	"env": {
+		"browser": true
+	},
+	"globals": {
+		"exports": true
+	},
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"rules": {
+		"jsdoc/no-undefined-types": "off",
+		"max-len": "off"
+	}
+}
