@@ -45,5 +45,18 @@
 	"embedvideo-error-urlargs": "تلقى EmbedVideo قائمة بوسائط URL التي تحتوي على بيانات مشوهة أو وسائط فارغة.",
 	"embedvideo-error-unknown": "واجه EmbedVideo خطًأغير معروف أثناء محاولة إنشاء كتلة تضمين الفيديو هذه. ($1)",
 	"embedvideo-error-evp_deprecated": "تم إهمال وظيفة المحلل اللغوي #evp في EmbedVideo 2.0. يرجى تحويل علامة وظيفة المحلل اللغوي إلى #ev.",
-	"apihelp-embedvideo-param-description": "وصف الفيديو"
+	"embedvideo-error-container": "المعلمة المقدمة لـ 'container' غير صالحة.",
+	"embedvideo-video-long-desc": "$1 ، $2 ، الطول $3 ، $4 × $5 بكسل، $6 إجماليًا",
+	"embedvideo-audio-long-desc": "$1 ، $2 ترميز، الطول $3 ، $4 الإجمالي",
+	"embedvideo-error-cantdecode_evu": "لم أتمكن من تحليل الفيديو من $1",
+	"embedvideo-error-url-not-whitelisted": "لم يتم تعيين عنوان URL المقدم في $wgAllowExternalImagesFrom",
+	"apihelp-embedvideo-summary": "احصل على كود تضمين الفيديو الناتج عن المعلمات المحددة.",
+	"apihelp-embedvideo-param-service": "اسم الخدمة (يوتيوب، تويتش، الخ)",
+	"apihelp-embedvideo-param-id": "معرف الفيديو لهذه الخدمة",
+	"apihelp-embedvideo-param-dimensions": "إما عرض رقمي (100) أو عرض حسب الارتفاع (100 × 100)",
+	"apihelp-embedvideo-param-alignment": "محاذاة الفيديو",
+	"apihelp-embedvideo-param-description": "وصف الفيديو",
+	"apihelp-embedvideo-param-container": "يقبل الإطار أو يتركه فارغًا",
+	"apihelp-embedvideo-param-urlargs": "حجج إضافية لتمريرها في عنوان URL للفيديو (لبعض الخدمات)",
+	"apihelp-embedvideo-param-autoresize": "تغيير حجم الفيديو تلقائيًا؟ (صحيح أم خطأ)"
 }
