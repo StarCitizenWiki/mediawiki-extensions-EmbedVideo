@@ -3,7 +3,8 @@
 		"authors": [
 			"Andreas Jonsson",
 			"Sabelöga",
-			"Skalman"
+			"Skalman",
+			"Stefan2255"
 		]
 	},
 	"embedvideo-description": "Lägger till en parser-funktion för att bädda in videor från populära källor.",
@@ -30,7 +31,7 @@
 	"embedvideo-error-id": "EmbedVideo - Felaktig id \"$2\" för tjänsten \"$1\" har angivits.",
 	"embedvideo-error-width": "EmbedVideo - Felaktigt värde \"$1\" har angivits som bredd.",
 	"embedvideo-error-height": "EmbedVideo - Felaktigt värde \"$1\" har angivits som höjd.",
-	"embedvideo-error-alignment": "EmbedVideo - Felaktigt värde har angivits som placering: \"$1\".  Korrekta värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad eller \"inline\".",
+	"embedvideo-error-alignment": "EmbedVideo fick ett ogiltigt värde för justeringsparametern \"$1\". Giltiga värden är \"right\" för högerställd, \"left\" för vänsterställd, \"center\" för centrerad eller \"inline\".",
 	"embedvideo-error-valignment": "EmbedVideo gavs ett ogiltigt värde för valignment-parametern \"$1\". Giltiga värden är \"top\", \"middle\", \"bottom\" eller \"baseline\".",
 	"embedvideo-error-urlargs": "EmbedVideo mottog en lista URL-argument som innehöll felformaterad eller tomma argument.",
 	"embedvideo-error-unknown": "EmbedVideo påträffade ett okänt fel när den försökte generera denna inbädda videoklump.  ($1)",
