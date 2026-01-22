@@ -8,6 +8,7 @@
 			"もなー(偽物)"
 		]
 	},
+	"embedvideo-description": "このフォーク版では、一般的なソースからの動画を埋め込むためのパーサー機能が追加されています。",
 	"embedvideo-load": "$1を読み込む",
 	"embedvideo-type-audio": "音声",
 	"embedvideo-type-video": "動画",
@@ -28,9 +29,13 @@
 	"embedvideo-service-sharepoint": "SharePoint",
 	"embedvideo-service-spotify": "Spotify",
 	"embedvideo-service-twitch": "Twitch",
+	"embedvideo-service-videolink": "動画のリンク",
 	"embedvideo-service-vimeo": "Vimeo",
 	"embedvideo-service-wistia": "Wistia",
 	"embedvideo-service-youtube": "YouTube",
+	"embedvideo-service-localvideo": "ローカルファイル",
+	"embedvideo-service-externalvideo": "外部の動画",
+	"embedvideo-play": "動画を再生",
 	"embedvideo-error-alignment": "EmbedVideo の配置パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"left\"、\"center\"、\"right\" のいずれかです。",
 	"embedvideo-error-valignment": "EmbedVideo の valignment パラメーター \"$1\" に無効な値が指定されました。有効な値は、\"top\"、\"middle\"、\"bottom\"、または \"baseline\" です。",
 	"embedvideo-error-unknown": "動画埋め込みブロックを生成しようとしたときに、EmbedVideo で不明なエラーが発生しました。($1)",
