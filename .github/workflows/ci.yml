@@ -58,7 +58,7 @@ jobs:
           path: ~/.composer/cache
           key: composer-php${{ matrix.php }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: EarlyCopy
 
@@ -67,7 +67,7 @@ jobs:
         working-directory: ~
         run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: mediawiki/extensions/EmbedVideo
 
