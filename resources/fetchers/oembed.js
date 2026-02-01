@@ -1,105 +1,102 @@
-const youtube = function(url) {
-	return oembed('https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=' + url);
+const oembed = function ( url ) {
+	// False positive
+	// eslint-disable-next-line n/no-unsupported-features/node-builtins
+	return fetch( url, {
+		credentials: 'omit',
+		cache: 'force-cache'
+	} )
+		.then( ( result ) => result.json() )
+		.then( ( json ) => ( {
+			title: json.title !== undefined ? json.title : null,
+			thumbnail: json.thumbnail_url !== undefined ? json.thumbnail_url : null,
+			duration: json.duration !== undefined ? json.duration : null
+		} ) )
+		.catch( () => ( {
+			title: null,
+			thumbnail: null,
+			duration: null
+		} ) );
 };
 
-const youtubeplaylist = function(url) {
-	return oembed('https://www.youtube-nocookie.com/oembed?url=' + url);
+const youtube = function ( url ) {
+	return oembed( 'https://www.youtube-nocookie.com/oembed?url=https://www.youtube.com/watch?v=' + url );
 };
 
-const vimeo = function(url) {
-	return oembed('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + url);
+const youtubeplaylist = function ( url ) {
+	return oembed( 'https://www.youtube-nocookie.com/oembed?url=' + url );
 };
 
-const spotifyalbum = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/album/' + url);
+const vimeo = function ( url ) {
+	return oembed( 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + url );
 };
 
-const spotifyartist = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/artist/' + url);
+const spotifyalbum = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/album/' + url );
 };
 
-const spotifytrack = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/track/' + url);
+const spotifyartist = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/artist/' + url );
 };
 
-const spotifyepisode = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/episode/' + url);
+const spotifytrack = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/track/' + url );
 };
 
-const spotifyshow = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/show/' + url);
+const spotifyepisode = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/episode/' + url );
 };
 
-const spotifyplaylist = function(url) {
-	return oembed('https://open.spotify.com/oembed?url=https://open.spotify.com/playlist/' + url);
+const spotifyshow = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/show/' + url );
 };
 
-const soundcloud = function(url) {
-	const queryParser = require('./queryKeyParser.js').queryKeyParser;
-
-	url = queryParser(url, ['url']);
-	return oembed('https://soundcloud.com/oembed' + url);
+const spotifyplaylist = function ( url ) {
+	return oembed( 'https://open.spotify.com/oembed?url=https://open.spotify.com/playlist/' + url );
 };
 
-const navertv = function(url) {
-	return oembed('https://tv.naver.com/oembed?url=' + url);
+const soundcloud = function ( url ) {
+	const queryParser = require( './queryKeyParser.js' ).queryKeyParser;
+
+	url = queryParser( url, [ 'url' ] );
+	return oembed( 'https://soundcloud.com/oembed' + url );
 };
 
-const kakaotv = function(url) {
-	return oembed('https://tv.kakao.com/oembed?url=' + url);
+const navertv = function ( url ) {
+	return oembed( 'https://tv.naver.com/oembed?url=' + url );
 };
 
-const loom = function(url) {
-	return oembed('https://www.loom.com/v1/oembed?url=https://www.loom.com/share/' + url);
+const kakaotv = function ( url ) {
+	return oembed( 'https://tv.kakao.com/oembed?url=' + url );
 };
 
-const ccc = function(url) {
-    return oembed('https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url);
+const loom = function ( url ) {
+	return oembed( 'https://www.loom.com/v1/oembed?url=https://www.loom.com/share/' + url );
 };
 
-const wistia = function(url) {
-    return oembed('http://fast.wistia.net/oembed?url=http://fast.wistia.net/embed/iframe/' + url);
+const ccc = function ( url ) {
+	return oembed( 'https://media.ccc.de/public/oembed?url=https://media.ccc.de/v/' + url );
 };
 
-const reddit = function(url) {
-    // url can be an embed URL; convert to a canonical reddit.com post URL for oEmbed
-    try {
-        const u = new URL(url);
-        // Normalize host to www.reddit.com and strip query
-        u.hostname = 'www.reddit.com';
-        u.search = '';
-        return oembed('https://www.reddit.com/oembed?url=' + u.origin + u.pathname);
-    } catch (e) {
-        // Fallback: assume we already have a usable path
-        return oembed('https://www.reddit.com/oembed?url=' + url);
-    }
+const wistia = function ( url ) {
+	return oembed( 'http://fast.wistia.net/oembed?url=http://fast.wistia.net/embed/iframe/' + url );
 };
 
-const oembed = function(url) {
-	return fetch(url, {
-		credentials: "omit",
-		cache: "force-cache"
-	})
-		.then(result => {
-			return result.json();
-		})
-		.then(json => {
-			return {
-				title: json.title ?? null,
-				thumbnail: json.thumbnail_url ?? null,
-				duration: json.duration ?? null,
-			};
-		})
-		.catch(error => {
-			return {
-				title: null,
-				thumbnail: null,
-				duration: null,
-			};
-		});
+const reddit = function ( url ) {
+	// url can be an embed URL; convert to a canonical reddit.com post URL for oEmbed
+	try {
+		const u = new URL( url );
+		// Normalize host to www.reddit.com and strip query
+		u.hostname = 'www.reddit.com';
+		u.search = '';
+		return oembed( 'https://www.reddit.com/oembed?url=' + u.origin + u.pathname );
+	} catch ( e ) {
+		// Fallback: assume we already have a usable path
+		return oembed( 'https://www.reddit.com/oembed?url=' + url );
+	}
 };
 
 module.exports = {
+	oembed,
 	navertv,
 	kakaotv,
 	loom,
@@ -113,8 +110,7 @@ module.exports = {
 	spotifytrack,
 	spotifyplaylist,
 	soundcloud,
-    ccc,
-    wistia,
-    reddit,
-    oembed,
+	ccc,
+	wistia,
+	reddit
 };

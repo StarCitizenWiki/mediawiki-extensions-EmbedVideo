@@ -2,17 +2,106 @@
 	&-consent {
 		.hidden {
 			opacity: 0;
-			visibility: hidden;
 			pointer-events: none;
+			visibility: hidden;
+		}
+	}
+
+	&-overlay {
+		position: relative;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		color: #54595d;
+		font-size: 0.875rem;
+		user-select: none;
+
+		> div {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			transition: opacity 250ms ease;
+		}
+	}
+
+	&-loader {
+		display: grid;
+		cursor: pointer;
+
+		&__title {
+			overflow: hidden;
+			padding: 0.75rem;
+			text-align: start;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			a {
+				color: #eaecf0;
+
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
+
+		&__fakeButton {
+			padding: 0.5rem 1rem;
+			border-radius: 1000px;
+			background-color: rgba( 0, 0, 0, 60% );
+			color: #fff;
+			cursor: pointer;
+			place-self: center;
+			transition: background-color 250ms ease;
+		}
+
+		&__footer {
+			display: flex;
+			align-self: end;
+			justify-content: space-between;
+			padding: 0.5rem;
+			font-size: 0.8125rem;
+
+			> div {
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
+				background-color: rgba( 0, 0, 0, 60% );
+				color: #eaecf0;
+			}
+		}
+
+		&__title,
+		&__footer {
+			right: 0;
+			left: 0;
+			font-weight: bold;
+			transition: opacity 250ms ease;
+		}
+
+		&__title,
+		&__fakeButton,
+		&__footer {
+			position: absolute;
+		}
+
+		&:hover {
+			.embedvideo-loader {
+				&__fakeButton {
+					background-color: #36c;
+				}
+			}
 		}
 	}
 
 	&-thumbnail {
-		width: 100%;
-		height: 100%;
+		position: absolute;
 		top: 0;
 		left: 0;
-		position: absolute;
+		width: 100%;
+		height: 100%;
 
 		&__image {
 			width: inherit;
@@ -26,114 +115,20 @@
 				color: #eaecf0;
 
 				&__title {
-					background: linear-gradient( to bottom, #000000, 40%, transparent );
-				}
-			}
-		}
-	}
-
-	&-overlay {
-		color: #54595d;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		position: relative;
-		font-size: 0.875rem;
-		user-select: none;
-
-		> div {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			transition: opacity 250ms ease;
-		}
-	}
-
-	&-loader {
-		display: grid;
-		cursor: pointer;
-
-		&__title {
-			padding: 0.75rem;
-			text-align: start;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-
-		  a {
-			color: #eaecf0;
-
-			&:hover {
-			  color: #fff;
-			}
-		  }
-		}
-
-		&__fakeButton {
-			place-self: center;
-			padding: 0.5rem 1rem;
-			color: #fff;
-			background-color: rgba( 0, 0, 0, 60% );
-			border-radius: 1000px;
-			cursor: pointer;
-			transition: background-color 250ms ease;
-		}
-
-		&__footer {
-			align-self: end;
-			display: flex;
-			padding: 0.5rem;
-			font-size: 0.8125rem;
-			justify-content: space-between;
-
-			> div {
-				padding: 0.25rem 0.5rem;
-				border-radius: 0.25rem;
-				background-color: rgba( 0, 0, 0, 60% );
-				color: #eaecf0;
-			}
-		}
-
-		&__title,
-		&__footer {
-			left: 0;
-			right: 0;
-			font-weight: bold;
-			transition: opacity 250ms ease;
-		}
-
-		&__title,
-		&__fakeButton,
-		&__footer {
-			position: absolute;
-		}
-
-		&:hover {
-			.embedvideo-loader {
-				&__title,
-				&__footer {
-					//opacity: 0;
-				}
-
-				&__fakeButton {
-					background-color: #36c;
+					background: linear-gradient( to bottom, #000, 40%, transparent );
 				}
 			}
 		}
 	}
 
 	&-privacyNotice {
-		padding: 1rem;
 		display: flex;
-    	flex-direction: column;
-    	justify-content: center;
-		gap: 0.5rem;
+		flex-direction: column;
+		justify-content: center;
+		padding: 1rem;
 		background-color: rgba( 0, 0, 0, 0.6 );
 		color: #eaecf0;
+		gap: 0.5rem;
 		text-align: center;
 
 		&__link {
@@ -143,13 +138,13 @@
 
 		&__buttons {
 			> button {
-				appearance: none;
 				padding: 0.5rem 1rem;
 				border: 0;
 				border-radius: 1000px;
+				appearance: none;
 				color: #fff;
-				font-size: inherit;
 				cursor: pointer;
+				font-size: inherit;
 			}
 		}
 
@@ -179,7 +174,7 @@
 	}
 }
 
-[data-service="local-embed"] .embedvideo-consent {
+[ data-service='local-embed' ] .embedvideo-consent {
 	background-color: transparent;
 }
 

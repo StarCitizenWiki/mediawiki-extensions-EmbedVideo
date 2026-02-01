@@ -1,0 +1,20 @@
+{
+	"extends": [
+		"wikimedia/client",
+		"wikimedia/mediawiki"
+	],
+	"env": {
+		"browser": true
+	},
+	"globals": {
+		"exports": true
+	},
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"rules": {
+		"jsdoc/no-undefined-types": "off",
+		"max-len": "off",
+		"mediawiki/no-nodelist-unsupported-methods": "off"
+	}
+}

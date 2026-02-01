@@ -5,34 +5,64 @@ on:
     pull_request:
         branches: [ master ]
 jobs:
-    lint-check:
+    lint-php:
+        name: Lint PHP
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v6
 
             - name: Installing PHP
               uses: shivammathur/setup-php@master
               with:
                   php-version: '8.0'
-            - name: Get Composer Cache Directory 2
+
+            - name: Get Composer cache directory 2
               id: composer-cache
               run: |
                 echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-            - uses: actions/cache@v3
+
+            - uses: actions/cache@v4
               id: actions-cache
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-composer-
+
             - name: Cache PHP dependencies
               uses: actions/cache@v3
               id: vendor-cache
               with:
                   path: vendor
                   key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+
             - name: Composer install
               if: steps.vendor-cache.outputs.cache-hit != 'true'
               run: composer install  --no-ansi --no-interaction --no-scripts --no-suggest --prefer-dist
-            - name: Run Test
+
+            - name: Run test
               run: composer run test
+
+    lint-npm:
+        name: Lint CSS, JS, and i18n
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v6
+
+          - name: Cache dependencies
+            uses: actions/cache@v4
+            with:
+              path: /home/runner/cache
+              key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
+
+          - name: Install dependencies
+            run: npm ci
+
+          - name: Lint script
+            run: npm run lint:js
+
+          - name: Lint stylesheet
+            run: npm run lint:styles
+
+          - name: Lint i18n
+            run: npm run lint:i18n

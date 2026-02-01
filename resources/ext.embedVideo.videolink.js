@@ -1,66 +1,67 @@
-const {makeIframe, fetchThumb} = require('./iframe.js');
+const { makeIframe, fetchThumb } = require( './modules/iframe.js' );
 
-(function () {
-    mw.hook( 'wikipage.content' ).add( () => {
-        document.querySelectorAll('.embedvideo-evl').forEach(function (evl) {
-            evl.addEventListener('click', e => {
-                e.preventDefault();
+( function () {
+	mw.hook( 'wikipage.content' ).add( () => {
+		document.querySelectorAll( '.embedvideo-evl' ).forEach( ( evl ) => {
+			evl.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
 
-                const player = evl.dataset?.player ?? 'default';
-                const iframeConfig = JSON.parse(evl.dataset?.mwIframeconfig ?? '{}');
+				const player = ( evl.dataset && evl.dataset.player ) || 'default';
+				const iframeConfig = JSON.parse( ( evl.dataset && evl.dataset.mwIframeconfig ) || '{}' );
 
-                const playerContainer = document.querySelector(`.embedvideo.evlplayer-${player}`);
-                const iframe = playerContainer.querySelector('iframe');
-                // Iframe exists, no consent required or already given
-                if (iframe !== null) {
-                    playerContainer.dataset.service = evl.dataset?.service ?? 'youtube';
+				const playerContainer = document.querySelector( `.embedvideo.evlplayer-${ player }` );
+				const iframe = playerContainer.querySelector( 'iframe' );
+				// Iframe exists, no consent required or already given
+				if ( iframe !== null ) {
+					playerContainer.dataset.service = ( evl.dataset && evl.dataset.service ) || 'youtube';
 
-                    for (const [key, value] of Object.entries(iframeConfig)) {
-                        iframe.setAttribute(key, value);
-                    }
+					for ( const [ key, value ] of Object.entries( iframeConfig ) ) {
+						iframe.setAttribute( key, value );
+					}
 
-                    return;
-                }
+					return;
+				}
 
-                // No iframe exists, only when explicit consent is required
-                const div = document.querySelector(`.embedvideo.evlplayer-${player}`);
+				// No iframe exists, only when explicit consent is required
+				const div = document.querySelector( `.embedvideo.evlplayer-${ player }` );
 
-                if (div === null || evl.dataset?.mwIframeconfig === null) {
-                    console.warn(`No player with id '${player}' found!.`);
-                    return;
-                }
+				if ( div === null || !evl.dataset.mwIframeconfig ) {
+					mw.log.warn( `No player with id '${ player }' found!.` );
+					return;
+				}
 
-                const wrapper = div.querySelector('.embedvideo-wrapper');
-                const consentDiv = wrapper.querySelector('.embedvideo-consent');
+				const wrapper = div.querySelector( '.embedvideo-wrapper' );
+				const consentDiv = wrapper.querySelector( '.embedvideo-consent' );
 
-                const origService = div.dataset?.service;
+				const origService = div.dataset ? div.dataset.service : undefined;
 
-                div.dataset.mwIframeconfig = evl.dataset.mwIframeconfig;
-                div.dataset.service = evl.dataset.service;
+				div.dataset.mwIframeconfig = evl.dataset.mwIframeconfig;
+				div.dataset.service = evl.dataset.service;
 
-                const serviceMessage = mw.message('embedvideo-service-' + (evl.dataset?.service ?? 'youtube')).escaped();
-                const privacyMessage = mw.message('embedvideo-consent-privacy-notice-text', serviceMessage).escaped();
+				// eslint-disable-next-line mediawiki/msg-doc
+				const serviceMessage = mw.message( 'embedvideo-service-' + ( ( evl.dataset && evl.dataset.service ) || 'youtube' ) ).escaped();
+				const privacyMessage = mw.message( 'embedvideo-consent-privacy-notice-text', serviceMessage ).escaped();
 
-                div.querySelector('.embedvideo-loader__service').innerText = serviceMessage;
-                div.querySelector('.embedvideo-privacyNotice__content').innerText = privacyMessage;
+				div.querySelector( '.embedvideo-loader__service' ).innerText = serviceMessage;
+				div.querySelector( '.embedvideo-privacyNotice__content' ).innerText = privacyMessage;
 
-                if (evl.dataset?.privacyUrl !== null) {
-                    const link = document.createElement('a');
+				if ( evl.dataset.privacyUrl ) {
+					const link = document.createElement( 'a' );
 					link.href = evl.dataset.privacyUrl;
-                    link.rel = 'nofollow,noopener';
-                    link.target = '_blank';
-                    link.classList.add('embedvideo-privacyNotice__link');
-                    link.innerText = mw.message('embedvideo-consent-privacy-policy').escaped();
+					link.rel = 'nofollow,noopener';
+					link.target = '_blank';
+					link.classList.add( 'embedvideo-privacyNotice__link' );
+					link.innerText = mw.message( 'embedvideo-consent-privacy-policy' ).escaped();
 
-                    div.querySelector('.embedvideo-privacyNotice__content').appendChild(link);
-                }
+					div.querySelector( '.embedvideo-privacyNotice__content' ).appendChild( link );
+				}
 
-                if (origService === 'videolink') {
-                    makeIframe(div);
-                } else {
-                    fetchThumb(iframeConfig.src, consentDiv, wrapper.parentElement);
-                }
-            });
-        });
-    } );
-})();
+				if ( origService === 'videolink' ) {
+					makeIframe( div );
+				} else {
+					fetchThumb( iframeConfig.src, consentDiv, wrapper.parentElement );
+				}
+			} );
+		} );
+	} );
+}() );
