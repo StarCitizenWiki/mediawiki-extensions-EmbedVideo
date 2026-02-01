@@ -88,8 +88,8 @@ class FFProbe {
 
 		if ( is_array( $result ) ) {
 			$this->metadata = [
-				'streams' => $result['streams'],
-				'format' => $result['format'],
+				'streams' => $result['streams'] ?? null,
+				'format' => $result['format'] ?? null,
 			];
 
 			return true;
