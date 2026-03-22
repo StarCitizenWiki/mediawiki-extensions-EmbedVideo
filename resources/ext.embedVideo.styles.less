@@ -8,6 +8,27 @@
 		display: block;
 	}
 
+	&-localEmbedStyle {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		z-index: 1;
+		pointer-events: none;
+		transition: opacity 250ms ease;
+
+		.embedvideo-overlay {
+			display: flex;
+			width: 100%;
+			height: 100%;
+		}
+
+		&--hidden {
+			opacity: 0;
+		}
+	}
+
 	// Let container control the dimension of the iframe
 	&-player {
 		width: 100%;
@@ -42,6 +63,19 @@
 
 		.embedvideo-wrapper {
 			height: 100%;
+		}
+	}
+
+	&--local-embed-style {
+		video {
+			display: block;
+		}
+
+		&:hover,
+		&:focus-within {
+			.embedvideo-localEmbedStyle {
+				opacity: 0;
+			}
 		}
 	}
 

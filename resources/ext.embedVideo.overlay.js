@@ -4,6 +4,21 @@
 			const consentDiv = div.querySelector( '.embedvideo-consent' );
 			const video = div.querySelector( 'video' );
 			const fakeButton = div.querySelector( '.embedvideo-loader__fakeButton' );
+			const localEmbedStyle = div.querySelector( '.embedvideo-localEmbedStyle' );
+
+			if ( localEmbedStyle !== null && video !== null ) {
+				video.addEventListener( 'play', () => {
+					localEmbedStyle.classList.add( 'embedvideo-localEmbedStyle--hidden' );
+				} );
+
+				video.addEventListener( 'ended', () => {
+					localEmbedStyle.classList.remove( 'embedvideo-localEmbedStyle--hidden' );
+				} );
+			}
+
+			if ( consentDiv === null || video === null || fakeButton === null ) {
+				return;
+			}
 
 			const clickListener = function () {
 				video.controls = true;
@@ -13,10 +28,6 @@
 			};
 
 			fakeButton.innerHTML = mw.message( 'embedvideo-play' ).escaped();
-
-			if ( consentDiv === null || video === null ) {
-				return;
-			}
 
 			video.controls = false;
 

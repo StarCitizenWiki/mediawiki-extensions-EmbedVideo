@@ -21,7 +21,8 @@ class VideoEmbedTransformOutput extends VideoTransformOutput {
 
 		return EmbedHtmlFormatter::toHtml( $service, [
 			'service' => 'local-embed',
-			'withConsent' => true,
+			'withConsent' => false,
+			'withLocalEmbedStyle' => true,
 			'autoresize' => ( $this->parameters['autoresize'] ?? false ) === true,
 			'description' => $this->parameters['description'] ?? null,
 			'img-class' => $this->parameters['img-class'] ?? null,

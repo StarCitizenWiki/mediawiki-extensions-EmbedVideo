@@ -44,6 +44,7 @@ final class EmbedHtmlFormatter {
 				'style' => '',
 				'service' => '',
 				'withConsent' => false,
+				'withLocalEmbedStyle' => false,
 				'autoresize' => false,
 				'description' => '',
 			],
@@ -52,6 +53,10 @@ final class EmbedHtmlFormatter {
 
 		if ( !empty( $config['img-class'] ) ) {
 			$config['class'] .= ' ' . $config['img-class'];
+		}
+
+		if ( $service instanceof LocalVideo && ( $config['withLocalEmbedStyle'] ?? false ) === true ) {
+			$config['class'] .= ' embedvideo--local-embed-style';
 		}
 
 		// Detect gallery-like contexts for local videos (packed galleries provide override-* options)
@@ -94,19 +99,21 @@ final class EmbedHtmlFormatter {
 		}
 
 		$iframeConfig = '';
-		try {
-			$consent = MediaWikiServices::getInstance()
-				->getConfigFactory()
-				->makeConfig( 'EmbedVideo' )
-				->get( 'EmbedVideoRequireConsent' );
-			if ( $consent === true ) {
-				$iframeConfig = sprintf(
-					"data-mw-iframeconfig='%s'",
-					$service->getIframeConfig( $width, $height )
-				);
+		if ( !( $service instanceof LocalVideo ) || ( $config['withConsent'] ?? false ) === true ) {
+			try {
+				$consent = MediaWikiServices::getInstance()
+					->getConfigFactory()
+					->makeConfig( 'EmbedVideo' )
+					->get( 'EmbedVideoRequireConsent' );
+				if ( $consent === true ) {
+					$iframeConfig = sprintf(
+						"data-mw-iframeconfig='%s'",
+						$service->getIframeConfig( $width, $height )
+					);
+				}
+			} catch ( JsonException | ConfigException $e ) {
+				//
 			}
-		} catch ( JsonException | ConfigException $e ) {
-			//
 		}
 
 		/**
@@ -122,12 +129,15 @@ final class EmbedHtmlFormatter {
 		 */
 		$template = <<<HTML
 			<figure class="%s" data-service="%s" %s %s>
-				<div class="embedvideo-wrapper" %s>%s%s</div>%s
+				<div class="embedvideo-wrapper" %s>%s%s%s</div>%s
 			</figure>
 			HTML;
 
 		$consentHtml = ( $config['withConsent'] ?? false ) === true
 			? self::makeConsentContainerHtml( $service )
+			: '';
+		$localEmbedStyleHtml = $service instanceof LocalVideo && ( $config['withLocalEmbedStyle'] ?? false ) === true
+			? self::makeLocalVideoEmbedStyleHtml( $service )
 			: '';
 
 		$embedHtml = $service instanceof LocalVideo
@@ -142,6 +152,7 @@ final class EmbedHtmlFormatter {
 			$inlineStyles['container'],
 			$inlineStyles['wrapper'],
 			$consentHtml,
+			$localEmbedStyleHtml,
 			$embedHtml,
 			$caption
 		);
@@ -237,6 +248,46 @@ final class EmbedHtmlFormatter {
 			'div',
 			[ 'class' => 'embedvideo-loader__title embedvideo-loader__title--manual' ],
 			$service->getTitle()
+		);
+	}
+
+	/**
+	 * Generates passive local-video embed styling that preserves the embed look without
+	 * blocking native playback controls or browser features such as PiP.
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string
+	 */
+	public static function makeLocalVideoEmbedStyleHtml( AbstractEmbedService $service ): string {
+		return Html::rawElement(
+			'div',
+			[
+				'class' => 'embedvideo-localEmbedStyle',
+				'aria-hidden' => 'true',
+			],
+			Html::rawElement(
+				'div',
+				[ 'class' => 'embedvideo-overlay' ],
+				Html::rawElement(
+					'div',
+					[ 'class' => 'embedvideo-loader' ],
+					self::makeTitleHtml( $service ) .
+					Html::element(
+						'div',
+						[ 'class' => 'embedvideo-loader__fakeButton' ],
+						( new Message( 'embedvideo-play' ) )->text()
+					) .
+					Html::rawElement(
+						'div',
+						[ 'class' => 'embedvideo-loader__footer' ],
+						Html::element(
+							'div',
+							[ 'class' => 'embedvideo-loader__service' ],
+							( new Message( 'embedvideo-service-' . $service->getServiceKey() ) )->text()
+						)
+					)
+				)
+			)
 		);
 	}
 
