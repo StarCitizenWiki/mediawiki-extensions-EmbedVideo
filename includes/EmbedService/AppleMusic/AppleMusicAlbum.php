@@ -9,7 +9,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 class AppleMusicAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
-		'style' => 'border-radius:10px;'
+		'style' => 'border-radius:10px;',
 	];
 
 	/**
@@ -45,8 +45,8 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#embed\.music\.apple\.com/album/([0-9]+)#is',
-			'#music\.apple\.com/us/album/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
+			'#embed\.music\.apple\.com/(?:[^/]+/)?album/([0-9]+)#is',
+			'#music\.apple\.com/(?:[^/]+/)?album/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
 			'#music\.apple\.com/album/([0-9]+)#is',
 		];
 	}
@@ -56,7 +56,7 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([0-9]+)$#is'
+			'#^([0-9]+)$#is',
 		];
 	}
 
@@ -78,6 +78,9 @@ class AppleMusicAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getCSPUrls(): array {
-		return [];
+		return [
+			'https://music.apple.com',
+			'https://embed.music.apple.com',
+		];
 	}
 }

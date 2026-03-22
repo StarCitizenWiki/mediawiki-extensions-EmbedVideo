@@ -1,6 +1,7 @@
 ## Patch Notes
-### V3.4.2
-* Added support for Deezer embeds. 
+### v3.4.2
+* Added support for Deezer embeds.
+* Added support for Tidal embeds.
 
 ### v3.0.0
 * Added explicit consent setting

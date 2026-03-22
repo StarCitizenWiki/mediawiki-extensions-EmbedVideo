@@ -43,6 +43,7 @@
 				"embedvideo-service-bandcamp",
 				"embedvideo-service-bilibili",
 				"embedvideo-service-dailymotion",
+				"embedvideo-service-deezer",
 				"embedvideo-service-kakaotv",
 				"embedvideo-service-loom",
 				"embedvideo-service-navertv",
@@ -65,21 +66,24 @@
 				"embedvideo-consent-privacy-notice-text",
 				"embedvideo-consent-privacy-policy"
 			]
-    },
+		},
 		"ext.embedVideo.videolink": {
 			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.videolink.js",
-				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
-				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
-				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
-				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
-				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
-				{ "name": "iframe.js", "file": "modules/iframe.js" }
+				"fetchers/fetchFactory.js",
+				"fetchers/queryKeyParser.js",
+				"fetchers/bilibili.js",
+				"fetchers/niconico.js",
+				"fetchers/oembed.js",
+				"modules/iframe.js"
 			],
 			"styles": [
 				"ext.embedVideo.consent.less",
 				"ext.embedVideo.evl.less"
+			],
+			"dependencies": [
+				"mediawiki.storage"
 			],
 			"position": "top",
 			"targets": [
@@ -91,15 +95,18 @@
 			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.consent.js",
-				{ "name": "fetchFactory.js", "file": "fetchers/fetchFactory.js" },
-				{ "name": "queryKeyParser.js", "file": "fetchers/queryKeyParser.js" },
-				{ "name": "bilibili.js", "file": "fetchers/bilibili.js" },
-				{ "name": "niconico.js", "file": "fetchers/niconico.js" },
-				{ "name": "oembed.js", "file": "fetchers/oembed.js" },
-				{ "name": "iframe.js", "file": "modules/iframe.js" }
+				"fetchers/fetchFactory.js",
+				"fetchers/queryKeyParser.js",
+				"fetchers/bilibili.js",
+				"fetchers/niconico.js",
+				"fetchers/oembed.js",
+				"modules/iframe.js"
 			],
 			"styles": [
 				"ext.embedVideo.consent.less"
+			],
+			"dependencies": [
+				"mediawiki.storage"
 			],
 			"position": "top",
 			"targets": [
@@ -214,4 +221,3 @@
 	},
 	"manifest_version": 2
 }
-

@@ -32,6 +32,18 @@ class AmazonMusicTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://music.amazon.com/albums/B0D9WK6RYX';
 
 	/**
+	 * A valid track url containing an id
+	 * @var string
+	 */
+	private string $validTrackUrlId = 'https://music.amazon.com/tracks/B09726DDC8';
+
+	/**
+	 * A valid playlist url containing an id
+	 * @var string
+	 */
+	private string $validPlaylistUrlId = 'https://music.amazon.com/playlists/B0FB2KR28H';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -78,6 +90,32 @@ class AmazonMusicTest extends MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getIdRegex
 	 * @return void
 	 */
+	public function testValidTrackUrlId() {
+		$service = new AmazonMusic( $this->validTrackUrlId );
+
+		$this->assertInstanceOf( AmazonMusic::class, $service );
+		$this->assertEquals( 'B09726DDC8', $service->parseVideoID( $this->validTrackUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getIdRegex
+	 * @return void
+	 */
+	public function testValidPlaylistUrlId() {
+		$service = new AmazonMusic( $this->validPlaylistUrlId );
+
+		$this->assertInstanceOf( AmazonMusic::class, $service );
+		$this->assertEquals( 'B0FB2KR28H', $service->parseVideoID( $this->validPlaylistUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getIdRegex
+	 * @return void
+	 */
 	public function testInvalidUrlId() {
 		$this->expectException( InvalidArgumentException::class );
 		new AmazonMusic( $this->invalidUrlId );
@@ -103,5 +141,14 @@ class AmazonMusicTest extends MediaWikiIntegrationTestCase {
 	public function testServiceKey() {
 		$service = new AmazonMusic( $this->validUrlId );
 		$this->assertEquals( 'amazonmusic', $service->getServiceKey() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AmazonMusic::getCSPUrls
+	 * @return void
+	 */
+	public function testGetCspUrls() {
+		$service = new AmazonMusic( $this->validUrlId );
+		$this->assertEquals( [ 'https://music.amazon.com' ], $service->getCSPUrls() );
 	}
 }

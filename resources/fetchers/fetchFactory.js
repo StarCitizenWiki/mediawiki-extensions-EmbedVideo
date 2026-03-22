@@ -1,15 +1,15 @@
-const fetchFactory = function (service) {
-	const oEmbedFetchers = require('./oembed.js');
+const fetchFactory = function ( service ) {
+	const oEmbedFetchers = require( './oembed.js' );
 
 	let fetcher = null;
 	let urlManipulation = true;
 
-	switch( service ) {
+	switch ( service ) {
 		case 'archiveorg':
 			break;
 		// Bilibili is missing CORS headers
 		case 'bilibili':
-			//fetcher = require('./bilibili.js').fetcher;
+			// fetcher = require('./bilibili.js').fetcher;
 			break;
 		case 'ccc':
 			fetcher = oEmbedFetchers.ccc;
@@ -19,7 +19,7 @@ const fetchFactory = function (service) {
 			break;
 		// Niconico is missing CORS headers
 		case 'niconico':
-			//fetcher = require('./niconico.js').fetcher;
+			// fetcher = require('./niconico.js').fetcher;
 			break;
 		case 'soundcloud':
 			urlManipulation = false;
@@ -61,20 +61,20 @@ const fetchFactory = function (service) {
 
 		// Missing CORS
 		case 'navertv':
-			//urlManipulation=false;
-			//fetcher = oEmbedFetchers.navertv;
+			// urlManipulation=false;
+			// fetcher = oEmbedFetchers.navertv;
 			break;
 		// Missing CORS
 		case 'kakaotv':
-			//urlManipulation=false;
-			//fetcher = oEmbedFetchers.kakaotv;
+			// urlManipulation=false;
+			// fetcher = oEmbedFetchers.kakaotv;
 			break;
 	}
 
 	return {
 		fetcher,
 		urlManipulation
-	}
+	};
 };
 
 module.exports = { fetchFactory };

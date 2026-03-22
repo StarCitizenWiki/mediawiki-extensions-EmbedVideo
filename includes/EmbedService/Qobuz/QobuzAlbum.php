@@ -7,6 +7,10 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 
 class QobuzAlbum extends AbstractEmbedService {
+	protected $extraIds = [
+		'US-en',
+	];
+
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
 	];
@@ -15,7 +19,7 @@ class QobuzAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.qobuz.com/album/%1$s?zone=US-en';
+		return 'https://widget.qobuz.com/album/%1$s?zone=%2$s';
 	}
 
 	/**
@@ -44,7 +48,7 @@ class QobuzAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#widget\.qobuz\.com/album/([a-zA-Z0-9]+)\?zone=US-en#is',
+			'#widget\.qobuz\.com/album/([a-zA-Z0-9]+)\?zone=([a-z]{2}-[a-z]{2})(?:&.*)?#is',
 			'#play\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
 			'#open\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
 		];
@@ -55,7 +59,7 @@ class QobuzAlbum extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([a-zA-Z0-9]+)$#is'
+			'#^([a-zA-Z0-9]+)$#is',
 		];
 	}
 
@@ -77,6 +81,8 @@ class QobuzAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getCSPUrls(): array {
-		return [];
+		return [
+			'https://widget.qobuz.com',
+		];
 	}
 }

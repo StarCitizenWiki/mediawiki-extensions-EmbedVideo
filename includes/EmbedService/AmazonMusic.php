@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 class AmazonMusic extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'encrypted-media',
-		'style' => 'border-radius:20px;'
+		'style' => 'border-radius:20px;',
 	];
 
 	/**
@@ -43,10 +43,9 @@ class AmazonMusic extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#music\.amazon\.com/albums/([a-zA-Z0-9]+)#is',
+			'#music\.amazon\.com/(?:albums|tracks|playlists)/([a-zA-Z0-9]+)#is',
 			'#music\.amazon\.com/embed/([a-zA-Z0-9]+)#is',
-			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)#is',
-			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)/(?:[a-zA-Z0-9-]+)#is'
+			'#music\.amazon\.com/artists/([a-zA-Z0-9]+)(?:/[a-zA-Z0-9-]+)?#is',
 		];
 	}
 
@@ -55,7 +54,7 @@ class AmazonMusic extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([a-zA-Z0-9]+)$#is'
+			'#^([a-zA-Z0-9]+)$#is',
 		];
 	}
 
@@ -77,6 +76,8 @@ class AmazonMusic extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getCSPUrls(): array {
-		return [];
+		return [
+			'https://music.amazon.com',
+		];
 	}
 }

@@ -32,6 +32,12 @@ class QobuzTrackTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://open.qobuz.com/track/359452978';
 
 	/**
+	 * A valid widget url containing an id and explicit zone
+	 * @var string
+	 */
+	private string $validWidgetUrlId = 'https://widget.qobuz.com/track/359452978?zone=NL-nl&display=compact';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -70,6 +76,21 @@ class QobuzTrackTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertInstanceOf( QobuzTrack::class, $service );
 		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzTrack::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzTrack::getIdRegex
+	 * @return void
+	 */
+	public function testValidWidgetUrlId() {
+		$service = new QobuzTrack( $this->validWidgetUrlId );
+
+		$this->assertInstanceOf( QobuzTrack::class, $service );
+		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validWidgetUrlId ) );
+		$this->assertStringContainsString( 'zone=NL-nl', $service->getUrl() );
 	}
 
 	/**

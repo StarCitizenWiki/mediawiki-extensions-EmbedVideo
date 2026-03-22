@@ -1,13 +1,13 @@
-const { makeIframe } = require('./iframe.js');
+const { makeIframe } = require( './modules/iframe.js' );
 
-(function () {
+( function () {
 	mw.hook( 'wikipage.content' ).add( () => {
-		document.querySelectorAll('.embedvideo').forEach(function (ev) {
-			if (ev?.dataset?.service === 'videolink') {
+		document.querySelectorAll( '.embedvideo' ).forEach( ( ev ) => {
+			if ( ev.dataset && ev.dataset.service === 'videolink' ) {
 				return;
 			}
 
-			makeIframe(ev);
-		});
+			makeIframe( ev );
+		} );
 	} );
-})();
+}() );

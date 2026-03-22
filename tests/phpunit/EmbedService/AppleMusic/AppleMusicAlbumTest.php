@@ -32,6 +32,12 @@ class AppleMusicAlbumTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://music.apple.com/us/album/kids/1758766090';
 
 	/**
+	 * A valid international url containing an id
+	 * @var string
+	 */
+	private string $validIntlUrlId = 'https://music.apple.com/de/album/kids/1758766090';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -78,6 +84,19 @@ class AppleMusicAlbumTest extends MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum::getIdRegex
 	 * @return void
 	 */
+	public function testValidIntlUrlId() {
+		$service = new AppleMusicAlbum( $this->validIntlUrlId );
+
+		$this->assertInstanceOf( AppleMusicAlbum::class, $service );
+		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validIntlUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum::getIdRegex
+	 * @return void
+	 */
 	public function testInvalidUrlId() {
 		$this->expectException( InvalidArgumentException::class );
 		new AppleMusicAlbum( $this->invalidUrlId );
@@ -103,5 +122,20 @@ class AppleMusicAlbumTest extends MediaWikiIntegrationTestCase {
 	public function testServiceKey() {
 		$service = new AppleMusicAlbum( $this->validUrlId );
 		$this->assertEquals( 'applemusic', $service->getServiceKey() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum::getCSPUrls
+	 * @return void
+	 */
+	public function testGetCspUrls() {
+		$service = new AppleMusicAlbum( $this->validUrlId );
+		$this->assertEquals(
+			[
+				'https://music.apple.com',
+				'https://embed.music.apple.com',
+			],
+			$service->getCSPUrls()
+		);
 	}
 }

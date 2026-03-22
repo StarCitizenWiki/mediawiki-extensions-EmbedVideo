@@ -32,6 +32,12 @@ class QobuzAlbumTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://play.qobuz.com/album/a1nkwok5snthb';
 
 	/**
+	 * A valid widget url containing an id and explicit zone
+	 * @var string
+	 */
+	private string $validWidgetUrlId = 'https://widget.qobuz.com/album/a1nkwok5snthb?zone=NL-nl';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -74,6 +80,21 @@ class QobuzAlbumTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum::getIdRegex
+	 * @return void
+	 */
+	public function testValidWidgetUrlId() {
+		$service = new QobuzAlbum( $this->validWidgetUrlId );
+
+		$this->assertInstanceOf( QobuzAlbum::class, $service );
+		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validWidgetUrlId ) );
+		$this->assertStringContainsString( 'zone=NL-nl', $service->getUrl() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum::getUrlRegex
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum::getIdRegex
 	 * @return void
@@ -103,5 +124,14 @@ class QobuzAlbumTest extends MediaWikiIntegrationTestCase {
 	public function testServiceKey() {
 		$service = new QobuzAlbum( $this->validUrlId );
 		$this->assertEquals( 'qobuz', $service->getServiceKey() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz\QobuzAlbum::getCSPUrls
+	 * @return void
+	 */
+	public function testGetCspUrls() {
+		$service = new QobuzAlbum( $this->validUrlId );
+		$this->assertEquals( [ 'https://widget.qobuz.com' ], $service->getCSPUrls() );
 	}
 }

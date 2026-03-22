@@ -32,6 +32,12 @@ class AppleMusicArtistTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://music.apple.com/us/artist/the-midnight/925515043';
 
 	/**
+	 * A valid international url containing an id
+	 * @var string
+	 */
+	private string $validIntlUrlId = 'https://music.apple.com/de/artist/the-midnight/925515043';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -70,6 +76,19 @@ class AppleMusicArtistTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertInstanceOf( AppleMusicArtist::class, $service );
 		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist::getIdRegex
+	 * @return void
+	 */
+	public function testValidIntlUrlId() {
+		$service = new AppleMusicArtist( $this->validIntlUrlId );
+
+		$this->assertInstanceOf( AppleMusicArtist::class, $service );
+		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validIntlUrlId ) );
 	}
 
 	/**

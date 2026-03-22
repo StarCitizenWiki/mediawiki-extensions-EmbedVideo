@@ -32,6 +32,12 @@ class AppleMusicPlaylistTest extends MediaWikiIntegrationTestCase {
 	private string $validUrlId = 'https://music.apple.com/us/playlist/todays-hits/pl.f4d106fed2bd41149aaacabb233eb5eb';
 
 	/**
+	 * A valid international url containing an id
+	 * @var string
+	 */
+	private string $validIntlUrlId = 'https://music.apple.com/de/playlist/todays-hits/pl.f4d106fed2bd41149aaacabb233eb5eb';
+
+	/**
 	 * An invalid url
 	 * @var string
 	 */
@@ -70,6 +76,19 @@ class AppleMusicPlaylistTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertInstanceOf( AppleMusicPlaylist::class, $service );
 		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validUrlId ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist::getIdRegex
+	 * @return void
+	 */
+	public function testValidIntlUrlId() {
+		$service = new AppleMusicPlaylist( $this->validIntlUrlId );
+
+		$this->assertInstanceOf( AppleMusicPlaylist::class, $service );
+		$this->assertEquals( $this->validId, $service->parseVideoID( $this->validIntlUrlId ) );
 	}
 
 	/**
