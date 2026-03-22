@@ -25,7 +25,8 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"EmbedVideoMagic": "EmbedVideo.i18n.magic.php"
+		"EmbedVideoMagic": "EmbedVideo.i18n.magic.php",
+		"EmbedVideoAliases": "EmbedVideo.alias.php"
 	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\EmbedVideo\\": "includes/"
@@ -177,20 +178,39 @@
 	"ConfigRegistry": {
 		"EmbedVideo": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
+	"AvailableRights": [
+		"embedvideo-refreshmetadata"
+	],
+	"GroupPermissions": {
+		"sysop": {
+			"embedvideo-refreshmetadata": true
+		}
+	},
 	"ExtensionFunctions": [
 		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
 	],
-		"HookHandlers": {
-			"EmbedVideoHooks": {
-				"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks",
-				"services": [
-					"ConfigFactory"
-				]
-			}
-		},
-		"Hooks": {
-			"ParserFirstCallInit": "EmbedVideoHooks",
-			"BeforePageDisplay": "EmbedVideoHooks"
-		},
+	"HookHandlers": {
+		"EmbedVideoHooks": {
+			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks",
+			"services": [
+				"ConfigFactory",
+				"RepoGroup"
+			]
+		}
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "EmbedVideoHooks",
+		"BeforePageDisplay": "EmbedVideoHooks",
+		"SkinTemplateNavigation::Universal": "EmbedVideoHooks"
+	},
+	"SpecialPages": {
+		"RefreshEmbedVideoMetadata": {
+			"class": "MediaWiki\\Extension\\EmbedVideo\\Specials\\SpecialRefreshEmbedVideoMetadata",
+			"services": [
+				"RepoGroup",
+				"TitleFactory"
+			]
+		}
+	},
 	"manifest_version": 2
 }

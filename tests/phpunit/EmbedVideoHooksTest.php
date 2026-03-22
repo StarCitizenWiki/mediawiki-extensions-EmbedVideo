@@ -9,7 +9,13 @@ use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedVideoHooks;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
+use MediaWiki\FileRepo\File\LocalFile;
+use MediaWiki\FileRepo\LocalRepo;
+use MediaWiki\FileRepo\RepoGroup;
+use MediaWiki\Message\Message;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Skin\SkinTemplate;
+use MediaWiki\User\User;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -23,7 +29,8 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testConstructor() {
 		$hooks = new EmbedVideoHooks(
-			$this->getServiceContainer()->getConfigFactory()
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup()
 		);
 
 		$this->assertInstanceOf( EmbedVideoHooks::class, $hooks );
@@ -40,7 +47,8 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$hooks = new EmbedVideoHooks(
-			$this->getServiceContainer()->getConfigFactory()
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup()
 		);
 
 		$page = new OutputPage( RequestContext::getMain() );
@@ -62,7 +70,8 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$hooks = new EmbedVideoHooks(
-			$this->getServiceContainer()->getConfigFactory()
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup()
 		);
 
 		$page = new OutputPage( RequestContext::getMain() );
@@ -118,7 +127,8 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testAddFunctionHooks() {
 		$hooks = new EmbedVideoHooks(
-			$this->getServiceContainer()->getConfigFactory()
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup()
 		);
 
 		$parser = $this->getServiceContainer()->getParser();
@@ -147,7 +157,8 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$hooks = new EmbedVideoHooks(
-			$this->getServiceContainer()->getConfigFactory()
+			$this->getServiceContainer()->getConfigFactory(),
+			$this->getServiceContainer()->getRepoGroup()
 		);
 
 		$parser = $this->getServiceContainer()->getParser();
@@ -164,6 +175,49 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 				$this->assertNotContains( $service, $tags );
 			}
 		}
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedVideoHooks::onSkinTemplateNavigation__Universal
+	 */
+	public function testAddsRefreshMetadataActionForLocalFile(): void {
+		$title = $this->getServiceContainer()->getTitleFactory()->newFromText( 'Test.ogg', NS_FILE );
+		$user = $this->createMock( User::class );
+		$user->method( 'isAllowed' )->with( 'embedvideo-refreshmetadata' )->willReturn( true );
+
+		$file = $this->createMock( LocalFile::class );
+		$file->method( 'exists' )->willReturn( true );
+		$file->method( 'isLocal' )->willReturn( true );
+		$file->method( 'getRedirected' )->willReturn( null );
+		$file->method( 'getHandler' )->willReturn( new AudioHandler() );
+
+		$localRepo = $this->createMock( LocalRepo::class );
+		$localRepo->method( 'newFile' )->with( $title )->willReturn( $file );
+
+		$repoGroup = $this->createMock( RepoGroup::class );
+		$repoGroup->method( 'getLocalRepo' )->willReturn( $localRepo );
+
+		$message = $this->createMock( Message::class );
+		$message->method( 'text' )->willReturn( 'Refresh metadata' );
+
+		$skin = $this->createMock( SkinTemplate::class );
+		$skin->method( 'getTitle' )->willReturn( $title );
+		$skin->method( 'getUser' )->willReturn( $user );
+		$skin->method( 'msg' )->with( 'embedvideo-refreshmetadata-tab' )->willReturn( $message );
+
+		$hooks = new EmbedVideoHooks(
+			$this->getServiceContainer()->getConfigFactory(),
+			$repoGroup
+		);
+
+		$links = [ 'actions' => [] ];
+		$hooks->onSkinTemplateNavigation__Universal( $skin, $links );
+
+		$this->assertArrayHasKey( 'embedvideo-refreshmetadata', $links['actions'] );
+		$this->assertStringContainsString(
+			'Special:RefreshEmbedVideoMetadata/Test.ogg',
+			$links['actions']['embedvideo-refreshmetadata']['href']
+		);
 	}
 
 }

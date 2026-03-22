@@ -12,9 +12,14 @@ use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
+use MediaWiki\FileRepo\File\LocalFile;
+use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Skin\Skin;
+use MediaWiki\Skin\SkinTemplate;
+use MediaWiki\SpecialPage\SpecialPage;
 
 /**
  * EmbedVideo
@@ -25,14 +30,21 @@ use MediaWiki\Skin\Skin;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook {
+class EmbedVideoHooks implements
+	ParserFirstCallInitHook,
+	BeforePageDisplayHook,
+	SkinTemplateNavigation__UniversalHook
+{
 
 	private Config $config;
 
 	/**
 	 * @param ConfigFactory $factory
 	 */
-	public function __construct( ConfigFactory $factory ) {
+	public function __construct(
+		ConfigFactory $factory,
+		private RepoGroup $repoGroup
+	) {
 		$this->config = $factory->makeConfig( 'EmbedVideo' );
 	}
 
@@ -163,5 +175,44 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook 
 			$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 			$out->addModules( [ 'ext.embedVideo.overlay' ] );
 		}
+	}
+
+	/**
+	 * Adds a file-page action for explicitly refreshing stored metadata.
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
+		$title = $sktemplate->getTitle();
+		if (
+			$title->getNamespace() !== NS_FILE ||
+			!$sktemplate->getUser()->isAllowed( 'embedvideo-refreshmetadata' )
+		) {
+			return;
+		}
+
+		$file = $this->repoGroup->getLocalRepo()->newFile( $title );
+		if ( !$this->isRefreshableLocalFile( $file ) ) {
+			return;
+		}
+
+		$label = $sktemplate->msg( 'embedvideo-refreshmetadata-tab' )->text();
+		$links['actions']['embedvideo-refreshmetadata'] = [
+			'text' => $label,
+			'title' => $label,
+			'href' => SpecialPage::getTitleFor(
+				'RefreshEmbedVideoMetadata',
+				$title->getDBkey()
+			)->getLocalURL(),
+		];
+	}
+
+	private function isRefreshableLocalFile( mixed $file ): bool {
+		return $file instanceof LocalFile
+			&& $file->exists()
+			&& $file->isLocal()
+			&& $file->getRedirected() === null
+			&& $file->getHandler() instanceof AudioHandler;
 	}
 }

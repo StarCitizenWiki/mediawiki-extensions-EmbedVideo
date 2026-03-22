@@ -38,6 +38,14 @@
 	"embedvideo-service-localvideo": "Local File",
 	"embedvideo-service-externalvideo": "External Video",
 	"embedvideo-play": "Play Video",
+	"embedvideo-refreshmetadata-tab": "Refresh metadata",
+	"embedvideo-refreshmetadata-submit": "Refresh metadata",
+	"embedvideo-refreshmetadata-intro": "Refresh stored EmbedVideo metadata for $1.",
+	"embedvideo-refreshmetadata-success": "EmbedVideo metadata was refreshed for $1.",
+	"embedvideo-refreshmetadata-failed": "EmbedVideo metadata refresh failed: $1",
+	"embedvideo-refreshmetadata-missing-target": "No file was specified.",
+	"embedvideo-refreshmetadata-invalid-target": "This tool only works for local audio and video files handled by EmbedVideo.",
+	"refreshembedvideometadata": "Refresh EmbedVideo metadata",
 	"embedvideo-error-missingparams": "EmbedVideo is missing a required parameter.",
 	"embedvideo-error-service": "EmbedVideo does not recognize the video service \"$1\".",
 	"embedvideo-error-id": "EmbedVideo received the bad id \"$2\" for the service \"$1\".",
@@ -63,5 +71,7 @@
 	"apihelp-embedvideo-param-description": "Description of video",
 	"apihelp-embedvideo-param-container": "Accepts frame, or leave empty",
 	"apihelp-embedvideo-param-urlargs": "Additional arguments to pass in the video url (for some services)",
-	"apihelp-embedvideo-param-autoresize": "Auto resize video? (true or false)"
+	"apihelp-embedvideo-param-autoresize": "Auto resize video? (true or false)",
+	"right-embedvideo-refreshmetadata": "Refresh stored EmbedVideo metadata",
+	"action-embedvideo-refreshmetadata": "refresh stored EmbedVideo metadata"
 }

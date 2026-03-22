@@ -113,6 +113,13 @@ When `$wgEmbedVideoUseEmbedStyleForLocalVideos` is enabled two additional option
 * description
   * Description shown below the video
 
+### Refreshing local metadata
+If stored metadata for a local audio or video file needs to be rebuilt, users with the
+`embedvideo-refreshmetadata` right can use the `Refresh metadata` action on the `File:` page.
+
+This runs an explicit metadata refresh for local EmbedVideo-managed files and is intended for
+admin use on installations where running maintenance scripts is not practical.
+
 ## Tags
 
 The EmbedVideo parser function expects to be called in any of the following ways:
