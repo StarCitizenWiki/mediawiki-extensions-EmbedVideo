@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo;
 
+use LocalFile;
 use MediaWiki\Config\Config;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Exception\MWException;
@@ -18,7 +19,6 @@ use MediaWiki\Parser\Parser;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Skin\SkinTemplate;
 use MediaWiki\SpecialPage\SpecialPage;
-use LocalFile;
 use RepoGroup;
 
 /**
