@@ -18,7 +18,7 @@ const fetchThumb = async ( url, parent, container ) => {
 		// Duration
 		const footer = parent.querySelector( '.embedvideo-loader__footer' );
 		footer.querySelectorAll( '.embedvideo-loader__duration' ).forEach( ( duration ) => {
-			overlay.removeChild( duration );
+			footer.removeChild( duration );
 		} );
 	};
 
