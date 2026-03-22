@@ -10,6 +10,11 @@ const { makeIframe, fetchThumb } = require( './modules/iframe.js' );
 				const iframeConfig = JSON.parse( ( evl.dataset && evl.dataset.mwIframeconfig ) || '{}' );
 
 				const playerContainer = document.querySelector( `.embedvideo.evlplayer-${ player }` );
+				if ( playerContainer === null ) {
+					mw.log.warn( `No player with id '${ player }' found.` );
+					return;
+				}
+
 				const iframe = playerContainer.querySelector( 'iframe' );
 				// Iframe exists, no consent required or already given
 				if ( iframe !== null ) {
@@ -23,13 +28,12 @@ const { makeIframe, fetchThumb } = require( './modules/iframe.js' );
 				}
 
 				// No iframe exists, only when explicit consent is required
-				const div = document.querySelector( `.embedvideo.evlplayer-${ player }` );
-
-				if ( div === null || !evl.dataset.mwIframeconfig ) {
-					mw.log.warn( `No player with id '${ player }' found!.` );
+				if ( !evl.dataset.mwIframeconfig ) {
+					mw.log.warn( `No iframe config found for player with id '${ player }'.` );
 					return;
 				}
 
+				const div = playerContainer;
 				const wrapper = div.querySelector( '.embedvideo-wrapper' );
 				const consentDiv = wrapper.querySelector( '.embedvideo-consent' );
 
