@@ -49,9 +49,13 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 			[ 'width', '-100', false ],
 
 			[ 'start', '1:30', true ],
+			[ 'start', ':30', true ],
+			[ 'start', '0:30', true ],
 			[ 'start', '', false ],
 
 			[ 'end', '1:30', true ],
+			[ 'end', ':05', true ],
+			[ 'end', '0', true ],
 			[ 'end', '', false ],
 
 			[ 'autoplay', null, true ],
@@ -136,6 +140,22 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 		$handler->normaliseParams( null, $params );
 
 		$this->assertArrayHasKey( 'start', $params );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::normaliseParams
+	 * @return void
+	 */
+	public function testNormaliseParamsLeadingColonStart(): void {
+		$handler = new AudioHandler();
+
+		$params = [
+			'start' => ':30',
+		];
+
+		$handler->normaliseParams( null, $params );
+
+		$this->assertSame( 30, $params['start'] );
 	}
 
 	/**

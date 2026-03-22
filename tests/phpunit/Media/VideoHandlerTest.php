@@ -45,9 +45,13 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			[ 'width', '-100', false ],
 
 			[ 'start', '1:30', true ],
+			[ 'start', ':30', true ],
+			[ 'start', '0:30', true ],
 			[ 'start', '', false ],
 
 			[ 'end', '1:30', true ],
+			[ 'end', ':05', true ],
+			[ 'end', '0', true ],
 			[ 'end', '', false ],
 
 			[ 'autoplay', null, true ],

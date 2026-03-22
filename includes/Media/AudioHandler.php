@@ -82,13 +82,24 @@ class AudioHandler extends MediaHandler {
 	 */
 	public function parseTimeString( $time ) {
 		$parts = explode( ':', $time );
+		$partCount = count( $parts );
+		$magnitude = [ 1, 60, 3600, 86400 ];
 
-		if ( $parts === false || empty( $parts[0] ?? '' ) || !is_numeric( $parts[0] ?? null ) ) {
+		if ( $partCount === 2 && $parts[0] === '' ) {
+			$parts[0] = '0';
+		}
+
+		if ( $partCount < 1 || $partCount > count( $magnitude ) ) {
 			return false;
 		}
-		$parts = array_reverse( $parts );
 
-		$magnitude = [ 1, 60, 3600, 86400 ];
+		foreach ( $parts as $part ) {
+			if ( $part === '' || !is_numeric( $part ) ) {
+				return false;
+			}
+		}
+
+		$parts = array_reverse( $parts );
 		$seconds = 0;
 
 		foreach ( $parts as $index => $part ) {
