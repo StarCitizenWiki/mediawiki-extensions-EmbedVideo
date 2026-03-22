@@ -40,9 +40,12 @@ class VideoEmbedTransformOutputTest extends MediaWikiIntegrationTestCase {
 		$out = $out->toHtml();
 
 		$this->assertStringContainsString( '<video src="', $out );
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="local-embed"', $out );
+		$this->assertStringContainsString( '<figure class="embedvideo', $out );
+		$this->assertStringContainsString( 'data-service="local-embed"', $out );
 		$this->assertStringContainsString( 'embedvideo--local-embed-style', $out );
 		$this->assertStringNotContainsString( 'embedvideo-consent', $out );
+		$this->assertStringNotContainsString( 'width: px', $out );
+		$this->assertStringNotContainsString( 'height: px', $out );
 		$this->assertMatchesRegularExpression(
 			'/<div class="embedvideo-wrapper"[^>]*>.*<video\s/s',
 			$out

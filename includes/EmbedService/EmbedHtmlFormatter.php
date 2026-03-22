@@ -37,6 +37,8 @@ final class EmbedHtmlFormatter {
 
 		$width = (int)$service->getWidth();
 		$height = (int)$service->getHeight();
+		$hasWidth = $width > 0;
+		$hasHeight = $height > 0;
 
 		$config = array_merge(
 			[
@@ -76,16 +78,21 @@ final class EmbedHtmlFormatter {
 
 		if ( $config['autoresize'] === true ) {
 			$config['class'] .= ' embedvideo--autoresize';
-			if ( isset( $args['width'] ) ) {
+			if ( isset( $args['width'] ) && $hasWidth ) {
 				$inlineStyles['container'] .= sprintf( 'max-width:%dpx', $width );
 			}
-			if ( isset( $args['height'] ) ) {
+			if ( isset( $args['height'] ) && $hasHeight ) {
 				$inlineStyles['wrapper'] .= sprintf( 'max-height:%dpx', $height );
 			}
 		} else {
 			// Autoresize does not need inline width and height
-			$inlineStyles['container'] .= sprintf( 'width:%dpx', $width );
-			$inlineStyles['wrapper'] .= sprintf( 'height:%dpx', $height );
+			if ( $hasWidth ) {
+				$inlineStyles['container'] .= sprintf( 'width:%dpx', $width );
+			}
+
+			if ( $hasHeight ) {
+				$inlineStyles['wrapper'] .= sprintf( 'height:%dpx', $height );
+			}
 		}
 
 		$caption = !empty( $config['description'] ?? '' )

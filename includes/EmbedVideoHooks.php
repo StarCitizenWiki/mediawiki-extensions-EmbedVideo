@@ -10,13 +10,13 @@ use MediaWiki\Exception\MWException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
+use MediaWiki\FileRepo\File\LocalFile;
+use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Parser\Parser;
-use MediaWiki\FileRepo\File\LocalFile;
-use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Skin\SkinTemplate;
 use MediaWiki\SpecialPage\SpecialPage;
@@ -40,6 +40,7 @@ class EmbedVideoHooks implements
 
 	/**
 	 * @param ConfigFactory $factory
+	 * @param RepoGroup $repoGroup
 	 */
 	public function __construct(
 		ConfigFactory $factory,
@@ -208,6 +209,12 @@ class EmbedVideoHooks implements
 		];
 	}
 
+	/**
+	 * Check whether a file can be refreshed via the metadata refresh workflow.
+	 *
+	 * @param mixed $file Candidate file object.
+	 * @return bool
+	 */
 	private function isRefreshableLocalFile( mixed $file ): bool {
 		return $file instanceof LocalFile
 			&& $file->exists()

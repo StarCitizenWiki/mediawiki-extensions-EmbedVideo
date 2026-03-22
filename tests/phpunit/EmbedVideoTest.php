@@ -391,6 +391,11 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 	 * @throws Exception
 	 */
 	public function testParseArgsExample6() {
+		$this->overrideConfigValues( [
+			'EmbedVideoRequireConsent' => true,
+			'EmbedVideoShowPrivacyNotice' => true,
+		] );
+
 		$parser = $this->getParser();
 
 		$output = EmbedVideo::parseEV(
@@ -412,7 +417,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 			'<div class="embedvideo-loader__title embedvideo-loader__title--manual">Title of the Embed</div>',
 			$output[0]
 		);
-		$this->assertStringNotContainsString( '<a', $output[0] );
+		$this->assertStringContainsString( 'class="embedvideo-privacyNotice__link"', $output[0] );
 	}
 
 	/**

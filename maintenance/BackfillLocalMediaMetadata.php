@@ -150,6 +150,13 @@ class BackfillLocalMediaMetadata extends Maintenance {
 		return true;
 	}
 
+	/**
+	 * Build the base query used to iterate local audio and video files.
+	 *
+	 * @param IReadableDatabase $dbw
+	 * @param int $batchSize
+	 * @return FileSelectQueryBuilder
+	 */
 	private function newQueryBuilderTemplate(
 		IReadableDatabase $dbw,
 		int $batchSize

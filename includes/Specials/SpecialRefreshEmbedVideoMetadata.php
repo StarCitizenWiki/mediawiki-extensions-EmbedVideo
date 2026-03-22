@@ -16,6 +16,10 @@ use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 
 class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
+	/**
+	 * @param RepoGroup $repoGroup
+	 * @param TitleFactory $titleFactory
+	 */
 	public function __construct(
 		private RepoGroup $repoGroup,
 		private TitleFactory $titleFactory
@@ -23,11 +27,18 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 		parent::__construct( 'RefreshEmbedVideoMetadata', 'embedvideo-refreshmetadata' );
 	}
 
-	public function doesWrites() {
+	/**
+	 * @return bool
+	 */
+	public function doesWrites(): bool {
 		return true;
 	}
 
-	public function execute( $par ) {
+	/**
+	 * @param string|null $par
+	 * @return void
+	 */
+	public function execute( $par ): void {
 		$this->checkReadOnly();
 		$this->setHeaders();
 		$this->outputHeader();
@@ -60,6 +71,13 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 		}
 	}
 
+	/**
+	 * Build the confirmation form used to refresh stored metadata.
+	 *
+	 * @param Title $title
+	 * @param LocalFile $file
+	 * @return HTMLForm
+	 */
 	private function getRefreshForm( Title $title, LocalFile $file ): HTMLForm {
 		return HTMLForm::factory( 'ooui', [], $this->getContext() )
 			->setAction( $this->getPageTitle( $title->getDBkey() )->getLocalURL() )
@@ -78,6 +96,13 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 			);
 	}
 
+	/**
+	 * Refresh metadata for the selected local file.
+	 *
+	 * @param Title $title
+	 * @param LocalFile $file
+	 * @return Status
+	 */
 	private function submitRefreshMetadata( Title $title, LocalFile $file ): Status {
 		try {
 			$file->upgradeRow();
@@ -92,6 +117,12 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 		}
 	}
 
+	/**
+	 * Resolve the requested file title.
+	 *
+	 * @param string|null $target
+	 * @return Title|null
+	 */
 	private function getTargetTitle( ?string $target ): ?Title {
 		if ( !$target ) {
 			return null;
@@ -105,6 +136,12 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 		return $title;
 	}
 
+	/**
+	 * Check whether the target file can be refreshed.
+	 *
+	 * @param mixed $file
+	 * @return bool
+	 */
 	private function isRefreshableFile( mixed $file ): bool {
 		return $file instanceof LocalFile
 			&& $file->exists()

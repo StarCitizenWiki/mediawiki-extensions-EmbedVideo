@@ -42,6 +42,14 @@
 	"embedvideo-service-localvideo": "Label for local video file service.",
 	"embedvideo-service-externalvideo": "Label for external video service.",
 	"embedvideo-play": "Label for play button.",
+	"embedvideo-refreshmetadata-tab": "Label for the file-page action tab that opens the special page for refreshing stored EmbedVideo metadata.",
+	"embedvideo-refreshmetadata-submit": "Label for the submit button on Special:RefreshEmbedVideoMetadata.",
+	"embedvideo-refreshmetadata-intro": "Introductory text on Special:RefreshEmbedVideoMetadata. $1 is the prefixed file title.",
+	"embedvideo-refreshmetadata-success": "Success message shown after refreshing stored EmbedVideo metadata. $1 is the prefixed file title.",
+	"embedvideo-refreshmetadata-failed": "Error message shown when refreshing stored EmbedVideo metadata fails. $1 is the underlying error message.",
+	"embedvideo-refreshmetadata-missing-target": "Error message shown when no target file was provided to Special:RefreshEmbedVideoMetadata.",
+	"embedvideo-refreshmetadata-invalid-target": "Error message shown when the target file is not a local audio or video file handled by EmbedVideo.",
+	"refreshembedvideometadata": "Title of Special:RefreshEmbedVideoMetadata.",
 	"embedvideo-error-missingparams": "Error message for missing required parameters.",
 	"embedvideo-error-service": "Error message for unrecognized video service. $1 is the service name.",
 	"embedvideo-error-id": "Error message for bad video ID. $1 is the service name, $2 is the ID.",
@@ -67,5 +75,7 @@
 	"apihelp-embedvideo-param-description": "API parameter description for description.",
 	"apihelp-embedvideo-param-container": "API parameter description for container.",
 	"apihelp-embedvideo-param-urlargs": "API parameter description for URL arguments.",
-	"apihelp-embedvideo-param-autoresize": "API parameter description for autoresize."
+	"apihelp-embedvideo-param-autoresize": "API parameter description for autoresize.",
+	"right-embedvideo-refreshmetadata": "Description of the user right that allows refreshing stored EmbedVideo metadata.",
+	"action-embedvideo-refreshmetadata": "Label for the embedvideo-refreshmetadata action, used in permission messages."
 }

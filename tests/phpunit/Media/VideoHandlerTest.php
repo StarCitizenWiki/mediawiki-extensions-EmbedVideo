@@ -486,10 +486,10 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	private function getVideoHandlerWithoutProbe(): VideoHandler {
 		$handler = new class extends VideoHandler {
 			/**
-			 * @param object $language
+			 * @param mixed $language
 			 * @return void
 			 */
-			public function setContentLanguageForTest( object $language ): void {
+			public function setContentLanguageForTest( $language ): void {
 				$this->contentLanguage = $language;
 			}
 

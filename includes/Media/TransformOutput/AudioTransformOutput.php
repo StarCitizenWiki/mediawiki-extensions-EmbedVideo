@@ -99,14 +99,17 @@ class AudioTransformOutput extends MediaTransformOutput {
 	 */
 	protected function getStyle( array $options ): string {
 		$style = [];
+		$width = (int)$this->getWidth();
 
 		$style[] = "max-width: 100%;";
 
 		if (
 			empty( $options['no-dimensions'] ) &&
-			!isset( $options['override-width'] ) && !isset( $options['override-height'] )
+			!isset( $options['override-width'] ) &&
+			!isset( $options['override-height'] ) &&
+			$width > 0
 		) {
-			$style[] = "width: {$this->getWidth()}px;";
+			$style[] = "width: {$width}px;";
 		}
 
 		if ( !empty( $options['valign'] ) ) {

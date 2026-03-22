@@ -393,10 +393,10 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 	private function getAudioHandlerWithoutProbe(): AudioHandler {
 		$handler = new class extends AudioHandler {
 			/**
-			 * @param object $language
+			 * @param mixed $language
 			 * @return void
 			 */
-			public function setContentLanguageForTest( object $language ): void {
+			public function setContentLanguageForTest( $language ): void {
 				$this->contentLanguage = $language;
 			}
 

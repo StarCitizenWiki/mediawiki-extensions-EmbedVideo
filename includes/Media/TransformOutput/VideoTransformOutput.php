@@ -81,6 +81,8 @@ class VideoTransformOutput extends AudioTransformOutput {
 	 */
 	protected function getStyle( array $options ): string {
 		$style = [];
+		$width = (int)$this->getWidth();
+		$height = (int)$this->getHeight();
 		$style[] = 'max-width: 100%;';
 		$style[] = 'max-height: 100%;';
 
@@ -88,8 +90,13 @@ class VideoTransformOutput extends AudioTransformOutput {
 			empty( $options['no-dimensions'] ) &&
 			!isset( $options['override-width'] ) && !isset( $options['override-height'] )
 		) {
-			$style[] = "width: {$this->getWidth()}px;";
-			$style[] = "height: {$this->getHeight()}px;";
+			if ( $width > 0 ) {
+				$style[] = "width: {$width}px;";
+			}
+
+			if ( $height > 0 ) {
+				$style[] = "height: {$height}px;";
+			}
 		}
 
 		if ( !empty( $options['valign'] ) ) {

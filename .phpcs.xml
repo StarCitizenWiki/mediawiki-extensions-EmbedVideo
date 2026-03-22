@@ -6,6 +6,14 @@
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPublic" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.ParamPassByReference" />
 	</rule>
+	<!--
+		The HookHandlers interface for SkinTemplateNavigation::Universal requires the
+		method name onSkinTemplateNavigation__Universal(), which intentionally does
+		not follow lowerCamelCase.
+	-->
+	<rule ref="MediaWiki.NamingConventions.LowerCamelFunctionsName.FunctionName">
+		<exclude-pattern>*/includes/EmbedVideoHooks.php</exclude-pattern>
+	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>
 	<arg name="encoding" value="UTF-8"/>
