@@ -8,7 +8,6 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\LocalVideo;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
-use MediaWiki\Html\Html;
 use MediaWikiIntegrationTestCase;
 use UnregisteredLocalFile;
 
@@ -149,19 +148,11 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 
 		$output = EmbedHtmlFormatter::makeTitleHtml( $service );
 
-		$link = Html::element( 'a', [
-			'target' => '_blank',
-			'href' => $service->getUrl(),
-			'rel' => 'noopener noreferrer nofollow'
-		], $service->getTitle() );
-
-		$this->assertEquals(
-			sprintf(
-				'<div class="embedvideo-loader__title embedvideo-loader__title--manual">%s</div>',
-				$link
-			),
+		$this->assertSame(
+			'<div class="embedvideo-loader__title embedvideo-loader__title--manual">Foo</div>',
 			$output
 		);
+		$this->assertStringNotContainsString( '<a', $output );
 	}
 
 	/**

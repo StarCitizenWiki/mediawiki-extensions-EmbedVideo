@@ -78,19 +78,10 @@ const fetchThumb = async ( url, parent, container ) => {
 			if ( typeof json.title !== 'undefined' && json.title.length > 0 && parent.querySelector( '.embedvideo-loader__title--manual' ) === null ) {
 				const
 					overlay = parent.querySelector( '.embedvideo-loader' ),
-					title = document.createElement( 'div' ),
-					link = document.createElement( 'a' );
+					title = document.createElement( 'div' );
 
 				title.classList.add( 'embedvideo-loader__title' );
-
-				link.classList.add( 'embedvideo-loader__link' );
-				const iframeConfig = ( container && container.dataset && container.dataset.mwIframeconfig ) || '{"src": "#"}';
-				link.href = JSON.parse( iframeConfig ).src;
-				link.target = '_blank';
-				link.rel = 'noopener noreferrer nofollow';
-				link.innerText = json.title;
-
-				title.append( link );
+				title.innerText = json.title;
 				overlay.prepend( title );
 			}
 
@@ -174,10 +165,6 @@ const makeIframe = function ( ev ) {
 
 		if ( session.get( getSessionStorageKey() ) === '1' ) {
 			createIframeHandler( event );
-			return;
-		}
-
-		if ( event.target.classList.contains( 'embedvideo-loader__link' ) ) {
 			return;
 		}
 

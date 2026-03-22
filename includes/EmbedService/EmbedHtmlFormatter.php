@@ -233,13 +233,11 @@ final class EmbedHtmlFormatter {
 			return '';
 		}
 
-		$link = Html::element( 'a', [
-			'target' => '_blank',
-			'href' => $service->getUrl(),
-			'rel' => 'noopener noreferrer nofollow'
-		], $service->getTitle() );
-
-		return sprintf( '<div class="embedvideo-loader__title embedvideo-loader__title--manual">%s</div>', $link );
+		return Html::element(
+			'div',
+			[ 'class' => 'embedvideo-loader__title embedvideo-loader__title--manual' ],
+			$service->getTitle()
+		);
 	}
 
 	/**
