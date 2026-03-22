@@ -20,4 +20,11 @@ final class SpotifyTrack extends SpotifyAlbum {
 			'#open\.spotify\.com/track/([a-zA-Z0-9]+)#is',
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getDefaultHeight(): int {
+		return 152;
+	}
 }

@@ -9,7 +9,7 @@ final class TidalTrack extends TidalAlbum {
 	 * @inheritDoc
 	 */
 	public function getDefaultHeight(): int {
-		return 96;
+		return 120;
 	}
 
 	/**

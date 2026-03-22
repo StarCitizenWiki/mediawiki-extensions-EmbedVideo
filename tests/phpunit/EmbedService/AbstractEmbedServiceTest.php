@@ -250,6 +250,42 @@ class AbstractEmbedServiceTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::setWidth
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::setHeight
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getHeight
+	 * @return void
+	 */
+	public function testSetHeightNullForAudio() {
+		$service = new class( '' ) extends AbstractEmbedService {
+			/**
+			 * @inheritDoc
+			 */
+			public function getBaseUrl(): string {
+				return '<base-url>';
+			}
+
+			/**
+			 * @inheritDoc
+			 */
+			public function getContentType(): ?string {
+				return 'audio';
+			}
+
+			/**
+			 * @inheritDoc
+			 */
+			public function getDefaultHeight(): int {
+				return 123;
+			}
+		};
+
+		$service->setWidth( 1920 );
+		$service->setHeight();
+
+		$this->assertEquals( 123, $service->getHeight() );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrlArgs
 	 * @return void
 	 */
