@@ -13,12 +13,8 @@ use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Output\OutputPage;
-use MediaWiki\Page\Hook\ArticlePurgeHook;
-use MediaWiki\Page\WikiPage;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Skin\Skin;
-use RepoGroup;
-use Wikimedia\ObjectCache\WANObjectCache;
 
 /**
  * EmbedVideo
@@ -29,21 +25,15 @@ use Wikimedia\ObjectCache\WANObjectCache;
  * @link    https://www.mediawiki.org/wiki/Extension:EmbedVideo
  */
 
-class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook, ArticlePurgeHook {
+class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook {
 
 	private Config $config;
-	private RepoGroup $repoGroup;
-	private WANObjectCache $cache;
 
 	/**
 	 * @param ConfigFactory $factory
-	 * @param RepoGroup $group
-	 * @param WANObjectCache $cache
 	 */
-	public function __construct( ConfigFactory $factory, RepoGroup $group, WANObjectCache $cache ) {
+	public function __construct( ConfigFactory $factory ) {
 		$this->config = $factory->makeConfig( 'EmbedVideo' );
-		$this->repoGroup = $group;
-		$this->cache = $cache;
 	}
 
 	/**
@@ -173,38 +163,5 @@ class EmbedVideoHooks implements ParserFirstCallInitHook, BeforePageDisplayHook,
 			$out->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 			$out->addModules( [ 'ext.embedVideo.overlay' ] );
 		}
-	}
-
-	/**
-	 * Purges possible FFProbe results from the main cache
-	 *
-	 * @param WikiPage $wikiPage
-	 * @return void
-	 */
-	public function onArticlePurge( $wikiPage ): void {
-		if ( $wikiPage->getTitle() === null || $wikiPage->getTitle()->getNamespace() !== NS_FILE ) {
-			return;
-		}
-
-		$file = $this->repoGroup->findFile( $wikiPage->getTitle() );
-
-		if ( $file === false ) {
-			return;
-		}
-
-		// The last part is only ever a:0 or v:0
-		$audioKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'a:0' );
-		$videoKey = $this->cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $file->getSha1(), 'v:0' );
-
-		$this->cache->delete( $audioKey );
-		$this->cache->delete( $videoKey );
-
-		wfDebugLog(
-			'EmbedVideo',
-			sprintf(
-				'Purging FFProbe Cache for %s',
-				$wikiPage->getTitle()->getBaseText()
-			)
-		);
 	}
 }

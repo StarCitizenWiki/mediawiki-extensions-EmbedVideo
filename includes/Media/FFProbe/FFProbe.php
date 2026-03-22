@@ -5,16 +5,14 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Media\FFProbe;
 
 use Exception;
-use File;
 use JsonException;
 use MediaWiki\Config\ConfigException;
 use MediaWiki\Exception\ProcOpenError;
 use MediaWiki\Exception\ShellDisabledError;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\MediaWikiServices;
-use MediaWiki\Settings\SettingsBuilder;
 use MediaWiki\Shell\Shell;
 use Wikimedia\FileBackend\FSFile\FSFile;
-use Wikimedia\LightweightObjectStore\ExpirationAwareness;
 
 class FFProbe {
 	/**
@@ -25,16 +23,16 @@ class FFProbe {
 	private $filename;
 
 	/**
-	 * @var FSFile|File|string
-	 */
-	private $file;
-
-	/**
 	 * Meta Data Cache
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	private $metadata;
+
+	/**
+	 * @var bool
+	 */
+	private $metadataLoaded = false;
 
 	/**
 	 * Main Constructor
@@ -45,57 +43,21 @@ class FFProbe {
 	 */
 	public function __construct( $filename, $file ) {
 		$this->filename = $filename;
-		$this->file = $file;
 	}
 
 	/**
 	 * Return the entire cache of metadata.
 	 *
-	 * @param string $select The selected audio/video stream
 	 * @return bool Flag if loading did succeed
 	 */
-	public function loadMetaData( string $select = 'v:0' ): bool {
-		// If this is in a maintenance call context, don't use the cache
-		if ( isset( $GLOBALS['wgSettings'] ) && $GLOBALS['wgSettings'] instanceof SettingsBuilder ) {
-			$isMaintenance = $GLOBALS['wgSettings']->getConfig()->get( 'CommandLineMode' );
-			if ( $isMaintenance ) {
-				$metadata = $this->invokeFFProbe();
-				$this->metadata = $metadata;
-
-				return is_array( $metadata );
-			}
+	public function loadMetaData(): bool {
+		if ( $this->metadataLoaded ) {
+			return is_array( $this->metadata );
 		}
 
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$cacheKey = $cache->makeGlobalKey( 'EmbedVideo', 'ffprobe', $this->filename, $select );
-		$ttl = ( $this->file instanceof File || is_string( $this->file ) )
-			? ExpirationAwareness::TTL_INDEFINITE : ExpirationAwareness::TTL_MINUTE;
+		$this->metadataLoaded = true;
 
-		$result = $cache->getWithSetCallback(
-			$cacheKey,
-			$ttl,
-			function ( $old, &$ttl ) {
-				$result = $this->invokeFFProbe();
-
-				if ( $result === null ) {
-					$ttl = ExpirationAwareness::TTL_UNCACHEABLE;
-					return $old;
-				}
-
-				return $result;
-			}
-		);
-
-		if ( is_array( $result ) ) {
-			$this->metadata = [
-				'streams' => $result['streams'] ?? null,
-				'format' => $result['format'] ?? null,
-			];
-
-			return true;
-		}
-
-		return false;
+		return $this->setMetadata( $this->invokeFFProbe() );
 	}
 
 	/**
@@ -112,7 +74,7 @@ class FFProbe {
 	 * @return false|StreamInfo StreamInfo object or false if does not exist.
 	 */
 	public function getStream( string $select ) {
-		$this->loadMetaData( $select );
+		$this->loadMetaData();
 
 		$types = [
 			'v'	=> 'video',
@@ -166,6 +128,24 @@ class FFProbe {
 	 */
 	private function getFilePath() {
 		return $this->filename;
+	}
+
+	/**
+	 * @param array|null $result
+	 * @return bool
+	 */
+	private function setMetadata( ?array $result ): bool {
+		if ( !is_array( $result ) ) {
+			$this->metadata = null;
+			return false;
+		}
+
+		$this->metadata = [
+			'streams' => $result['streams'] ?? null,
+			'format' => $result['format'] ?? null,
+		];
+
+		return true;
 	}
 
 	/**

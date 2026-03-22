@@ -4,36 +4,21 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\Media;
 
-use Exception;
 use LocalFile;
 use MediaTransformOutput;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
-use MediaWiki\Shell\Command;
-use MediaWiki\Shell\CommandFactory;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use MediaWiki\Utils\UrlUtils;
 use RepoGroup;
-use Shellbox\Command\UnboxedResult;
-use Wikimedia\AtEase\AtEase;
 
 /**
  * @group EmbedVideo
  */
 class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
-	/**
-	 * Set FFProbe to an existing invalid location
-	 * @return void
-	 */
-	protected function setUp(): void {
-		$this->overrideConfigValues( [
-			'FFProbeLocation' => '/dev/null',
-		] );
-	}
-
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getParamMap
 	 * @return void
@@ -86,8 +71,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testNormaliseParamsSmallerWidth() {
@@ -96,28 +79,9 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		] );
 
 		$handler = new VideoHandler();
+		$params = [ 'width' => 1280 ];
 
-		$params = [
-			'width' => 1280,
-		];
-
-		$result = new UnboxedResult();
-		$result->stdout( json_encode( [
-			'streams' => [
-				[
-					'codec_type' => 'video',
-					'width' => 1920,
-					'height' => 1080,
-				]
-			],
-			'format' => [],
-		] ) );
-
-		$this->mockFFProbeCommand( $result );
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-
-		$file->method( 'getLocalRefPath' )->willReturn( '/dev/null' );
+		$file = $this->getVideoFileMock();
 
 		$handler->normaliseParams( $file, $params );
 
@@ -128,8 +92,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testNormaliseParamsCalculatedSize() {
@@ -140,21 +102,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$handler = new VideoHandler();
 		$params = [];
 
-		$result = new UnboxedResult();
-		$result->stdout( json_encode( [
-			'streams' => [
-				[
-					'codec_type' => 'video',
-					'width' => 0,
-					'height' => 0,
-				]
-			],
-			'format' => [],
-		] ) );
-
-		$this->mockFFProbeCommand( $result );
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$file = $this->getVideoFileMock( [], 0, 0 );
 
 		$handler->normaliseParams( $file, $params );
 
@@ -164,8 +112,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testNormaliseParamsSquareVideo() {
@@ -175,21 +121,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			'height' => 200,
 		];
 
-		$result = new UnboxedResult();
-		$result->stdout( json_encode( [
-			'streams' => [
-				[
-					'codec_type' => 'video',
-					'width' => 200,
-					'height' => 200,
-				]
-			],
-			'format' => [],
-		] ) );
-
-		$this->mockFFProbeCommand( $result );
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$file = $this->getVideoFileMock( [], 200, 200 );
 
 		$handler->normaliseParams( $file, $params );
 
@@ -198,14 +130,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * Video: 16/9
-	 * Given: 1/2
-	 *
-	 * Recalculate height to fit original aspect
-	 *
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testNormaliseParamsDifferentAspectRatio() {
@@ -215,44 +140,26 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			'height' => 250,
 		];
 
-		$result = new UnboxedResult();
-		$result->stdout( json_encode( [
-			'streams' => [
-				[
-					'codec_type' => 'video',
-					'width' => 1920,
-					'height' => 1080,
-				]
-			],
-			'format' => [],
-		] ) );
-
-		$this->mockFFProbeCommand( $result );
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$file = $this->getVideoFileMock();
 
 		$handler->normaliseParams( $file, $params );
 
 		$this->assertEquals( 500, $params['width'] );
-		// Actually 281.25
 		$this->assertEquals( 281, (int)$params['height'] );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testNormaliseParamsPoster() {
-		$this->markTestSkipped( 'Somehow: Class "MediaWiki\Title\TitleFactory" does not exist on MW1_39' );
+		$this->markTestSkipped( 'Somehow: Class "MediaWiki\\Title\\TitleFactory" does not exist on MW1_39' );
 
 		$this->overrideConfigValues( [
 			'EmbedVideoLazyLoadLocalVideos' => 'custom-val',
 		] );
 
 		$handler = new VideoHandler();
-
 		$params = [
 			'poster' => 'ExamplePoster.jpg',
 		];
@@ -269,16 +176,19 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			->with( 'ExamplePoster.jpg', NS_FILE )
 			->willReturn( $titleMock );
 
-		$this->mockFFProbeCommand();
-
 		$output = $this->getMockBuilder( MediaTransformOutput::class )->getMock();
 		$output->expects( $this->once() )->method( 'getUrl' )->willReturn( 'http://localhost' );
 
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$file = $this->getMockBuilder( LocalFile::class )
+			->disableOriginalConstructor()
+			->onlyMethods( [ 'transform', 'getWidth', 'getHeight', 'getFullUrl' ] )
+			->getMock();
 		$file->expects( $this->once() )
 			->method( 'transform' )
 			->willReturn( $output );
-		$file->method( 'getLocalRefPath' )->willReturn( '/dev/null' );
+		$file->method( 'getWidth' )->willReturn( 1920 );
+		$file->method( 'getHeight' )->willReturn( 1080 );
+		$file->method( 'getFullUrl' )->willReturn( 'https://example.org/foo.mp4' );
 
 		$repoMock = $this->getMockBuilder( RepoGroup::class )->disableOriginalConstructor()->getMock();
 		$repoMock->expects( $this->once() )
@@ -303,8 +213,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::doTransform
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testDoTransform() {
@@ -313,12 +221,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		] );
 
 		$handler = new VideoHandler();
-
-		$this->mockFFProbeCommand();
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-
-		$handler->normaliseParams( $file, $params );
+		$file = $this->getVideoFileMock();
 
 		$this->assertInstanceOf( VideoTransformOutput::class, $handler->doTransform( $file, '', '', [] ) );
 	}
@@ -326,8 +229,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::doTransform
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testDoTransformStyled() {
@@ -342,17 +243,10 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		] );
 
 		RequestContext::resetMain();
-
-		$context = RequestContext::getMain();
-		$context->setTitle( $title );
+		RequestContext::getMain()->setTitle( $title );
 
 		$handler = new VideoHandler();
-
-		$this->mockFFProbeCommand();
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-
-		$handler->normaliseParams( $file, $params );
+		$file = $this->getVideoFileMock();
 
 		$this->assertInstanceOf( VideoEmbedTransformOutput::class, $handler->doTransform( $file, '', '', [] ) );
 	}
@@ -360,8 +254,6 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::doTransform
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getSizeAndMetadata
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testDoTransformStyledNotWhenGif() {
@@ -376,17 +268,10 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		] );
 
 		RequestContext::resetMain();
-
-		$context = RequestContext::getMain();
-		$context->setTitle( $title );
+		RequestContext::getMain()->setTitle( $title );
 
 		$handler = new VideoHandler();
-
-		$this->mockFFProbeCommand();
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-
-		$handler->normaliseParams( $file, $params );
+		$file = $this->getVideoFileMock();
 
 		$this->assertInstanceOf(
 			VideoTransformOutput::class,
@@ -396,136 +281,176 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getDimensionsString
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testGetDimensionsString() {
-		$handler = new VideoHandler();
+		$handler = $this->getVideoHandlerWithoutProbe();
 
-		$this->mockFFProbeCommand();
+		$file = $this->getVideoFileMock( [ 'duration' => '10' ], 640, 320 );
 
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$result = $handler->getDimensionsString( $file );
 
-		$msg = $handler->getDimensionsString( $file );
-
-		$this->assertEquals(
-			$msg,
-			wfMessage(
-				'embedvideo-video-short-desc',
-				$this->getServiceContainer()->getContentLanguage()->formatTimePeriod( false ),
-				640,
-				320
-			)->plain()
-		);
+		$this->assertStringContainsString( 'duration:10', $result );
+		$this->assertStringContainsString( '640', $result );
+		$this->assertStringContainsString( '320', $result );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getDimensionsString
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
-	public function testGetDimensionsStringInvalidResult() {
-		$handler = new VideoHandler();
+	public function testGetDimensionsStringMissingMetadata() {
+		$handler = $this->getVideoHandlerWithoutProbe();
 
-		$result = new UnboxedResult();
-		$result->stdout( '<' );
+		$file = $this->getVideoFileMock( [], 640, 320 );
 
-		$this->mockFFProbeCommand( $result );
+		$result = $handler->getDimensionsString( $file );
 
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-
-		AtEase::suppressWarnings();
-		$msg = $handler->getDimensionsString( $file );
-		AtEase::restoreWarnings();
-
-		$this->assertEmpty( $msg );
+		$this->assertStringNotContainsString( 'duration:', $result );
+		$this->assertStringContainsString( '640', $result );
+		$this->assertStringContainsString( '320', $result );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getShortDesc
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testGetShortDesc() {
-		$handler = new VideoHandler();
+		$handler = $this->getVideoHandlerWithoutProbe();
 
-		$this->mockFFProbeCommand();
+		$file = $this->getVideoFileMock( [ 'duration' => '10' ], 640, 320, 1000 );
 
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
+		$result = $handler->getShortDesc( $file );
 
-		$msg = $handler->getShortDesc( $file );
-
-		$this->assertEquals(
-			$msg,
-			wfMessage(
-				'embedvideo-video-short-desc',
-				$this->getServiceContainer()->getContentLanguage()->formatTimePeriod( false ),
-				640,
-				320,
-				1000
-			)->plain()
-		);
+		$this->assertStringContainsString( 'duration:10', $result );
+		$this->assertStringContainsString( '640', $result );
+		$this->assertStringContainsString( '320', $result );
 	}
 
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getLongDesc
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getFFProbeResult
 	 * @return void
 	 */
 	public function testGetLongDesc() {
-		$handler = new VideoHandler();
+		$handler = $this->getVideoHandlerWithoutProbe();
 
-		$this->mockFFProbeCommand();
-
-		$file = $this->getMockBuilder( LocalFile::class )->disableOriginalConstructor()->getMock();
-		$file->expects( $this->once() )->method( 'getPath' )->willReturn( 'foo.mp4' );
-
-		$msg = $handler->getLongDesc( $file );
-
-		$this->assertEquals(
-			$msg,
-			wfMessage(
-				'embedvideo-video-long-desc',
-				'MP4',
-				'',
-				$this->getServiceContainer()->getContentLanguage()->formatTimePeriod( false ),
-				640,
-				320,
-				$this->getServiceContainer()->getContentLanguage()->formatBitrate( false ),
-			)->plain()
+		$file = $this->getVideoFileMock(
+			[
+				'duration' => '10',
+				'codec' => 'h264',
+				'bitrate' => 100,
+			],
+			640,
+			320,
+			1000,
+			'foo.mp4'
 		);
+
+		$result = $handler->getLongDesc( $file );
+
+		$this->assertStringContainsString( 'MP4', $result );
+		$this->assertStringContainsString( 'h264', $result );
+		$this->assertStringContainsString( 'duration:10', $result );
+		$this->assertStringContainsString( '640', $result );
+		$this->assertStringContainsString( '320', $result );
+		$this->assertStringContainsString( 'bitrate:100', $result );
 	}
 
 	/**
-	 * Mock the invocations used by invokeFFProbe
-	 *
-	 * @param UnboxedResult|null $result
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getLength
 	 * @return void
-	 * @throws Exception
 	 */
-	private function mockFFProbeCommand( ?UnboxedResult $result = null ): void {
-		if ( $result === null ) {
-			$result = new UnboxedResult();
-			$result->stdout( json_encode( [
-				'streams' => [
-					[
-						'codec_type' => 'video',
-						'width' => 640,
-						'height' => 320,
-					]
-				],
-				'format' => [],
-			] ) );
-		}
+	public function testGetLength() {
+		$handler = new VideoHandler();
 
-		$commandMock = $this->getMockBuilder( Command::class )->disableOriginalConstructor()->getMock();
-		$commandMock->expects( $this->atLeast( 1 ) )->method( 'params' );
-		$commandMock->expects( $this->atLeast( 1 ) )->method( 'unsafeParams' );
-		$commandMock->expects( $this->atLeast( 1 ) )->method( 'execute' )->willReturn( $result );
+		$this->assertSame( 10.0, $handler->getLength( $this->getVideoFileMock( [ 'duration' => '10' ] ) ) );
+		$this->assertSame( 0.0, $handler->getLength( $this->getVideoFileMock() ) );
+	}
 
-		$shellMock = $this->getMockBuilder( CommandFactory::class )->disableOriginalConstructor()->getMock();
-		$shellMock->expects( $this->atLeast( 1 ) )->method( 'create' )->willReturn( $commandMock );
+	/**
+	 * @param array $metadata
+	 * @param int $width
+	 * @param int $height
+	 * @param int $size
+	 * @param string $path
+	 * @return LocalFile
+	 */
+	private function getVideoFileMock(
+		array $metadata = [],
+		int $width = 1920,
+		int $height = 1080,
+		int $size = 1000,
+		string $path = 'foo.mp4'
+	): LocalFile {
+		$file = $this->getMockBuilder( LocalFile::class )
+			->disableOriginalConstructor()
+			->onlyMethods( [
+				'getMetadataItems',
+				'getMetadataItem',
+				'getWidth',
+				'getHeight',
+				'getSize',
+				'getPath',
+				'getFullUrl',
+			] )
+			->getMock();
 
-		$this->setService( 'ShellCommandFactory', $shellMock );
+		$file->method( 'getMetadataItems' )
+			->willReturnCallback(
+				static fn( array $keys ) => array_intersect_key( $metadata, array_fill_keys( $keys, true ) )
+			);
+		$file->method( 'getMetadataItem' )
+			->willReturnCallback( static fn( string $key ) => $metadata[$key] ?? null );
+		$file->method( 'getWidth' )->willReturn( $width );
+		$file->method( 'getHeight' )->willReturn( $height );
+		$file->method( 'getSize' )->willReturn( $size );
+		$file->method( 'getPath' )->willReturn( $path );
+		$file->method( 'getFullUrl' )->willReturn( 'https://example.org/' . basename( $path ) );
+
+		return $file;
+	}
+
+	/**
+	 * @return VideoHandler
+	 */
+	private function getVideoHandlerWithoutProbe(): VideoHandler {
+		$handler = new class extends VideoHandler {
+			/**
+			 * @param object $language
+			 * @return void
+			 */
+			public function setContentLanguageForTest( object $language ): void {
+				$this->contentLanguage = $language;
+			}
+
+			/**
+			 * @inheritDoc
+			 */
+			protected function getFFProbeResult( $file, ?string $select = null ): array {
+				throw new \LogicException( 'FFProbe should not be called during metadata-only render methods.' );
+			}
+		};
+
+		$handler->setContentLanguageForTest(
+			new class {
+				public function formatTimePeriod( $seconds ): string {
+					return "duration:$seconds";
+				}
+
+				public function formatSize( $size ): string {
+					return "size:$size";
+				}
+
+				public function formatBitrate( $bitrate ): string {
+					return "bitrate:$bitrate";
+				}
+
+				public function commaList( array $list ): string {
+					return implode( ', ', $list );
+				}
+			}
+		);
+
+		return $handler;
 	}
 }

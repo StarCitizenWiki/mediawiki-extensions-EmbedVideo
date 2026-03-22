@@ -62,26 +62,6 @@ class FFProbeTest extends MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::invokeFFProbe
 	 * @return void
 	 */
-	public function testLoadMetadataCLI() {
-		$this->overrideConfigValues( [
-			'CommandLineMode' => true,
-		] );
-
-		$this->mockFFProbeCommand();
-
-		$cache = $this->getMockBuilder( \WANObjectCache::class )->disableOriginalConstructor()->getMock();
-		$cache->expects( $this->never() )->method( 'makeGlobalKey' );
-
-		$probe = new FFProbe( 'foo', UnregisteredLocalFile::newFromPath( '/dev/null', 'video/mp4' ) );
-
-		$this->assertTrue( $probe->loadMetaData() );
-	}
-
-	/**
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::loadMetaData
-	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::invokeFFProbe
-	 * @return void
-	 */
 	public function testLoadMetadataNoFfProbe() {
 		$this->overrideConfigValues( [
 			'FFProbeLocation' => null,
@@ -210,6 +190,35 @@ class FFProbeTest extends MediaWikiIntegrationTestCase {
 		$probe = new FFProbe( 'foo', UnregisteredLocalFile::newFromPath( '/dev/null', 'video/mp4' ) );
 
 		$this->assertFalse( $probe->getStream( 'v:0' ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::getFormat
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::getStream
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::loadMetaData
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe::invokeFFProbe
+	 * @return void
+	 */
+	public function testProbeMemoizedWithinInstance() {
+		$result = new UnboxedResult();
+		$result->stdout( json_encode( [
+			'streams' => [
+				[
+					'codec_type' => 'audio',
+					'codec_name' => 'opus',
+				],
+			],
+			'format' => [
+				'filename' => 'foobar',
+			],
+		] ) );
+
+		$this->mockFFProbeCommand( $result );
+
+		$probe = new FFProbe( 'foo', UnregisteredLocalFile::newFromPath( '/dev/null', 'audio/ogg' ) );
+
+		$this->assertInstanceOf( StreamInfo::class, $probe->getStream( 'a:0' ) );
+		$this->assertInstanceOf( FormatInfo::class, $probe->getFormat() );
 	}
 
 	/**

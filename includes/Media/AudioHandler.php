@@ -4,17 +4,18 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Media;
 
-use File;
 use MediaHandler;
 use MediaTransformOutput;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
+use MediaWiki\FileRepo\File\File;
 use MediaWiki\MediaWikiServices;
 use stdClass;
 use Wikimedia\FileBackend\FSFile\FSFile;
 
 class AudioHandler extends MediaHandler {
 	protected $contentLanguage;
+	protected string $defaultProbeStream = 'a:0';
 
 	public function __construct() {
 		$this->contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
@@ -183,18 +184,15 @@ class AudioHandler extends MediaHandler {
 	 * @return string Dimensions
 	 */
 	public function getDimensionsString( $file ): string {
-		[
-			'stream' => $stream,
-			'format' => $format,
-		] = $this->getFFProbeResult( $file, 'a:0' );
-
-		if ( $format === false || $stream === false ) {
-			return parent::getDimensionsString( $file );
+		$metadata = $file->getMetadataItems( [ 'duration' ] );
+		$duration = $metadata['duration'] ?? null;
+		if ( $duration === null || $duration === false || $duration === '' ) {
+			return '';
 		}
 
 		return wfMessage(
 			'embedvideo-audio-short-desc',
-			$this->contentLanguage->formatTimePeriod( $format->getDuration() )
+			$this->contentLanguage->formatTimePeriod( (float)$duration )
 		)->text();
 	}
 
@@ -205,18 +203,15 @@ class AudioHandler extends MediaHandler {
 	 * @return string
 	 */
 	public function getShortDesc( $file ): string {
-		[
-			'stream' => $stream,
-			'format' => $format,
-		] = $this->getFFProbeResult( $file, 'a:0' );
-
-		if ( $format === false || $stream === false ) {
+		$metadata = $file->getMetadataItems( [ 'duration' ] );
+		$duration = $metadata['duration'] ?? null;
+		if ( $duration === null || $duration === false || $duration === '' ) {
 			return self::getGeneralShortDesc( $file );
 		}
 
 		return wfMessage(
 			'embedvideo-audio-short-desc',
-			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
+			$this->contentLanguage->formatTimePeriod( (float)$duration ),
 			$this->contentLanguage->formatSize( $file->getSize() )
 		)->text();
 	}
@@ -228,24 +223,30 @@ class AudioHandler extends MediaHandler {
 	 * @return string
 	 */
 	public function getLongDesc( $file ): string {
-		[
-			'stream' => $stream,
-			'format' => $format,
-		] = $this->getFFProbeResult( $file, 'a:0' );
+		$metadata = $file->getMetadataItems( [ 'duration', 'codec', 'bitrate' ] );
+		$duration = $metadata['duration'] ?? null;
+		$codec = $metadata['codec'] ?? null;
+		$bitrate = $metadata['bitrate'] ?? null;
+		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
+		$parts = [ strtoupper( $extension ) ];
 
-		if ( $format === false || $stream === false ) {
+		if ( $codec !== null && $codec !== false && $codec !== '' ) {
+			$parts[] = $codec;
+		}
+
+		if ( $duration !== null && $duration !== false && $duration !== '' ) {
+			$parts[] = $this->contentLanguage->formatTimePeriod( (float)$duration );
+		}
+
+		if ( $bitrate !== null && $bitrate !== false && $bitrate !== '' ) {
+			$parts[] = $this->contentLanguage->formatBitrate( $bitrate );
+		}
+
+		if ( count( $parts ) === 1 ) {
 			return self::getGeneralLongDesc( $file );
 		}
 
-		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
-
-		return wfMessage(
-			'embedvideo-audio-long-desc',
-			strtoupper( $extension ),
-			$stream->getCodecName(),
-			$this->contentLanguage->formatTimePeriod( $format->getDuration() ),
-			$this->contentLanguage->formatBitrate( $format->getBitRate() )
-		)->text();
+		return $this->contentLanguage->commaList( $parts );
 	}
 
 	/**
@@ -262,12 +263,15 @@ class AudioHandler extends MediaHandler {
 		];
 
 		if ( $stream !== false && $stream !== null ) {
+			$codec = $stream->getCodecName();
+			if ( $codec !== false && $codec !== null && $codec !== '' ) {
+				$data['metadata']['codec'] = $codec;
+			}
+
 			$bitDepth = $stream->getBitDepth();
-			$data['metadata'] = [
-				'duration' => $stream->getDuration(),
-				'codec' => $stream->getCodecName(),
-				'bitdepth' => $bitDepth,
-			];
+			if ( $bitDepth !== false && $bitDepth !== null ) {
+				$data['metadata']['bitdepth'] = $bitDepth;
+			}
 
 			if ( !empty( $stream->getWidth() ) ) {
 				$data['width'] = $stream->getWidth();
@@ -276,6 +280,11 @@ class AudioHandler extends MediaHandler {
 		}
 
 		if ( $format !== false && $format !== null ) {
+			$duration = $format->getDuration();
+			if ( $duration !== false && $duration !== null ) {
+				$data['metadata']['duration'] = $duration;
+			}
+
 			$bitrate = $format->getBitRate();
 			if ( $bitrate !== false && $bitrate !== null ) {
 				$data['metadata']['bitrate'] = (int)$bitrate;
@@ -289,11 +298,12 @@ class AudioHandler extends MediaHandler {
 	 * Runs FFProbe and caches results in the Main WAN Object cache
 	 *
 	 * @param string|FSFile|File $file The file to work on
-	 * @param string $select Video / Audio track to select
+	 * @param string|null $select Video / Audio track to select
 	 * @return array
 	 */
-	protected function getFFProbeResult( $file, string $select = 'v:0' ): array {
+	protected function getFFProbeResult( $file, ?string $select = null ): array {
 		$path = $file;
+		$select ??= $this->defaultProbeStream;
 
 		if ( $file instanceof File ) {
 			$path = $file->getLocalRefPath();
@@ -301,7 +311,7 @@ class AudioHandler extends MediaHandler {
 			$path = $file->getPath();
 		}
 
-		if ( $file === false ) {
+		if ( $file === false || $path === false ) {
 			return [
 				'stream' => false,
 				'format' => false,
@@ -314,5 +324,18 @@ class AudioHandler extends MediaHandler {
 			'stream' => $probe->getStream( $select ),
 			'format' => $probe->getFormat()
 		];
+	}
+
+	/**
+	 * @param File $file
+	 * @return float
+	 */
+	public function getLength( $file ) {
+		$duration = $file->getMetadataItem( 'duration' );
+		if ( $duration === null || $duration === false ) {
+			return 0.0;
+		}
+
+		return (float)$duration;
 	}
 }

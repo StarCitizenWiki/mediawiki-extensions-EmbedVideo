@@ -180,20 +180,17 @@
 	"ExtensionFunctions": [
 		"MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks::setup"
 	],
-	"HookHandlers": {
-		"EmbedVideoHooks": {
-			"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks",
-			"services": [
-				"ConfigFactory",
-				"RepoGroup",
-				"MainWANObjectCache"
-			]
-		}
-	},
-	"Hooks": {
-		"ParserFirstCallInit": "EmbedVideoHooks",
-		"BeforePageDisplay": "EmbedVideoHooks",
-		"ArticlePurge": "EmbedVideoHooks"
-	},
+		"HookHandlers": {
+			"EmbedVideoHooks": {
+				"class": "MediaWiki\\Extension\\EmbedVideo\\EmbedVideoHooks",
+				"services": [
+					"ConfigFactory"
+				]
+			}
+		},
+		"Hooks": {
+			"ParserFirstCallInit": "EmbedVideoHooks",
+			"BeforePageDisplay": "EmbedVideoHooks"
+		},
 	"manifest_version": 2
 }
