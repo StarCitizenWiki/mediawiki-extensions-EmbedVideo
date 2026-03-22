@@ -76,6 +76,7 @@
 	"apihelp-embedvideo-param-container": "API parameter description for container.",
 	"apihelp-embedvideo-param-urlargs": "API parameter description for URL arguments.",
 	"apihelp-embedvideo-param-autoresize": "API parameter description for autoresize.",
+	"apihelp-embedvideo-param-valignment": "API parameter description for vertical alignment.",
 	"right-embedvideo-refreshmetadata": "Description of the user right that allows refreshing stored EmbedVideo metadata.",
 	"action-embedvideo-refreshmetadata": "Label for the embedvideo-refreshmetadata action, used in permission messages."
 }

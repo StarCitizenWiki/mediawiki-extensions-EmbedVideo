@@ -72,6 +72,7 @@
 	"apihelp-embedvideo-param-container": "Accepts frame, or leave empty",
 	"apihelp-embedvideo-param-urlargs": "Additional arguments to pass in the video url (for some services)",
 	"apihelp-embedvideo-param-autoresize": "Auto resize video? (true or false)",
+	"apihelp-embedvideo-param-valignment": "Vertical alignment of video",
 	"right-embedvideo-refreshmetadata": "Refresh stored EmbedVideo metadata",
 	"action-embedvideo-refreshmetadata": "refresh stored EmbedVideo metadata"
 }
