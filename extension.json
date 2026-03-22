@@ -65,7 +65,6 @@
 			]
 		},
 		"ext.embedVideo.videolink": {
-			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.videolink.js",
 				"fetchers/fetchFactory.js",
@@ -81,15 +80,9 @@
 			],
 			"dependencies": [
 				"mediawiki.storage"
-			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"ext.embedVideo.consent": {
-			"es6": true,
 			"packageFiles": [
 				"ext.embedVideo.consent.js",
 				"fetchers/fetchFactory.js",
@@ -104,11 +97,6 @@
 			],
 			"dependencies": [
 				"mediawiki.storage"
-			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"ext.embedVideo.overlay": {
@@ -118,11 +106,6 @@
 			"styles": [
 				"ext.embedVideo.consent.less"
 			],
-			"position": "top",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"messages": [
 				"embedvideo-play"
 			]
@@ -130,10 +113,6 @@
 		"ext.embedVideo.styles": {
 			"styles": [
 				"ext.embedVideo.styles.less"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		}
 	},
