@@ -5,15 +5,15 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Specials;
 
 use Exception;
+use LocalFile;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
-use MediaWiki\FileRepo\File\LocalFile;
-use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Html\Html;
 use MediaWiki\HTMLForm\HTMLForm;
 use MediaWiki\SpecialPage\UnlistedSpecialPage;
 use MediaWiki\Status\Status;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
+use RepoGroup;
 
 class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 	/**

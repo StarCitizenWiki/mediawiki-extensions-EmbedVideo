@@ -10,8 +10,6 @@ use MediaWiki\Exception\MWException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Media\VideoHandler;
-use MediaWiki\FileRepo\File\LocalFile;
-use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
@@ -20,6 +18,8 @@ use MediaWiki\Parser\Parser;
 use MediaWiki\Skin\Skin;
 use MediaWiki\Skin\SkinTemplate;
 use MediaWiki\SpecialPage\SpecialPage;
+use LocalFile;
+use RepoGroup;
 
 /**
  * EmbedVideo

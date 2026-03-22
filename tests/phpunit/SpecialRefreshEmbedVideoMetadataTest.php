@@ -4,13 +4,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests;
 
+use LocalFile;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Specials\SpecialRefreshEmbedVideoMetadata;
-use MediaWiki\FileRepo\File\LocalFile;
 use MediaWiki\FileRepo\LocalRepo;
-use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\SpecialPage\SpecialPage;
+use RepoGroup;
 
 /**
  * @group Database
