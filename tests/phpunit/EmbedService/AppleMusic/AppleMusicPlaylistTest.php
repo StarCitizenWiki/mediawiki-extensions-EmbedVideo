@@ -35,7 +35,8 @@ class AppleMusicPlaylistTest extends MediaWikiIntegrationTestCase {
 	 * A valid international url containing an id
 	 * @var string
 	 */
-	private string $validIntlUrlId = 'https://music.apple.com/de/playlist/todays-hits/pl.f4d106fed2bd41149aaacabb233eb5eb';
+	private string $validIntlUrlId =
+		'https://music.apple.com/de/playlist/todays-hits/pl.f4d106fed2bd41149aaacabb233eb5eb';
 
 	/**
 	 * An invalid url
