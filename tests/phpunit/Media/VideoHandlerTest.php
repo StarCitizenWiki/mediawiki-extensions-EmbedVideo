@@ -236,7 +236,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 			'EmbedVideoUseEmbedStyleForLocalVideos' => true,
 		] );
 
-		$title = Title::newFromText( 'Main_Page' );
+		$title = $this->getTitleMock( NS_MAIN );
 
 		$this->setMwGlobals( [
 			'wgTitle' => $title,
@@ -256,12 +256,67 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
 	 * @return void
 	 */
+	public function testDoTransformStyledOnFilePage(): void {
+		$this->overrideConfigValues( [
+			'EmbedVideoUseEmbedStyleForLocalVideos' => true,
+			'EmbedVideoLazyLoadLocalVideos' => true,
+		] );
+
+		$title = $this->getTitleMock( NS_FILE );
+
+		$this->setMwGlobals( [
+			'wgTitle' => $title,
+		] );
+
+		RequestContext::resetMain();
+		RequestContext::getMain()->setTitle( $title );
+
+		$handler = new VideoHandler();
+		$file = $this->getVideoFileMock();
+		$output = $handler->doTransform( $file, '', '', [] );
+		$parameters = ( new \ReflectionProperty(
+			\MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput::class,
+			'parameters'
+		) );
+
+		$this->assertInstanceOf( VideoEmbedTransformOutput::class, $output );
+		$this->assertFalse( $parameters->getValue( $output )['lazy'] );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::doTransform
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
+	 * @return void
+	 */
+	public function testDoTransformStyledWithoutRequestTitle(): void {
+		$this->overrideConfigValues( [
+			'EmbedVideoUseEmbedStyleForLocalVideos' => true,
+		] );
+
+		$this->setMwGlobals( [
+			'wgTitle' => null,
+		] );
+
+		RequestContext::resetMain();
+		RequestContext::getMain()->setTitle( null );
+
+		$handler = new VideoHandler();
+		$file = $this->getVideoFileMock();
+
+		$this->assertInstanceOf( VideoEmbedTransformOutput::class, $handler->doTransform( $file, '', '', [] ) );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::doTransform
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::normaliseParams
+	 * @return void
+	 */
 	public function testDoTransformStyledNotWhenGif() {
 		$this->overrideConfigValues( [
 			'EmbedVideoUseEmbedStyleForLocalVideos' => true,
 		] );
 
-		$title = Title::newFromText( 'Main_Page' );
+		$title = $this->getTitleMock( NS_MAIN );
 
 		$this->setMwGlobals( [
 			'wgTitle' => $title,
@@ -408,6 +463,21 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$file->method( 'getFullUrl' )->willReturn( 'https://example.org/' . basename( $path ) );
 
 		return $file;
+	}
+
+	/**
+	 * @param int $namespace
+	 * @return Title
+	 */
+	private function getTitleMock( int $namespace ): Title {
+		$title = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->onlyMethods( [ 'getNamespace' ] )
+			->getMock();
+
+		$title->method( 'getNamespace' )->willReturn( $namespace );
+
+		return $title;
 	}
 
 	/**

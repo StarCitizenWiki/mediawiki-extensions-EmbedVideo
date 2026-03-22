@@ -162,19 +162,15 @@ class VideoHandler extends AudioHandler {
 			->get( 'EmbedVideoUseEmbedStyleForLocalVideos' );
 
 		$request = RequestContext::getMain();
-		$useEmbedTransform = false;
+		$title = $request->getTitle();
 
-		if ( $request->getTitle() !== null ) {
-			$useEmbedTransform = $request->getTitle()->isContentPage();
-
+		if ( $title !== null && $title->getNamespace() === NS_FILE ) {
 			// Always preload if is file page
-			if ( $request->getTitle()->getNamespace() === NS_FILE ) {
-				$params['lazy'] = false;
-			}
+			$params['lazy'] = false;
 		}
 
 		// If local files are globally styled AND no gif or autoplay parameter is set
-		if ( $useEmbedTransform && $styledLocalFiles === true &&
+		if ( $styledLocalFiles === true &&
 			!( isset( $params['gif'] ) || isset( $params['autoplay'] ) ) ) {
 			return new VideoEmbedTransformOutput( $file, $params );
 		}
