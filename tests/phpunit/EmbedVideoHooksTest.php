@@ -6,15 +6,12 @@ namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use Exception;
 use LocalFile;
+use LocalRepo;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedVideoHooks;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
-use MediaWiki\FileRepo\LocalRepo;
-use MediaWiki\Message\Message;
 use MediaWiki\Output\OutputPage;
-use MediaWiki\Skin\SkinTemplate;
-use MediaWiki\User\User;
 use MediaWikiIntegrationTestCase;
 use RepoGroup;
 
@@ -182,8 +179,11 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testAddsRefreshMetadataActionForLocalFile(): void {
 		$title = $this->getServiceContainer()->getTitleFactory()->newFromText( 'Test.ogg', NS_FILE );
-		$user = $this->createMock( User::class );
-		$user->method( 'isAllowed' )->with( 'embedvideo-refreshmetadata' )->willReturn( true );
+		$user = new class {
+			public function isAllowed( string $permission ): bool {
+				return $permission === 'embedvideo-refreshmetadata';
+			}
+		};
 
 		$file = $this->createMock( LocalFile::class );
 		$file->method( 'exists' )->willReturn( true );
@@ -197,13 +197,36 @@ class EmbedVideoHooksTest extends MediaWikiIntegrationTestCase {
 		$repoGroup = $this->createMock( RepoGroup::class );
 		$repoGroup->method( 'getLocalRepo' )->willReturn( $localRepo );
 
-		$message = $this->createMock( Message::class );
-		$message->method( 'text' )->willReturn( 'Refresh metadata' );
+		$message = new class {
+			public function text(): string {
+				return 'Refresh metadata';
+			}
+		};
 
-		$skin = $this->createMock( SkinTemplate::class );
-		$skin->method( 'getTitle' )->willReturn( $title );
-		$skin->method( 'getUser' )->willReturn( $user );
-		$skin->method( 'msg' )->with( 'embedvideo-refreshmetadata-tab' )->willReturn( $message );
+		$skin = new class( $title, $user, $message ) {
+			public function __construct(
+				private $title,
+				private $user,
+				private $message
+			) {
+			}
+
+			public function getTitle() {
+				return $this->title;
+			}
+
+			public function getUser() {
+				return $this->user;
+			}
+
+			public function msg( string $key ) {
+				if ( $key !== 'embedvideo-refreshmetadata-tab' ) {
+					throw new \InvalidArgumentException( "Unexpected message key: $key" );
+				}
+
+				return $this->message;
+			}
+		};
 
 		$hooks = new EmbedVideoHooks(
 			$this->getServiceContainer()->getConfigFactory(),

@@ -5,9 +5,9 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests;
 
 use LocalFile;
+use LocalRepo;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Specials\SpecialRefreshEmbedVideoMetadata;
-use MediaWiki\FileRepo\LocalRepo;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\SpecialPage\SpecialPage;
 use RepoGroup;
