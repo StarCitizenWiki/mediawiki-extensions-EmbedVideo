@@ -2,43 +2,42 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Extension\EmbedVideo\EmbedService\Deezer;
+namespace MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic;
 
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 
-class DeezerAlbum extends AbstractEmbedService {
+class AppleMusicAlbum extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
-		'allow' => 'encrypted-media; clipboard-write',
-		'allowtransparency' => true,
-		'style' => 'border-radius:10px;'
+		'allow' => 'encrypted-media',
+		'style' => 'border-radius:10px;',
 	];
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.deezer.com/widget/auto/album/%1$s';
+		return 'https://embed.music.apple.com/album/%1$s?theme=auto';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getServiceKey(): string {
-		return 'deezer';
+		return 'applemusic';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getDefaultWidth(): int {
-		return 400;
+		return 660;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getDefaultHeight(): int {
-		return 300;
+		return 450;
 	}
 
 	/**
@@ -46,7 +45,9 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/en/album/([a-zA-Z0-9]+)#is',
+			'#embed\.music\.apple\.com/(?:[^/]+/)?album/([0-9]+)#is',
+			'#music\.apple\.com/(?:[^/]+/)?album/(?:[a-zA-Z0-9-]+)/([0-9]+)#is',
+			'#music\.apple\.com/album/([0-9]+)#is',
 		];
 	}
 
@@ -55,7 +56,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([a-zA-Z0-9]+)$#is'
+			'#^([0-9]+)$#is',
 		];
 	}
 
@@ -70,7 +71,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.deezer.com/legal/personal-datas';
+		return 'https://www.apple.com/legal/privacy/data/en/apple-music/';
 	}
 
 	/**
@@ -78,8 +79,8 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://www.deezer.com',
-			'https://widget.deezer.com'
+			'https://music.apple.com',
+			'https://embed.music.apple.com',
 		];
 	}
 }

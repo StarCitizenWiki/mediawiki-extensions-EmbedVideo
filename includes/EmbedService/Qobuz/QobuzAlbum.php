@@ -2,43 +2,45 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Extension\EmbedVideo\EmbedService\Deezer;
+namespace MediaWiki\Extension\EmbedVideo\EmbedService\Qobuz;
 
 use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 
-class DeezerAlbum extends AbstractEmbedService {
+class QobuzAlbum extends AbstractEmbedService {
+	protected $extraIds = [
+		'US-en',
+	];
+
 	protected $additionalIframeAttributes = [
-		'allow' => 'encrypted-media; clipboard-write',
-		'allowtransparency' => true,
-		'style' => 'border-radius:10px;'
+		'allow' => 'encrypted-media',
 	];
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return 'https://widget.deezer.com/widget/auto/album/%1$s';
+		return 'https://widget.qobuz.com/album/%1$s?zone=%2$s';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getServiceKey(): string {
-		return 'deezer';
+		return 'qobuz';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getDefaultWidth(): int {
-		return 400;
+		return 378;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getDefaultHeight(): int {
-		return 300;
+		return 390;
 	}
 
 	/**
@@ -46,7 +48,9 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#www\.deezer\.com/en/album/([a-zA-Z0-9]+)#is',
+			'#widget\.qobuz\.com/album/([a-zA-Z0-9]+)\?zone=([a-z]{2}-[a-z]{2})(?:&.*)?#is',
+			'#play\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
+			'#open\.qobuz\.com/album/([a-zA-Z0-9]+)#is',
 		];
 	}
 
@@ -55,7 +59,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([a-zA-Z0-9]+)$#is'
+			'#^([a-zA-Z0-9]+)$#is',
 		];
 	}
 
@@ -70,7 +74,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.deezer.com/legal/personal-datas';
+		return 'https://www.qobuz.com/us-en/discover/legals/privacy';
 	}
 
 	/**
@@ -78,8 +82,7 @@ class DeezerAlbum extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://www.deezer.com',
-			'https://widget.deezer.com'
+			'https://widget.qobuz.com',
 		];
 	}
 }
