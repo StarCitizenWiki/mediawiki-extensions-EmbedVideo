@@ -247,7 +247,7 @@ class VideoHandler extends AudioHandler {
 		$bitrate = $metadata['bitrate'] ?? null;
 		$width = $file->getWidth();
 		$height = $file->getHeight();
-		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
+		$extension = $file->getExtension();
 		$parts = [ strtoupper( $extension ) ];
 
 		if ( $codec !== null && $codec !== false && $codec !== '' ) {

@@ -416,6 +416,56 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getLongDesc
+	 * @return void
+	 */
+	public function testGetLongDescWithForeignApiFile(): void {
+		$handler = $this->getVideoHandlerWithoutProbe();
+
+		$file = $this->getMockBuilder( LocalFile::class )
+			->disableOriginalConstructor()
+			->onlyMethods( [
+				'getMetadataItems',
+				'getMetadataItem',
+				'getWidth',
+				'getHeight',
+				'getSize',
+				'getPath',
+				'getFullUrl',
+				'getExtension',
+			] )
+			->getMock();
+
+		$metadata = [
+			'duration' => '10',
+			'codec' => 'h264',
+			'bitrate' => 100,
+		];
+
+		$file->method( 'getMetadataItems' )
+			->willReturnCallback(
+				static fn( array $keys ) => array_intersect_key( $metadata, array_fill_keys( $keys, true ) )
+			);
+		$file->method( 'getMetadataItem' )
+			->willReturnCallback( static fn( string $key ) => $metadata[$key] ?? null );
+		$file->method( 'getWidth' )->willReturn( 640 );
+		$file->method( 'getHeight' )->willReturn( 320 );
+		$file->method( 'getSize' )->willReturn( 1000 );
+		$file->method( 'getPath' )->willReturn( false );
+		$file->method( 'getFullUrl' )->willReturn( 'https://example.org/foo.mp4' );
+		$file->method( 'getExtension' )->willReturn( 'mp4' );
+
+		$result = $handler->getLongDesc( $file );
+
+		$this->assertStringContainsString( 'MP4', $result );
+		$this->assertStringContainsString( 'h264', $result );
+		$this->assertStringContainsString( 'duration:10', $result );
+		$this->assertStringContainsString( '640', $result );
+		$this->assertStringContainsString( '320', $result );
+		$this->assertStringContainsString( 'bitrate:100', $result );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\VideoHandler::getLength
 	 * @return void
 	 */
@@ -451,6 +501,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 				'getSize',
 				'getPath',
 				'getFullUrl',
+				'getExtension',
 			] )
 			->getMock();
 
@@ -465,6 +516,7 @@ class VideoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$file->method( 'getSize' )->willReturn( $size );
 		$file->method( 'getPath' )->willReturn( $path );
 		$file->method( 'getFullUrl' )->willReturn( 'https://example.org/' . basename( $path ) );
+		$file->method( 'getExtension' )->willReturn( pathinfo( $path, PATHINFO_EXTENSION ) );
 
 		return $file;
 	}

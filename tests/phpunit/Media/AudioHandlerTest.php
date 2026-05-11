@@ -287,6 +287,40 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getLongDesc
+	 * @return void
+	 */
+	public function testGetLongDescWithForeignApiFile(): void {
+		$handler = $this->getAudioHandlerWithoutProbe();
+
+		$file = $this->getMockBuilder( File::class )
+			->disableOriginalConstructor()
+			->onlyMethods( [ 'getMetadataItems', 'getMetadataItem', 'getSize', 'getPath', 'getExtension' ] )
+			->getMock();
+
+		$metadata = [
+			'duration' => '10',
+			'codec' => 'opus',
+			'bitrate' => 100,
+		];
+
+		$file->method( 'getMetadataItems' )
+			->willReturnCallback(
+				static fn( array $keys ) => array_intersect_key( $metadata, array_fill_keys( $keys, true ) )
+			);
+		$file->method( 'getMetadataItem' )
+			->willReturnCallback( static fn( string $key ) => $metadata[$key] ?? null );
+		$file->method( 'getSize' )->willReturn( 1000 );
+		$file->method( 'getPath' )->willReturn( false );
+		$file->method( 'getExtension' )->willReturn( 'ogg' );
+
+		$this->assertEquals(
+			'OGG, opus, duration:10, bitrate:100',
+			$handler->getLongDesc( $file )
+		);
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\AudioHandler::getLength
 	 * @return void
 	 */
@@ -392,7 +426,7 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 	private function getAudioFileMock( array $metadata, int $size = 1000, string $path = 'foo.ogg' ) {
 		$file = $this->getMockBuilder( File::class )
 			->disableOriginalConstructor()
-			->onlyMethods( [ 'getMetadataItems', 'getMetadataItem', 'getSize', 'getPath' ] )
+			->onlyMethods( [ 'getMetadataItems', 'getMetadataItem', 'getSize', 'getPath', 'getExtension' ] )
 			->getMock();
 
 		$file->method( 'getMetadataItems' )
@@ -403,6 +437,7 @@ class AudioHandlerTest extends \MediaWikiIntegrationTestCase {
 			->willReturnCallback( static fn( string $key ) => $metadata[$key] ?? null );
 		$file->method( 'getSize' )->willReturn( $size );
 		$file->method( 'getPath' )->willReturn( $path );
+		$file->method( 'getExtension' )->willReturn( pathinfo( $path, PATHINFO_EXTENSION ) );
 
 		return $file;
 	}

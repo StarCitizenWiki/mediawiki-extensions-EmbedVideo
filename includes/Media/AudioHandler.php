@@ -238,7 +238,7 @@ class AudioHandler extends MediaHandler {
 		$duration = $metadata['duration'] ?? null;
 		$codec = $metadata['codec'] ?? null;
 		$bitrate = $metadata['bitrate'] ?? null;
-		$extension = pathinfo( $file->getPath(), PATHINFO_EXTENSION );
+		$extension = $file->getExtension();
 		$parts = [ strtoupper( $extension ) ];
 
 		if ( $codec !== null && $codec !== false && $codec !== '' ) {
