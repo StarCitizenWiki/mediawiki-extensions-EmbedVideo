@@ -160,6 +160,26 @@ class VideoTransformOutputTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput::getStyle
+	 * Ensures video uses height:auto (not fixed px) so it scales proportionally
+	 * when max-width constrains the width inside a thumb frame.
+	 * @return void
+	 */
+	public function testStyleUsesAutoHeight() {
+		$out = new VideoTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[ 'width' => 640, 'height' => 360 ]
+		);
+
+		$html = $out->toHtml();
+
+		$this->assertStringContainsString( 'height: auto', $html );
+		$this->assertStringNotContainsString( 'height: 360px', $html );
+		$this->assertStringContainsString( 'width: 640px', $html );
+		$this->assertStringContainsString( 'max-width: 100%', $html );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput::toHtml
 	 * Ensures that in gallery contexts, width/height attributes are omitted
 	 * and style does not include fixed width/height when 'no-dimensions' is set.

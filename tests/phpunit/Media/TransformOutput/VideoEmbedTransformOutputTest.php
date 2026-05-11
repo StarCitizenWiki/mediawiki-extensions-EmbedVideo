@@ -55,6 +55,33 @@ class VideoEmbedTransformOutputTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput::toHtml
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter::makeLocalVideoEmbedStyleHtml
+	 * Ensures that when core provides framing options (thumb/frame), no nested <figure>
+	 * is generated — only a wrapper div with overlay + video.
+	 * @return void
+	 */
+	public function testToHtmlWithCoreOptions() {
+		$out = new VideoEmbedTransformOutput(
+			UnregisteredLocalFile::newFromPath( '/dev/null', 'image/jpeg' ),
+			[ 'width' => 640, 'height' => 360, 'title' => 'Test Video' ]
+		);
+
+		$html = $out->toHtml( [ 'img-class' => 'mw-file-element' ] );
+
+		// Should NOT contain a <figure> wrapper (core provides the frame)
+		$this->assertStringNotContainsString( '<figure', $html );
+		// Should contain the wrapper div with embed style class
+		$this->assertStringContainsString( 'embedvideo-wrapper', $html );
+		$this->assertStringContainsString( 'embedvideo--local-embed-style', $html );
+		// Should contain the local embed style overlay
+		$this->assertStringContainsString( 'embedvideo-localEmbedStyle', $html );
+		// Should contain the video with the core-provided class
+		$this->assertStringContainsString( 'mw-file-element', $html );
+		$this->assertStringContainsString( '<video', $html );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoEmbedTransformOutput::toHtml
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter::makeLocalVideoEmbedStyleHtml
 	 * @return void
 	 */
 	public function testToHtmlIncludesPassiveLocalEmbedStyle() {

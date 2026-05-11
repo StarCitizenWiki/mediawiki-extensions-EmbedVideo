@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\Media\TransformOutput;
 
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\LocalVideo;
+use MediaWiki\Html\Html;
 
 class VideoEmbedTransformOutput extends VideoTransformOutput {
 	/**
@@ -18,6 +19,22 @@ class VideoEmbedTransformOutput extends VideoTransformOutput {
 	 */
 	public function toHtml( $options = [] ): string {
 		$service = new LocalVideo( $this, $this->parameters );
+
+		// Core wraps the output in <figure> for frames / thumbs.
+		// This avoids generating a second <figure> which causes unwanted nesting figure elements.
+		if ( !empty( $options ) ) {
+			$videoHtml = $service->renderVideoHtml( $options );
+			$overlayHtml = EmbedHtmlFormatter::makeLocalVideoEmbedStyleHtml( $service );
+
+			return Html::rawElement(
+				'div',
+				[
+					'class' => 'embedvideo-wrapper embedvideo--local-embed-style',
+					'style' => 'position: relative;',
+				],
+				$overlayHtml . $videoHtml
+			);
+		}
 
 		return EmbedHtmlFormatter::toHtml( $service, [
 			'service' => 'local-embed',

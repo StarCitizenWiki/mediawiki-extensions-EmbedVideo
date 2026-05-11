@@ -82,9 +82,7 @@ class VideoTransformOutput extends AudioTransformOutput {
 	protected function getStyle( array $options ): string {
 		$style = [];
 		$width = (int)$this->getWidth();
-		$height = (int)$this->getHeight();
 		$style[] = 'max-width: 100%;';
-		$style[] = 'max-height: 100%;';
 
 		if (
 			empty( $options['no-dimensions'] ) &&
@@ -93,10 +91,8 @@ class VideoTransformOutput extends AudioTransformOutput {
 			if ( $width > 0 ) {
 				$style[] = "width: {$width}px;";
 			}
-
-			if ( $height > 0 ) {
-				$style[] = "height: {$height}px;";
-			}
+			// Use auto height to maintain aspect ratio when max-width constrains the width
+			$style[] = 'height: auto;';
 		}
 
 		if ( !empty( $options['valign'] ) ) {
