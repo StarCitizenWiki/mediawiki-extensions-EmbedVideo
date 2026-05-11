@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"McDutchie",
-			"Romaine"
+			"Romaine",
+			"Siebrand"
 		]
 	},
 	"embedvideo-description": "Deze afgesplitste versie voegt een parserfunctie toe voor het inbedden van video’s uit populaire bronnen.",
@@ -29,7 +30,7 @@
 	"embedvideo-error-urlargs": "EmbedVideo heeft een lijst met URL-argumenten ontvangen die verkeerde gegevens of lege argumenten bevatten.",
 	"embedvideo-error-unknown": "EmbedVideo is een onbekende fout tegengekomen bij het genereren van dit video-insluitblok. ($1)",
 	"embedvideo-error-evp_deprecated": "De parserfunctie #evp is verouderd in EmbedVideo 2.0. Zet uw parserfunctie-tag om naar #ev.",
-	"embedvideo-error-container": "De voor ‘container’ vermelde parameter is ongeldig.",
+	"embedvideo-error-container": "De voor ‘container’ vermelde parameter is onjuist.",
 	"embedvideo-video-long-desc": "$1, codec $2, lengte $3, $4x$5 pixels, gezamenlijk $6",
 	"embedvideo-audio-long-desc": "$1, codec $2, lengte $3, gezamenlijk $4",
 	"embedvideo-error-cantdecode_evu": "De video van $1 kon niet verwerkt worden",
