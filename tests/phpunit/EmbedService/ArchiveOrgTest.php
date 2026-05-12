@@ -201,7 +201,10 @@ class ArchiveOrgTest extends MediaWikiIntegrationTestCase {
 		$service = new ArchiveOrg( $this->validIdWithSubFile );
 
 		$this->assertStringContainsString( '//archive.org/embed/', $service->getUrl() );
-		$this->assertStringContainsString( '2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4', $service->getUrl() );
+		$this->assertStringContainsString(
+			'2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4',
+			$service->getUrl()
+		);
 	}
 
 	/**
