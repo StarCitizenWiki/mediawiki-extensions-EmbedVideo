@@ -124,4 +124,104 @@ class ArchiveOrgTest extends MediaWikiIntegrationTestCase {
 			$out[0]
 		);
 	}
+
+	/**
+	 * A valid ID with a sub-file path (archive.org item containing multiple files)
+	 * @var string
+	 */
+	private string $validIdWithSubFile = '2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4';
+
+	/**
+	 * A valid ID with a sub-file path containing URL-encoded characters
+	 * @var string
+	 */
+	private string $validIdWithEncodedSubFile = 'electricsheep-flock-244-80000-6/00244%3D80126%3D79911%3D79912.avi';
+
+	/**
+	 * A valid URL pointing to a specific sub-file within an archive.org item
+	 * @var string
+	 */
+	private string $validUrlWithSubFile = 'https://archive.org/embed/2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4';
+
+	/**
+	 * A valid details URL pointing to a specific sub-file within an archive.org item
+	 * @var string
+	 */
+	private string $validDetailsUrlWithSubFile = 'https://archive.org/details/electricsheep-flock-244-80000-6/00244%3D80126%3D79911%3D79912.avi';
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
+	 * @return void
+	 */
+	public function testValidIdWithSubFile() {
+		$service = new ArchiveOrg( $this->validIdWithSubFile );
+
+		$this->assertInstanceOf( ArchiveOrg::class, $service );
+		$this->assertEquals( $this->validIdWithSubFile, $service->getId() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
+	 * @return void
+	 */
+	public function testValidIdWithEncodedSubFile() {
+		$service = new ArchiveOrg( $this->validIdWithEncodedSubFile );
+
+		$this->assertInstanceOf( ArchiveOrg::class, $service );
+		$this->assertEquals( $this->validIdWithEncodedSubFile, $service->getId() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
+	 * @return void
+	 */
+	public function testValidUrlWithSubFile() {
+		$service = new ArchiveOrg( $this->validUrlWithSubFile );
+
+		$this->assertInstanceOf( ArchiveOrg::class, $service );
+		$this->assertEquals( $this->validIdWithSubFile, $service->getId() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getUrlRegex
+	 * @return void
+	 */
+	public function testValidDetailsUrlWithSubFile() {
+		$service = new ArchiveOrg( $this->validDetailsUrlWithSubFile );
+
+		$this->assertInstanceOf( ArchiveOrg::class, $service );
+		$this->assertEquals( $this->validIdWithEncodedSubFile, $service->getId() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getUrlRegex
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
+	 * @return void
+	 */
+	public function testUrlWithSubFile() {
+		$service = new ArchiveOrg( $this->validIdWithSubFile );
+
+		$this->assertStringContainsString( '//archive.org/embed/', $service->getUrl() );
+		$this->assertStringContainsString( '2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4', $service->getUrl() );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::getUrl
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
+	 * @return void
+	 */
+	public function testUrlWithEncodedSubFile() {
+		$service = new ArchiveOrg( $this->validIdWithEncodedSubFile );
+
+		$this->assertStringContainsString( '//archive.org/embed/', $service->getUrl() );
+		$this->assertStringContainsString( '00244%3D80126%3D79911%3D79912.avi', $service->getUrl() );
+	}
 }

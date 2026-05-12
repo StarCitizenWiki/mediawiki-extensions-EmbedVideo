@@ -32,7 +32,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#archive\.org/(?:details|embed)/([\d\w\-_][^/\?\#\'"<>]+)#is'
+			'#archive\.org/(?:details|embed)/([\d\w\-_][^\?\#\'"<>]+)#is'
 		];
 	}
 
@@ -41,7 +41,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 */
 	protected function getIdRegex(): array {
 		return [
-			'#^([\d\w\-_][^/\?\#]+)$#is'
+			'#^([\d\w\-_][^\?\#]+)$#is'
 		];
 	}
 
