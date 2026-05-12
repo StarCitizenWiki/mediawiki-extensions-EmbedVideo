@@ -138,18 +138,6 @@ class ArchiveOrgTest extends MediaWikiIntegrationTestCase {
 	private string $validIdWithEncodedSubFile = 'electricsheep-flock-244-80000-6/00244%3D80126%3D79911%3D79912.avi';
 
 	/**
-	 * A valid URL pointing to a specific sub-file within an archive.org item
-	 * @var string
-	 */
-	private string $validUrlWithSubFile = 'https://archive.org/embed/2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4';
-
-	/**
-	 * A valid details URL pointing to a specific sub-file within an archive.org item
-	 * @var string
-	 */
-	private string $validDetailsUrlWithSubFile = 'https://archive.org/details/electricsheep-flock-244-80000-6/00244%3D80126%3D79911%3D79912.avi';
-
-	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService::parseVideoID
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\ArchiveOrg::getIdRegex
 	 * @return void
@@ -180,7 +168,9 @@ class ArchiveOrgTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testValidUrlWithSubFile() {
-		$service = new ArchiveOrg( $this->validUrlWithSubFile );
+		$service = new ArchiveOrg(
+			'https://archive.org/embed/2024-12-21-18-15-xjtv-2/动画片_2024-12-20_19_24_xjtv2.mp4'
+		);
 
 		$this->assertInstanceOf( ArchiveOrg::class, $service );
 		$this->assertEquals( $this->validIdWithSubFile, $service->getId() );
@@ -192,7 +182,9 @@ class ArchiveOrgTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testValidDetailsUrlWithSubFile() {
-		$service = new ArchiveOrg( $this->validDetailsUrlWithSubFile );
+		$service = new ArchiveOrg(
+			'https://archive.org/details/electricsheep-flock-244-80000-6/00244%3D80126%3D79911%3D79912.avi'
+		);
 
 		$this->assertInstanceOf( ArchiveOrg::class, $service );
 		$this->assertEquals( $this->validIdWithEncodedSubFile, $service->getId() );
