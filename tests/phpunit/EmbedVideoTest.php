@@ -136,7 +136,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig=\'{"src":"https://www.youtube-nocookie.com/embed/foobar?autoplay=1"}\' style="width:640px">', $output[0] );
+		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube" data-mw-iframeconfig="{&quot;src&quot;:&quot;https://www.youtube-nocookie.com/embed/foobar?autoplay=1&quot;}" style="width:640px">', $output[0] );
 	}
 
 	/**
@@ -168,7 +168,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
-		$this->assertStringContainsString( '"width":200,"height":200', $output[0] );
+		$this->assertStringContainsString( '"width":200,"height":200', htmlspecialchars_decode( $output[0] ) );
 	}
 
 	/**
@@ -196,7 +196,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
-		$this->assertStringContainsString( '"height":200', $output[0] );
+		$this->assertStringContainsString( '"height":200', htmlspecialchars_decode( $output[0] ) );
 	}
 
 	/**
@@ -224,7 +224,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
-		$this->assertStringContainsString( '"width":200', $output[0] );
+		$this->assertStringContainsString( '"width":200', htmlspecialchars_decode( $output[0] ) );
 	}
 
 	/**
@@ -374,7 +374,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
-		$this->assertStringContainsString( '"width":1000', $output[0] );
+		$this->assertStringContainsString( '"width":1000', htmlspecialchars_decode( $output[0] ) );
 		$this->assertStringContainsString( '<figcaption>Example description</figcaption>', $output[0] );
 		$this->assertStringContainsString( 'mw-halign-right', $output[0] );
 	}
@@ -412,7 +412,7 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 3, $output );
-		$this->assertStringContainsString( '"width":320,"height":320', $output[0] );
+		$this->assertStringContainsString( '"width":320,"height":320', htmlspecialchars_decode( $output[0] ) );
 		$this->assertStringContainsString(
 			'<div class="embedvideo-loader__title embedvideo-loader__title--manual">Title of the Embed</div>',
 			$output[0]

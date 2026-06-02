@@ -125,7 +125,18 @@ class EmbedVideo {
 			}
 		}
 
-		return ( new EmbedVideo( $parser, $expandedArgs, $fromTag ) )->output();
+		$output = ( new EmbedVideo( $parser, $expandedArgs, $fromTag ) )->output();
+		if ( ( $output['isRawHTML'] ?? false ) ) {
+			// Use a nowiki strip marker as isRawHTML requires MW 1.44+ and Scribunto does not properly support
+			// isRawHTML yet (T428670)
+			unset( $output['isRawHTML'] );
+			$marker = Parser::MARKER_PREFIX .
+				'-ev-' . sprintf( '%08X', $parser->mMarkerIndex++ ) .
+				Parser::MARKER_SUFFIX;
+			$parser->getStripState()->addNoWiki( $marker, $output[0] );
+			$output[0] = $marker;
+		}
+		return $output;
 	}
 
 	/**
@@ -319,7 +330,7 @@ class EmbedVideo {
 				$this->args
 			),
 			'noparse' => true,
-			'isHTML' => true
+			'isRawHTML' => true
 		];
 	}
 
@@ -545,7 +556,7 @@ class EmbedVideo {
 	 * @param string $description Description
 	 */
 	private function setDescriptionNoParse( $description ): void {
-		$this->description = ( !$description ? false : $description );
+		$this->description = ( !$description ? false : htmlspecialchars( $description ) );
 	}
 
 	/**

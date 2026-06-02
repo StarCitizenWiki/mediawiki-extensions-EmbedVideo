@@ -121,7 +121,7 @@ class VkTest extends MediaWikiIntegrationTestCase {
 		$this->assertCount( 3, $out );
 		$this->assertStringContainsString(
 			'oid=-22822305&id=456241864',
-			$out[0]
+			htmlspecialchars_decode( $out[0] )
 		);
 	}
 }

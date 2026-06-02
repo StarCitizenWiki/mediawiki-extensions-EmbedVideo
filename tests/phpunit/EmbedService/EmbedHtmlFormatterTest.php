@@ -8,6 +8,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\LocalVideo;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\VideoTransformOutput;
+use MediaWiki\Html\TemplateParser;
 use MediaWikiIntegrationTestCase;
 use UnregisteredLocalFile;
 
@@ -43,7 +44,7 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 		$service = EmbedServiceFactory::newFromName( 'archiveorg', 'foo' );
 
         // phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->assertStringContainsString( 'data-mw-iframeconfig=\'{"src":"//archive.org/embed/foo"}\'', EmbedHtmlFormatter::toHtml( $service ) );
+		$this->assertStringContainsString( 'data-mw-iframeconfig="{&quot;src&quot;:&quot;//archive.org/embed/foo&quot;}"', EmbedHtmlFormatter::toHtml( $service ) );
 		$this->assertStringNotContainsString( '<iframe', EmbedHtmlFormatter::toHtml( $service ) );
 	}
 
@@ -174,7 +175,8 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 	public function testMakeConsentContainerHtml() {
 		$service = EmbedServiceFactory::newFromName( 'archiveorg', 'foo' );
 
-		$output = EmbedHtmlFormatter::makeConsentContainerHtml( $service );
+		$templateParser = new TemplateParser( __DIR__ . '/../../../includes/EmbedService/templates' );
+		$output = EmbedHtmlFormatter::makeConsentContainerHtml( $service, $templateParser );
 
 		$this->assertStringStartsWith( '<div class="embedvideo-consent" data-show-privacy-notice="', $output );
 	}
