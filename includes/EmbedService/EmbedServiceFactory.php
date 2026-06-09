@@ -43,6 +43,7 @@ final class EmbedServiceFactory {
 	 * @var AbstractEmbedService[]
 	 */
 	private static $availableServices = [
+	Alugha::class,
 		AmazonMusic::class,
 		AppleMusicAlbum::class,
 		AppleMusicArtist::class,
@@ -104,6 +105,9 @@ final class EmbedServiceFactory {
 	 */
 	public static function newFromName( string $serviceName, string $id ): AbstractEmbedService {
 		switch ( strtolower( $serviceName ) ) {
+	  case 'alugha':
+		  return new Alugha( $id );
+
 			case 'amazonmusic':
 				return new AmazonMusic( $id );
 
