@@ -415,6 +415,13 @@ class EmbedVideo {
 		];
 	}
 
+	/**
+	 * Build the HTML markup for an error box.
+	 *
+	 * @param string $type
+	 * @param mixed ...$arguments
+	 * @return string
+	 */
 	private function errorBoxHtml( string $type = 'unknown', mixed ...$arguments ): string {
 		return Html::element(
 			'div',
