@@ -5,9 +5,9 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
 use Exception;
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Bandcamp;
 use MediaWiki\Extension\EmbedVideo\EmbedVideo;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWiki\Parser\ParserOptions;
 use MediaWiki\Parser\PPCustomFrame_Hash;
 use MediaWikiIntegrationTestCase;
@@ -47,7 +47,7 @@ class BandcampTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 
 		new Bandcamp( $this->invalidId );
 	}
@@ -87,7 +87,7 @@ class BandcampTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		new Bandcamp( $this->invalidUrlId );
 	}
 

@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\AppleMusic;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -48,7 +48,7 @@ class AppleMusicArtistTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 
 		new AppleMusicArtist( $this->invalidId );
 	}
@@ -98,7 +98,7 @@ class AppleMusicArtistTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		new AppleMusicArtist( $this->invalidUrlId );
 	}
 

@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\YouTube;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubePlaylist;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -42,7 +42,7 @@ class YouTubePlaylistTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 
 		new YouTubePlaylist( $this->invalidId );
 	}
@@ -79,7 +79,7 @@ class YouTubePlaylistTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		new YouTubePlaylist( $this->invalidUrlId );
 	}
 

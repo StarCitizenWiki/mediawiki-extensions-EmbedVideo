@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\Spotify;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\Twitch\TwitchClip;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -42,7 +42,7 @@ class TwitchClipTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 
 		new TwitchClip( $this->invalidId );
 	}
@@ -79,7 +79,7 @@ class TwitchClipTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		new TwitchClip( $this->invalidUrlId );
 	}
 

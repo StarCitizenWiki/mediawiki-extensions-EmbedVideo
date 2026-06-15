@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService\YouTube;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeOEmbed;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -42,7 +42,7 @@ class YouTubeOEmbedTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 
 		new YouTubeOEmbed( $this->invalidId );
 	}
@@ -79,7 +79,7 @@ class YouTubeOEmbedTest extends MediaWikiIntegrationTestCase {
 	 * @return void
 	 */
 	public function testInvalidUrlId() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		new YouTubeOEmbed( $this->invalidUrlId );
 	}
 

@@ -4,9 +4,9 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Tests\EmbedService;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\ExternalVideo;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -38,7 +38,7 @@ class ExternalVideoTest extends MediaWikiIntegrationTestCase {
 			'AllowExternalImagesFrom' => 'bar',
 		] );
 
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( EmbedVideoException::class );
 		EmbedServiceFactory::newFromName( 'external', 'foo' );
 	}
 

@@ -4,10 +4,10 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-use InvalidArgumentException;
 use JsonException;
 use MediaTransformOutput;
 use MediaWiki\Config\Config;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use RuntimeException;
@@ -96,7 +96,7 @@ abstract class AbstractEmbedService {
 	/**
 	 * AbstractVideoService constructor.
 	 * @param string $id
-	 * @throws InvalidArgumentException
+	 * @throws EmbedVideoException
 	 */
 	public function __construct( string $id ) {
 		if ( self::$config === null ) {
@@ -348,7 +348,7 @@ abstract class AbstractEmbedService {
 	 *
 	 * @param string $id Video ID/URL
 	 * @return string Parsed Video ID or false on failure.
-	 * @throws InvalidArgumentException
+	 * @throws EmbedVideoException
 	 */
 	public function parseVideoID( $id ): string {
 		$id = trim( $id );
@@ -373,7 +373,7 @@ abstract class AbstractEmbedService {
 			}
 
 			// If nothing matches and matches are specified then return false for an invalid ID/URL.
-			throw new InvalidArgumentException( 'Provided ID could not be validated.' );
+			throw new EmbedVideoException( 'Provided ID could not be validated.' );
 		}
 
 		// Service definition has not specified a sanitization/validation regex.
@@ -450,7 +450,7 @@ abstract class AbstractEmbedService {
 	 * Set a local filename to be used as the thumbnail for this embed
 	 *
 	 * @param string $localFileName
-	 * @throws InvalidArgumentException When the local file was not found
+	 * @throws EmbedVideoException When the local file was not found
 	 * @throws RuntimeException When the local file could not be transformed
 	 */
 	public function setLocalThumb( string $localFileName ): void {
@@ -469,7 +469,7 @@ abstract class AbstractEmbedService {
 
 			$this->localThumb = $transform;
 		} else {
-			throw new InvalidArgumentException( sprintf( 'Local file "%s" not found.', $localFileName ) );
+			throw new EmbedVideoException( sprintf( 'Local file "%s" not found.', $localFileName ) );
 		}
 	}
 

@@ -4,7 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
-use InvalidArgumentException;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicAlbum;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicArtist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\AppleMusic\AppleMusicPlaylist;
@@ -34,6 +33,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTube;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeOEmbed;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubePlaylist;
 use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTubeVideoList;
+use MediaWiki\Extension\EmbedVideo\EmbedVideoException;
 
 final class EmbedServiceFactory {
 
@@ -283,7 +283,7 @@ final class EmbedServiceFactory {
 				return new Youku( $id );
 
 			default:
-				throw new InvalidArgumentException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
+				throw new EmbedVideoException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );
 		}
 	}
 
