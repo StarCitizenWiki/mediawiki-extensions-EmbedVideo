@@ -16,7 +16,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.43.0",
 		"platform": {
-			"php": ">=8.0"
+			"php": ">=8.1"
 		}
 	},
 	"MessagesDirs": {
