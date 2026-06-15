@@ -20,32 +20,32 @@ class AlughaTest extends MediaWikiIntegrationTestCase {
    * A bare UUID is accepted and produces the expected embed src.
    */
   public function testValidIdProducesEmbedUrl(): void {
-    $this->overrideConfigValue( 'EmbedVideoRequireConsent', true );
+	$this->overrideConfigValue( 'EmbedVideoRequireConsent', true );
 
-    $service = EmbedServiceFactory::newFromName( 'alugha', self::VALID_ID );
-    $html = EmbedHtmlFormatter::toHtml( $service );
+	$service = EmbedServiceFactory::newFromName( 'alugha', self::VALID_ID );
+	$html = EmbedHtmlFormatter::toHtml( $service );
 
-    $this->assertStringContainsString(
-      'data-mw-iframeconfig=\'{"src":"//alugha.com/embed/web-player?v=' . self::VALID_ID . '"}\'',
-      $html
-    );
+	$this->assertStringContainsString(
+	  'data-mw-iframeconfig=\'{"src":"//alugha.com/embed/web-player?v=' . self::VALID_ID . '"}\'',
+	  $html
+	);
 
-    // With consent enabled, no iframe is rendered until the user clicks.
-    $this->assertStringNotContainsString( '<iframe', $html );
+	// With consent enabled, no iframe is rendered until the user clicks.
+	$this->assertStringNotContainsString( '<iframe', $html );
   }
 
   /**
    * A full Alugha embed URL is normalised to the same video id.
    */
   public function testFullUrlIsParsed(): void {
-    $service = EmbedServiceFactory::newFromName(
-      'alugha',
-      'https://alugha.com/embed/web-player?v=' . self::VALID_ID
-    );
+	$service = EmbedServiceFactory::newFromName(
+	  'alugha',
+	  'https://alugha.com/embed/web-player?v=' . self::VALID_ID
+	);
 
-    $this->assertStringContainsString(
-      '//alugha.com/embed/web-player?v=' . self::VALID_ID,
-      EmbedHtmlFormatter::toHtml( $service )
-    );
+	$this->assertStringContainsString(
+	  '//alugha.com/embed/web-player?v=' . self::VALID_ID,
+	  EmbedHtmlFormatter::toHtml( $service )
+	);
   }
 }

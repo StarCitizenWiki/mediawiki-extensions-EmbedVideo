@@ -37,6 +37,7 @@
 	"ResourceModules": {
 		"ext.embedVideo.messages": {
 			"messages": [
+				"embedvideo-service-alugha",
 				"embedvideo-service-amazonmusic",
 				"embedvideo-service-applemusic",
 				"embedvideo-service-archiveorg",
