@@ -110,7 +110,7 @@ class LoomTest extends MediaWikiIntegrationTestCase {
 	public function testEvu(): void {
 		$parser = $this->getServiceContainer()->getParser();
 		$parser->setOptions( ParserOptions::newFromAnon() );
-		$parser->resetOutput();
+		$parser->clearState();
 
 		$out = EmbedVideo::parseEVU(
 			$parser, new PPCustomFrame_Hash( $parser->getPreprocessor(), [] ), [
@@ -118,10 +118,10 @@ class LoomTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$this->assertIsArray( $out );
-		$this->assertCount( 3, $out );
+		$this->assertCount( 2, $out );
 		$this->assertStringContainsString(
 			$this->validId,
-			$out[0]
+			$parser->getStripState()->unstripNoWiki( $out[0] )
 		);
 	}
 }

@@ -110,7 +110,7 @@ class VkTest extends MediaWikiIntegrationTestCase {
 	public function testEvu(): void {
 		$parser = $this->getServiceContainer()->getParser();
 		$parser->setOptions( ParserOptions::newFromAnon() );
-		$parser->resetOutput();
+		$parser->clearState();
 
 		$out = EmbedVideo::parseEVU(
 			$parser, new PPCustomFrame_Hash( $parser->getPreprocessor(), [] ), [
@@ -118,10 +118,10 @@ class VkTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$this->assertIsArray( $out );
-		$this->assertCount( 3, $out );
+		$this->assertCount( 2, $out );
 		$this->assertStringContainsString(
 			'oid=-22822305&id=456241864',
-			htmlspecialchars_decode( $out[0] )
+			htmlspecialchars_decode( $parser->getStripState()->unstripNoWiki( $out[0] ) )
 		);
 	}
 }

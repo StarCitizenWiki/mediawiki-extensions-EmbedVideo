@@ -110,7 +110,7 @@ class BilibiliTest extends MediaWikiIntegrationTestCase {
 	public function testEvu(): void {
 		$parser = $this->getServiceContainer()->getParser();
 		$parser->setOptions( ParserOptions::newFromAnon() );
-		$parser->resetOutput();
+		$parser->clearState();
 
 		$out = EmbedVideo::parseEVU(
 			$parser, new PPCustomFrame_Hash( $parser->getPreprocessor(), [] ), [
@@ -118,10 +118,10 @@ class BilibiliTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$this->assertIsArray( $out );
-		$this->assertCount( 3, $out );
+		$this->assertCount( 2, $out );
 		$this->assertStringContainsString(
 			'1Hz4y1k7ae',
-			$out[0]
+			$parser->getStripState()->unstripNoWiki( $out[0] )
 		);
 	}
 }
