@@ -52,7 +52,10 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 2, $output );
-		$this->assertStringContainsString( '<figure class="embedvideo" data-service="youtube"', $this->resolveHtml( $parser, $output ) );
+		$this->assertStringContainsString(
+			'<figure class="embedvideo" data-service="youtube"',
+			$this->resolveHtml( $parser, $output )
+		);
 	}
 
 	/**
@@ -168,7 +171,10 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 2, $output );
-		$this->assertStringContainsString( '"width":200,"height":200', htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) ) );
+		$this->assertStringContainsString(
+			'"width":200,"height":200',
+			htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) )
+		);
 	}
 
 	/**
@@ -196,7 +202,10 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 2, $output );
-		$this->assertStringContainsString( '"height":200', htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) ) );
+		$this->assertStringContainsString(
+			'"height":200',
+			htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) )
+		);
 	}
 
 	/**
@@ -224,7 +233,10 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 2, $output );
-		$this->assertStringContainsString( '"width":200', htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) ) );
+		$this->assertStringContainsString(
+			'"width":200',
+			htmlspecialchars_decode( $this->resolveHtml( $parser, $output ) )
+		);
 	}
 
 	/**
@@ -509,11 +521,15 @@ class EmbedVideoTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $output );
 		$this->assertCount( 2, $output );
-		$this->assertStringContainsString( 'class="embedvideo evlplayer evlplayer-explicit-player"', $this->resolveHtml( $parser, $output ) );
+		$this->assertStringContainsString(
+			'class="embedvideo evlplayer evlplayer-explicit-player"',
+			$this->resolveHtml( $parser, $output )
+		);
 	}
 
 	/**
-	 * Resolve a nowiki strip marker returned by parseEV/parseEVU/parseEVTag in $output[0] back to the HTML it represents.
+	 * Resolve a nowiki strip marker returned by parseEV/parseEVU/parseEVTag in $output[0]
+	 * back to the HTML it represents.
 	 *
 	 * @param Parser $parser
 	 * @param array $output Parser function return array

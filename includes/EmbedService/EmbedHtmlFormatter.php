@@ -223,7 +223,7 @@ final class EmbedHtmlFormatter {
 						'src' => $url,
 						'loading' => 'lazy',
 						'class' => 'embedvideo-thumbnail__image',
-						'alt' => 'Thumbnail for '. ( $service->getTitle() ?? '' ),
+						'alt' => 'Thumbnail for ' . ( $service->getTitle() ?? '' ),
 					]
 				)
 			);
@@ -253,6 +253,9 @@ final class EmbedHtmlFormatter {
 	/**
 	 * Generates passive local-video embed styling that preserves the embed look without
 	 * blocking native playback controls or browser features such as PiP.
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string
 	 */
 	public static function makeLocalVideoEmbedStyleHtml( AbstractEmbedService $service ): string {
 		return Html::rawElement(
@@ -289,6 +292,10 @@ final class EmbedHtmlFormatter {
 
 	/**
 	 * Generates the HTML consent container used when explicit consent is activated in the settings
+	 *
+	 * @param AbstractEmbedService $service
+	 * @param TemplateParser $templateParser
+	 * @return string
 	 */
 	public static function makeConsentContainerHtml(
 		AbstractEmbedService $service,
@@ -325,6 +332,9 @@ final class EmbedHtmlFormatter {
 
 	/**
 	 * Generates the HTML output for the services privacy url and short privacy text
+	 *
+	 * @param AbstractEmbedService $service
+	 * @return string
 	 */
 	public static function makePrivacyPolicyLink( AbstractEmbedService $service ): string {
 		$privacyUrl = $service->getPrivacyPolicyUrl();

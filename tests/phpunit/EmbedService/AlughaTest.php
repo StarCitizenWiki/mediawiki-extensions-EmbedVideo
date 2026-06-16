@@ -26,7 +26,7 @@ class AlughaTest extends MediaWikiIntegrationTestCase {
 	$html = EmbedHtmlFormatter::toHtml( $service );
 
 	$this->assertStringContainsString(
-	  'data-mw-iframeconfig=\'{"src":"//alugha.com/embed/web-player?v=' . self::VALID_ID . '"}\'',
+	  'data-mw-iframeconfig="{&quot;src&quot;:&quot;//alugha.com/embed/web-player?v=' . self::VALID_ID . '&quot;}"',
 	  $html
 	);
 
