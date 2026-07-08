@@ -35,7 +35,7 @@ final class Alugha extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://alugha.com/legal/privacy-policy';
+	  return 'https://alugha.com/cms/privacy/';
 	}
 
 	/**
