@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"embedvideo-description": "دا څانگه شوې بلبڼه د مشهورو سرچينو څه د ويډيوگانو د ځای پرځای کولو لپاره ټوټه‌کوونکې کړنچار ورگډوي.",
+	"embedvideo-load": "$1 بارول",
+	"embedvideo-type-audio": "غږ",
+	"embedvideo-type-content": "منځپانگه",
+	"embedvideo-type-video": "ويډيو",
+	"embedvideo-consent-privacy-policy": "پټنتيا تگلار",
+	"embedvideo-consent-privacy-notice-text": "$1 ښايي ځانواله اومتوکي راټول کړي.",
+	"embedvideo-consent-privacy-notice-continue": "دوام ورکول",
+	"embedvideo-consent-privacy-notice-dismiss": "تړل",
+	"embedvideo-service-archiveorg": "Archive.org",
+	"embedvideo-service-bilibili": "بيلي‌بيلي",
+	"embedvideo-service-bandcamp": "بينډکمپ",
+	"embedvideo-service-dailymotion": "ډايلي‌موشن",
+	"embedvideo-service-deezer": "ډيزر",
+	"embedvideo-service-kakaotv": "کاکاوټي‌وي",
+	"embedvideo-service-loom": "لووم",
+	"embedvideo-service-navertv": "ناوېرټي‌وي",
+	"embedvideo-service-niconico": "نيکونيکو",
+	"embedvideo-service-soundcloud": "سونډکلاوډ",
+	"embedvideo-service-sharepoint": "شيرپوينټ",
+	"embedvideo-service-spotify": "سپوټيفای",
+	"embedvideo-service-twitch": "ټويټچ",
+	"embedvideo-service-videolink": "ويډيو تړونی",
+	"embedvideo-service-vk": "وي‌کونټاکټې",
+	"embedvideo-service-vimeo": "ويمېو",
+	"embedvideo-service-wistia": "ويستيا",
+	"embedvideo-service-youtube": "يوټيوب",
+	"embedvideo-service-youku": "یوکو",
+	"embedvideo-service-localvideo": "ځايي دوتنه",
+	"embedvideo-service-externalvideo": "باندنۍ ويډيو",
+	"embedvideo-play": "ويډيو غږول",
+	"apihelp-embedvideo-param-alignment": "د ويډيو ترتيبول"
+}
