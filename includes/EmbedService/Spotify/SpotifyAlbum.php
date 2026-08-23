@@ -76,7 +76,7 @@ class SpotifyAlbum extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getCSPUrls(): array {
-		return [,
+		return [
 			'https://i.scdn.co',
 			'https://open.spotify.com',
 			'https://image-cdn-ak.spotifycdn.com'
