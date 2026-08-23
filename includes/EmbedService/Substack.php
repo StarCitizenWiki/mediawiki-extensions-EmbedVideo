@@ -32,6 +32,13 @@ final class Substack extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getContentType(): ?string {
+		return 'content';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://substack.com/privacy';
 	}

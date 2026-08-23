@@ -43,6 +43,7 @@ final class Ccc extends AbstractEmbedService {
 	public function getCSPUrls(): array {
 		return [
 			'https://media.ccc.de',
+			'https://static.media.ccc.de',
 		];
 	}
 }

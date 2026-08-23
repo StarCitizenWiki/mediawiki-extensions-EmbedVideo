@@ -62,7 +62,8 @@ final class SoundCloud extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-			'https://w.soundcloud.com'
+			'https://i1.sndcdn.com',
+			'https://w.soundcloud.com',
 		];
 	}
 }

@@ -65,10 +65,6 @@ const navertv = function ( url ) {
 	return oembed( 'https://tv.naver.com/oembed?url=' + url );
 };
 
-const kakaotv = function ( url ) {
-	return oembed( 'https://tv.kakao.com/oembed?url=' + url );
-};
-
 const loom = function ( url ) {
 	return oembed( 'https://www.loom.com/v1/oembed?url=https://www.loom.com/share/' + url );
 };
@@ -98,7 +94,6 @@ const reddit = function ( url ) {
 module.exports = {
 	oembed,
 	navertv,
-	kakaotv,
 	loom,
 	youtube,
 	youtubeplaylist,

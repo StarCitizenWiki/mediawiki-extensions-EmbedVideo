@@ -67,6 +67,13 @@ final class Bandcamp extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getContentType(): ?string {
+		return 'audio';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://bandcamp.com/privacy';
 	}
@@ -78,12 +85,5 @@ final class Bandcamp extends AbstractEmbedService {
 		return [
 			'https://bandcamp.com',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'audio';
 	}
 }

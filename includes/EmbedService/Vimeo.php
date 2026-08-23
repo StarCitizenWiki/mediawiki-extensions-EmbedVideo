@@ -43,7 +43,7 @@ final class Vimeo extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://vimeo.com/privacy';
+		return 'https://vimeo.com/legal/privacy/policy';
 	}
 
 	/**

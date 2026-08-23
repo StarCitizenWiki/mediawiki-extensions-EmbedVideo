@@ -45,6 +45,7 @@ final class Wistia extends AbstractEmbedService {
 		return [
 			'https://wistia.com',
 			'https://fast.wistia.com',
+			'https://fast.wistia.net',
 		];
 	}
 }

@@ -49,7 +49,7 @@ final class ArchiveOrg extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://archive.org/about/terms.php';
+		return 'https://archive.org/about/terms';
 	}
 
 	/**
