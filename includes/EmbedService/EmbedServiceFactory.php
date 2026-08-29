@@ -62,7 +62,6 @@ final class EmbedServiceFactory {
 		DeezerShow::class,
 		DeezerTrack::class,
 		ExternalVideo::class,
-		KakaoTV::class,
 		Loom::class,
 		NaverTV::class,
 		Niconico::class,
@@ -171,10 +170,6 @@ final class EmbedServiceFactory {
 			case 'external':
 			case 'externalvideo':
 				return new ExternalVideo( $id );
-
-			case 'kakaotv':
-			case 'play-tv.kakao':
-				return new KakaoTV( $id );
 
 			case 'loom':
 				return new Loom( $id );
