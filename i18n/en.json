@@ -25,6 +25,7 @@
 	"embedvideo-service-navertv": "NaverTV",
 	"embedvideo-service-niconico": "Niconico",
 	"embedvideo-service-soundcloud": "SoundCloud",
+	"embedvideo-service-peertube": "Peertube",
 	"embedvideo-service-podbean": "Podbean",
 	"embedvideo-service-qobuz": "Qobuz",
 	"embedvideo-service-sharepoint": "SharePoint",

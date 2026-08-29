@@ -29,6 +29,7 @@
 	"embedvideo-service-navertv": "{{Optional}}",
 	"embedvideo-service-niconico": "{{Optional}}",
 	"embedvideo-service-soundcloud": "{{Optional}}",
+	"embedvideo-service-peertube": "{{Optional}}\nThe name of Peertube, a video hosting service, see https://peertube.tv/.",
 	"embedvideo-service-podbean": "{{Optional}}\nName of https://www.podbean.com/ service.",
 	"embedvideo-service-qobuz": "{{Optional}}\nThe name of the Qobuz music streaming service, see https://www.qobuz.com/.",
 	"embedvideo-service-sharepoint": "{{Optional}}",
