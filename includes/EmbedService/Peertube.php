@@ -5,6 +5,11 @@ declare( strict_types=1 );
 namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 
 final class Peertube extends AbstractEmbedService {
+	protected $additionalIframeAttributes = [
+		'allow' => 'fullscreen',
+        'style' => 'border:0px;',
+		'sandbox' => 'allow-same-origin allow-scripts allow-popups allow-forms',
+	];
 
 	/**
 	 * @inheritDoc
@@ -16,9 +21,30 @@ final class Peertube extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getServiceKey(): string {
+		return 'peertube';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getDefaultWidth(): int {
+		return 560;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getDefaultHeight(): int {
+		return 315;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	protected function getUrlRegex(): array {
 		return [
-			'#^https?://(?:www\.)?peertube\.tv/embed/([a-zA-Z0-9]+)#is',
+			'#^https?://(?:www\.)?peertube\.tv/videos/embed/([a-zA-Z0-9]+)#is',
 		];
 	}
 
