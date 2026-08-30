@@ -116,8 +116,7 @@ class AudioHandler extends MediaHandler {
 	 * @return string
 	 */
 	public function makeParamString( $params ): string {
-		// Width does not matter to video or audio.
-		return '';
+		return (string)( $params['width'] ?? 0 ) . 'px-';
 	}
 
 	/**
