@@ -69,7 +69,7 @@ class AmazonMusic extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.amazon.com/gp/help/customer/display.html?nodeId=G201380010';
+		return 'https://www.amazon.com/gp/help/customer/display.html?nodeId=201380010';
 	}
 
 	/**

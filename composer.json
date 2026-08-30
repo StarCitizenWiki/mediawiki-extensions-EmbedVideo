@@ -1,6 +1,6 @@
 {
 	"name": "starcitizenwiki/embedvideo",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"type": "mediawiki-extension",
 	"description": "Adds a parser function embedding video from popular sources.",
 	"license": "MIT",
@@ -33,6 +33,13 @@
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
+		},
+		"policy": {
+			"advisories": {
+				"ignore-id": {
+					"PKSA-rdkp-vv9z-mjkg": "This package is only run in workflow environments."
+				}
+			}
 		}
 	}
 }

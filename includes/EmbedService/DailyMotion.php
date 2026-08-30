@@ -34,7 +34,7 @@ final class DailyMotion extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.dailymotion.com/legal/privacy?localization=en';
+		return 'https://legal.dailymotion.com/en/privacy-policy/';
 	}
 
 	/**
@@ -43,6 +43,8 @@ final class DailyMotion extends AbstractEmbedService {
 	public function getCSPUrls(): array {
 		return [
 			'https://dailymotion.com',
+			'https://geo.dailymotion.com',
+			'https://www.dailymotion.com',
 		];
 	}
 }

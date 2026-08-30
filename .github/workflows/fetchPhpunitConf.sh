@@ -20,8 +20,12 @@ if [ ! -f phpunit.xml.dist ]; then
 fi
 
 if [ ! -s phpunit.xml.dist ]; then
-  echo "Error: phpunit.xml.dist is empty!"
-  exit 1
+  echo "Error: phpunit.xml.dist is empty! Attempting to download phpunit.xml.template instead!"
+  wget https://raw.githubusercontent.com/wikimedia/mediawiki/${MW_BRANCH}/phpunit.xml.template -O phpunit.xml.template
+  if [ ! -s phpunit.xml.template ]; then
+    echo "Error: phpunit.xml.template is empty!"
+    exit 1
+  fi
 fi
 
 echo "phpunit.xml.dist downloaded successfully."

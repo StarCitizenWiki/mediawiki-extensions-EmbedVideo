@@ -53,7 +53,7 @@ class YouTube extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://www.youtube.com/howyoutubeworks/user-settings/privacy/';
+		return 'https://www.youtube.com/howyoutubeworks/privacy/';
 	}
 
 	/**
