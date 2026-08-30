@@ -9,6 +9,18 @@ final class Bandcamp extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getBaseUrl(): string {
+		if ( empty( $this->urlArgs ) ) {
+			// phpcs:ignore Generic.Files.LineLength.TooLong
+			return '//bandcamp.com/EmbeddedPlayer/album=%1$s/size=large/bgcol=181a1b/linkcol=056cc4/artwork=small/transparent=true/';
+		}
+
+		return '//bandcamp.com/EmbeddedPlayer/album=%1$s/';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getDefaultHeight(): int {
 		return 200;
 	}
@@ -18,18 +30,6 @@ final class Bandcamp extends AbstractEmbedService {
 	 */
 	public function getDefaultWidth(): int {
 		return 400;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getBaseUrl(): string {
-		if ( empty( $this->urlArgs ) ) {
-			// phpcs:ignore Generic.Files.LineLength.TooLong
-			return '//bandcamp.com/EmbeddedPlayer/album=%1$s/size=large/bgcol=181a1b/linkcol=056cc4/artwork=small/transparent=true/';
-		}
-
-		return '//bandcamp.com/EmbeddedPlayer/album=%1$s/';
 	}
 
 	/**

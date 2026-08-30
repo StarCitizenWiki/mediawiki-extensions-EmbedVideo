@@ -13,39 +13,27 @@ use MediaWikiIntegrationTestCase;
  * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\Alugha
  */
 class AlughaTest extends MediaWikiIntegrationTestCase {
+	private const VALID_ID = 'b8fe2460-81e1-11eb-8b27-65de6c3aea52';
 
-  private const VALID_ID = 'b8fe2460-81e1-11eb-8b27-65de6c3aea52';
+	/**
+	 * A bare UUID is accepted and produces the expected embed src.
+	 */
+	public function testValidIdProducesEmbedUrl(): void {
+		$this->overrideConfigValue( 'EmbedVideoRequireConsent', true );
 
-  /**
-   * A bare UUID is accepted and produces the expected embed src.
-   */
-  public function testValidIdProducesEmbedUrl(): void {
-	$this->overrideConfigValue( 'EmbedVideoRequireConsent', true );
+		$service = EmbedServiceFactory::newFromName( 'alugha', self::VALID_ID );
+		$html = EmbedHtmlFormatter::toHtml( $service );
 
-	$service = EmbedServiceFactory::newFromName( 'alugha', self::VALID_ID );
-	$html = EmbedHtmlFormatter::toHtml( $service );
+		$this->assertStringContainsString( 'data-mw-iframeconfig="{&quot;src&quot;:&quot;//alugha.com/embed/web-player?v=' . self::VALID_ID . '&quot;}"', $html );
+			// With consent enabled, no iframe is rendered until the user clicks.
+			$this->assertStringNotContainsString( '<iframe', $html );
+	}
 
-	$this->assertStringContainsString(
-	  'data-mw-iframeconfig="{&quot;src&quot;:&quot;//alugha.com/embed/web-player?v=' . self::VALID_ID . '&quot;}"',
-	  $html
-	);
-
-	// With consent enabled, no iframe is rendered until the user clicks.
-	$this->assertStringNotContainsString( '<iframe', $html );
-  }
-
-  /**
-   * A full Alugha embed URL is normalised to the same video id.
-   */
-  public function testFullUrlIsParsed(): void {
-	$service = EmbedServiceFactory::newFromName(
-	  'alugha',
-	  'https://alugha.com/embed/web-player?v=' . self::VALID_ID
-	);
-
-	$this->assertStringContainsString(
-	  '//alugha.com/embed/web-player?v=' . self::VALID_ID,
-	  EmbedHtmlFormatter::toHtml( $service )
-	);
-  }
+	/**
+	 * A full Alugha embed URL is normalised to the same video id.
+	 */
+	public function testFullUrlIsParsed(): void {
+		$service = EmbedServiceFactory::newFromName( 'alugha', 'https://alugha.com/embed/web-player?v=' . self::VALID_ID );
+		$this->assertStringContainsString( 'https://alugha.com/embed/web-player?v=' . self::VALID_ID, EmbedHtmlFormatter::toHtml( $service ) );
+	}
 }
