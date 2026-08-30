@@ -9,7 +9,7 @@ jobs:
         name: Lint PHP
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
 
             - name: Installing PHP
               uses: shivammathur/setup-php@v2
@@ -21,7 +21,7 @@ jobs:
               run: |
                 echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-            - uses: actions/cache@v5
+            - uses: actions/cache@v6
               id: actions-cache
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
@@ -30,7 +30,7 @@ jobs:
                       ${{ runner.os }}-composer-
 
             - name: Cache PHP dependencies
-              uses: actions/cache@v5
+              uses: actions/cache@v6
               id: vendor-cache
               with:
                   path: vendor
@@ -47,10 +47,10 @@ jobs:
         name: Lint CSS, JS, and i18n
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v6
+          - uses: actions/checkout@v7
 
           - name: Cache dependencies
-            uses: actions/cache@v5
+            uses: actions/cache@v6
             with:
               path: /home/runner/cache
               key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
