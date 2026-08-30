@@ -10,7 +10,7 @@ final class Alugha extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
-		return '//alugha.com/embed/web-player?v=%1$s';
+		return 'https://alugha.com/embed/web-player?v=%1$s';
 	}
 
 	/**
