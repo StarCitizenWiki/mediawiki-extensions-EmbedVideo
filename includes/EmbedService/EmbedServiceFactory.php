@@ -43,8 +43,9 @@ final class EmbedServiceFactory {
 	 * @var AbstractEmbedService[]
 	 */
 	private static $availableServices = [
-	Alugha::class,
+		Alugha::class,
 		AmazonMusic::class,
+		Aparat::class,
 		AppleMusicAlbum::class,
 		AppleMusicArtist::class,
 		AppleMusicTrack::class,
@@ -52,11 +53,8 @@ final class EmbedServiceFactory {
 		ArchiveOrg::class,
 		Bandcamp::class,
 		Bilibili::class,
-		Aparat::class,
 		Ccc::class,
 		DailyMotion::class,
-		Reddit::class,
-		Podbean::class,
 		DeezerAlbum::class,
 		DeezerArtist::class,
 		DeezerEpisode::class,
@@ -64,12 +62,13 @@ final class EmbedServiceFactory {
 		DeezerShow::class,
 		DeezerTrack::class,
 		ExternalVideo::class,
-		KakaoTV::class,
 		Loom::class,
 		NaverTV::class,
 		Niconico::class,
+		Podbean::class,
 		QobuzAlbum::class,
 		QobuzTrack::class,
+		Reddit::class,
 		SharePoint::class,
 		SoundCloud::class,
 		SpotifyAlbum::class,
@@ -78,12 +77,12 @@ final class EmbedServiceFactory {
 		SpotifyShow::class,
 		SpotifyTrack::class,
 		SpotifyPlaylist::class,
+		Substack::class,
 		TakhteSefid::class,
 		TidalAlbum::class,
 		TidalMix::class,
 		TidalTrack::class,
 		TidalVideo::class,
-		Substack::class,
 		Twitch::class,
 		TwitchClip::class,
 		TwitchVod::class,
@@ -91,11 +90,11 @@ final class EmbedServiceFactory {
 		Vimeo::class,
 		Vk::class,
 		Wistia::class,
+		Youku::class,
 		YouTube::class,
 		YouTubeOEmbed::class,
 		YouTubePlaylist::class,
 		YouTubeVideoList::class,
-		Youku::class,
 	];
 
 	/**
@@ -111,26 +110,26 @@ final class EmbedServiceFactory {
 			case 'amazonmusic':
 				return new AmazonMusic( $id );
 
+			case 'aparat':
+				return new Aparat( $id );
+
 			case 'applemusicalbum':
 				return new AppleMusicAlbum( $id );
 
 			case 'applemusicartist':
 				return new AppleMusicArtist( $id );
 
+			case 'applemusicplaylist':
+				return new AppleMusicPlaylist( $id );
+
 			case 'applemusic':
 			case 'applemusictrack':
 				return new AppleMusicTrack( $id );
-
-			case 'applemusicplaylist':
-				return new AppleMusicPlaylist( $id );
 
 			case 'archive':
 			case 'archiveorg':
 			case 'archive.org':
 				return new ArchiveOrg( $id );
-
-			case 'aparat':
-				return new Aparat( $id );
 
 			case 'bandcamp':
 				return new Bandcamp( $id );
@@ -156,10 +155,6 @@ final class EmbedServiceFactory {
 			case 'deezerplaylist':
 				return new DeezerPlaylist( $id );
 
-			case 'deezer':
-			case 'deezertrack':
-				return new DeezerTrack( $id );
-
 			case 'deezerpodcast':
 			case 'deezershow':
 				return new DeezerShow( $id );
@@ -168,16 +163,28 @@ final class EmbedServiceFactory {
 			case 'deezerepisode':
 				return new DeezerEpisode( $id );
 
+			case 'deezer':
+			case 'deezertrack':
+				return new DeezerTrack( $id );
+
 			case 'external':
 			case 'externalvideo':
 				return new ExternalVideo( $id );
 
-			case 'kakaotv':
-			case 'play-tv.kakao':
-				return new KakaoTV( $id );
-
 			case 'loom':
 				return new Loom( $id );
+
+			case 'navertv':
+			case 'tv.naver':
+				return new NaverTV( $id );
+
+			case 'nicovideo':
+			case 'niconico':
+			case 'embed.nicovideo':
+				return new Niconico( $id );
+
+			case 'podbean':
+				return new Podbean( $id );
 
 			case 'qobuzalbum':
 				return new QobuzAlbum( $id );
@@ -192,18 +199,6 @@ final class EmbedServiceFactory {
 			case 'embed.reddit':
 				return new Reddit( $id );
 
-			case 'podbean':
-				return new Podbean( $id );
-
-			case 'nicovideo':
-			case 'niconico':
-			case 'embed.nicovideo':
-				return new Niconico( $id );
-
-			case 'navertv':
-			case 'tv.naver':
-				return new NaverTV( $id );
-
 			case 'sharepoint':
 				return new SharePoint( $id );
 
@@ -216,10 +211,6 @@ final class EmbedServiceFactory {
 			case 'spotifyartist':
 				return new SpotifyArtist( $id );
 
-			case 'spotify':
-			case 'spotifytrack':
-				return new SpotifyTrack( $id );
-
 			case 'spotifypodcast':
 			case 'spotifyshow':
 				return new SpotifyShow( $id );
@@ -230,6 +221,16 @@ final class EmbedServiceFactory {
 
 			case 'spotifyplaylist':
 				return new SpotifyPlaylist( $id );
+
+			case 'spotify':
+			case 'spotifytrack':
+				return new SpotifyTrack( $id );
+
+			case 'substack':
+				return new Substack( $id );
+
+			case 'takhtesefid':
+				return new TakhteSefid( $id );
 
 			case 'tidalalbum':
 				return new TidalAlbum( $id );
@@ -243,12 +244,6 @@ final class EmbedServiceFactory {
 
 			case 'tidalvideo':
 				return new TidalVideo( $id );
-
-			case 'substack':
-				return new Substack( $id );
-
-			case 'takhtesefid':
-				return new TakhteSefid( $id );
 
 			case 'twitch':
 				return new Twitch( $id );
@@ -272,6 +267,9 @@ final class EmbedServiceFactory {
 			case 'wistia':
 				return new Wistia( $id );
 
+			case 'youku':
+				return new Youku( $id );
+
 			case 'youtubeoembed':
 				return new YouTubeOEmbed( $id );
 
@@ -283,8 +281,6 @@ final class EmbedServiceFactory {
 
 			case 'youtubevideolist':
 				return new YouTubeVideoList( $id );
-			case 'youku':
-				return new Youku( $id );
 
 			default:
 				throw new EmbedVideoException( sprintf( 'VideoService "%s" not recognized.', $serviceName ) );

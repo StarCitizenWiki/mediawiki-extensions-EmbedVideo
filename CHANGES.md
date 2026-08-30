@@ -1,7 +1,28 @@
 ## Patch Notes
+### v4.1.1
+* Adding new CSP URLs for various services 
+* Fixing a spelling mistake in a CSP URL for nicovideo.jp
+* Updating Privacy Policy URLs for applicable services
+* Updating CHANGED.md and README.md for better maintainability
+
+### v4.1.0
+* Added the Alugha video and audio hosting service.
+* Added the Apple music streaming service.
+* Added the Qobuz music streaming service.
+* Added support for Spotify playlists.
+* Rewrite EmbedHtmlFormatter to use mustache templates and escape properly
+* Updating test files for MediaWiki 1.43+, fixing ci issues, and correcting linter errors and issues
+* Fixing an issue where Archive.org video URLs with forward-slashes (/) were not embedding.
+* Removing FFProbe from the render path, instaed of probing for metadata on render time, it now only runs on upload/reupload.
+* Removing deprecated keys from extension.json
+* Apply embed styles to local videos consistently
+
+### v4.0.0
+* Added the Tidal music streaming service.
+* Making the extension compatible with MediaWiki 1.43+
+
 ### v3.4.2
-* Added support for Deezer embeds.
-* Added support for Tidal embeds.
+* Added the Deezer music streaming service.
 
 ### v3.0.0
 * Added explicit consent setting

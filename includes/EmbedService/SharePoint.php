@@ -32,7 +32,7 @@ final class SharePoint extends AbstractEmbedService {
 	 * @inheritDoc
 	 */
 	public function getPrivacyPolicyUrl(): ?string {
-		return 'https://privacy.microsoft.com/en-us/privacystatement';
+		return 'https://www.microsoft.com/privacy/privacystatement';
 	}
 
 	/**

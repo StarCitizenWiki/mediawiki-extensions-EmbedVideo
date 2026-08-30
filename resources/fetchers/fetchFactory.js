@@ -64,11 +64,6 @@ const fetchFactory = function ( service ) {
 			// urlManipulation=false;
 			// fetcher = oEmbedFetchers.navertv;
 			break;
-		// Missing CORS
-		case 'kakaotv':
-			// urlManipulation=false;
-			// fetcher = oEmbedFetchers.kakaotv;
-			break;
 	}
 
 	return {

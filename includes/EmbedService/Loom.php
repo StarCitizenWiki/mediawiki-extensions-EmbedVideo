@@ -42,6 +42,7 @@ final class Loom extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
+			'https://cdn.loom.com',
 			'https://www.loom.com',
 		];
 	}

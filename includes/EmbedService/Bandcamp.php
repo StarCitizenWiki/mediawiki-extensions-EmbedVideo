@@ -9,6 +9,18 @@ final class Bandcamp extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getBaseUrl(): string {
+		if ( empty( $this->urlArgs ) ) {
+			// phpcs:ignore Generic.Files.LineLength.TooLong
+			return '//bandcamp.com/EmbeddedPlayer/album=%1$s/size=large/bgcol=181a1b/linkcol=056cc4/artwork=small/transparent=true/';
+		}
+
+		return '//bandcamp.com/EmbeddedPlayer/album=%1$s/';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getDefaultHeight(): int {
 		return 200;
 	}
@@ -18,18 +30,6 @@ final class Bandcamp extends AbstractEmbedService {
 	 */
 	public function getDefaultWidth(): int {
 		return 400;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getBaseUrl(): string {
-		if ( empty( $this->urlArgs ) ) {
-			// phpcs:ignore Generic.Files.LineLength.TooLong
-			return '//bandcamp.com/EmbeddedPlayer/album=%1$s/size=large/bgcol=181a1b/linkcol=056cc4/artwork=small/transparent=true/';
-		}
-
-		return '//bandcamp.com/EmbeddedPlayer/album=%1$s/';
 	}
 
 	/**
@@ -67,6 +67,13 @@ final class Bandcamp extends AbstractEmbedService {
 	/**
 	 * @inheritDoc
 	 */
+	public function getContentType(): ?string {
+		return 'audio';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getPrivacyPolicyUrl(): ?string {
 		return 'https://bandcamp.com/privacy';
 	}
@@ -78,12 +85,5 @@ final class Bandcamp extends AbstractEmbedService {
 		return [
 			'https://bandcamp.com',
 		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getContentType(): ?string {
-		return 'audio';
 	}
 }

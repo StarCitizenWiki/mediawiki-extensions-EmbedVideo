@@ -43,7 +43,7 @@ final class Niconico extends AbstractEmbedService {
 	public function getCSPUrls(): array {
 		return [
 			'https://www.nicovideo.jp',
-			'https://embed.nicovido.jp',
+			'https://embed.nicovideo.jp',
 		];
 	}
 }
