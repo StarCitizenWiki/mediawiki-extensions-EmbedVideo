@@ -9,7 +9,6 @@
 	},
 	"embedvideo-description": "Description of the extension.",
 	"embedvideo-load": "Label for button to load the embedded video. $1 is the service name.",
-	"embedvideo-play": "Label for play button.",
 	"embedvideo-type-audio": "Label for audio type content.",
 	"embedvideo-type-content": "Label for generic content type.",
 	"embedvideo-type-video": "Label for video type content.",
