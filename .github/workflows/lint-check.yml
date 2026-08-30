@@ -9,7 +9,7 @@ jobs:
         name: Lint PHP
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
 
             - name: Installing PHP
               uses: shivammathur/setup-php@v2
@@ -47,7 +47,7 @@ jobs:
         name: Lint CSS, JS, and i18n
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v6
+          - uses: actions/checkout@v7
 
           - name: Cache dependencies
             uses: actions/cache@v5
