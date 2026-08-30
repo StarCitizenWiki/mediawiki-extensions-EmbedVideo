@@ -33,6 +33,13 @@
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
+		},
+		"policy": {
+			"advisories": {
+				"ignore-id": {
+					"PKSA-rdkp-vv9z-mjkg": "This package is only run in workflow environments."
+				}
+			}
 		}
 	}
 }
