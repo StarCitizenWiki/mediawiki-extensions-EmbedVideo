@@ -24,7 +24,7 @@ class AlughaTest extends MediaWikiIntegrationTestCase {
 		$service = EmbedServiceFactory::newFromName( 'alugha', self::VALID_ID );
 		$html = EmbedHtmlFormatter::toHtml( $service );
 
-		$this->assertStringContainsString( 'data-mw-iframeconfig="{&quot;src&quot;:&quot;//alugha.com/embed/web-player?v=' . self::VALID_ID . '&quot;}"', $html );
+		$this->assertStringContainsString( 'data-mw-iframeconfig="{&quot;src&quot;:&quot;https://alugha.com/embed/web-player?v=' . self::VALID_ID . '&quot;}"', $html );
 			// With consent enabled, no iframe is rendered until the user clicks.
 			$this->assertStringNotContainsString( '<iframe', $html );
 	}
