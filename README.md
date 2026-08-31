@@ -279,7 +279,7 @@ or
 As of version 3.x, EmbedVideo supports embedding video content from the following services:
 
 | Site                                                     | Service Name(s)                     | ID Example                              | URL Example(s)                                                                                       |
-|----------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------------------------------------------------------|-------------------------------------|-----------------------------------------|------------------------------------------------------------------------------------------------------|
 | [Alugha](https://alugha.com/)                            | `alugha`                            | b92c4508-faeb-11e9-bc4c-93211a9e934f    | https://alugha.com/embed/web-player?v=b92c4508-faeb-11e9-bc4c-93211a9e934f                 |
 | [Amazon Music](https://music.amazon.com)                 | `amazonmusic`                       | B00A9SD43S                              | https://music.amazon.com/tracks/B00A9SD43S                  |
 | [Aparat](https://www.aparat.com/)                        | `aparat`                            | rajj65c                                 | https://www.aparat.com/v/rajj65c<br/>https://www.aparat.com/video/video/embed/videohash/rajj65c/vt/frame |
