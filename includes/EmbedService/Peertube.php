@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\EmbedVideo\EmbedService;
 final class Peertube extends AbstractEmbedService {
 	protected $additionalIframeAttributes = [
 		'allow' => 'fullscreen',
-        'style' => 'border:0px;',
+		'style' => 'border:0px;',
 		'sandbox' => 'allow-same-origin allow-scripts allow-popups allow-forms',
 	];
 
@@ -69,7 +69,7 @@ final class Peertube extends AbstractEmbedService {
 	 */
 	public function getCSPUrls(): array {
 		return [
-            'https://peertube.tv',
+			'https://peertube.tv',
 			'https://www.peertube.tv',
 		];
 	}

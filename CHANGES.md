@@ -1,5 +1,6 @@
 ## Patch Notes
 ### v4.1.1
+* Added support for the Peertube service.
 * Adding new CSP URLs for various services 
 * Fixing a spelling mistake in a CSP URL for nicovideo.jp
 * Updating Privacy Policy URLs for applicable services
