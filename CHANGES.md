@@ -4,6 +4,7 @@
 * Fixing a spelling mistake in a CSP URL for nicovideo.jp
 * Updating Privacy Policy URLs for applicable services
 * Updating CHANGED.md and README.md for better maintainability
+* Fixed the deprecated `$restriction` special page constructor parameter on MediaWiki 1.46
 
 ### v4.1.0
 * Added the Alugha video and audio hosting service.

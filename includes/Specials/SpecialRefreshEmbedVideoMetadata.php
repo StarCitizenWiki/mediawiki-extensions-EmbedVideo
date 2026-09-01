@@ -17,6 +17,11 @@ use RepoGroup;
 
 class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 	/**
+	 * Right a user must hold to refresh stored metadata.
+	 */
+	private const RESTRICTION = 'embedvideo-refreshmetadata';
+
+	/**
 	 * @param RepoGroup $repoGroup
 	 * @param TitleFactory $titleFactory
 	 */
@@ -24,7 +29,24 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 		private RepoGroup $repoGroup,
 		private TitleFactory $titleFactory
 	) {
-		parent::__construct( 'RefreshEmbedVideoMetadata', 'embedvideo-refreshmetadata' );
+		// MediaWiki 1.46 deprecated the $restriction constructor parameter in favour of
+		// overriding getRestriction(). The parameter still has to be passed on older
+		// releases: before 1.46, userCanExecute(), isRestricted() and
+		// displayRestrictionError() read the property the constructor sets and never
+		// consult getRestriction(), so dropping it there would make those methods report
+		// that no right is required.
+		if ( version_compare( MW_VERSION, '1.46', '<' ) ) {
+			parent::__construct( 'RefreshEmbedVideoMetadata', self::RESTRICTION );
+		} else {
+			parent::__construct( 'RefreshEmbedVideoMetadata' );
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getRestriction(): string {
+		return self::RESTRICTION;
 	}
 
 	/**
