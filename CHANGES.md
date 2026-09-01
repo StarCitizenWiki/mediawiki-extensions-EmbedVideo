@@ -5,6 +5,7 @@
 * Updating Privacy Policy URLs for applicable services
 * Updating CHANGED.md and README.md for better maintainability
 * Fixed the deprecated `$restriction` special page constructor parameter on MediaWiki 1.46
+* Special:RefreshEmbedVideoMetadata now enforces the `embedvideo-refreshmetadata` right it declares
 
 ### v4.1.0
 * Added the Alugha video and audio hosting service.

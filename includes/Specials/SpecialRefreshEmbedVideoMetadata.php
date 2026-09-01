@@ -61,8 +61,9 @@ class SpecialRefreshEmbedVideoMetadata extends UnlistedSpecialPage {
 	 * @return void
 	 */
 	public function execute( $par ): void {
-		$this->checkReadOnly();
 		$this->setHeaders();
+		$this->checkPermissions();
+		$this->checkReadOnly();
 		$this->outputHeader();
 
 		$out = $this->getOutput();
