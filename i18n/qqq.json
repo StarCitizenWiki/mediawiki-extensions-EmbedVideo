@@ -47,6 +47,7 @@
 	"embedvideo-service-youtube": "{{Optional}}\nThe name of YouTube, a live streaming and video hosting service, see https://www.youtube.com/.",
 	"embedvideo-service-localvideo": "Label for local video file service.",
 	"embedvideo-service-externalvideo": "Label for external video service.",
+	"embedvideo-play": "Label for the play button shown on the embed placeholder before the player is loaded.",
 	"embedvideo-refreshmetadata-tab": "Label for the file-page action tab that opens the special page for refreshing stored EmbedVideo metadata.",
 	"embedvideo-refreshmetadata-submit": "Label for the submit button on Special:RefreshEmbedVideoMetadata.",
 	"embedvideo-refreshmetadata-intro": "Introductory text on Special:RefreshEmbedVideoMetadata. $1 is the prefixed file title.",
