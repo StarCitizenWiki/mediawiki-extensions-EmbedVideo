@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Extension\EmbedVideo\Maintenance;
 
+use MediaWiki\Deferred\DeferredUpdates;
 use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\FileRepo\File\FileSelectQueryBuilder;
 use MediaWiki\Maintenance\Maintenance;
@@ -92,7 +93,7 @@ class BackfillLocalMediaMetadata extends Maintenance {
 			$res->rewind();
 
 			$lastName = null;
-			$this->beginTransactionRound( __METHOD__ );
+			$this->beginBatchTransaction( __METHOD__ );
 			foreach ( $res as $row ) {
 				$lastName = $row->img_name;
 
@@ -125,7 +126,7 @@ class BackfillLocalMediaMetadata extends Maintenance {
 					$failures[] = "File:$lastName failed: {$e->getMessage()}";
 				}
 			}
-			$this->commitTransactionRound( __METHOD__ );
+			$this->commitBatchTransaction( __METHOD__ );
 
 			if ( $lastName !== null ) {
 				$batchCondition = [ $dbw->expr( 'img_name', '>', $lastName ) ];
@@ -148,6 +149,48 @@ class BackfillLocalMediaMetadata extends Maintenance {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Begin a transaction round.
+	 *
+	 * Maintenance::beginTransactionRound() only exists since MediaWiki 1.44; call the
+	 * load balancer factory directly on older supported releases.
+	 *
+	 * @param string $fname
+	 * @return void
+	 */
+	private function beginBatchTransaction( string $fname ): void {
+		if ( version_compare( MW_VERSION, '1.44', '<' ) ) {
+			$this->getServiceContainer()->getDBLoadBalancerFactory()->beginPrimaryChanges( $fname );
+			return;
+		}
+
+		$this->beginTransactionRound( $fname );
+	}
+
+	/**
+	 * Commit a transaction round, wait for replication and drain deferred updates.
+	 *
+	 * Maintenance::commitTransactionRound() only exists since MediaWiki 1.44; on older
+	 * supported releases call the load balancer factory directly. waitForReplication()
+	 * covers the wait and autoReconfigure(), but not the opportunistic deferred update
+	 * run, which has to be triggered separately: the cache invalidations queued by
+	 * LocalFile::upgradeRow() cannot run while a transaction round is open, so without
+	 * this the queue would grow for the whole run.
+	 *
+	 * @param string $fname
+	 * @return void
+	 */
+	private function commitBatchTransaction( string $fname ): void {
+		if ( version_compare( MW_VERSION, '1.44', '<' ) ) {
+			$this->getServiceContainer()->getDBLoadBalancerFactory()->commitPrimaryChanges( $fname );
+			$this->waitForReplication();
+			DeferredUpdates::tryOpportunisticExecute();
+			return;
+		}
+
+		$this->commitTransactionRound( $fname );
 	}
 
 	/**

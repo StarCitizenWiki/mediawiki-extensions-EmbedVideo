@@ -6,6 +6,7 @@
 * Updating CHANGED.md and README.md for better maintainability
 * Fixed the deprecated `$restriction` special page constructor parameter on MediaWiki 1.46
 * Special:RefreshEmbedVideoMetadata now enforces the `embedvideo-refreshmetadata` right it declares
+* Fixed a fatal error in the BackfillLocalMediaMetadata maintenance script on MediaWiki 1.43
 
 ### v4.1.0
 * Added the Alugha video and audio hosting service.
