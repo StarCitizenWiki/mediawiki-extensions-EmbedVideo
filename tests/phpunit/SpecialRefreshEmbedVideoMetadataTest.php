@@ -10,6 +10,7 @@ use MediaWiki\Extension\EmbedVideo\Media\AudioHandler;
 use MediaWiki\Extension\EmbedVideo\Specials\SpecialRefreshEmbedVideoMetadata;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\SpecialPage\SpecialPage;
+use PermissionsError;
 use RepoGroup;
 
 /**
@@ -36,9 +37,41 @@ class SpecialRefreshEmbedVideoMetadataTest extends \SpecialPageTestBase {
 		);
 	}
 
+	public function testGetRestrictionReturnsRequiredRight(): void {
+		$this->assertSame( 'embedvideo-refreshmetadata', $this->newSpecialPage()->getRestriction() );
+	}
+
+	public function testUserWithoutRightIsDenied(): void {
+		$performer = $this->getMutableTestUser()->getUser();
+		$this->overrideUserPermissions( $performer, [] );
+
+		$this->expectException( PermissionsError::class );
+		$this->executeSpecialPage( '', null, 'qqx', $performer );
+	}
+
+	public function testUserWithoutRightCannotRefreshMetadata(): void {
+		$performer = $this->getMutableTestUser()->getUser();
+		$this->overrideUserPermissions( $performer, [] );
+
+		// The permission check throws before the file is ever looked up, so these
+		// expectations are not reached today. They are here to fail if the check is
+		// ever moved below the form handling.
+		$file = $this->createMock( LocalFile::class );
+		$file->method( 'exists' )->willReturn( true );
+		$file->method( 'isLocal' )->willReturn( true );
+		$file->method( 'getRedirected' )->willReturn( null );
+		$file->method( 'getHandler' )->willReturn( new AudioHandler() );
+		$file->expects( $this->never() )->method( 'upgradeRow' );
+
+		$this->localRepo->method( 'newFile' )->willReturn( $file );
+
+		$this->expectException( PermissionsError::class );
+		$this->executeSpecialPage( 'Test.ogg', new FauxRequest( [], true ), 'qqx', $performer );
+	}
+
 	public function testMissingTargetShowsError(): void {
 		$performer = $this->getMutableTestUser()->getUser();
-		$this->overrideUserPermissions( $performer, [ 'embedvideo-refreshmetadata' => true ] );
+		$this->overrideUserPermissions( $performer, [ 'embedvideo-refreshmetadata' ] );
 
 		[ $html ] = $this->executeSpecialPage( '', null, 'qqx', $performer );
 
@@ -47,7 +80,7 @@ class SpecialRefreshEmbedVideoMetadataTest extends \SpecialPageTestBase {
 
 	public function testPostedRefreshCallsUpgradeRow(): void {
 		$performer = $this->getMutableTestUser()->getUser();
-		$this->overrideUserPermissions( $performer, [ 'embedvideo-refreshmetadata' => true ] );
+		$this->overrideUserPermissions( $performer, [ 'embedvideo-refreshmetadata' ] );
 
 		$file = $this->createMock( LocalFile::class );
 		$file->method( 'exists' )->willReturn( true );
