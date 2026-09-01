@@ -6,6 +6,7 @@ namespace MediaWiki\Extension\EmbedVideo\Media;
 
 use MediaHandler;
 use MediaTransformOutput;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Extension\EmbedVideo\Media\FFProbe\FFProbe;
 use MediaWiki\Extension\EmbedVideo\Media\TransformOutput\AudioTransformOutput;
 use MediaWiki\FileRepo\File\File;
@@ -216,7 +217,9 @@ class AudioHandler extends MediaHandler {
 		$metadata = $file->getMetadataItems( [ 'duration' ] );
 		$duration = $metadata['duration'] ?? null;
 		if ( $duration === null || $duration === false || $duration === '' ) {
-			return self::getGeneralShortDesc( $file );
+		// The general fallbacks are user-language, matching what core used before it
+		// took an explicit $lang; the branches above deliberately stay content-language.
+			return self::getGeneralShortDesc( $file, RequestContext::getMain()->getLanguage() );
 		}
 
 		return wfMessage(
@@ -253,7 +256,9 @@ class AudioHandler extends MediaHandler {
 		}
 
 		if ( count( $parts ) === 1 ) {
-			return self::getGeneralLongDesc( $file );
+		// The general fallbacks are user-language, matching what core used before it
+		// took an explicit $lang; the branches above deliberately stay content-language.
+			return self::getGeneralLongDesc( $file, RequestContext::getMain()->getLanguage() );
 		}
 
 		return $this->contentLanguage->commaList( $parts );

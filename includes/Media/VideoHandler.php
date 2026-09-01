@@ -228,7 +228,9 @@ class VideoHandler extends AudioHandler {
 		}
 
 		if ( !$parts ) {
-			return self::getGeneralShortDesc( $file );
+		// The general fallbacks are user-language, matching what core used before it
+		// took an explicit $lang; the branches above deliberately stay content-language.
+			return self::getGeneralShortDesc( $file, RequestContext::getMain()->getLanguage() );
 		}
 
 		return $this->contentLanguage->commaList( $parts );
@@ -267,7 +269,9 @@ class VideoHandler extends AudioHandler {
 		}
 
 		if ( count( $parts ) === 1 ) {
-			return self::getGeneralLongDesc( $file );
+		// The general fallbacks are user-language, matching what core used before it
+		// took an explicit $lang; the branches above deliberately stay content-language.
+			return self::getGeneralLongDesc( $file, RequestContext::getMain()->getLanguage() );
 		}
 
 		return $this->contentLanguage->commaList( $parts );
