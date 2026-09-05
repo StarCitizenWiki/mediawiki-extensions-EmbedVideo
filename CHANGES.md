@@ -1,13 +1,16 @@
 ## Patch Notes
-### v4.1.1
-* Adding new CSP URLs for various services 
-* Fixing a spelling mistake in a CSP URL for nicovideo.jp
-* Updating Privacy Policy URLs for applicable services
-* Updating CHANGED.md and README.md for better maintainability
-* Fixed the deprecated `$restriction` special page constructor parameter on MediaWiki 1.46
-* Special:RefreshEmbedVideoMetadata now enforces the `embedvideo-refreshmetadata` right it declares
-* Fixed a fatal error in the BackfillLocalMediaMetadata maintenance script on MediaWiki 1.43
-* Fixed a MediaWiki 1.46 deprecation notice on audio and video file description pages
+### v4.2.0
+* Removed the KakaoTV service. KakaoTV shut down in 2021 and its content is no longer retrievable. Existing `{{#ev:kakaotv|...}}` calls and `<kakaotv>` tags will now render an "unrecognized service" error and should be removed from your wiki.
+* SECURITY: Special:RefreshEmbedVideoMetadata did not enforce the `embedvideo-refreshmetadata` right that it declares, so any visitor able to reach the page, including anonymous users, could trigger a metadata refresh on a local audio or video file. See [GHSA-hfqr-7c3c-qpmj](https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/security/advisories/GHSA-hfqr-7c3c-qpmj).
+* Fixed local audio and video files failing to render on MediaWiki 1.46 with "Error creating thumbnail: Unable to save thumbnail to destination".
+* Fixed a fatal error in the BackfillLocalMediaMetadata maintenance script on MediaWiki 1.43.
+* Fixed MediaWiki 1.46 deprecation notices from the special page constructor and from audio and video file description pages.
+* Reddit, SharePoint, Substack and VK are now treated as "content" rather than "video", which changes the type shown in the consent overlay.
+* Added new CSP URLs for various services.
+* Fixed a misspelled CSP URL for nicovideo.jp.
+* Updated privacy policy URLs for services whose policies have moved.
+* Added missing service labels to i18n, documented every service in qqq.json, and removed English strings that were duplicated into translation files.
+* Alphabetised the service table in README.md and refreshed example URLs and IDs that no longer worked.
 
 ### v4.1.0
 * Added the Alugha video and audio hosting service.
