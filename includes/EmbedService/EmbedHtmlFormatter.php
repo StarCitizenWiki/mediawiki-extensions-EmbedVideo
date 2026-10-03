@@ -109,7 +109,7 @@ final class EmbedHtmlFormatter {
 					->getConfigFactory()
 					->makeConfig( 'EmbedVideo' )
 					->get( 'EmbedVideoRequireConsent' );
-				if ( $consent === true ) {
+				if ( $consent !== false ) {
 					$templateArgs['iframeConfig'] = $service->getIframeConfig( $width, $height );
 				}
 			} catch ( JsonException | ConfigException $e ) {
@@ -179,7 +179,7 @@ final class EmbedHtmlFormatter {
 				->getConfigFactory()
 				->makeConfig( 'EmbedVideo' )
 				->get( 'EmbedVideoRequireConsent' );
-			if ( $consent === true ) {
+			if ( $consent !== false ) {
 				// Iframe is created through JS
 				return '';
 			}
@@ -311,6 +311,16 @@ final class EmbedHtmlFormatter {
 			//
 		}
 
+		$rememberConsent = false;
+		try {
+			$rememberConsent = MediaWikiServices::getInstance()
+				->getConfigFactory()
+				->makeConfig( 'EmbedVideo' )
+				->get( 'EmbedVideoRequireConsent' ) === 'remember';
+		} catch ( ConfigException $e ) {
+			//
+		}
+
 		$serviceNameMsg = MessageValue::new( 'embedvideo-service-' . $service->getServiceKey() );
 		$contentTypeMsg = MessageValue::new( 'embedvideo-type-' . $service->getContentType() );
 
@@ -318,6 +328,7 @@ final class EmbedHtmlFormatter {
 			'consent-container',
 			[
 				'showPrivacyNotice' => $showPrivacyNotice,
+				'rememberConsent' => $rememberConsent,
 				'thumbnailHtml' => self::makeThumbHtml( $service ),
 				'titleHtml' => self::makeTitleHtml( $service ),
 				'fakeButtonText' => wfMessage( 'embedvideo-load', $contentTypeMsg )->text(),

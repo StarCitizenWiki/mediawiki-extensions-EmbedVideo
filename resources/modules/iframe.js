@@ -127,7 +127,10 @@ const makeIframe = function ( ev ) {
 	const loader = consentDiv.querySelector( '.embedvideo-loader' );
 	const privacyNotice = consentDiv.querySelector( '.embedvideo-privacyNotice' );
 
-	const getSessionStorageKey = function () {
+	// Consent mode "remember" persists in localStorage, otherwise sessionStorage
+	const storage = consentDiv.dataset.rememberConsent === '1' ? mw.storage : session;
+
+	const getStorageKey = function () {
 		return `ev-${ ev.dataset.service }-consent-given`;
 	};
 
@@ -163,7 +166,7 @@ const makeIframe = function ( ev ) {
 	const togglePrivacyClickListener = function ( event ) {
 		event.stopPropagation();
 
-		if ( session.get( getSessionStorageKey() ) === '1' ) {
+		if ( storage.get( getStorageKey() ) === '1' ) {
 			createIframeHandler( event );
 			return;
 		}
@@ -180,7 +183,7 @@ const makeIframe = function ( ev ) {
 
 		consentDiv.addEventListener( 'click', togglePrivacyClickListener );
 		continueBtn.addEventListener( 'click', ( event ) => {
-			session.set( getSessionStorageKey(), '1' );
+			storage.set( getStorageKey(), '1' );
 			createIframeHandler( event );
 		} );
 		dismissBtn.addEventListener( 'click', togglePrivacyClickListener );

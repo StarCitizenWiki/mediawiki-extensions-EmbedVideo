@@ -150,9 +150,9 @@ Alternatively each parameter can be used in any order as a named parameter. The 
 * `width`
 * `height`
 * `poster` / `cover`
-  * This only has an effect if `$wgEmbedVideoRequireConsent` is set to true
+  * This only has an effect if `$wgEmbedVideoRequireConsent` is not set to false
 * `title`
-  * This only has an effect if `$wgEmbedVideoRequireConsent` is set to true
+  * This only has an effect if `$wgEmbedVideoRequireConsent` is not set to false
 
 **Do note** mixing named and unnamed parameters will require you to add all unnamed parameters (and blanks) in the previously mentioned order.
 E.g. using named id and unnamed description `{{#ev:service||||This is the Description|id=abc}}`/ `{{#ev:service|id=abc|||This is the Description}}`
@@ -344,7 +344,7 @@ New services can be requested by using the following [link](https://github.com/S
 | $wgEmbedVideoMaxWidth                    | null             | Integer - Maximum width of video players. Widths specified above this value will be automatically bounded to it.                                                  |
 | $wgFFprobeLocation                       | /usr/bin/ffprobe | String  - Set the location of the ffprobe binary.                                                                                                                 |
 | $wgEmbedVideoEnabledServices             | null             | Array   - Array of service names that are allowed, if empty all services are available.                                                                           |
-| $wgEmbedVideoRequireConsent              | true             | Boolean - Set to true to _only_ load the iframe if the user clicks it.                                                                                            |
+| $wgEmbedVideoRequireConsent              | true             | Boolean or `"remember"` - Set to true to _only_ load the iframe if the user clicks it (consent is remembered for the browser session). Set to `"remember"` to only ask once per service, stored in the browser. Set to false to always load iframes directly. |
 | $wgEmbedVideoFetchExternalThumbnails     | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.                         |
 
 # Credits

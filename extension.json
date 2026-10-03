@@ -178,7 +178,7 @@
 			"value": []
 		},
 		"EmbedVideoRequireConsent": {
-			"description": "Explicitly require consent by only loading the iframe after the user clicks play",
+			"description": "Explicitly require consent by only loading the iframe after the user clicks play: false = load directly, true = ask for consent each browser session, \"remember\" = ask once per service and store consent in the browser",
 			"value": true
 		},
 		"EmbedVideoFetchExternalThumbnails": {

@@ -52,6 +52,24 @@ class EmbedHtmlFormatterTest extends MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter::toHtml
 	 * @return void
 	 */
+	public function testToHtmlRememberConsent() {
+		$this->overrideConfigValues( [
+			'EmbedVideoRequireConsent' => 'remember',
+		] );
+
+		$service = EmbedServiceFactory::newFromName( 'archiveorg', 'foo' );
+		$output = EmbedHtmlFormatter::toHtml( $service, [
+			'withConsent' => true,
+		] );
+
+		$this->assertStringNotContainsString( '<iframe', $output );
+		$this->assertStringContainsString( 'data-remember-consent="1"', $output );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter::toHtml
+	 * @return void
+	 */
 	public function testToHtmlNoConsentCustomArgs() {
 		$this->overrideConfigValues( [
 			'EmbedVideoRequireConsent' => false,

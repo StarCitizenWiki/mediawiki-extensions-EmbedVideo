@@ -200,7 +200,7 @@ class EmbedVideo {
 			'href' => '#',
 		];
 
-		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
+		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) !== false ) {
 			$linkConfig['data-privacy-url'] = $ev->service->getPrivacyPolicyUrl();
 		}
 
@@ -486,7 +486,7 @@ class EmbedVideo {
 		$this->service->setWidth( $rpl( (string)$width ) );
 		$this->service->setHeight( $rpl( (string)$height ) );
 
-		if ( $this->config->get( 'EmbedVideoRequireConsent' ) === true ) {
+		if ( $this->config->get( 'EmbedVideoRequireConsent' ) !== false ) {
 			$this->service->setUrlArgs( $this->service->getAutoplayParameter() );
 		}
 
@@ -677,7 +677,7 @@ class EmbedVideo {
 
 		$out?->addModuleStyles( [ 'ext.embedVideo.styles' ] );
 
-		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) === true ) {
+		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) !== false ) {
 			$out?->addModules( [
 				'ext.embedVideo.consent',
 			] );
