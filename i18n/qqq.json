@@ -37,6 +37,7 @@
 	"embedvideo-service-spotify": "{{Optional}}\nThe name of Spotify, a subscription-based music streaming service, see https://spotify.com/.",
 	"embedvideo-service-substack": "{{Optional}}\nThe name of Substack, a social media service, see https://substack.com/.",
 	"embedvideo-service-takhtesefid": "{{Optional}}\nThe name of Takhtesefid, an educational and informational video hosting service, see https://takhtesefid.org/.",
+	"embedvideo-service-tencentvideo": "{{Optional}}\nThe name of Tencent Video, a video streaming service, see https://v.qq.com/.",
 	"embedvideo-service-tidal": "{{Optional}}\nThe name of Tidal, a subscription-based Hi-Fi music streaming service, see https://tidal.com/.",
 	"embedvideo-service-twitch": "{{Optional}}\nThe name of Twitch, a live streaming website, see https://twitch.tv/.",
 	"embedvideo-service-videolink": "{{Optional}}",
