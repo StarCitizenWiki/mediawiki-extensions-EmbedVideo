@@ -79,6 +79,7 @@ final class EmbedServiceFactory {
 		SpotifyPlaylist::class,
 		Substack::class,
 		TakhteSefid::class,
+		TencentVideo::class,
 		TidalAlbum::class,
 		TidalMix::class,
 		TidalTrack::class,
@@ -231,6 +232,10 @@ final class EmbedServiceFactory {
 
 			case 'takhtesefid':
 				return new TakhteSefid( $id );
+
+			case 'tencentvideo':
+			case 'v.qq':
+				return new TencentVideo( $id );
 
 			case 'tidalalbum':
 				return new TidalAlbum( $id );
