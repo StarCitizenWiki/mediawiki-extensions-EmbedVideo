@@ -80,5 +80,7 @@
 	"apihelp-embedvideo-param-autoresize": "Auto resize video? (true or false)",
 	"apihelp-embedvideo-param-valignment": "Vertical alignment of video",
 	"right-embedvideo-refreshmetadata": "Refresh stored EmbedVideo metadata",
-	"action-embedvideo-refreshmetadata": "refresh stored EmbedVideo metadata"
+	"action-embedvideo-refreshmetadata": "refresh stored EmbedVideo metadata",
+	"embedvideo-youtube-overlay-play": "Resume video",
+	"embedvideo-youtube-overlay-replay": "Replay video"
 }

@@ -347,6 +347,7 @@ New services can be requested by using the following [link](https://github.com/S
 | $wgEmbedVideoEnabledServices             | null             | Array   - Array of service names that are allowed, if empty all services are available.                                                                           |
 | $wgEmbedVideoRequireConsent              | true             | Boolean or `"remember"` - Set to true to _only_ load the iframe if the user clicks it (consent is remembered for the browser session). Set to `"remember"` to only ask once per service, stored in the browser. Set to false to always load iframes directly. |
 | $wgEmbedVideoFetchExternalThumbnails     | true             | Boolean - Set to false to disable fetching video thumbnails from the external video provider. Currently only works for YouTube and Vimeo.                         |
+| $wgEmbedVideoYouTubeHideRelated         | false            | Boolean - Cover YouTube's related-videos screen with a resume / replay button when an embed is paused or ends. Adds `enablejsapi=1`, `rel=0` and `origin` to YouTube embed URLs and loads the YouTube IFrame Player API (allows https://www.youtube.com in the CSP script-src). |
 
 # Credits
 

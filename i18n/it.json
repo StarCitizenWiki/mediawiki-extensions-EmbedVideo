@@ -44,5 +44,7 @@
 	"apihelp-embedvideo-param-description": "Descrizione del video",
 	"apihelp-embedvideo-param-container": "Accetta il parametro frame. Altrimenti lasciare vuoto",
 	"apihelp-embedvideo-param-urlargs": "Parametri aggiuntivi da passare all'URL del video (per alcuni servizi)",
-	"apihelp-embedvideo-param-autoresize": "Ridimensionamento automatico del video? (true o false)"
+	"apihelp-embedvideo-param-autoresize": "Ridimensionamento automatico del video? (true o false)",
+	"embedvideo-youtube-overlay-play": "Riprendi il video",
+	"embedvideo-youtube-overlay-replay": "Riguarda il video"
 }
