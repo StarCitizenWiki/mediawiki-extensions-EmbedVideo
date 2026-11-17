@@ -101,6 +101,41 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * The player options must be real query parameters (the HTML layer escapes '&' once), and the
+	 * track URL must be percent-encoded inside the player's url= parameter.
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getUrl
+	 * @return void
+	 */
+	public function testUrlHasRealQueryParameters() {
+		$service = new SoundCloud( 'https://soundcloud.com/forss/flickermood' );
+		$url = $service->getUrl();
+
+		$this->assertStringNotContainsString( '&amp;', $url );
+		$this->assertStringStartsWith(
+			'https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fforss%2Fflickermood&auto_play=false',
+			$url
+		);
+		parse_str( parse_url( $url, PHP_URL_QUERY ), $query );
+		$this->assertSame( 'https://soundcloud.com/forss/flickermood', $query['url'] );
+		$this->assertSame( 'true', $query['visual'] );
+	}
+
+	/**
+	 * Editor URL arguments are still appended (4.2.0's AbstractEmbedService::getUrl did).
+	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getUrl
+	 * @return void
+	 */
+	public function testUrlKeepsEditorArguments() {
+		$service = new SoundCloud( 'https://soundcloud.com/forss/flickermood' );
+		$service->setUrlArgs( 'color=ff5500&show_artwork=false' );
+		parse_str( parse_url( $service->getUrl(), PHP_URL_QUERY ), $query );
+
+		$this->assertSame( 'ff5500', $query['color'] );
+		$this->assertSame( 'false', $query['show_artwork'] );
+		$this->assertSame( 'https://soundcloud.com/forss/flickermood', $query['url'] );
+	}
+
+	/**
 	 * @covers \MediaWiki\Extension\EmbedVideo\EmbedService\SoundCloud::getBaseUrl
 	 * @return void
 	 */
@@ -109,7 +144,7 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertEquals(
             // phpcs:ignore Generic.Files.LineLength.TooLong
-			'https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true',
+			'https://w.soundcloud.com/player/?url=%1$s&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true',
 			$service->getBaseUrl()
 		);
 	}
@@ -160,8 +195,9 @@ class SoundCloudTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertIsArray( $out );
 		$this->assertCount( 2, $out );
+		// The track URL is a query parameter of the player URL, so it appears percent-encoded.
 		$this->assertStringContainsString(
-			$this->validId,
+			rawurlencode( $this->validId ),
 			$parser->getStripState()->unstripNoWiki( $out[0] )
 		);
 	}
