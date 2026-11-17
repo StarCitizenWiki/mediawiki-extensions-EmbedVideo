@@ -44,5 +44,7 @@
 	"apihelp-embedvideo-param-description": "Description de la vidéo",
 	"apihelp-embedvideo-param-container": "Accepte un paramètre de numéro de trame, sinon laisser à vide",
 	"apihelp-embedvideo-param-urlargs": "Arguments supplémentaires à ajouter dans l’url de la vidéo (pour certains services)",
-	"apihelp-embedvideo-param-autoresize": "Redimensionnement automatique des vidéos ? « true » ou « false » (vrai ou faux)"
+	"apihelp-embedvideo-param-autoresize": "Redimensionnement automatique des vidéos ? « true » ou « false » (vrai ou faux)",
+	"embedvideo-youtube-overlay-play": "Reprendre la vidéo",
+	"embedvideo-youtube-overlay-replay": "Revoir la vidéo"
 }

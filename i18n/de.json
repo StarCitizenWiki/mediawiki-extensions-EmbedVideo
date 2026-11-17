@@ -44,5 +44,7 @@
 	"apihelp-embedvideo-param-description": "Beschreibung des Videos",
 	"apihelp-embedvideo-param-container": "Akzeptiert Rahmen, oder leer lassen",
 	"apihelp-embedvideo-param-urlargs": "Zusätzliche Argumente für die Übergabe der Video-URL (für einige Dienste)",
-	"apihelp-embedvideo-param-autoresize": "Automatische Größenanpassung des Videos? (true oder false)"
+	"apihelp-embedvideo-param-autoresize": "Automatische Größenanpassung des Videos? (true oder false)",
+	"embedvideo-youtube-overlay-play": "Video fortsetzen",
+	"embedvideo-youtube-overlay-replay": "Video erneut abspielen"
 }

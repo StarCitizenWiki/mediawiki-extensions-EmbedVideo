@@ -10,6 +10,7 @@ use MediaWiki\Extension\EmbedVideo\EmbedService\AbstractEmbedService;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedHtmlFormatter;
 use MediaWiki\Extension\EmbedVideo\EmbedService\EmbedServiceFactory;
 use MediaWiki\Extension\EmbedVideo\EmbedService\OEmbedServiceInterface;
+use MediaWiki\Extension\EmbedVideo\EmbedService\YouTube\YouTube;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Parser\Parser;
@@ -676,6 +677,12 @@ class EmbedVideo {
 		}
 
 		$out?->addModuleStyles( [ 'ext.embedVideo.styles' ] );
+
+		if ( $this->service instanceof YouTube && $this->config->get( 'EmbedVideoYouTubeHideRelated' ) ) {
+			$out?->addModules( [ 'ext.embedVideo.youtubeOverlay' ] );
+			// the module loads the IFrame Player API script
+			$out?->addExtraCSPScriptSrc( 'https://www.youtube.com' );
+		}
 
 		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'EmbedVideoRequireConsent' ) !== false ) {
 			$out?->addModules( [

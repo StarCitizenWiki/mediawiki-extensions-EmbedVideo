@@ -36,5 +36,7 @@
 	"apihelp-embedvideo-param-description": "Descrição do vídeo",
 	"apihelp-embedvideo-param-container": "Aceita moldura, senão, deixar em branco",
 	"apihelp-embedvideo-param-urlargs": "Argumentos adicionais a passar no URL do vídeo (para alguns serviços)",
-	"apihelp-embedvideo-param-autoresize": "Redimensionar o vídeo automaticamente? (\"true\" ou \"false\", verdadeiro ou falso)"
+	"apihelp-embedvideo-param-autoresize": "Redimensionar o vídeo automaticamente? (\"true\" ou \"false\", verdadeiro ou falso)",
+	"embedvideo-youtube-overlay-play": "Retomar o vídeo",
+	"embedvideo-youtube-overlay-replay": "Ver o vídeo de novo"
 }

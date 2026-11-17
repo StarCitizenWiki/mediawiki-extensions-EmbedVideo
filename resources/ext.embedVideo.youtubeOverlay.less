@@ -1,0 +1,42 @@
+// Resume / replay overlay over YouTube's related-videos screen (see ext.embedVideo.youtubeOverlay.js).
+// The overlay is a real button (focusable, labelled), shown only while the player is paused or ended.
+figure.embedvideo[ data-service^='youtube' ] .embedvideo-wrapper {
+	.embedvideo-youtube-overlay {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: none;
+		width: 100%;
+		padding: 0;
+		border: 0;
+		margin: 0;
+		background-position: center;
+		background-repeat: no-repeat;
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid #36c;
+			outline-offset: -4px;
+		}
+	}
+
+	// replay arrow on black: covers YouTube's end screen
+	&.ended .embedvideo-youtube-overlay {
+		display: block;
+		background-color: #000;
+		background-image: url( data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgNTEwIDUxMCI+PHBhdGggZD0iTTI1NSAxMDJWMEwxMjcuNSAxMjcuNSAyNTUgMjU1VjE1M2M4NC4xNSAwIDE1MyA2OC44NSAxNTMgMTUzcy02OC44NSAxNTMtMTUzIDE1My0xNTMtNjguODUtMTUzLTE1M0g1MWMwIDExMi4yIDkxLjggMjA0IDIwNCAyMDRzMjA0LTkxLjggMjA0LTIwNC05MS44LTIwNC0yMDQtMjA0eiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg== );
+		background-size: 64px 64px;
+	}
+
+	// play triangle on a band over the related videos; YouTube's control bar (bottom 48px) stays usable
+	&.paused .embedvideo-youtube-overlay {
+		bottom: 48px;
+		display: block;
+		height: auto;
+		background-color: transparent;
+		background-image: url( data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNzA2LjY2NyIgaGVpZ2h0PSIxNzA2LjY2NyIgdmlld0JveD0iMCAwIDEyODAgMTI4MCI+PHBhdGggZD0iTTE1Ny42MzUgMi45ODRMMTI2MC45NzkgNjQwIDE1Ny42MzUgMTI3Ny4wMTZ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+ ), linear-gradient( 0deg, rgba( 0, 0, 0, 0 ) 0%, rgba( 0, 0, 0, 1 ) 20%, rgba( 0, 0, 0, 1 ) 75%, rgba( 0, 0, 0, 0 ) 100% );
+		background-size: 40px 40px, cover;
+	}
+}

@@ -37,5 +37,7 @@
 	"apihelp-embedvideo-param-description": "Descripción del video",
 	"apihelp-embedvideo-param-container": "Aceptar para marco, o dejar vacío",
 	"apihelp-embedvideo-param-urlargs": "Parámetros URL adicionales",
-	"apihelp-embedvideo-param-autoresize": "Redimensionado automático de video (verdadero o falso)"
+	"apihelp-embedvideo-param-autoresize": "Redimensionado automático de video (verdadero o falso)",
+	"embedvideo-youtube-overlay-play": "Reanudar el vídeo",
+	"embedvideo-youtube-overlay-replay": "Volver a ver el vídeo"
 }
