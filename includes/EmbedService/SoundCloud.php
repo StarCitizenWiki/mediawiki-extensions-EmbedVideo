@@ -13,11 +13,23 @@ final class SoundCloud extends AbstractEmbedService {
 	];
 
 	/**
+	 * The track URL is a query parameter of the player URL: percent-encode it. The HTML layer
+	 * escapes the URL once, so the base URL uses plain '&'.
+	 *
+	 * @return string
+	 */
+	public function getUrl(): string {
+		$url = sprintf( $this->getBaseUrl(), rawurlencode( $this->getId() ) );
+		$args = $this->getUrlArgs();
+		return $args === false ? $url : wfAppendQuery( $url, $args );
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getBaseUrl(): string {
 		// phpcs:ignore Generic.Files.LineLength.TooLong
-		return 'https://w.soundcloud.com/player/?url=%1$s&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
+		return 'https://w.soundcloud.com/player/?url=%1$s&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true';
 	}
 
 	/**
